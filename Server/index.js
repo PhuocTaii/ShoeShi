@@ -4,7 +4,7 @@ const app = express();
 const mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 const morgan = require('morgan');
-// const dotenv = require('dotenv');
+const dotenv = require('dotenv');
 const userRouter = require('./routes/userRouter');
 // const bookRouter = require('./routes/bookRouter');
 // const slipRouter = require('./routes/slipRouter');
@@ -17,9 +17,9 @@ app.use(morgan('common'));
 app.use(cookieParser());
 // app.use(express.static('images'));
 
-// dotenv.config();
+dotenv.config();
 
-mongoose.connect("mongodb+srv://phuoctai1773:asd12345@cluster0.jfpxkuj.mongodb.net/ShoeShi?retryWrites=true&w=majority")
+mongoose.connect(process.env.MONGODB_URL)
   .then(() => {
     console.log('Connected to MongoDB');
   })
