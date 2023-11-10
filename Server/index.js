@@ -6,6 +6,7 @@ var bodyParser = require('body-parser');
 const morgan = require('morgan');
 const dotenv = require('dotenv');
 const userRouter = require('./routes/userRouter');
+
 const cookieParser = require('cookie-parser');
 
 app.use(bodyParser.json());
