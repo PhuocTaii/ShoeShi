@@ -75,3 +75,7 @@
     color: #FF7100;
     text-decoration-line: underline;
 }
+
+.bg-primary{
+    background-color: #111 !important;
+}
