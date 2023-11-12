@@ -1,0 +1,72 @@
+body {
+    font-family: "Inter", sans-serif;
+}
+a > img {
+    width: 100%;
+    border-radius: 20px;
+    height: 100%;
+}
+
+.right-box-img img {
+    width: 100%;
+    height: 98%;
+}
+
+.right-box-img {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.adidas-img {
+    display: flex;
+    align-items: flex-end;
+}
+
+.nike,
+.new-balance,
+.adidas {
+    position: relative;
+}
+
+.nike-title,
+.new-balance-title,
+.adidas-title {
+    width: 100%;
+    position: absolute;
+    bottom: -2%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    text-align: center;
+    font-size: 64px;
+    font-weight: bold;
+}
+
+.info .col {
+    display: flex;
+    flex-direction: row;
+}
+
+.info .text {
+    margin-left: 10px;
+}
+
+.info .title {
+    display: flex;
+    flex-direction: column;
+    font-weight: bold;
+}
+
+.info img {
+    width: 25%;
+    height: 50%;
+}
+
+.info {
+    box-shadow: 0 0 20px #dadada;
+}
+
+.text > p {
+    margin: 0;
+}
