@@ -1,9 +1,9 @@
-var express = require("express");
-var router = express.Router();
+const express = require("express");
+const router = express.Router();
 
-/* GET login page. */
+/* GET sign up page. */
 router.get("/", function (req, res, next) {
-    res.render("auth/signup", { layout: "layout/signup" });
+    res.render("auth/signup", { layout: "layout/auth", extraStyles: "signup.css" });
 });
 
 module.exports = router;
