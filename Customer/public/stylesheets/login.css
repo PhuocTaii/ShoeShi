@@ -1,17 +1,34 @@
-body {
-    padding: 0;
+.logo-container {
+    width: fit-content;
+}
+.header-text {
+    font-weight: 600;
+}
+
+.btn-container {
+    width: fit-content;
+}
+.btn-container button {
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.text-link {
+    color: var(--my-orange);
 }
 
 .img-bg {
     height: 100vh;
     width: 100%;
-    display: flex;
+    object-fit: cover;
 }
 
 .left-box {
     display: flex;
-    padding: 40px 100px 40px 100px;
+    padding: 0 40px;
     justify-content: center;
     align-items: center;
 }
-
+.left-box.row>* {
+    padding: 0;
+}

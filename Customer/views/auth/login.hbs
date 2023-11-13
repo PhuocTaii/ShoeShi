@@ -1,52 +1,58 @@
 <div class="container-fluid">
     <div class="row align-items-center">
         <div class="col-lg-6 p-0">
-            <div class="left-box row">
-                <div class="mb-3 mx-auto text-center">
-                    <img src="/img/logo.png" alt="" />
+            <div class="left-box row m-0">
+                <div class="mb-4 mx-auto logo-container">
+                    <img src="/assets/img/logo.png" alt="logo">
+                    SHOESHI
                 </div>
+
                 <div class="header-text mb-2 text-center fs-3">
                     <p>LOGIN</p>
                 </div>
 
-                <div class="header-text text-dark fs-6">
-                    <small>Username</small><small class="text-danger">*</small>
-                </div>
-                <div class="input-group mb-3">
-                    <input
-                        type="text"
-                        class="form-control fs-6"
-                        placeholder="Username"
-                    />
-                </div>
-                <div class="header-text fs-6">
-                    <small>Password</small><small class="text-danger">*</small>
-                </div>
-                <div class="input-group mb-3">
-                    <input
-                        type="password"
-                        class="form-control fs-6"
-                        placeholder="Password"
-                    />
-                </div>
-                <div class="text mb-4">
-                    <a class="text-warning" href="">Forgot password</a>
-                </div>
-                <div class="input-group mb-3">
-                    <button
-                        class="btn btn-lg btn-dark w-20 fs-6 mx-auto text-center"
-                        placeholder="Password"
-                    >Login</button>
-                </div>
+                <form name="login-form">
+                    <div class="mb-3">
+                        <label for="username-login" class="form-label">Username <small class="text-danger">*</small></label>
+                        <input
+                            id="username-login"
+                            type="text"
+                            class="form-control fs-6"
+                            placeholder="Username"
+                            required
+                        />
+                    </div>
+                    <div class="mb-3">
+                        <label for="password-login" class="form-label">Password <small class="text-danger">*</small></label>
+                        <input
+                            id="password-login"
+                            type="password"
+                            class="form-control fs-6"
+                            placeholder="Password"
+                            required
+                        />
+                        <div class="form-text">
+                            <a class="text-link" href="#">Forgot password?</a>
+                        </div>
+                    </div>
+                    <div class="btn-container mx-auto mb-3">
+                        <button
+                            class="btn btn-lg btn-dark w-20 fs-6 mx-auto text-center"
+                            type="submit"
+                        >Login
+                        </button>
+                    </div>
+                </form>
 
                 <div class="row mx-auto text-center">
-                    <small class="p-0">Don't have account?
-                        <a class="text-warning" href="#">Sign Up</a></small>
+                    <p class="p-0 fs-6">Don't have account?
+                        <a class="text-link" href="/signup">Sign Up</a>
+                    </p>
                 </div>
             </div>
         </div>
         <div class="col-lg-6 p-0">
-            <img src="/img/background-login.png" class="img-bg" alt="" />
+            <img src="assets/img/background-login.png" class="img-bg" alt="background-shoes" />
         </div>
     </div>
 </div>
