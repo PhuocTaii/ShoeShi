@@ -270,3 +270,33 @@ footer .get-help {
 .offcanvas-body .search-bar {
   height: 40px;
 }
+
+/* Layout of auth page */
+.left-box-auth {
+  display: flex;
+  padding: 0 40px;
+  justify-content: center;
+  align-items: center;
+}
+.left-box-auth.row>* {
+  padding: 0;
+}
+.left-box-auth .logo-container {
+  width: fit-content;
+}
+.left-box-auth .header-text {
+  font-weight: 600;
+}
+.left-box-auth .btn-container {
+  width: fit-content;
+}
+.left-box-auth .btn-container button {
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.left-box-auth .text-link {
+  color: var(--my-orange);
+}
+.left-box-auth .form-label {
+  font-weight: 600;
+}
