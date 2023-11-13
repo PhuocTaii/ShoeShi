@@ -68,6 +68,7 @@
   --bs-code-color: #d63384;
   --bs-highlight-bg: #fff3cd;
   --my-black: #111111;
+  --my-orange: #FF7100;
 }
 ::-webkit-scrollbar {
   width: 10px;
@@ -83,8 +84,8 @@
 }
 
 body {
-  width: 100vw;
-  height: 100vh;
+  /* width: 100vw; */
+  /* height: 100vh; */
   margin: 0;
   font-family: var(--bs-body-font-family);
   font-size: var(--bs-body-font-size);
@@ -120,6 +121,7 @@ body {
   font-family: 'Koulen', sans-serif;
   font-size: 40px;
   font-weight: 400;
+  color: var(--bs-body-color);
 }
 .logo-container img {
   width: 55px;
@@ -136,9 +138,12 @@ body {
 a {
   text-decoration: none;
 }
-#header-container a {
+#header-container .menu-header a {
   color: var(--bs-body-color);
-  font-weight: 500;
+}
+
+#header-container .menu-header a:nth-child(1), #header-container .menu-header a:nth-child(2), #header-container .menu-header a:nth-child(3){
+  font-weight: 600;
 }
 
 .search-bar {
