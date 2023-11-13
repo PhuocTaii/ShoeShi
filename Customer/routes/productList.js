@@ -1,9 +1,9 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET login page. */
+/* GET accounts page. */
 router.get('/', function(req, res, next) {
-  res.render('auth/index', {layout: 'layout/auth'});
+  res.render('product/productList');
 });
 
 module.exports = router;

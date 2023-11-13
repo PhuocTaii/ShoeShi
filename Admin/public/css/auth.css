@@ -1,0 +1,81 @@
+.logo{
+    padding-top: 24px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.logo .imgLogo{
+    width: 55px;
+    height: 50px;
+}
+
+.logo .wordLogo{
+    font-family: Koulen;
+    font-size: 40px;
+    font-weight: 400;
+}
+
+.card-header .text-center{
+    font-family: Inter;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.d-flex{
+    flex-direction: column;
+    gap: 16px
+}
+
+.d-flex .forgotPass{
+    align-items: start;
+    color: #FF7100;
+    font-family: Inter;
+    font-size: 12px;
+    font-weight: 400;
+    text-decoration-line: underline;
+}
+
+.d-flex .logBtn{
+    display: flex;
+    justify-content: center;
+}
+
+.d-flex .logBtn .btn{
+    width: 110px;
+    padding: 16px 30px;
+    gap: 10px;
+    border-radius: 5px;
+    background: #111;   
+}
+
+.d-flex .logBtn .btn-primary{
+    color: #FFF;
+    font-family: Inter;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.card-footer{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 10px;
+    font-family: Inter;
+    font-size: 16px;
+    font-weight: 400;
+    text-align: center;
+}
+
+.card-footer .q{
+    color: #111;
+}
+
+.card-footer .a{
+    color: #FF7100;
+    text-decoration-line: underline;
+}
+
+.bg-primary{
+    background-color: #111 !important;
+}
