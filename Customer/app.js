@@ -8,7 +8,6 @@ const loginRouter = require("./routes/login");
 const signupRouter = require("./routes/signup");
 const homeRouter = require("./routes/home");
 const productList = require('./routes/productList');
-
 const cartRouter = require("./routes/cart");
 
 
@@ -28,8 +27,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/", homeRouter);
 app.use("/login", loginRouter);
 app.use("/signup", signupRouter);
-app.use('/productList', productList);
-
+app.use('/products', productList);
 app.use("/cart", cartRouter);
 
 // catch 404 and forward to error handler

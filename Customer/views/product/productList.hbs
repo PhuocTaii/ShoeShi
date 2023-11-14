@@ -1,6 +1,6 @@
 <div class="container-fluid mx-0">
     <div class="body-head">
-        <p class="body-tittle"> MEN </p>
+        <p class="body-tittle">MEN</p>
     </div>
     <div class="body-container">
         <div class="product-filter">
@@ -45,13 +45,26 @@
             </div>
             <div class="component">
                 <p>Price</p>
-                <p class="price">600,000 ₫ - 9,000,000 ₫ </p>
-                <input type="range" class="form-range" id="customRange1">
+
+                <div class="range_container">
+                    <div class="sliders_control">
+                    <input id="fromSlider" type="range" value="100000" min="100000" max="9000000"/>
+                    <input id="toSlider" type="range" value="9000000" min="100000" max="9000000"/>
+                    </div>
+                    <div class="form_control">
+                        <div class="form_control_container">
+                            <input class="" type="number" id="fromInput" value="100000" min="100000" max="9000000"/>
+                        </div>
+                        <div class="form_control_container">
+                            <input class="" type="number" id="toInput" value="9000000" min="100000" max="9000000"/>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
         <div class="main-content">
             <div class="content-header">
-                {{!-- <p class="content-path">Home/ <span class="content-Subpath"> Men</span></p> --}}
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="#">Home</a></li>
@@ -59,8 +72,14 @@
                     </ol>
                 </nav>
                 <div class="sort-info">
-                    <p class="sort-content">Sort by: <span class="sort-detail">Price (low-high)</span></p>
-                    <svg class="sort-icon" width="13" height="9" viewBox="0 0 13 9" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.63593 5.56062L11.5857 0.610901L12.9999 2.02511L6.63593 8.38912L0.271973 2.02511L1.68619 0.610901L6.63593 5.56062Z" fill="#111111"/></svg>
+                    <label for="sort-products">Sort by: </label>
+                    <select id="sort-products" name="sort-options">
+                        <option value="none">None</option>
+                        <option value="newest">Newest</option>
+                        <option value="oldest">Oldest</option>
+                        <option value="low-high">Low price - High price</option>
+                        <option value="high-low">High price - Low price</option>
+                    </select>
                 </div>
             </div>
             <div class="product-container">
@@ -151,3 +170,4 @@
         </div>
     </div>
 </div>
+<script src="js/range-price.js"></script>
