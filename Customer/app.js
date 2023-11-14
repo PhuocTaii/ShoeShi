@@ -4,19 +4,19 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 
-const indexRouter = require("./routes/index");
-const usersRouter = require("./routes/users");
 const loginRouter = require("./routes/login");
 const signupRouter = require("./routes/signup");
 const homeRouter = require("./routes/home");
+const productList = require('./routes/productList');
 const cartRouter = require("./routes/cart");
 
 
 const app = express();
 
 // view engine setup
-app.set("views", path.join(__dirname, "views"));
-app.set("view engine", "hbs");
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'hbs');
+app.set('view options', { layout: 'layout/main' });
 
 app.use(logger("dev"));
 app.use(express.json());
@@ -24,11 +24,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use("/", indexRouter);
-app.use("/users", usersRouter);
+app.use("/", homeRouter);
 app.use("/login", loginRouter);
 app.use("/signup", signupRouter);
-app.use("/home", homeRouter);
+app.use('/products', productList);
 app.use("/cart", cartRouter);
 
 // catch 404 and forward to error handler

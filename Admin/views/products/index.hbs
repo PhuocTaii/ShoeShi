@@ -1,2 +1,287 @@
-<h1>{{title}}</h1>
-<p>Welcome to {{title}}</p>
+<div id="product-container">
+    <h3>PRODUCTS</h3>
+
+    <!-- Customer table-->
+    <div class="card">
+        <div class="card-header">
+            <button type="button" class="btn btn-dark product">add</button>
+            <div class="filter dropdown">
+                <div class="" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Filters
+                    <i class="ri-filter-3-fill"></i>
+                </div>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li><a class="dropdown-item" href="#">Name</a></li>
+                    <li><a class="dropdown-item" href="#">Category</a></li>
+                    <li><a class="dropdown-item" href="#">Manufacturer</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="card-body">
+            <table id="product">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Manufacturer</th>
+                        <th>Creation Time</th>
+                        <th>Price</th>
+                        <th>Amount</th>
+                        <th>Total purchase</th>
+                        <th>Status</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Manufacturer</th>
+                        <th>Creation Time</th>
+                        <th>Price</th>
+                        <th>Amount</th>
+                        <th>Total purchase</th>
+                        <th>Status</th>
+                        <th></th>
+                    </tr>
+                </tfoot>
+                <tbody>
+                    <tr>
+                        <td>Nike Pegasus FlyEase</td>
+                        <td>Running shoes</td>
+                        <td>Nike</td>
+                        <td>09/11/2023</td>
+                        <td>2,991,149</td>
+                        <td>20</td>
+                        <td>4</td>
+                        <td>On stock</td>
+                        <td>
+                            <button class="edit-btn"><i class="ri-pencil-line"></i></button>
+                            <button class="delete-btn"><i class="ri-delete-bin-6-line"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Nike Pegasus FlyEase</td>
+                        <td>Running shoes</td>
+                        <td>Nike</td>
+                        <td>09/11/2023</td>
+                        <td>2,991,149</td>
+                        <td>20</td>
+                        <td>4</td>
+                        <td>On stock</td>
+                        <td>
+                            <button class="edit-btn"><i class="ri-pencil-line"></i></button>
+                            <button class="delete-btn"><i class="ri-delete-bin-6-line"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Nike Pegasus FlyEase</td>
+                        <td>Running shoes</td>
+                        <td>Nike</td>
+                        <td>09/11/2023</td>
+                        <td>2,991,149</td>
+                        <td>20</td>
+                        <td>4</td>
+                        <td>On stock</td>
+                        <td>
+                            <button class="edit-btn"><i class="ri-pencil-line"></i></button>
+                            <button class="delete-btn"><i class="ri-delete-bin-6-line"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Nike Pegasus FlyEase</td>
+                        <td>Running shoes</td>
+                        <td>Nike</td>
+                        <td>09/11/2023</td>
+                        <td>2,991,149</td>
+                        <td>20</td>
+                        <td>4</td>
+                        <td>On stock</td>
+                        <td>
+                            <button class="edit-btn"><i class="ri-pencil-line"></i></button>
+                            <button class="delete-btn"><i class="ri-delete-bin-6-line"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Nike Pegasus FlyEase</td>
+                        <td>Running shoes</td>
+                        <td>Nike</td>
+                        <td>09/11/2023</td>
+                        <td>2,991,149</td>
+                        <td>20</td>
+                        <td>4</td>
+                        <td>On stock</td>
+                        <td>
+                            <button class="edit-btn"><i class="ri-pencil-line"></i></button>
+                            <button class="delete-btn"><i class="ri-delete-bin-6-line"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Nike Pegasus FlyEase</td>
+                        <td>Running shoes</td>
+                        <td>Nike</td>
+                        <td>09/11/2023</td>
+                        <td>2,991,149</td>
+                        <td>20</td>
+                        <td>4</td>
+                        <td>On stock</td>
+                        <td>
+                            <button class="edit-btn"><i class="ri-pencil-line"></i></button>
+                            <button class="delete-btn"><i class="ri-delete-bin-6-line"></i></button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Nike Pegasus FlyEase</td>
+                        <td>Running shoes</td>
+                        <td>Nike</td>
+                        <td>09/11/2023</td>
+                        <td>2,991,149</td>
+                        <td>20</td>
+                        <td>4</td>
+                        <td>On stock</td>
+                        <td>
+                            <button class="edit-btn"><i class="ri-pencil-line"></i></button>
+                            <button class="delete-btn"><i class="ri-delete-bin-6-line"></i></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{{!-- Modal detail --}}
+<div class="modal" id="modal-manage-product" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-content">
+            <div class="modal-header">
+                <p id="action-product"></p>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {{!-- basic info --}}
+                <div class="row row-cols-2 g-3">
+                    <div class="col">
+                        <div class="info-detail">
+                            <label for="name-product">Name</label>
+                            <input type="text" id="name-product">
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="info-detail">
+                            <label for="price-product">Price</label>
+                            <input type="number" id="price-product" min="0">
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="info-detail">
+                            <label for="manufacturer-product">Manufacturer</label>
+                            <select name="manufacturer" id="manufacturer-product">
+                                <option value="Nike">Nike</option>
+                                <option value="Adidas">Adidas</option>
+                                <option value="Vans">Vans</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="info-detail">
+                            <label for="categories-product">Categories</label>
+                            <select name="categories" id="categories-product">
+                                <option value="Running shoes">Running shoes</option>
+                                <option value="Sneakers">Sneakers</option>
+                                <option value="Slides">Slides</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="info-detail">
+                            <label for="status-product">Status</label>
+                            <select name="status" id="status-product">
+                                <option value="On stock">On stock</option>
+                                <option value="Out of stock">Out of stock</option>
+                                <option value="Suspend">Suspend</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div id="photos-product">
+                            <div class="heading">
+                                <p>Photos</p>
+                                <div>
+                                    <label class="file-label" for="file-upload">
+                                        Choose file
+                                    </label>
+                                    <input id="file-upload" type="file" onchange="handleAddPhotoProduct(event)">
+                                </div>
+                            </div>
+                            <div class="photos-container">
+                                {{!-- <div class="photo-frame">
+                                    <img src="/assets/img/product.png" alt="product">
+                                    <button class="remove-icon" onclick="handleRemovePhotoProduct(event)">
+                                        <i class="ri-subtract-line"></i>
+                                    </button>
+                                </div> --}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {{!-- color-size-quantity info --}}
+                <div id="color-container" class="container px-0">
+                    <div class="input-container">
+                        <div class="row">
+                            <div class="col">
+                                <label>Color</label>
+                                <input type="color" class="color-product" />
+                            </div>
+                            <div class="col">
+                                <label>Size</label>
+                                <input type="number" class="size-color" min="0" />
+                            </div>
+                            <div class="col">
+                                <label>Quantity</label>
+                                <input type="number" class="quant-color" min="1" />
+                            </div>
+                            <div class="col-1">
+                                <div class="dummy-space"></div>
+                                <button class="remove-icon" onclick="removeColorElement(event)">
+                                    <i class="ri-subtract-line"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="new-color" onclick="addColorElement()">
+                        New color
+                        <i class="ri-add-circle-fill"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-dark">save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{!-- Modal delete --}}
+<div class="modal" id="modal-delete-product" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-content">
+            <div class="modal-header">
+                <p>Sure you want to delete?</p>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No, cancel</button>
+                <button type="button" class="btn btn-danger">Yes, confirm</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.7.0.js" crossorigin="anonymous"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
+<script src="/js/products.js"></script>

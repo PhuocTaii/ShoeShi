@@ -1,22 +1,8 @@
-body {
-    padding: 0;
+.left-box-auth {
+    height: fit-content;
 }
 
 .img-bg {
-    height: 100vh;
-    width: 100%;
-    display: flex;
+    object-fit: cover;
+    height: 100%;
 }
-
-.left-box {
-    display: flex;
-    padding: 40px 100px 40px 100px;
-    justify-content: center;
-    align-items: center;
-}
-
-.email-require {
-    display: flex;
-    font-size: 12px;
-}
-

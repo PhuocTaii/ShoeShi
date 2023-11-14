@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
-/* GET login page. */
+/* GET products page. */
 router.get('/', function(req, res, next) {
-  res.render('dashboard/index', {extraStyles: 'dashboard.css'});
+  res.render('product/productList', {extraStyles: 'productList.css'});
 });
 
 module.exports = router;
