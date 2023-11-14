@@ -1,0 +1,111 @@
+.home-content {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+    margin: 48px 0;
+    padding: 0 36px;
+}
+.banner-section {
+    width: 100%;
+    height: fit-content;
+}
+.banner-section.row {
+    gap: 30px;
+}
+.left-box-img, .right-box-img {
+    height: 688px;
+}
+.brand-banner {
+    height: 100%;
+}
+.right-box-img .brand-banner {
+    height: 50%;
+}
+.banner-section a {
+    display: block;
+}
+.brand-banner > *:not(.brand-title-banner) {
+    height: 100%;
+}
+.banner-section img {
+    width: 100%;
+    border-radius: 20px;
+    object-fit: cover;
+}
+.right-box-img {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+.left-box-img img, .right-box-img img {
+    height: 100%;
+}
+
+/* .adidas-img {
+    display: flex;
+    align-items: flex-end;
+} */
+
+.brand-banner {
+    position: relative;
+}
+
+.brand-title-banner {
+    width: 100%;
+    position: absolute;
+    bottom: -2%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    text-align: center;
+    font-size: 64px;
+    font-weight: bold;
+}
+
+.info .col-md {
+    display: flex;
+    flex-direction: row;
+}
+
+.info .text {
+    margin-left: 10px;
+}
+
+.info .title {
+    display: flex;
+    flex-direction: column;
+    font-weight: bold;
+}
+
+.info img {
+    width: 25%;
+    height: 50%;
+}
+
+.info {
+    box-shadow: 0 0 20px #dadada;
+    border-radius: 10px;
+}
+
+.text > p {
+    margin: 0;
+}
+
+.sample-featured img {
+    width: 100%;
+}
+
+.sample-featured > div {
+    border: 2px solid #000;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.brand-container img {
+    width: 35%;
+}
+
+.brand-container {
+    box-shadow: 0 0 20px #dadada;
+    border-radius: 10px;
+}

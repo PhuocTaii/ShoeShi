@@ -1,9 +1,9 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 
 /* GET login page. */
 router.get('/', function(req, res, next) {
-  res.render('dashboard/index', {layout: 'layout/main'});
+  res.render('dashboard/index', {extraStyles: 'dashboard.css'});
 });
 
 module.exports = router;
