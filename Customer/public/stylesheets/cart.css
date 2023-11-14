@@ -1,0 +1,33 @@
+.item {
+    border: 1px solid black;
+}
+
+.right-box-info {
+    display: flex;
+    align-items: flex-end;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.right-box-info > img {
+    width: 30px;
+    height: 30px;
+}
+
+.info {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.left-box-info {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.right-box {
+    display: flex !important;
+    flex-direction: column;
+    align-items: flex-end;
+}
