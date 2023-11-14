@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const userSchema = new mongoose.Schema({
+const customerSchema = new mongoose.Schema({
     username: {
         type: String,
         minlength: 6,
@@ -21,13 +21,13 @@ const userSchema = new mongoose.Schema({
         type: String,
     },
 
-    id: {
-        type: String,
-    },
-
     birthday: {
         type: Date,
     },   
+
+    phoneNum:{
+        type: String,
+    },
 
     gender: {
         type: String,
@@ -40,8 +40,13 @@ const userSchema = new mongoose.Schema({
     address: {
         type: String,
     },
+
+    createTime: {
+        type: Date,
+        default: Date.now,
+    },
 });
 
-let User = mongoose.model('User', userSchema);
+let Customer = mongoose.model('Customer', customerSchema);
 
-module.exports = User;
+module.exports = Customer;
