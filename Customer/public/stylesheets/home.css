@@ -1,38 +1,56 @@
-body {
-    font-family: "Inter", sans-serif;
+.home-content {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+    margin: 48px 0;
+    padding: 0 36px;
 }
-
-a > img {
+.banner-section {
+    width: 100%;
+    height: fit-content;
+}
+.banner-section.row {
+    gap: 30px;
+}
+.left-box-img, .right-box-img {
+    height: 688px;
+}
+.brand-banner {
+    height: 100%;
+}
+.right-box-img .brand-banner {
+    height: 50%;
+}
+.banner-section a {
+    display: block;
+}
+.brand-banner > *:not(.brand-title-banner) {
+    height: 100%;
+}
+.banner-section img {
     width: 100%;
     border-radius: 20px;
+    object-fit: cover;
+}
+.right-box-img {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+.left-box-img img, .right-box-img img {
     height: 100%;
 }
 
-.right-box-img img {
-    width: 100%;
-    height: 98%;
-}
-
-.right-box-img {
-    display: flex;
-    justify-content: space-between;
-    flex-direction: column;
-}
-
-.adidas-img {
+/* .adidas-img {
     display: flex;
     align-items: flex-end;
-}
+} */
 
-.nike,
-.new-balance,
-.adidas {
+.brand-banner {
     position: relative;
 }
 
-.nike-title,
-.new-balance-title,
-.adidas-title {
+.brand-title-banner {
     width: 100%;
     position: absolute;
     bottom: -2%;
@@ -44,7 +62,7 @@ a > img {
     font-weight: bold;
 }
 
-.info .col {
+.info .col-md {
     display: flex;
     flex-direction: row;
 }
