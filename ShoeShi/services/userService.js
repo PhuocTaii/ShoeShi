@@ -1,25 +1,28 @@
 const User = require('../models/customer')
+const Cart = require('../models/cart')
 
 const userService = {
   getAllUsers() {
-    const query = { admin: false }
-    const users = User.find(query)
+    const users = User.find({ admin: false })
+    console.log(users)
     return users
   },
 
-  addUser() {
-    const newUser = new User(req.body)
+  addUser(user) {
+    const newUser = new User(user)
     const savedUser = newUser.save()
-    return savedUser
+    const cart = new Cart({ customer: newUser._id })
+    const savedCart = cart.save()
+    return savedUser, savedCart
   },
 
-  updateUser() {
-    const user = User.findByIdAndUpdate(req.params.id, req.body)
+  updateUser(id, body) {
+    const user = User.findByIdAndUpdate(id, body)
     return user
   },
 
-  deleteUser() {
-    const user = User.findByIdAndDelete(req.params.id)
+  deleteUser(id) {
+    const user = User.findByIdAndDelete(id)
     return user
   },
 }
