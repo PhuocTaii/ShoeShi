@@ -1,7 +1,8 @@
 const userService = require('../services/userService')
+const User = require('../models/customer')
 
 const userController = {
-  //GET all users
+  //GET all customers
   getAllUsers: async (req, res) => {
     try {
       const users = await userService.getAllUsers()
@@ -14,20 +15,21 @@ const userController = {
     }
   },
 
-  //ADD user
+  //ADD customers
   addUser: async (req, res) => {
     try {
-      const savedUser = await userService.addUser()
+      const savedUser = await userService.addUser(req.body)
       res.status(200).json(savedUser)
     } catch (err) {
+      console.log(err)
       res.status(500).json(err)
     }
   },
 
-  //UPDATE user
+  //UPDATE customers
   updateUser: async (req, res) => {
     try {
-      const user = await userService.updateUser()
+      const user = await userService.updateUser(req.params.id, req.body)
       if (!user) {
         return res.status(500).json(err)
       }
@@ -37,10 +39,10 @@ const userController = {
     }
   },
 
-  //DELETE user
+  //DELETE customers
   deleteUser: async (req, res) => {
     try {
-      const user = await userService.deleteUser()
+      const user = await userService.deleteUser(req.params.id)
       if (!user) {
         res.status(500).json(err)
       }

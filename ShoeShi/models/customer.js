@@ -45,8 +45,12 @@ const customerSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+
+  customerImage: {
+    type: String,
+  },
 })
 
-let Customer = mongoose.model('Customer', customerSchema)
+const Customer = mongoose.model('Customer', customerSchema)
 
 module.exports = Customer

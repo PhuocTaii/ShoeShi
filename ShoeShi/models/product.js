@@ -75,11 +75,12 @@ const productSchema = new mongoose.Schema({
   status: {
     type: String,
   },
-  /*image: {
-        product image
-    }*/
+
+  productImage: {
+    type: String,
+  },
 })
 
-let Product = mongoose.model('Product', productSchema)
+const Product = mongoose.model('Product', productSchema)
 
 module.exports = Product
