@@ -1,0 +1,151 @@
+<div class='container-fluid px-4'>
+  <div class='cards'>
+    <div class='card mb-4'>
+      <svg
+        width='28'
+        height='28'
+        viewBox='0 0 28 28'
+        fill='none'
+        xmlns='http://www.w3.org/2000/svg'
+      ><g clip-path='url(#clip0_74_4927)'><path
+            d='M14 28C6.26802 28 0 21.7321 0 14C0 6.26802 6.26802 0 14 0C21.7319 0 28 6.26802 28 14C28 21.7321 21.7319 28 14 28ZM9.09999 16.8V19.6H12.6V22.4H15.4V19.6H16.8C18.733 19.6 20.3 18.033 20.3 16.1C20.3 14.167 18.733 12.6 16.8 12.6H11.2C10.8134 12.6 10.5 12.2867 10.5 11.9C10.5 11.5134 10.8134 11.2 11.2 11.2H18.9V8.40001H15.4V5.60001H12.6V8.40001H11.2C9.267 8.40001 7.69999 9.96702 7.69999 11.9C7.69999 13.833 9.267 15.4 11.2 15.4H16.8C17.1866 15.4 17.5 15.7134 17.5 16.1C17.5 16.4867 17.1866 16.8 16.8 16.8H9.09999Z'
+            fill='black'
+          /></g><defs><clipPath id='clip0_74_4927'><rect
+              width='28'
+              height='28'
+              fill='white'
+            /></clipPath></defs></svg>
+      <div class='card-content'>Total revenue</div>
+      <a class='small stretched-link'>10.000.000 <span class='d'>đ</span> </a>
+    </div>
+    <div class='card mb-4'>
+      <svg
+        width='22'
+        height='28'
+        viewBox='0 0 22 28'
+        fill='none'
+        xmlns='http://www.w3.org/2000/svg'
+      >
+        <g clip-path='url(#clip0_74_4933)'>
+          <path
+            d='M20.7778 28H1.22222C0.547213 28 0 27.3732 0 26.6V1.4C0 0.626808 0.547213 0 1.22222 0H20.7778C21.4528 0 22 0.626808 22 1.4V26.6C22 27.3732 21.4528 28 20.7778 28ZM6.11111 9.8V12.6H15.8889V9.8H6.11111ZM6.11111 15.4V18.2H15.8889V15.4H6.11111Z'
+            fill='black'
+          />
+        </g>
+        <defs>
+          <clipPath id='clip0_74_4933'>
+            <rect width='22' height='28' fill='white' />
+          </clipPath>
+        </defs>
+      </svg>
+      <div class='card-content'>Total orders</div>
+      <a class='small stretched-link'>200</a>
+    </div>
+  </div>
+  <div class='card mb-4'>
+    <div class='card-header'>
+      <p class='tableName'>overall sales</p>
+      <div class='Date'>
+        <input type='date' />
+        -
+        <input type='date' />
+      </div>
+    </div>
+    <div class='card-body'><canvas
+        id='myAreaChart'
+        width='100%'
+        height='35'
+      ></canvas></div>
+  </div>
+
+  <div class='card mb-4'>
+    <div class='card-header'>
+      <p class='tableName'>best selling product</p>
+      <div class='Date'>
+        <input type='date' />
+        -
+        <input type='date' />
+      </div>
+    </div>
+    <div class='card-body'>
+      <table id='datatablesSimple'>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Sold</th>
+            <th>Revenue</th>
+          </tr>
+        </thead>
+        <tfoot>
+          <tr>
+            <th>Name</th>
+            <th>Sold</th>
+            <th>Revenue</th>
+          </tr>
+        </tfoot>
+        <tbody>
+          <tr>
+            <td>Lorem ipsum dolor sit amet</td>
+            <td>10</td>
+            <td>10</td>
+          </tr>
+          <tr>
+            <td>consectetur adipiscing elit</td>
+            <td>10</td>
+            <td>10</td>
+          </tr>
+          <tr>
+            <td>Fusce eu lobortis leo, id dapibus</td>
+            <td>10</td>
+            <td>10</td>
+          </tr>
+          <tr>
+            <td>Fusce eu lobortis leo, id dapibus</td>
+            <td>10</td>
+            <td>10</td>
+          </tr>
+          <tr>
+            <td>felis. Donec nunc ligula, tempor</td>
+            <td>10</td>
+            <td>10</td>
+          </tr>
+          <tr>
+            <td>quis sem nec, vulputate fringilla</td>
+            <td>10</td>
+            <td>10</td>
+          </tr>
+          <tr>
+            <td>quis sem nec, vulputate fringilly</td>
+            <td>10</td>
+            <td>10</td>
+          </tr>
+          <tr>
+            <td>quis sem nec, vulputate fringille</td>
+            <td>10</td>
+            <td>10</td>
+          </tr>
+          <tr>
+            <td>quis sem nec, vulputate fringillu</td>
+            <td>10</td>
+            <td>10</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script
+  src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js'
+  crossorigin='anonymous'
+></script>
+<script src='/assets/demo/chart-area-demo.js'></script>
+<script
+  src='https://code.jquery.com/jquery-3.7.0.js'
+  crossorigin='anonymous'
+></script>
+<script
+  src='https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js'
+  crossorigin='anonymous'
+></script>
+<script src='/js/datatables-simple-demo.js'></script>
