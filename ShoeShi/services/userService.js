@@ -4,15 +4,16 @@ const Cart = require('../models/cart')
 const userService = {
   getAllUsers() {
     const users = User.find({ admin: false })
-    console.log(users)
     return users
   },
 
   addUser(user) {
     const newUser = new User(user)
     const savedUser = newUser.save()
-    const cart = new Cart({ customer: newUser._id })
-    const savedCart = cart.save()
+    if(newUser.admin == false){
+      var cart = new Cart({ customer: newUser._id })
+      var savedCart = cart.save()
+    }
     return savedUser, savedCart
   },
 
