@@ -1,0 +1,30 @@
+const User = require('../models/customer')
+const Cart = require('../models/cart')
+
+const userService = {
+  getAllUsers() {
+    const users = User.find({ admin: false })
+    console.log(users)
+    return users
+  },
+
+  addUser(user) {
+    const newUser = new User(user)
+    const savedUser = newUser.save()
+    const cart = new Cart({ customer: newUser._id })
+    const savedCart = cart.save()
+    return savedUser, savedCart
+  },
+
+  updateUser(id, body) {
+    const user = User.findByIdAndUpdate(id, body)
+    return user
+  },
+
+  deleteUser(id) {
+    const user = User.findByIdAndDelete(id)
+    return user
+  },
+}
+
+module.exports = userService
