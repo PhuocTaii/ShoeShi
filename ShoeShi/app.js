@@ -16,6 +16,8 @@ const productWebRouter = require('./routes/websiteRoutes/productRouter')
 const cartWebRouter = require('./routes/websiteRoutes/cartRouter')
 const userWebRouter = require('./routes/websiteRoutes/userRouter')
 const categoryWebRouter = require('./routes/websiteRoutes/categoryRouter')
+const profileWebRouter = require('./routes/websiteRoutes/profileRouter')
+
 
 // // API routes
 const userApiRouter = require('./routes/apiRoutes/userRouter')
@@ -59,6 +61,7 @@ app.use(
   cartWebRouter,
   userWebRouter,
   categoryWebRouter,
+  profileWebRouter,
   userApiRouter,
   productApiRouter,
   cartApiRouter,
