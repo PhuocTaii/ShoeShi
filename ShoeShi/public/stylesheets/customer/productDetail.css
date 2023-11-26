@@ -1,0 +1,494 @@
+.container-fluid{
+    display: flex;
+    flex-direction: column ;
+    align-items: center ;
+    margin-top: 48px;
+    padding: 0;
+}
+
+.detail-container{
+    padding: 0px 36px;
+    align-items: flex-start;
+    align-self: stretch;
+}
+
+
+.img-detail{
+    width: 100%;
+}
+
+.product-img{
+    align-items: flex-start;
+    width: 100%;
+    
+}
+
+.product-image{
+    object-fit: cover;
+    width: 100%;
+}
+
+.carousel-control-prev-icon{
+    background-color: black ;
+}
+
+.carousel-control-next-icon{
+    background-color: black ;
+}
+
+.product-detail{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    align-self: stretch;
+    padding-left: 48px;
+}
+
+.product-detail p{
+    margin: 0;
+}
+
+.name-price{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    align-self: stretch;
+}
+
+.product-name{
+    color: #000;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.product-price{
+    color: #000;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.attribute-name{
+    color: #000;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.color{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    align-self: stretch;
+}
+
+.color-options{
+    display: flex;
+    align-items: flex-start;
+    align-content: flex-start;
+    gap: 10px;
+    align-self: stretch;
+    flex-wrap: wrap;
+}
+
+.option{
+    display: flex;
+    width: 34px;
+    height: 34px;
+    align-items: flex-start;
+    gap: 10px;
+    border-radius: 100px;
+    display: none;
+}
+
+label{
+    display: flex;
+    width: 34px;
+    height: 34px;
+    align-items: flex-start;
+    gap: 10px;
+    border-radius: 100px;
+    justify-content: center;
+    align-items: center;
+}
+
+.color-options .ri-check-line{
+    font-size: x-large;
+    color: white;
+    display: none;
+}
+
+.color-options input[type="radio"]:checked +label .ri-check-line{
+    display: inline-block;
+}
+
+.option1{
+    background: #000;
+}
+
+.option2{
+    background-color: #D10000;
+}
+
+.option3{
+    background-color: #00C868;
+}
+
+.size{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    align-self: stretch;
+}
+
+.size-options{
+    display: flex;
+    align-items: flex-start;
+    align-content: flex-start;
+    gap: 10px;
+    align-self: stretch;
+    flex-wrap: wrap;
+}
+
+.size-options{
+    display: flex;
+    align-items: flex-start;
+    align-content: flex-start;
+    gap: 10px;
+    align-self: stretch;
+    flex-wrap: wrap;
+}
+
+.s-option{
+    display: flex;
+    width: 68px;
+    height: 34px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 5px;
+    border: 1px solid #111;
+    background-color: white;
+    color: #000;
+    font-size: 16px;
+    font-weight: 600;;
+}
+
+.size-options input[type="radio"]:checked + label.s-option {
+    background-color: black;
+    color: white
+}
+
+.add-button{
+    display: flex;
+    padding: 20px 40px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    align-self: stretch;
+    border-radius: 5px;
+    background: #111;
+}
+
+.add-action{
+    color: #FFF;
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.review-container{
+    padding: 0px 36px;
+    align-items: flex-start;
+    align-self: stretch;
+    padding-top: 48px;
+}
+
+.view-make{
+    width: 100%;
+}
+
+.review-view{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 30px;
+    flex: 1 0 0;
+    align-self: stretch;
+}
+
+.review-header{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 30px;
+    align-self: stretch;
+}
+
+.r-header{
+    color: #000;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+.review-amount{
+    color: #707072;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 6px;
+}
+
+.review {
+    display: none;
+}
+
+.show {
+    display: block !important;
+}
+
+.reviewpage{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.r-review{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.r-topic{
+    color: #000;
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.r-rating{
+    display: flex;
+    width: 86px;
+    height: 13px;
+    align-items: center;
+    gap: 4px;
+}
+
+.r-content{
+    color: #000;
+    font-size: 16px;
+    font-weight: 400;
+    margin: 0;
+}
+
+.r-reviewer{
+    color: #707072;
+    font-size: 12px;
+    font-weight: 400;
+    margin: 0;
+}
+
+.review-form{
+    display: flex;
+    width: 100%;
+    padding: 20px;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    border-radius: 5px;
+    background: #F5F5F5;
+}
+
+.form-header{
+    color: #000;
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.f-rating{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    align-self: stretch;
+}
+
+.form-tittle{
+    color: #000;
+    font-size: 16px;
+    font-weight: 400;
+    margin: 0;
+}
+
+.rating{
+    display: flex;
+    width: 100%;
+    height: 20px;
+    align-items: center;
+    gap: 4px;
+}
+
+
+.rating-star {
+    display: inline-block;
+    font-size: 20px;
+    position: relative;
+    cursor: pointer;
+    color: #ccc;
+}
+
+
+.rating-star span {
+    color: #ccc;
+    position: absolute;
+    transition: color 0.5s;
+}
+
+.rating-star span:hover,
+.rating-star span:hover ~ span,
+.rating-star:hover span {
+    color: #000;
+} 
+
+.rating-star.clicked span {
+    color: #000;
+}
+
+.f-review-tittle{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    align-self: stretch;
+}
+
+.f-review-tittle .input-text{
+    height: 40px;
+    align-self: stretch;
+    border-radius: 5px;
+    border: 1px solid #000;
+    width: 100%;
+}
+
+.f-review-content{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    align-self: stretch;
+}
+
+.f-review-content .input-text{
+    height: 80px;
+    align-self: stretch;
+    vertical-align: text-top;
+    border-radius: 5px;
+    border: 1px solid #000;
+    width: 100%;
+    resize: none;
+}
+
+.f-review-button{
+    display: flex;
+    padding: 20px 40px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    align-self: stretch;
+    border-radius: 5px;
+    background: #111;
+    color: #F5F5F5;
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.other-products-container{
+    display: flex;
+    padding: 48px 36px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 30px;
+    align-self: stretch;
+}
+
+.others-tittle{
+    color: #000;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+}
+
+.product-container{
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    align-self: stretch;
+    width: 100%;
+    gap: 10px
+}
+
+.product{
+    display: flex;
+    width: 100%;
+    height: fit-content;
+    flex-direction: column;
+    align-items: flex-start;
+    border-radius: 10px;
+    border: 1px solid #000;
+    background: #FFF;
+    overflow: hidden;
+}
+
+.product-img {
+    width: 100%;
+}
+
+.product-details {
+    display: flex;
+    height: fit-content;
+    padding: 15px 10px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    flex-shrink: 0;
+    align-self: stretch;
+}
+
+p {
+    margin: 0 !important;
+}
+
+.product-details .product-name {
+    color: #000;
+    font-size: 16px;
+    font-weight: 400;
+}
+  
+.product-details .product-branch {
+    color: #707072;
+    font-size: 14px;
+    font-weight: 500;
+}
+  
+.product-details .product-price {
+    color: #000;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.other-products-container .carousel-indicators {
+    bottom: -50px !important;
+}
+
+.carousel-indicators button{
+    background-color: black !important;
+}
