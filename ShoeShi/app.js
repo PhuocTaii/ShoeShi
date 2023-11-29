@@ -16,13 +16,16 @@ const productWebRouter = require('./routes/websiteRoutes/productRouter')
 const cartWebRouter = require('./routes/websiteRoutes/cartRouter')
 const userWebRouter = require('./routes/websiteRoutes/userRouter')
 const categoryWebRouter = require('./routes/websiteRoutes/categoryRouter')
+const profileWebRouter = require('./routes/websiteRoutes/profileRouter')
+const orderWebRouter = require('./routes/websiteRoutes/orderRouter')
 
 // // API routes
 const userApiRouter = require('./routes/apiRoutes/userRouter')
 const productApiRouter = require('./routes/apiRoutes/productRouter')
 const cartApiRouter = require('./routes/apiRoutes/cartRouter')
-const colorApiRouter = require('./routes/apiRoutes/colorRouter')
-const manufacturerApiRouter = require('./routes/apiRoutes/manufacturerRouter')
+const categoryApiRouter = require('./routes/apiRoutes/categoryRouter')
+const sizeApiRouter = require('./routes/apiRoutes/sizeRouter')
+const orderApiRouter = require('./routes/apiRoutes/orderRouter')
 
 const app = express()
 
@@ -59,11 +62,14 @@ app.use(
   cartWebRouter,
   userWebRouter,
   categoryWebRouter,
+  profileWebRouter,
+  orderWebRouter,
   userApiRouter,
   productApiRouter,
   cartApiRouter,
-  colorApiRouter,
-  manufacturerApiRouter
+  categoryApiRouter,
+  sizeApiRouter,
+  orderApiRouter,
 )
 
 // catch 404 and forward to error handler
