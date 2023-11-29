@@ -47,6 +47,7 @@ const orderSchema = new mongoose.Schema({
     type: String,
     default: 'Pending',
   },
+
 })
 
 const Order = mongoose.model('Order', orderSchema)
