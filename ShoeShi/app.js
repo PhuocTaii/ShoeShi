@@ -25,6 +25,7 @@ const productApiRouter = require('./routes/apiRoutes/productRouter')
 const cartApiRouter = require('./routes/apiRoutes/cartRouter')
 const categoryApiRouter = require('./routes/apiRoutes/categoryRouter')
 const sizeApiRouter = require('./routes/apiRoutes/sizeRouter')
+const orderApiRouter = require('./routes/apiRoutes/orderRouter')
 
 const app = express()
 
@@ -67,7 +68,8 @@ app.use(
   productApiRouter,
   cartApiRouter,
   categoryApiRouter,
-  sizeApiRouter
+  sizeApiRouter,
+  orderApiRouter,
 )
 
 // catch 404 and forward to error handler
