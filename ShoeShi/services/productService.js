@@ -6,17 +6,32 @@ const productService = {
     return products
   },
 
-  addProduct(product, color, size, category) {
+  addProduct(product, colorList, sizeList, categoryList, manufacturer) {
+    cateList = []
+    sList = []
+    cList = []
+    for(let i = 0; i < categoryList.length; i++){
+        cateList.push(categoryList[i]._id)
+    }
+    for(let i = 0; i < sizeList.length; i++){
+      sList.push(sizeList[i]._id)
+    }
+    for(let i = 0; i < colorList.length; i++){
+      cList.push(colorList[i]._id)
+    }
     const newProduct = new Product({
-      category: category._id,
+      category: cateList,
       creationDate: product.creationDate,
-      manufacturer: product.manufacturer,
+      manufacturer: manufacturer,
       name: product.name,
       price: product.price,
       status: product.status,
       totalPurchase: product.totalPurchase,
-      
-      
+      review: product.review,
+      color: cList,
+      size: sList,
+      totalPurchase: product.totalPurchase,
+      productImage: product.productImage,
     })
     const savedProduct = newProduct.save()
     return savedProduct

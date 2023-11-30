@@ -16,8 +16,9 @@ const colorService = {
         const color = Color.findByIdAndDelete(id)
         return color
     },
+    
     findColorByName(name){
-        const color = Color.findOne({name: name})
+        const color = Color.findOne({color: name})
         return color
     }
 }

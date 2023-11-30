@@ -10,10 +10,6 @@ const productSchema = new mongoose.Schema({
     type: String,
   },
 
-  category: {
-    type: String,
-  },
-
   manufacturer: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Manufacturer',
@@ -49,24 +45,20 @@ const productSchema = new mongoose.Schema({
     },
   ],
 
-  size:{
+  size:[{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Size',
-  },
+  }],
 
-  color:{
+  color:[{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Color',
-  },
+  }],
 
-  category:{
+  category:[{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Category',
-  },
-
-  typeOfcustomer: {
-    type: String,
-  },
+  }],
 
   creationDate: {
     type: Date,
@@ -82,9 +74,9 @@ const productSchema = new mongoose.Schema({
     type: String,
   },
 
-  productImage: {
+  productImage: [{
     type: String,
-  },
+  }],
 })
 
 const Product = mongoose.model('Product', productSchema)

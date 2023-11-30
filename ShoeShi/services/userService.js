@@ -4,6 +4,7 @@ const Cart = require('../models/cart')
 const userService = {
   getAllUsers() {
     const users = User.find({ admin: false })
+    console.log(users)
     return users
   },
 

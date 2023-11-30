@@ -21,11 +21,21 @@ const productController = {
   //ADD product 
   addProduct: async (req, res) => {
     try {
-      const color = await colorService.findColorByName(req.body.color)
-      const size = await sizeService.getSizeByName(req.body.size)
-      const category = await categoryService.getCategoryByName(req.body.category)
-      const manufacturer = await manufacturerService.getManufacturerByName(req.body.manufacturer)
-      const savedProduct = await productService.addProduct(req.body, color, size, category, manufacturer)
+      var colorArr = [], sizeArr = [], categoryArr = []
+      for (color of req.body.color) {
+        const colorObj = await colorService.findColorByName(color)
+        colorArr.push(colorObj)
+      }
+      for(size of req.body.size){
+        const sizeObj = await sizeService.getSizeByNumber(size)
+        sizeArr.push(sizeObj)
+      }
+      for(category of req.body.category){
+        const categoryObj = await categoryService.getCategoryByName(category)
+        categoryArr.push(categoryObj)
+      }
+      const manufacturer = await manufacturerService.findManufacturerByName(req.body.manufacturer)
+      const savedProduct = await productService.addProduct(req.body, colorArr, sizeArr, categoryArr, manufacturer)
       res.status(200).json(savedProduct)
     } catch (err) {
       res.status(500).json(err)

@@ -25,8 +25,9 @@ const sizeService = {
     const foundSize = Size.findByIdAndDelete(id)
     return foundSize
   },
-  getSizeByName(name){
-    const foundSize = Size.findOne({name: name})
+  
+  getSizeByNumber(size){
+    const foundSize = Size.findOne({size: size})
     return foundSize
   }
 }
