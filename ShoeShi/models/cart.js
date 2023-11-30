@@ -1,6 +1,8 @@
 const mongoose = require('mongoose')
 const Customer = require('../models/customer')
 const Product = require('../models/product')
+const Color = require('../models/color')
+const Size = require('../models/size')
 
 const cartSchema = new mongoose.Schema({
   customer: {
@@ -19,11 +21,13 @@ const cartSchema = new mongoose.Schema({
       },
 
       size: {
-        type: Number,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Size',
       },
 
       color: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Color',
       },
     },
   ],

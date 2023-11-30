@@ -1,4 +1,4 @@
-const Order = require('../models/Order')
+const Order = require('../models/order')
 
 const orderService = {
   // Create a new order
@@ -19,7 +19,7 @@ const orderService = {
 
   // Update an order
   updateOrder: async (id, data) => {
-    return await Order.findByIdAndUpdate(id, { $set: data }, { new: true })
+    return await Order.findByIdAndUpdate(id, { $set: data })
   },
 
   // Delete an order

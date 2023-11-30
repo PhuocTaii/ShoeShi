@@ -4,16 +4,10 @@ const Product = require('../models/product')
 const Cart = require('../models/cart')
 
 const orderSchema = new mongoose.Schema({
-  customer: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Customer',
-  },
-
   ProductList: [
     {
       product: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Product',
+        type: String
       },
 
       quantity: {
@@ -29,6 +23,10 @@ const orderSchema = new mongoose.Schema({
       },
     },
   ],
+
+  buyer:{
+    type: String,
+  },
 
   address: {
     type: String,

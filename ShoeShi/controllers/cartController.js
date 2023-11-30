@@ -2,6 +2,8 @@ const cartService = require('../services/cartService')
 const User = require('../models/customer')
 const Product = require('../models/product')
 const Cart = require('../models/cart')
+const colorSerice = require('../services/colorService')
+const sizeService = require('../services/sizeService') 
 
 const cartController = {
   //GET all carts
@@ -17,24 +19,13 @@ const cartController = {
     }
   },
 
-  //GET one cart
-  getOneCart: async (req, res) => {
-    try {
-      const carts = await cartService.getOneCart(req.params.customerId)
-      if (!carts) {
-        return res.status(500).json(err)
-      }
-      res.status(200).json(carts)
-    } catch (err) {
-      res.status(500).json(err)
-    }
-  },
-
   //ADD product to cart
   addProductToCart: async (req, res) => {
     try {
+      const color = await colorSerice.findColorByName(req.body.color)
+      const size = await sizeService.getSizeByNumber(req.body.size)
       const cart = await cartService.getOneCart(req.params.customerId)
-      const savedCart = cartService.addProductToCart(cart, req.body)
+      const savedCart = cartService.addProductToCart(cart, req.body, color, size)
       res.status(200).json(savedCart)
     } catch (err) {
       console.log(err)

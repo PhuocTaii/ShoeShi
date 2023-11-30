@@ -1,10 +1,12 @@
 const orderService = require('../services/orderService')
+const cartService = require('../services/cartService')
 
 const orderController = {
   // POST a new order
   createOrder: async (req, res) => {
     try {
-      const newOrder = await orderService.createOrder(req.body)
+      const cart = await cartService.findCartById(req.params.cartID)
+      const newOrder = await orderService.createOrder(req.body, cart)
       res.status(200).json(newOrder)
     } catch (err) {
       res.status(500).json(err)

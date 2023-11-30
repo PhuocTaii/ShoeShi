@@ -26,7 +26,8 @@ const cartApiRouter = require('./routes/apiRoutes/cartRouter')
 const categoryApiRouter = require('./routes/apiRoutes/categoryRouter')
 const sizeApiRouter = require('./routes/apiRoutes/sizeRouter')
 const orderApiRouter = require('./routes/apiRoutes/orderRouter')
-
+const manufacturerApiRouter = require('./routes/apiRoutes/manufacturerRouter')
+const colorApiRouter = require('./routes/apiRoutes/colorRouter')
 const app = express()
 
 dotenv.config()
@@ -70,6 +71,8 @@ app.use(
   categoryApiRouter,
   sizeApiRouter,
   orderApiRouter,
+  manufacturerApiRouter,
+  colorApiRouter
 )
 
 // catch 404 and forward to error handler
