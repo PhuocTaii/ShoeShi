@@ -1,4 +1,8 @@
 const productService = require('../services/productService')
+const colorService = require('../services/colorService')
+const sizeService = require('../services/sizeService')
+const categoryService = require('../services/categoryService')
+const manufacturerService = require('../services/manufacturerService')
 
 const productController = {
   //GET all products
@@ -14,10 +18,14 @@ const productController = {
     }
   },
 
-  //ADD product
+  //ADD product 
   addProduct: async (req, res) => {
     try {
-      const savedProduct = await productService.addProduct(req.body)
+      const color = await colorService.findColorByName(req.body.color)
+      const size = await sizeService.getSizeByName(req.body.size)
+      const category = await categoryService.getCategoryByName(req.body.category)
+      const manufacturer = await manufacturerService.getManufacturerByName(req.body.manufacturer)
+      const savedProduct = await productService.addProduct(req.body, color, size, category, manufacturer)
       res.status(200).json(savedProduct)
     } catch (err) {
       res.status(500).json(err)

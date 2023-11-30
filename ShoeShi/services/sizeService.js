@@ -25,6 +25,10 @@ const sizeService = {
     const foundSize = Size.findByIdAndDelete(id)
     return foundSize
   },
+  getSizeByName(name){
+    const foundSize = Size.findOne({name: name})
+    return foundSize
+  }
 }
 
 module.exports = sizeService

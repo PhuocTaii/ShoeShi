@@ -16,6 +16,10 @@ const colorService = {
         const color = Color.findByIdAndDelete(id)
         return color
     },
+    findColorByName(name){
+        const color = Color.findOne({name: name})
+        return color
+    }
 }
 
 module.exports = colorService

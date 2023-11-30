@@ -7,7 +7,10 @@ const userController = {
   //GET all customers
   getAllUsers: async (req, res) => {
     try {
+      console.log(123)
       const users = await userService.getAllUsers()
+      console.log(users)
+
       if (!users) {
         return res.status(500).json(err)
       }

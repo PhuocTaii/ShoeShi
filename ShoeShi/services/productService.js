@@ -6,8 +6,18 @@ const productService = {
     return products
   },
 
-  addProduct(product) {
-    const newProduct = new Product(product)
+  addProduct(product, color, size, category) {
+    const newProduct = new Product({
+      category: category._id,
+      creationDate: product.creationDate,
+      manufacturer: product.manufacturer,
+      name: product.name,
+      price: product.price,
+      status: product.status,
+      totalPurchase: product.totalPurchase,
+      
+      
+    })
     const savedProduct = newProduct.save()
     return savedProduct
   },
