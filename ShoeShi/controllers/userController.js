@@ -1,11 +1,16 @@
 const userService = require('../services/userService')
+const cartService = require('../services/cartService')
 const User = require('../models/customer')
+
 
 const userController = {
   //GET all customers
   getAllUsers: async (req, res) => {
     try {
+      console.log(123)
       const users = await userService.getAllUsers()
+      console.log(users)
+
       if (!users) {
         return res.status(500).json(err)
       }
@@ -43,11 +48,17 @@ const userController = {
   deleteUser: async (req, res) => {
     try {
       const user = await userService.deleteUser(req.params.id)
-      if (!user) {
-        res.status(500).json(err)
-      }
+      const cart = await cartService.deleteCart(req.params.id)
+      // console.log(req.params.id)
+      // if (!user) {
+      //   res.status(500).json(err)
+      // }
+      // if(!cart){
+      //   res.status(500).json(err)
+      // }
       res.status(200).json('The user has been deleted')
     } catch (err) {
+      console.log(err)
       res.status(500).json(err)
     }
   },

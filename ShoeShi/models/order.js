@@ -4,16 +4,10 @@ const Product = require('../models/product')
 const Cart = require('../models/cart')
 
 const orderSchema = new mongoose.Schema({
-  customer: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Customer',
-  },
-
-  ProductList: [
+  productList: [
     {
       product: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Product',
+        type: String
       },
 
       quantity: {
@@ -30,12 +24,20 @@ const orderSchema = new mongoose.Schema({
     },
   ],
 
+  buyer:{
+    type: String,
+  },
+
   address: {
     type: String,
   },
 
   phone: {
     type: String,
+  },
+
+  totalPrice:{
+    type: Number,
   },
 
   orderTime: {
@@ -47,6 +49,7 @@ const orderSchema = new mongoose.Schema({
     type: String,
     default: 'Pending',
   },
+
 })
 
 const Order = mongoose.model('Order', orderSchema)

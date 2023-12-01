@@ -10,6 +10,14 @@ router.get('/products', function (req, res, next) {
   })
 })
 
+/* GET product detail page. */
+router.get('/productDetail', function (req, res, next) {
+  res.render('customer/productDetail', {
+    layout: 'customer/layout/main',
+    extraStyles: 'productDetail.css',
+  })
+})
+
 /* GET products page. */
 router.get('/admin/products', function (req, res, next) {
   res.render('admin/products', {

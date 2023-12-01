@@ -1,17 +1,18 @@
 const mongoose = require('mongoose')
 const Customer = require('./customer')
+const Size = require('./size')
+const Color = require('./color')
+const Category = require('./category')
+const Manufacturer = require('./manufacturer')
 
 const productSchema = new mongoose.Schema({
   name: {
     type: String,
   },
 
-  category: {
-    type: String,
-  },
-
   manufacturer: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Manufacturer',
   },
 
   price: {
@@ -44,23 +45,20 @@ const productSchema = new mongoose.Schema({
     },
   ],
 
-  type: [
-    {
-      size: {
-        type: Number,
-      },
-      quantity: {
-        type: Number,
-      },
-      color: {
-        type: String,
-      },
-    },
-  ],
+  size:[{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Size',
+  }],
 
-  typeOfcustomer: {
-    type: String,
-  },
+  color:[{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Color',
+  }],
+
+  category:[{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Category',
+  }],
 
   creationDate: {
     type: Date,
@@ -76,9 +74,9 @@ const productSchema = new mongoose.Schema({
     type: String,
   },
 
-  productImage: {
+  productImage: [{
     type: String,
-  },
+  }],
 })
 
 const Product = mongoose.model('Product', productSchema)
