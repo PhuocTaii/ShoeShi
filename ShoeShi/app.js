@@ -72,7 +72,7 @@ app.use(
   sizeApiRouter,
   orderApiRouter,
   manufacturerApiRouter,
-  colorApiRouter
+  colorApiRouter,
 )
 
 // catch 404 and forward to error handler

@@ -20,6 +20,11 @@ const colorService = {
     findColorByName(name){
         const color = Color.findOne({color: name})
         return color
+    },
+
+    findColorById(id){
+        const color = Color.findById(id)
+        return color
     }
 }
 

@@ -4,7 +4,7 @@ const Product = require('../models/product')
 const Cart = require('../models/cart')
 
 const orderSchema = new mongoose.Schema({
-  ProductList: [
+  productList: [
     {
       product: {
         type: String
@@ -34,6 +34,10 @@ const orderSchema = new mongoose.Schema({
 
   phone: {
     type: String,
+  },
+
+  totalPrice:{
+    type: Number,
   },
 
   orderTime: {

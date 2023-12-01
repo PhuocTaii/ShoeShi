@@ -27,6 +27,12 @@ const userService = {
     const user = User.findByIdAndDelete(id)
     return user
   },
+
+  getUserById(id){
+    const user = User.findById(id)
+    return user
+  }
+
 }
 
 module.exports = userService

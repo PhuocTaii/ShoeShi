@@ -1,6 +1,5 @@
 const Cart = require('../models/cart')
 
-
 const cartService = {
   getAllCarts() {
     const carts = Cart.find()
@@ -16,8 +15,8 @@ const cartService = {
     const newProduct = new Object({
       product: product.product,
       quantity: product.quantity,
-      size: color._id,
-      color: size._id,
+      size: size._id,
+      color: color._id,
     })
     cart.productList.push(newProduct)
     cart.save()
@@ -54,8 +53,12 @@ const cartService = {
   findCartById(cartId){
     const cart = Cart.findById(cartId)
     return cart
-  }
+  },
 
+  getProductListById(id){
+    const cart = cartService.findCartById(id)
+    return cart.productList
+  }
 }
 
 module.exports = cartService

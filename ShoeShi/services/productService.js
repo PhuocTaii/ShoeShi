@@ -46,6 +46,12 @@ const productService = {
     const Product = Product.findByIdAndDelete(id)
     return Product
   },
+
+  getProductById(id){
+    const foundProduct = Product.findById(id)
+    return foundProduct
+  },
+
 }
 
 module.exports = productService

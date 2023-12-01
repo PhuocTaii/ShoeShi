@@ -29,6 +29,11 @@ const sizeService = {
   getSizeByNumber(size){
     const foundSize = Size.findOne({size: size})
     return foundSize
+  },
+
+  getSizeById(id){
+    const foundSize = Size.findById(id)
+    return foundSize
   }
 }
 
