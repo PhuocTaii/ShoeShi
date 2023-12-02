@@ -2,6 +2,7 @@ const authService = require('../services/authService')
 const passport = require('../config/passport.config')
 
 const authController = {
+  //Server side
   //Signup
   signup: async (req, res, next) => {
     try {
@@ -43,6 +44,25 @@ const authController = {
       res.json({ redirect: '/' })
     })
   },
+
+  //Client side
+  getAdminLoginPage: (req, res) => {
+    res.render('admin/auth', { layout: 'admin/layout/auth' })
+  },
+
+  getUserSignUpPage: (req, res) => {
+    res.render('customer/signup', {
+      layout: 'customer/layout/auth',
+      extraStyles: 'signup.css',
+    })
+  },
+
+  getUserLogInPage: (req, res) => {
+    res.render('customer/login', {
+      layout: 'customer/layout/auth',
+      extraStyles: 'login.css',
+    })
+  }
 }
 
 module.exports = authController

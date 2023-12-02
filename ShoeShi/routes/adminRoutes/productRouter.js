@@ -5,12 +5,15 @@ const router = require('express').Router()
 router.get('/product', productController.getAllProducts)
 
 //ADD one product
-router.post('/admin/product', productController.addProduct)
+router.post('/product', productController.addProduct)
 
 //MODIFY product
-router.put('/admin/product/:id', productController.updateProduct)
+router.put('/product/:id', productController.updateProduct)
 
 //DELETE product
-router.delete('/admin/product/:id', productController.deleteProduct)
+router.delete('/product/:id', productController.deleteProduct)
+
+//Client side
+router.get('/products', productController.getAdminProductPage)
 
 module.exports = router

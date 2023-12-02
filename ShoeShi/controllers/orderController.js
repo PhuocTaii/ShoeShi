@@ -92,6 +92,14 @@ const orderController = {
       res.status(500).json(err)
     }
   },
+
+  //Client side
+  getOrderPage: async (req, res) => {
+    res.render('customer/order', {
+      layout: 'customer/layout/main',
+      extraStyles: 'order.css',
+    })
+  }
 }
 
 module.exports = orderController

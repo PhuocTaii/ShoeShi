@@ -80,5 +80,27 @@ const productController = {
       res.status(500).json(err)
     }
   },
+
+  //Client side
+  getProductPage: async (req, res) => {
+    res.render('customer/productList', {
+      layout: 'customer/layout/main',
+      extraStyles: 'productList.css',
+    })
+  },
+
+  getProductDetailPage: async (req, res) => {
+    res.render('customer/productDetail', {
+      layout: 'customer/layout/main',
+      extraStyles: 'productDetail.css',
+    })
+  },
+
+  getAdminProductPage: async (req, res) => {
+    res.render('admin/products', {
+      layout: 'admin/layout/main',
+      extraStyles: 'products.css',
+    })
+  },
 }
 module.exports = productController

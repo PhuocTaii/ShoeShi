@@ -1,5 +1,6 @@
 const userService = require('../services/userService')
 const cartService = require('../services/cartService')
+const imageService = require('../services/imageService')
 const User = require('../models/customer')
 
 const userController = {
@@ -20,12 +21,29 @@ const userController = {
   },
 
   //ADD customers
-  addUser: async (req, res) => {
-    try {
-      const savedUser = await userService.addUser(req.body)
-      res.status(200).json(savedUser)
-    } catch (err) {
-      console.log(err)
+  // addUser: async (req, res) => {
+  //   try {
+  //     let imageUrl = ''
+  //     if(req.body.customerImage){
+  //       imageUrl = await imageService.uploadImageToCloudinary(req.body.customerImage)
+  //     }
+  //     console.log(imageUrl) 
+  //     const savedUser = await userService.addUser(req.body, imageUrl)
+  //     res.status(200).json(savedUser)
+  //   } catch (err) {
+  //     console.log(err)
+  //     res.status(500).json(err)
+  //   }
+  // },
+
+  //UPDATE avatar
+  updateAvatar: async (req, res) => {
+    try{
+      let imageUrl = ''
+      imageUrl = await imageService.uploadImageToCloudinary(req.body.customerImage)
+      const user = await userService.updateAvatarUser(req.params.id, imageUrl)
+      res.status(200).json(user)
+    } catch(err){
       res.status(500).json(err)
     }
   },
@@ -48,18 +66,25 @@ const userController = {
     try {
       const user = await userService.deleteUser(req.params.id)
       const cart = await cartService.deleteCart(req.params.id)
-      // console.log(req.params.id)
-      // if (!user) {
-      //   res.status(500).json(err)
-      // }
-      // if(!cart){
-      //   res.status(500).json(err)
-      // }
       res.status(200).json('The user has been deleted')
     } catch (err) {
       console.log(err)
       res.status(500).json(err)
     }
   },
+
+  getProfilePage: async (req, res) => {
+    res.render('customer/profile', {
+      layout: 'customer/layout/main',
+      extraStyles: 'profile.css',
+    })
+  },
+
+  getAccountsPage: async (req, res) => {
+    res.render('admin/accounts', {
+      layout: 'admin/layout/main',
+      extraStyles: 'accounts.css',
+    })
+  }
 }
 module.exports = userController

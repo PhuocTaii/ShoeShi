@@ -1,7 +1,7 @@
 const authController = require('../../controllers/authController')
 const router = require('express').Router()
 
-//USER
+// Server side
 //Signup
 router.post('/signup', authController.signup)
 
@@ -11,12 +11,8 @@ router.post('/login', authController.login)
 //Logout
 router.post('/logout', authController.logout)
 
-//ADMIN
-router.post('/admin/signup', authController.signup)
-//Login
-router.post('/admin/login', authController.login)
-
-//Logout
-router.post('/admin/logout', authController.logout)
+//Client side
+//Admin login page
+router.get('/login', authController.getAdminLoginPage)
 
 module.exports = router

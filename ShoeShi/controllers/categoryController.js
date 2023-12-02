@@ -1,6 +1,8 @@
 const categoryService = require('../services/categoryService')
 
 const categoryController = {
+
+  //Server side
   //GET all categories
   getAllCategories: async (req, res) => {
     try {
@@ -62,6 +64,14 @@ const categoryController = {
       res.status(500).json(err)
     }
   },
+
+  //Client side
+  getCategoriesManufacturersPage: async(req, res) => {
+    res.render('admin/categories', {
+      layout: 'admin/layout/main',
+      extraStyles: 'category.css',
+    })
+  }
 }
 
 module.exports = categoryController

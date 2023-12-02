@@ -6,6 +6,8 @@ const colorSerice = require('../services/colorService')
 const sizeService = require('../services/sizeService')
 
 const cartController = {
+
+  //Server side
   //GET all carts
   getAllCarts: async (req, res) => {
     try {
@@ -81,5 +83,13 @@ const cartController = {
       res.status(500).json(err)
     }
   },
+
+  //Client side
+  getCartPage: async(req, res) => {
+    res.render('customer/cart', {
+      layout: 'customer/layout/main',
+      extraStyles: 'cart.css',
+    })
+  }
 }
 module.exports = cartController

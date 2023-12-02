@@ -2,14 +2,14 @@ const manufacturerController = require('../../controllers/manufacturerController
 const router = require('express').Router()
 
 //GET all manufacturers
-router.get('/admin/getmanufacturer', manufacturerController.getAllManufacturers)
+router.get('/getmanufacturer', manufacturerController.getAllManufacturers)
 
 //ADD one manufacturer
-router.post('/admin/addmanufacturer', manufacturerController.addManufacturer)
+router.post('/addmanufacturer', manufacturerController.addManufacturer)
 
 //DELETE manufacturer
 router.delete(
-  '/admin/deletemanufacturer/:id',
+  '/deletemanufacturer/:id',
   manufacturerController.deleteManufacturer
 )
 
