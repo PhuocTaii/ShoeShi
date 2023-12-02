@@ -8,6 +8,9 @@ router.get('/admin/getmanufacturer', manufacturerController.getAllManufacturers)
 router.post('/admin/addmanufacturer', manufacturerController.addManufacturer)
 
 //DELETE manufacturer
-router.delete('/admin/deletemanufacturer/:id', manufacturerController.deleteManufacturer)
+router.delete(
+  '/admin/deletemanufacturer/:id',
+  manufacturerController.deleteManufacturer
+)
 
 module.exports = router

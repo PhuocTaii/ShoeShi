@@ -15,9 +15,13 @@ const orderController = {
       var sizeList = []
       var priceList = []
       var TotalPrice = 0
-      for(let i = 0; i < cart.productList.length; i++){
-        const product = await productService.getProductById(cart.productList[i].product)
-        const color = await colorService.findColorById(cart.productList[i].color)
+      for (let i = 0; i < cart.productList.length; i++) {
+        const product = await productService.getProductById(
+          cart.productList[i].product
+        )
+        const color = await colorService.findColorById(
+          cart.productList[i].color
+        )
         const size = await sizeService.getSizeById(cart.productList[i].size)
         nameList.push(product.name)
         priceList.push(product.price)
@@ -26,7 +30,16 @@ const orderController = {
         TotalPrice += product.price * cart.productList[i].quantity
       }
       const user = await userService.getUserById(cart.customer)
-      const newOrder = await orderService.createOrder(req.body, cart, user, nameList, colorList, sizeList, priceList, TotalPrice)
+      const newOrder = await orderService.createOrder(
+        req.body,
+        cart,
+        user,
+        nameList,
+        colorList,
+        sizeList,
+        priceList,
+        TotalPrice
+      )
       const clearCart = await cartService.clearProductList(cart.customer)
       res.status(200).json(newOrder)
     } catch (err) {

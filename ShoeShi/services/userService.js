@@ -11,7 +11,7 @@ const userService = {
   addUser(user) {
     const newUser = new User(user)
     const savedUser = newUser.save()
-    if(newUser.admin == false){
+    if (newUser.admin == false) {
       var cart = new Cart({ customer: newUser._id })
       var savedCart = cart.save()
     }
@@ -28,11 +28,10 @@ const userService = {
     return user
   },
 
-  getUserById(id){
+  getUserById(id) {
     const user = User.findById(id)
     return user
-  }
-
+  },
 }
 
 module.exports = userService

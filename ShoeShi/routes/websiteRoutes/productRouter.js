@@ -1,4 +1,5 @@
 const express = require('express')
+const { isAdmin } = require('../../middleware/authenticationMiddleware')
 const router = express.Router()
 
 /* CUSTOMER */
@@ -19,7 +20,7 @@ router.get('/productDetail', function (req, res, next) {
 })
 
 /* GET products page. */
-router.get('/admin/products', function (req, res, next) {
+router.get('/admin/products', isAdmin, function (req, res, next) {
   res.render('admin/products', {
     layout: 'admin/layout/main',
     extraStyles: 'products.css',

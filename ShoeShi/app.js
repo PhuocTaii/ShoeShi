@@ -6,6 +6,8 @@ const cookieParser = require('cookie-parser')
 const logger = require('morgan')
 const mongoose = require('mongoose')
 const dotenv = require('dotenv')
+const passport = require('passport')
+const session = require('express-session')
 // var bodyParser = require('body-parser');
 // const morgan = require('morgan');
 
@@ -28,7 +30,10 @@ const sizeApiRouter = require('./routes/apiRoutes/sizeRouter')
 const orderApiRouter = require('./routes/apiRoutes/orderRouter')
 const manufacturerApiRouter = require('./routes/apiRoutes/manufacturerRouter')
 const colorApiRouter = require('./routes/apiRoutes/colorRouter')
+const authApiRouter = require('./routes/apiRoutes/authRouter')
+
 const app = express()
+const store = session.MemoryStore()
 
 dotenv.config()
 
@@ -54,6 +59,20 @@ app.use(logger('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(express.static(path.join(__dirname, 'public')))
+app.use(
+  session({
+    saveUninitialized: false,
+    resave: false,
+    secret: process.env.secret_key,
+    cookie: {
+      maxAge: 1000 * 30,
+    },
+    store,
+  })
+)
+
+app.use(passport.initialize())
+app.use(passport.session())
 
 app.use(
   '/',
@@ -73,6 +92,7 @@ app.use(
   orderApiRouter,
   manufacturerApiRouter,
   colorApiRouter,
+  authApiRouter
 )
 
 // catch 404 and forward to error handler

@@ -3,7 +3,7 @@ const User = require('../models/customer')
 const Product = require('../models/product')
 const Cart = require('../models/cart')
 const colorSerice = require('../services/colorService')
-const sizeService = require('../services/sizeService') 
+const sizeService = require('../services/sizeService')
 
 const cartController = {
   //GET all carts
@@ -25,7 +25,12 @@ const cartController = {
       const color = await colorSerice.findColorByName(req.body.color)
       const size = await sizeService.getSizeByNumber(req.body.size)
       const cart = await cartService.getOneCart(req.params.customerId)
-      const savedCart = cartService.addProductToCart(cart, req.body, color, size)
+      const savedCart = cartService.addProductToCart(
+        cart,
+        req.body,
+        color,
+        size
+      )
       res.status(200).json(savedCart)
     } catch (err) {
       console.log(err)

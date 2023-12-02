@@ -2,7 +2,6 @@ const userService = require('../services/userService')
 const cartService = require('../services/cartService')
 const User = require('../models/customer')
 
-
 const userController = {
   //GET all customers
   getAllUsers: async (req, res) => {

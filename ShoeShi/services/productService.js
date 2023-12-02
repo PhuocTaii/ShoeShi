@@ -10,13 +10,13 @@ const productService = {
     cateList = []
     sList = []
     cList = []
-    for(let i = 0; i < categoryList.length; i++){
-        cateList.push(categoryList[i]._id)
+    for (let i = 0; i < categoryList.length; i++) {
+      cateList.push(categoryList[i]._id)
     }
-    for(let i = 0; i < sizeList.length; i++){
+    for (let i = 0; i < sizeList.length; i++) {
       sList.push(sizeList[i]._id)
     }
-    for(let i = 0; i < colorList.length; i++){
+    for (let i = 0; i < colorList.length; i++) {
       cList.push(colorList[i]._id)
     }
     const newProduct = new Product({
@@ -47,11 +47,10 @@ const productService = {
     return Product
   },
 
-  getProductById(id){
+  getProductById(id) {
     const foundProduct = Product.findById(id)
     return foundProduct
   },
-
 }
 
 module.exports = productService
