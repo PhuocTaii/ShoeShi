@@ -9,44 +9,28 @@ const orderController = {
   // POST a new order
   createOrder: async (req, res) => {
     try {
-      console.log(123)
       const cart = await cartService.findCartById(req.params.cartID)
-      // console.log(cart.productList)
-      // for(let i = 0; i < cart.productList.length; i++){
-      //   const product = await productService.getProductById(cart.productList[i].product)
-      //   const color = await colorService.findColorById(cart.productList[i].color)
-      //   const size = await sizeService.getSizeById(cart.productList[i].size)
-      //   // cart.productList[i].product = product
-      //   // cart.productList[i].color = color
-      //   // cart.productList[i].size = size
-      //   console.log(product.name)
-      //   console.log(color.color)
-      //   console.log(size.size)
-
-      // }
-      // const name = await productService.getNameById(cart.productList[0].product)
-      // const name = await productService.getProductById(cart.productList[0].product)
-      // console.log(name.name)
       var nameList = []
       var colorList = []
       var sizeList = []
+      var priceList = []
       var TotalPrice = 0
       for(let i = 0; i < cart.productList.length; i++){
         const product = await productService.getProductById(cart.productList[i].product)
         const color = await colorService.findColorById(cart.productList[i].color)
         const size = await sizeService.getSizeById(cart.productList[i].size)
         nameList.push(product.name)
+        priceList.push(product.price)
         colorList.push(color.color)
         sizeList.push(size.size)
         TotalPrice += product.price * cart.productList[i].quantity
       }
-
       const user = await userService.getUserById(cart.customer)
-      const newOrder = await orderService.createOrder(req.body, cart, user, nameList, colorList, sizeList, TotalPrice)
+      const newOrder = await orderService.createOrder(req.body, cart, user, nameList, colorList, sizeList, priceList, TotalPrice)
+      const clearCart = await cartService.clearProductList(cart.customer)
       res.status(200).json(newOrder)
     } catch (err) {
       res.status(500).json(err)
-      console.log(err)
     }
   },
 

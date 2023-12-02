@@ -50,6 +50,11 @@ const cartService = {
     return cart
   },
 
+  clearProductList(customerId){
+    const clearCart = Cart.findOneAndUpdate({customer: customerId}, {productList: []})
+    return clearCart;
+  },
+
   findCartById(cartId){
     const cart = Cart.findById(cartId)
     return cart

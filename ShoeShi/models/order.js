@@ -21,6 +21,10 @@ const orderSchema = new mongoose.Schema({
       color: {
         type: String,
       },
+      
+      price:{
+        type: Number,
+      }
     },
   ],
 
