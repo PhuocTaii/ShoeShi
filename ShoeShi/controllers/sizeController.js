@@ -37,10 +37,7 @@ const sizeController = {
   // UPDATE a size by id
   updateSize: async (req, res) => {
     try {
-      const foundSize = await sizeService.updateSize(
-        req.params.id,
-        req.body
-      )
+      const foundSize = await sizeService.updateSize(req.params.id, req.body)
       if (!foundSize) {
         return res.status(404).json('Size not found')
       }

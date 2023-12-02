@@ -18,24 +18,34 @@ const productController = {
     }
   },
 
-  //ADD product 
+  //ADD product
   addProduct: async (req, res) => {
     try {
-      var colorArr = [], sizeArr = [], categoryArr = []
+      var colorArr = [],
+        sizeArr = [],
+        categoryArr = []
       for (color of req.body.color) {
         const colorObj = await colorService.findColorByName(color)
         colorArr.push(colorObj)
       }
-      for(size of req.body.size){
+      for (size of req.body.size) {
         const sizeObj = await sizeService.getSizeByNumber(size)
         sizeArr.push(sizeObj)
       }
-      for(category of req.body.category){
+      for (category of req.body.category) {
         const categoryObj = await categoryService.getCategoryByName(category)
         categoryArr.push(categoryObj)
       }
-      const manufacturer = await manufacturerService.findManufacturerByName(req.body.manufacturer)
-      const savedProduct = await productService.addProduct(req.body, colorArr, sizeArr, categoryArr, manufacturer)
+      const manufacturer = await manufacturerService.findManufacturerByName(
+        req.body.manufacturer
+      )
+      const savedProduct = await productService.addProduct(
+        req.body,
+        colorArr,
+        sizeArr,
+        categoryArr,
+        manufacturer
+      )
       res.status(200).json(savedProduct)
     } catch (err) {
       res.status(500).json(err)
@@ -69,6 +79,28 @@ const productController = {
     } catch (err) {
       res.status(500).json(err)
     }
+  },
+
+  //Client side
+  getProductPage: async (req, res) => {
+    res.render('customer/productList', {
+      layout: 'customer/layout/main',
+      extraStyles: 'productList.css',
+    })
+  },
+
+  getProductDetailPage: async (req, res) => {
+    res.render('customer/productDetail', {
+      layout: 'customer/layout/main',
+      extraStyles: 'productDetail.css',
+    })
+  },
+
+  getAdminProductPage: async (req, res) => {
+    res.render('admin/products', {
+      layout: 'admin/layout/main',
+      extraStyles: 'products.css',
+    })
   },
 }
 module.exports = productController

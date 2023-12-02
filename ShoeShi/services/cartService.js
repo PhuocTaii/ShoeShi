@@ -11,7 +11,7 @@ const cartService = {
     return cart
   },
 
-  addProductToCart(cart,product, color, size) {
+  addProductToCart(cart, product, color, size) {
     const newProduct = new Object({
       product: product.product,
       quantity: product.quantity,
@@ -50,20 +50,23 @@ const cartService = {
     return cart
   },
 
-  clearProductList(customerId){
-    const clearCart = Cart.findOneAndUpdate({customer: customerId}, {productList: []})
-    return clearCart;
+  clearProductList(customerId) {
+    const clearCart = Cart.findOneAndUpdate(
+      { customer: customerId },
+      { productList: [] }
+    )
+    return clearCart
   },
 
-  findCartById(cartId){
+  findCartById(cartId) {
     const cart = Cart.findById(cartId)
     return cart
   },
 
-  getProductListById(id){
+  getProductListById(id) {
     const cart = cartService.findCartById(id)
     return cart.productList
-  }
+  },
 }
 
 module.exports = cartService

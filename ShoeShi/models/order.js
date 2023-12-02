@@ -7,7 +7,7 @@ const orderSchema = new mongoose.Schema({
   productList: [
     {
       product: {
-        type: String
+        type: String,
       },
 
       quantity: {
@@ -21,14 +21,14 @@ const orderSchema = new mongoose.Schema({
       color: {
         type: String,
       },
-      
-      price:{
+
+      price: {
         type: Number,
-      }
+      },
     },
   ],
 
-  buyer:{
+  buyer: {
     type: String,
   },
 
@@ -40,7 +40,7 @@ const orderSchema = new mongoose.Schema({
     type: String,
   },
 
-  totalPrice:{
+  totalPrice: {
     type: Number,
   },
 
@@ -53,7 +53,6 @@ const orderSchema = new mongoose.Schema({
     type: String,
     default: 'Pending',
   },
-
 })
 
 const Order = mongoose.model('Order', orderSchema)

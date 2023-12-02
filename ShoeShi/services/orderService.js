@@ -4,9 +4,18 @@ const Color = require('../models/color')
 const Size = require('../models/size')
 const orderService = {
   // Create a new order
-  createOrder: async (data, cart, user, nameList, colorList, sizeList, priceList, TotalPrice) => {
+  createOrder: async (
+    data,
+    cart,
+    user,
+    nameList,
+    colorList,
+    sizeList,
+    priceList,
+    TotalPrice
+  ) => {
     var productList = []
-    for(let i  = 0; i < cart.productList.length; i++){
+    for (let i = 0; i < cart.productList.length; i++) {
       productList.push({
         product: nameList[i],
         quantity: cart.productList[i].quantity,

@@ -1,0 +1,16 @@
+const userController = require('../../controllers/userController')
+const router = require('express').Router()
+
+//GET all users
+router.get('/user', userController.getAllUsers)
+
+//UPDATE user
+router.put('/user/:id', userController.updateUser)
+
+//DELETE user
+router.delete('/user/:id', userController.deleteUser)
+
+//Client side
+router.get('/accounts', userController.getAccountsPage)
+
+module.exports = router

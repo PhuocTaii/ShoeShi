@@ -6,29 +6,56 @@ const cookieParser = require('cookie-parser')
 const logger = require('morgan')
 const mongoose = require('mongoose')
 const dotenv = require('dotenv')
+const passport = require('passport')
+const session = require('express-session')
 // var bodyParser = require('body-parser');
 // const morgan = require('morgan');
 
-// Website routes
-const indexWebRouter = require('./routes/websiteRoutes/indexRouter')
-const authWebRouter = require('./routes/websiteRoutes/authRouter')
-const productWebRouter = require('./routes/websiteRoutes/productRouter')
-const cartWebRouter = require('./routes/websiteRoutes/cartRouter')
-const userWebRouter = require('./routes/websiteRoutes/userRouter')
-const categoryWebRouter = require('./routes/websiteRoutes/categoryRouter')
-const profileWebRouter = require('./routes/websiteRoutes/profileRouter')
-const orderWebRouter = require('./routes/websiteRoutes/orderRouter')
+//Cloudinary config
+const cloudinary = require('./config/cloudinary.config')
+
+// // Website routes
+// const indexWebRouter = require('./routes/websiteRoutes/indexRouter')
+// const authWebRouter = require('./routes/websiteRoutes/authRouter')
+// const productWebRouter = require('./routes/websiteRoutes/productRouter')
+// const cartWebRouter = require('./routes/websiteRoutes/cartRouter')
+// const userWebRouter = require('./routes/websiteRoutes/userRouter')
+// const categoryWebRouter = require('./routes/websiteRoutes/categoryRouter')
+// const profileWebRouter = require('./routes/websiteRoutes/profileRouter')
+// const orderWebRouter = require('./routes/websiteRoutes/orderRouter')
 
 // // API routes
-const userApiRouter = require('./routes/apiRoutes/userRouter')
-const productApiRouter = require('./routes/apiRoutes/productRouter')
-const cartApiRouter = require('./routes/apiRoutes/cartRouter')
-const categoryApiRouter = require('./routes/apiRoutes/categoryRouter')
-const sizeApiRouter = require('./routes/apiRoutes/sizeRouter')
-const orderApiRouter = require('./routes/apiRoutes/orderRouter')
-const manufacturerApiRouter = require('./routes/apiRoutes/manufacturerRouter')
-const colorApiRouter = require('./routes/apiRoutes/colorRouter')
+// const userApiRouter = require('./routes/apiRoutes/userRouter')
+// const productApiRouter = require('./routes/apiRoutes/productRouter')
+// const cartApiRouter = require('./routes/apiRoutes/cartRouter')
+// const categoryApiRouter = require('./routes/apiRoutes/categoryRouter')
+// const sizeApiRouter = require('./routes/apiRoutes/sizeRouter')
+// const orderApiRouter = require('./routes/apiRoutes/orderRouter')
+// const manufacturerApiRouter = require('./routes/apiRoutes/manufacturerRouter')
+// const colorApiRouter = require('./routes/apiRoutes/colorRouter')
+// const authApiRouter = require('./routes/apiRoutes/authRouter')
+
+//ADMIN routes
+const indexAdminRouter = require('./routes/adminRoutes/indexRouter')
+const authAdminRouter = require('./routes/adminRoutes/authRouter')
+const categoryAdminRouter = require('./routes/adminRoutes/categoryRouter')
+const colorAdminRouter = require('./routes/adminRoutes/colorRouter')
+const manufacturerAdminRouter = require('./routes/adminRoutes/manufacturerRouter')
+const orderAdminRouter = require('./routes/adminRoutes/orderRouter')
+const productAdminRouter = require('./routes/adminRoutes/productRouter')
+const sizeAdminRouter = require('./routes/adminRoutes/sizeRouter')
+const userAdminRouter = require('./routes/adminRoutes/userRouter')
+
+//CUSTOMER routes
+const indexCustomerRouter = require('./routes/customerRoutes/indexRouter')
+const authCustomerRouter = require('./routes/customerRoutes/authRouter')
+const cartCustomerRouter = require('./routes/customerRoutes/cartRouter')
+const orderCustomerRouter = require('./routes/customerRoutes/orderRouter')
+const productCustomerRouter = require('./routes/customerRoutes/productRouter')
+const userCustomerRouter = require('./routes/customerRoutes/userRouter')
+
 const app = express()
+const store = session.MemoryStore()
 
 dotenv.config()
 
@@ -54,25 +81,43 @@ app.use(logger('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(express.static(path.join(__dirname, 'public')))
+app.use(
+  session({
+    saveUninitialized: false,
+    resave: false,
+    secret: process.env.secret_key,
+    cookie: {
+      maxAge: 1000 * 30,
+    },
+    store,
+  })
+)
+
+
+app.use(passport.initialize())
+app.use(passport.session())
 
 app.use(
   '/',
-  indexWebRouter,
-  authWebRouter,
-  productWebRouter,
-  cartWebRouter,
-  userWebRouter,
-  categoryWebRouter,
-  profileWebRouter,
-  orderWebRouter,
-  userApiRouter,
-  productApiRouter,
-  cartApiRouter,
-  categoryApiRouter,
-  sizeApiRouter,
-  orderApiRouter,
-  manufacturerApiRouter,
-  colorApiRouter,
+  indexCustomerRouter,
+  authCustomerRouter,
+  cartCustomerRouter,
+  orderCustomerRouter,
+  productCustomerRouter,
+  userCustomerRouter
+)
+
+app.use(
+  '/admin',
+  indexAdminRouter,
+  authAdminRouter,
+  categoryAdminRouter,
+  colorAdminRouter,
+  manufacturerAdminRouter,
+  orderAdminRouter,
+  productAdminRouter,
+  sizeAdminRouter,
+  userAdminRouter
 )
 
 // catch 404 and forward to error handler
