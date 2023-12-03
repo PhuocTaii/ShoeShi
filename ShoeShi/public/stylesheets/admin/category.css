@@ -1,10 +1,10 @@
-#account-container {
+#categories-container {
   padding: 0 20px;
 }
-#account-container > h3 {
+#categories-container > h3 {
   margin: 40px 0 48px;
 }
-#account-container > div:last-child {
+#categories-container > div:last-child {
   margin-bottom: 40px;
 }
 h3,
@@ -54,11 +54,4 @@ table button i {
   display: block;
   width: 100%;
   margin-top: 10px;
-}
-.modal-footer {
-  justify-content: center;
-}
-.modal-footer button {
-  font-weight: bold;
-  padding: 10px 20px;
 }
