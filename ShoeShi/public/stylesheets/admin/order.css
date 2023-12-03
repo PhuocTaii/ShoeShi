@@ -20,7 +20,7 @@ h3 {
 	font-size: 16px;
 	font-weight: 500;
 	display: flex;
-	justify-content: space-between;
+	justify-content: flex-end;
 	align-items: center;
 }
 
@@ -116,7 +116,7 @@ td.order-actions button i {
 	margin-left: auto;
 }
 
-.modal-footer {
+#modal-view-order .modal-footer {
 	display: block;
 }
 .modal-footer p {
@@ -132,9 +132,4 @@ td.order-actions button i {
 .modal-footer>div.total>p:first-child {
 	font-weight: 600;
 	text-transform: uppercase;
-}
-.modal-footer>button {
-	text-transform: uppercase;
-	font-weight: 500;
-	padding: 5px 50px;
 }
