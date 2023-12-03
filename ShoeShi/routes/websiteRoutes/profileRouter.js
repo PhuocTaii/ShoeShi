@@ -9,4 +9,11 @@ router.get('/profile', function (req, res, next) {
   })
 })
 
+router.get('/admin/profile', function (req, res, next) {
+  res.render('admin/profile', {
+    layout: 'admin/layout/main',
+    extraStyles: 'profile.css',
+  })
+})
+
 module.exports = router
