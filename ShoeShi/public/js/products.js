@@ -1,138 +1,122 @@
-window.addEventListener('DOMContentLoaded', (event) => {
-  // Simple-DataTables
-  // https://github.com/fiduswriter/Simple-DataTables/wiki
+const info = {
+  photos: [],
+  cates: [],
+  colors: [],
+  sizes: [],
+}
 
-  const tableProd = document.getElementById('product')
-  if (tableProd) {
-    new DataTable(tableProd, {
-      lengthMenu: [5, 10, 20, 50],
-      scrollX: true,
+function toggleAddProduct() {
+  info.photos.splice(0, info.photos.length)
+  info.cates.splice(0, info.cates.length)
+  info.colors.splice(0, info.colors.length)
+  info.sizes.splice(0, info.sizes.length)
+  showSelectedItem('cates')
+  showSelectedItem('colors')
+  showSelectedItem('sizes')
+  showSelectedPhoto()
+
+  $('#modal-manage-product').modal('toggle')
+  document.getElementById('action-product').innerHTML = `Add new product`
+}
+
+function toggleUpdateProduct(id) {
+  // get product info
+
+  // set product info to modal
+
+  // open modal
+  $('#modal-manage-product').modal('toggle')
+  document.getElementById('action-product').innerHTML = `Update product`
+}
+
+function toggleDeleteProduct(id) {
+  $('#modal-delete-product').modal('toggle')
+}
+
+function showSelectedItem(infoType) {
+  const list = document.getElementsByClassName("chosen-list " + infoType)[0]
+
+  list.innerHTML = info[infoType].map(item => {
+    return(
+      `
+      <li>
+        <p>${item}</p>
+        <button class='remove-icon' onclick="removeSelectedItem('${infoType}', '${item}')">
+          <i class='ri-subtract-line'>
+          </i>
+      </li>
+      `
+    )
+  }).join('')
+}
+
+function addSelectedItem(event, infoType) {
+    const selectedValue = event.target.value
+    if(!info[infoType].includes(selectedValue)) {
+      // push to array
+      info[infoType].push(selectedValue)
+      // show to chosen list
+      showSelectedItem(infoType)
+    }
+    event.target.selectedIndex = 0
+}
+
+function removeSelectedItem(infoType, selectedValue) {
+  // remove from array
+  info[infoType] = info[infoType].filter(item => item !== selectedValue)
+  // show to chosen list
+  showSelectedItem(infoType)
+}
+
+// onclick="removeSelectedPhoto('${photo}')"
+
+function showSelectedPhoto() {
+  const list = document.getElementById('photos-container')
+
+  list.innerHTML = info['photos'].map(photo => {
+    const url = URL.createObjectURL(photo)
+    return(
+      `
+      <div class='photo-frame'>
+        <img src='${url}' alt='photo-product'>
+        <button class='remove-icon'>
+          <i class='ri-subtract-line'>
+          </i>
+        </button>
+      </div>
+      `
+    )
+  }).join('')
+
+  const removeBtns = document.getElementById('photos-container').getElementsByClassName('remove-icon')
+  for(let i = 0; i < removeBtns.length; i++) {
+    removeBtns[i].addEventListener('click', () => {
+      removeSelectedPhoto(info['photos'][i])
     })
   }
-})
+}
 
-document
-  .getElementsByClassName('btn product')[0]
-  .addEventListener('click', function () {
-    $('#modal-manage-product').modal('toggle')
-    document.getElementById('action-product').innerHTML = `Add new product`
-  })
-
-const btnsEditProd = document
-  .getElementById('product')
-  .getElementsByClassName('edit-btn')
-Array.from(btnsEditProd).forEach((btn) => {
-  btn.addEventListener('click', function () {
-    $('#modal-manage-product').modal('toggle')
-    document.getElementById('action-product').innerHTML = `Update product`
-  })
-})
-
-const btnsDeleteProd = document
-  .getElementById('product')
-  .getElementsByClassName('delete-btn')
-Array.from(btnsDeleteProd).forEach((btn) => {
-  btn.addEventListener('click', function () {
-    $('#modal-delete-product').modal('toggle')
-  })
-})
-
-function handleAddPhotoProduct(event) {
+function addSelectedPhoto(event) {
   const selectedFile = event.target.files[0]
-  if (selectedFile) {
-    // handle file upload here
-
-    // add photo to photo container in modal
-    const photoContainer = document
-      .getElementById('photos-product')
-      .getElementsByClassName('photos-container')[0]
-    const newDiv = document.createElement('div')
-    newDiv.classList.add('photo-frame')
-
-    const newImg = document.createElement('img')
-    newImg.setAttribute('src', URL.createObjectURL(selectedFile))
-    newImg.setAttribute('alt', 'product')
-
-    const newButton = document.createElement('button')
-    newButton.classList.add('remove-icon')
-    newButton.addEventListener('click', handleRemovePhotoProduct)
-
-    const newIcon = document.createElement('i')
-    newIcon.classList.add('ri-subtract-line')
-
-    newButton.appendChild(newIcon)
-    newDiv.appendChild(newImg)
-    newDiv.appendChild(newButton)
-    photoContainer.appendChild(newDiv)
+  if(selectedFile) {
+    // push to array
+    info['photos'].push(selectedFile)
+    // show to chosen list
+    showSelectedPhoto()
   }
 }
 
-function handleRemovePhotoProduct(event) {
-  const rowContainer = document
-    .getElementById('photos-product')
-    .getElementsByClassName('photos-container')[0]
-  rowContainer.removeChild(event.currentTarget.parentElement)
+function removeSelectedPhoto(selectedPhoto) {
+  // remove from array
+  info['photos'] = info['photos'].filter(photo => photo !== selectedPhoto)
+  // show to chosen list
+  showSelectedPhoto()
 }
 
-function addColorElement() {
-  const rowContainer = document
-    .getElementById('color-container')
-    .getElementsByClassName('input-container')[0]
 
-  const newDiv = document.createElement('div')
-  newDiv.classList.add('row')
-
-  const columns = ['color-product', 'size-color', 'quant-color', 'remove-icon']
-  columns.forEach((colClass) => {
-    const column = document.createElement('div')
-
-    if (colClass === 'remove-icon') {
-      column.classList.add('col-1')
-      const dummySpace = document.createElement('div')
-      dummySpace.classList.add('dummy-space')
-
-      const removeButton = document.createElement('button')
-      removeButton.classList.add('remove-icon')
-      removeButton.addEventListener('click', removeColorElement)
-
-      const icon = document.createElement('i')
-      icon.classList.add('ri-subtract-line')
-
-      removeButton.appendChild(icon)
-
-      column.appendChild(dummySpace)
-      column.appendChild(removeButton)
-    } else {
-      column.classList.add('col')
-      const label = document.createElement('label')
-      label.textContent =
-        colClass === 'color-product'
-          ? 'Color'
-          : colClass === 'size-color'
-            ? 'Size'
-            : 'Quantity'
-
-      const input = document.createElement('input')
-      input.setAttribute(
-        'type',
-        colClass === 'color-product' ? 'color' : 'number'
-      )
-      input.setAttribute('class', `${colClass}`)
-      input.setAttribute('min', colClass === 'quant-color' ? 1 : 0)
-
-      column.appendChild(label)
-      column.appendChild(input)
-    }
-
-    newDiv.appendChild(column)
-  })
-
-  rowContainer.appendChild(newDiv)
-}
-
-function removeColorElement(event) {
-  const rowContainer = document
-    .getElementById('color-container')
-    .getElementsByClassName('input-container')[0]
-  rowContainer.removeChild(event.currentTarget.parentElement.parentElement)
+function handleSaveProduct() {
+  // get product info
+  console.log(info)
+  // close modal
+  $('#modal-manage-product').modal('toggle')
 }
