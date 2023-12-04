@@ -11,4 +11,6 @@ router.post('/addcolor', colorController.addColor)
 //DELETE color
 router.delete('/deletecolor/:id', colorController.deleteColor)
 
+router.get('/colors-sizes', colorController.getColorPage)
+
 module.exports = router

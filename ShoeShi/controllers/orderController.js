@@ -94,12 +94,19 @@ const orderController = {
   },
 
   //Client side
+  getAdminOrderPage: async (req, res) => {
+    res.render('admin/orders', {
+      layout: 'admin/layout/main',
+      extraStyles: 'order.css',
+    })
+  },  
+
   getOrderPage: async (req, res) => {
     res.render('customer/order', {
       layout: 'customer/layout/main',
       extraStyles: 'order.css',
     })
-  }
+  },
 }
 
 module.exports = orderController

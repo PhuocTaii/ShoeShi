@@ -3,6 +3,8 @@ const colorService = require('../services/colorService')
 const sizeService = require('../services/sizeService')
 const categoryService = require('../services/categoryService')
 const manufacturerService = require('../services/manufacturerService')
+const imageService = require('../services/imageService')
+
 
 const productController = {
   //GET all products
@@ -23,7 +25,8 @@ const productController = {
     try {
       var colorArr = [],
         sizeArr = [],
-        categoryArr = []
+        categoryArr = [],
+        imageArr = []
       for (color of req.body.color) {
         const colorObj = await colorService.findColorByName(color)
         colorArr.push(colorObj)
@@ -36,6 +39,10 @@ const productController = {
         const categoryObj = await categoryService.getCategoryByName(category)
         categoryArr.push(categoryObj)
       }
+      for(image of req.body.productImage){
+        imageUrl = await imageService.uploadImageToCloudinary(image)
+        imageArr.push(imageUrl)
+      }
       const manufacturer = await manufacturerService.findManufacturerByName(
         req.body.manufacturer
       )
@@ -44,7 +51,8 @@ const productController = {
         colorArr,
         sizeArr,
         categoryArr,
-        manufacturer
+        manufacturer,
+        imageArr
       )
       res.status(200).json(savedProduct)
     } catch (err) {

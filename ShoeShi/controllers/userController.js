@@ -20,21 +20,21 @@ const userController = {
     }
   },
 
-  //ADD customers
-  // addUser: async (req, res) => {
-  //   try {
-  //     let imageUrl = ''
-  //     if(req.body.customerImage){
-  //       imageUrl = await imageService.uploadImageToCloudinary(req.body.customerImage)
-  //     }
-  //     console.log(imageUrl) 
-  //     const savedUser = await userService.addUser(req.body, imageUrl)
-  //     res.status(200).json(savedUser)
-  //   } catch (err) {
-  //     console.log(err)
-  //     res.status(500).json(err)
-  //   }
-  // },
+  // ADD customers
+  addUser: async (req, res) => {
+    try {
+      let imageUrl = ''
+      if(req.body.customerImage){
+        imageUrl = await imageService.uploadImageToCloudinary(req.body.customerImage)
+      }
+      console.log(imageUrl) 
+      const savedUser = await userService.addUser(req.body, imageUrl)
+      res.status(200).json(savedUser)
+    } catch (err) {
+      console.log(err)
+      res.status(500).json(err)
+    }
+  },
 
   //UPDATE avatar
   updateAvatar: async (req, res) => {
@@ -85,6 +85,13 @@ const userController = {
       layout: 'admin/layout/main',
       extraStyles: 'accounts.css',
     })
-  }
+  },
+
+  getAdminProfilePage: async (req, res) => {
+    res.render('admin/profile', {
+      layout: 'admin/layout/main',
+      extraStyles: 'profile.css',
+    })
+  },
 }
 module.exports = userController

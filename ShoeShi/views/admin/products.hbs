@@ -1,170 +1,234 @@
 <div id='product-container'>
   <h3>PRODUCTS</h3>
 
-  <!-- Customer table-->
-  <div class='card'>
-    <div class='card-header'>
-      <button type='button' class='btn btn-dark product'>add</button>
-      <div class='filter dropdown'>
-        <div
-          class=''
-          type='button'
-          data-bs-toggle='dropdown'
-          aria-expanded='false'
-        >
-          Filters
-          <i class='ri-filter-3-fill'></i>
+  <div class="row">
+    <!-- Filters -->
+    <div class='col-2 filter-container'>
+      <h4>Filters</h4>
+      <div class="cate-section">
+        <p>Categories</p>
+        <div class="cate-list">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox">
+            <label class="form-check-label">
+              Men
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox">
+            <label class="form-check-label">
+              Running shoes
+            </label>
+          </div>
         </div>
-        <ul class='dropdown-menu dropdown-menu-end'>
-          <li><a class='dropdown-item' href='#'>Name</a></li>
-          <li><a class='dropdown-item' href='#'>Category</a></li>
-          <li><a class='dropdown-item' href='#'>Manufacturer</a></li>
-        </ul>
+      </div>
+      <hr>
+      <div class="manu-section">
+        <p>Manufacturers</p>
+        <div class="manu-list">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox">
+            <label class="form-check-label">
+              Nike
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox">
+            <label class="form-check-label">
+              Adidas
+            </label>
+          </div>
+        </div>
       </div>
     </div>
-    <div class='card-body'>
-      <table id='product'>
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Category</th>
-            <th>Manufacturer</th>
-            <th>Creation Time</th>
-            <th>Price</th>
-            <th>Amount</th>
-            <th>Total purchase</th>
-            <th>Status</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tfoot>
-          <tr>
-            <th>Name</th>
-            <th>Category</th>
-            <th>Manufacturer</th>
-            <th>Creation Time</th>
-            <th>Price</th>
-            <th>Amount</th>
-            <th>Total purchase</th>
-            <th>Status</th>
-            <th></th>
-          </tr>
-        </tfoot>
-        <tbody>
-          <tr>
-            <td>Nike Pegasus FlyEase</td>
-            <td>Running shoes</td>
-            <td>Nike</td>
-            <td>09/11/2023</td>
-            <td>2,991,149</td>
-            <td>20</td>
-            <td>4</td>
-            <td>On stock</td>
-            <td>
-              <button class='edit-btn'><i class='ri-pencil-line'></i></button>
-              <button class='delete-btn'><i
-                  class='ri-delete-bin-6-line'
-                ></i></button>
-            </td>
-          </tr>
-          <tr>
-            <td>Nike Pegasus FlyEase</td>
-            <td>Running shoes</td>
-            <td>Nike</td>
-            <td>09/11/2023</td>
-            <td>2,991,149</td>
-            <td>20</td>
-            <td>4</td>
-            <td>On stock</td>
-            <td>
-              <button class='edit-btn'><i class='ri-pencil-line'></i></button>
-              <button class='delete-btn'><i
-                  class='ri-delete-bin-6-line'
-                ></i></button>
-            </td>
-          </tr>
-          <tr>
-            <td>Nike Pegasus FlyEase</td>
-            <td>Running shoes</td>
-            <td>Nike</td>
-            <td>09/11/2023</td>
-            <td>2,991,149</td>
-            <td>20</td>
-            <td>4</td>
-            <td>On stock</td>
-            <td>
-              <button class='edit-btn'><i class='ri-pencil-line'></i></button>
-              <button class='delete-btn'><i
-                  class='ri-delete-bin-6-line'
-                ></i></button>
-            </td>
-          </tr>
-          <tr>
-            <td>Nike Pegasus FlyEase</td>
-            <td>Running shoes</td>
-            <td>Nike</td>
-            <td>09/11/2023</td>
-            <td>2,991,149</td>
-            <td>20</td>
-            <td>4</td>
-            <td>On stock</td>
-            <td>
-              <button class='edit-btn'><i class='ri-pencil-line'></i></button>
-              <button class='delete-btn'><i
-                  class='ri-delete-bin-6-line'
-                ></i></button>
-            </td>
-          </tr>
-          <tr>
-            <td>Nike Pegasus FlyEase</td>
-            <td>Running shoes</td>
-            <td>Nike</td>
-            <td>09/11/2023</td>
-            <td>2,991,149</td>
-            <td>20</td>
-            <td>4</td>
-            <td>On stock</td>
-            <td>
-              <button class='edit-btn'><i class='ri-pencil-line'></i></button>
-              <button class='delete-btn'><i
-                  class='ri-delete-bin-6-line'
-                ></i></button>
-            </td>
-          </tr>
-          <tr>
-            <td>Nike Pegasus FlyEase</td>
-            <td>Running shoes</td>
-            <td>Nike</td>
-            <td>09/11/2023</td>
-            <td>2,991,149</td>
-            <td>20</td>
-            <td>4</td>
-            <td>On stock</td>
-            <td>
-              <button class='edit-btn'><i class='ri-pencil-line'></i></button>
-              <button class='delete-btn'><i
-                  class='ri-delete-bin-6-line'
-                ></i></button>
-            </td>
-          </tr>
-          <tr>
-            <td>Nike Pegasus FlyEase</td>
-            <td>Running shoes</td>
-            <td>Nike</td>
-            <td>09/11/2023</td>
-            <td>2,991,149</td>
-            <td>20</td>
-            <td>4</td>
-            <td>On stock</td>
-            <td>
-              <button class='edit-btn'><i class='ri-pencil-line'></i></button>
-              <button class='delete-btn'><i
-                  class='ri-delete-bin-6-line'
-                ></i></button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+
+    <!-- Product table-->
+    <div class='col-10 card'>
+      <div class='card-header'>
+        <button type='button' class='btn btn-dark product' onclick="toggleAddProduct()">add</button>
+        <div class="action-table">
+          <div class="sort-table">
+            <label for="product-sort">Sort by</label>
+            <select class="form-select" name="sort-options" id="product-sort">
+              <option selected value="none">None</option>
+              <option value="newest">Creation time: Newest</option>
+              <option value="oldest">Creation time: Oldest</option>
+              <option value="low-high">Price: Low-High</option>
+              <option value="high-low">Price: High-Low</option>
+              <option value="purchase-min-max">Total purchase: Min-Max</option>
+              <option value="purchase-max-min">Total purchase: Max-Min</option>
+            </select>
+          </div>
+          <div class="search-table">
+            <label for="products-filter-name">Name: </label>
+            <input class="form-control" type="text" id="products-filter-name">
+            <button type="button" class="btn">Search</button>
+          </div>
+        </div>
+      </div>
+      <div class='card-body table-responsive'>
+        <table class="table table-striped table-hover">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Category</th>
+              <th>Manufacturer</th>
+              <th>Creation Time</th>
+              <th>Price</th>
+              <th>Amount</th>
+              <th>Total purchase</th>
+              <th>Status</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tfoot>
+            <tr>
+              <th>Name</th>
+              <th>Category</th>
+              <th>Manufacturer</th>
+              <th>Creation Time</th>
+              <th>Price</th>
+              <th>Amount</th>
+              <th>Total purchase</th>
+              <th>Status</th>
+              <th></th>
+            </tr>
+          </tfoot>
+          <tbody class="table-group-divider">
+            <tr>
+              <td>Nike Pegasus FlyEase</td>
+              <td>Running shoes</td>
+              <td>Nike</td>
+              <td>09/11/2023</td>
+              <td>2,991,149</td>
+              <td>20</td>
+              <td>4</td>
+              <td>On stock</td>
+              <td>
+                <button class='edit-btn' onclick="toggleUpdateProduct(id)"><i class='ri-pencil-line'></i></button>
+                <button class='delete-btn' onclick="toggleDeleteProduct(id)"><i
+                    class='ri-delete-bin-6-line'
+                  ></i></button>
+              </td>
+            </tr>
+            <tr>
+              <td>Nike Pegasus FlyEase</td>
+              <td>Running shoes</td>
+              <td>Nike</td>
+              <td>09/11/2023</td>
+              <td>2,991,149</td>
+              <td>20</td>
+              <td>4</td>
+              <td>On stock</td>
+              <td>
+                <button class='edit-btn'><i class='ri-pencil-line'></i></button>
+                <button class='delete-btn'><i
+                    class='ri-delete-bin-6-line'
+                  ></i></button>
+              </td>
+            </tr>
+            <tr>
+              <td>Nike Pegasus FlyEase</td>
+              <td>Running shoes</td>
+              <td>Nike</td>
+              <td>09/11/2023</td>
+              <td>2,991,149</td>
+              <td>20</td>
+              <td>4</td>
+              <td>On stock</td>
+              <td>
+                <button class='edit-btn'><i class='ri-pencil-line'></i></button>
+                <button class='delete-btn'><i
+                    class='ri-delete-bin-6-line'
+                  ></i></button>
+              </td>
+            </tr>
+            <tr>
+              <td>Nike Pegasus FlyEase</td>
+              <td>Running shoes</td>
+              <td>Nike</td>
+              <td>09/11/2023</td>
+              <td>2,991,149</td>
+              <td>20</td>
+              <td>4</td>
+              <td>On stock</td>
+              <td>
+                <button class='edit-btn'><i class='ri-pencil-line'></i></button>
+                <button class='delete-btn'><i
+                    class='ri-delete-bin-6-line'
+                  ></i></button>
+              </td>
+            </tr>
+            <tr>
+              <td>Nike Pegasus FlyEase</td>
+              <td>Running shoes</td>
+              <td>Nike</td>
+              <td>09/11/2023</td>
+              <td>2,991,149</td>
+              <td>20</td>
+              <td>4</td>
+              <td>On stock</td>
+              <td>
+                <button class='edit-btn'><i class='ri-pencil-line'></i></button>
+                <button class='delete-btn'><i
+                    class='ri-delete-bin-6-line'
+                  ></i></button>
+              </td>
+            </tr>
+            <tr>
+              <td>Nike Pegasus FlyEase</td>
+              <td>Running shoes</td>
+              <td>Nike</td>
+              <td>09/11/2023</td>
+              <td>2,991,149</td>
+              <td>20</td>
+              <td>4</td>
+              <td>On stock</td>
+              <td>
+                <button class='edit-btn'><i class='ri-pencil-line'></i></button>
+                <button class='delete-btn'><i
+                    class='ri-delete-bin-6-line'
+                  ></i></button>
+              </td>
+            </tr>
+            <tr>
+              <td>Nike Pegasus FlyEase</td>
+              <td>Running shoes</td>
+              <td>Nike</td>
+              <td>09/11/2023</td>
+              <td>2,991,149</td>
+              <td>20</td>
+              <td>4</td>
+              <td>On stock</td>
+              <td>
+                <button class='edit-btn'><i class='ri-pencil-line'></i></button>
+                <button class='delete-btn'><i
+                    class='ri-delete-bin-6-line'
+                  ></i></button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card-footer">
+        <nav aria-label="navigation table">
+          <ul class="pagination">
+            <li class="page-item">
+              <a class="page-link" href="#" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+              <a class="page-link" href="#" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div>
     </div>
   </div>
 </div>
@@ -222,16 +286,6 @@
           </div>
           <div class='col'>
             <div class='info-detail'>
-              <label for='categories-product'>Categories</label>
-              <select name='categories' id='categories-product'>
-                <option value='Running shoes'>Running shoes</option>
-                <option value='Sneakers'>Sneakers</option>
-                <option value='Slides'>Slides</option>
-              </select>
-            </div>
-          </div>
-          <div class='col'>
-            <div class='info-detail'>
               <label for='status-product'>Status</label>
               <select name='status' id='status-product'>
                 <option value='On stock'>On stock</option>
@@ -240,65 +294,88 @@
               </select>
             </div>
           </div>
+          <div class="col">
+            <div class='info-detail'>
+              <label>Quantity</label>
+              <input id="quant-product" type='number'/>
+            </div>
+          </div>
           <div class='col'>
-            <div id='photos-product'>
-              <div class='heading'>
-                <p>Photos</p>
-                <div>
-                  <label class='file-label' for='file-upload'>
-                    Choose file
-                  </label>
-                  <input
-                    id='file-upload'
-                    type='file'
-                    onchange='handleAddPhotoProduct(event)'
-                  />
-                </div>
+            <div class='info-detail'>
+              <label for='category'>Categories</label>
+              <select id='category' class="multi-choices" onchange="addSelectedItem(event, 'cates')">
+                <option value=''>Select categories...</option>
+                <option value='Running shoes'>Running shoes</option>
+                <option value='Sneakers'>Sneakers</option>
+                <option value='Slides'>Slides</option>
+              </select>
+            </div>
+            <ul class="chosen-list cates">
+            </ul>
+          </div>
+        </div>
+
+        <div class='row'>
+          <div id='photos-product'>
+            <div class='heading'>
+              <p>Photos</p>
+              <div>
+                <label class='file-label' for='file-upload'>
+                  Choose file
+                </label>
+                <input
+                  id='file-upload'
+                  type='file'
+                  onchange='addSelectedPhoto(event)'
+                />
               </div>
-              <div class='photos-container'>
-                {{! <div class="photo-frame">
-                                    <img src="/assets/img/product.png" alt="product">
-                                    <button class="remove-icon" onclick="handleRemovePhotoProduct(event)">
-                                        <i class="ri-subtract-line"></i>
-                                    </button>
-                                </div> }}
-              </div>
+            </div>
+            <div id='photos-container'>
+
             </div>
           </div>
         </div>
 
         {{! color-size-quantity info }}
-        <div id='color-container' class='container px-0'>
-          <div class='input-container'>
-            <div class='row'>
-              <div class='col'>
-                <label>Color</label>
-                <input type='color' class='color-product' />
-              </div>
-              <div class='col'>
-                <label>Size</label>
-                <input type='number' class='size-color' min='0' />
-              </div>
-              <div class='col'>
-                <label>Quantity</label>
-                <input type='number' class='quant-color' min='1' />
-              </div>
-              <div class='col-1'>
-                <div class='dummy-space'></div>
-                <button class='remove-icon' onclick='removeColorElement(event)'>
-                  <i class='ri-subtract-line'></i>
-                </button>
-              </div>
+        <div class="color-size-quant row">
+          <div class="col">
+            <label>Color</label>
+            <div>
+              <select name="" id="color" class="multi-choices" onchange="addSelectedItem(event, 'colors')">
+                <option value=''>Select colors...</option>
+                <option value="Black">Black</option>
+                <option value="White">White</option>
+                <option value="Red">Red</option>
+              </select>
             </div>
+            <ul class="chosen-list colors">
+              
+            </ul>
           </div>
-          <button class='new-color' onclick='addColorElement()'>
-            New color
-            <i class='ri-add-circle-fill'></i>
-          </button>
+          <div class="col">
+            <label>Size</label>
+            <div>
+              <select name="" id="size" class="multi-choices" onchange="addSelectedItem(event, 'sizes')">
+                <option value=''>Select sizes...</option>
+                <option value="36">36</option>
+                <option value="37">37</option>
+                <option value="">38</option>
+                <option value="">39</option>
+                <option value="">40</option>
+                <option value="">41</option>
+                <option value="">42</option>
+                <option value="">43</option>
+                <option value="">44</option>
+                <option value="">45</option>
+              </select>
+            </div>
+            <ul class="chosen-list sizes"></ul>
+          </div>
         </div>
+
       </div>
       <div class='modal-footer'>
-        <button type='button' class='btn btn-dark'>save</button>
+        <button type='button' class='btn btn-dark' onclick="handleSaveProduct()">save</button>
       </div>
     </div>
   </div>
@@ -345,12 +422,4 @@
   </div>
 </div>
 
-<script
-  src='https://code.jquery.com/jquery-3.7.0.js'
-  crossorigin='anonymous'
-></script>
-<script
-  src='https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js'
-  crossorigin='anonymous'
-></script>
 <script src='/js/products.js'></script>

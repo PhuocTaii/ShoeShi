@@ -46,9 +46,9 @@
     <div class='card-header'>
       <p class='tableName'>overall sales</p>
       <div class='Date'>
-        <input type='date' />
+        <input type='date' class="date-choosing" />
         -
-        <input type='date' />
+        <input type='date' class="date-choosing" />
       </div>
     </div>
     <div class='card-body'><canvas
@@ -67,8 +67,8 @@
         <input type='date' />
       </div>
     </div>
-    <div class='card-body'>
-      <table id='datatablesSimple'>
+    <div class='card-body table-responsive'>
+      <table class="table table-striped table-hover">
         <thead>
           <tr>
             <th>Name</th>
@@ -83,7 +83,7 @@
             <th>Revenue</th>
           </tr>
         </tfoot>
-        <tbody>
+        <tbody class="table-group-divider">
           <tr>
             <td>Lorem ipsum dolor sit amet</td>
             <td>10</td>
@@ -140,12 +140,3 @@
   crossorigin='anonymous'
 ></script>
 <script src='/assets/demo/chart-area-demo.js'></script>
-<script
-  src='https://code.jquery.com/jquery-3.7.0.js'
-  crossorigin='anonymous'
-></script>
-<script
-  src='https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js'
-  crossorigin='anonymous'
-></script>
-<script src='/js/datatables-simple-demo.js'></script>
