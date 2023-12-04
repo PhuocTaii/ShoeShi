@@ -85,6 +85,13 @@ const userController = {
       layout: 'admin/layout/main',
       extraStyles: 'accounts.css',
     })
-  }
+  },
+
+  getAdminProfilePage: async (req, res) => {
+    res.render('admin/profile', {
+      layout: 'admin/layout/main',
+      extraStyles: 'profile.css',
+    })
+  },
 }
 module.exports = userController

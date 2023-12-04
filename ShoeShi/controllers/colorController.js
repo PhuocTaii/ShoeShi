@@ -36,5 +36,12 @@ const colorController = {
       res.status(500).json(err)
     }
   },
+
+  getColorPage: async(req, res) => {
+    res.render('admin/colors-sizes', {
+      layout: 'admin/layout/main',
+      extraStyles: 'color-size.css',
+    })
+  }
 }
 module.exports = colorController

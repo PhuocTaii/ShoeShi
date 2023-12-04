@@ -6,7 +6,7 @@
   <p class='m-0'>SIGN UP</p>
 </div>
 
-<form class='form-signup'>
+<form id='form-signup'>
   <div class='mb-2'>
     <label for='username' class='form-label'>Username
       <small class='text-danger'>*</small></label>
@@ -15,6 +15,7 @@
       class='form-control fs-6'
       placeholder='Username'
       id='username'
+      name='username'
       required
     />
   </div>
@@ -27,9 +28,11 @@
       class='form-control fs-6'
       placeholder='Password'
       id='password'
+      name='password'
       required
       minlength='8'
-      pattern='(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}'
+      pattern='^(?=.*[a-zA-Z])(?=.*\d).{8,}$'
+      title='Please enter with both letters and numbers, and a minimum of 8 characters.'
     />
     <div class='form-text'>Minimum of 8 characters. Include letters and numbers</div>
   </div>
@@ -43,6 +46,7 @@
       placeholder='Email'
       id='email'
       required
+      name='email'
     />
   </div>
 
@@ -54,6 +58,7 @@
       class='form-control fs-6'
       placeholder='Full Name'
       id='full-name'
+      name='name'
     />
   </div>
 
@@ -82,16 +87,6 @@
           class='form-check-input'
         />
       </div>
-
-      {{! <div class="form-check form-check-inline">
-                <label for="male" class="mr-3">Other</label>
-                <input
-                    type="radio"
-                    id="other"
-                    name="gender"
-                    class="form-check-input"
-                />
-            </div> }}
     </div>
   </div>
 
@@ -102,6 +97,7 @@
       class='form-control fs-6'
       placeholder='Phone Number'
       id='phone-number'
+      name='phoneNum'
     />
   </div>
 
@@ -112,12 +108,18 @@
       class='form-control fs-6'
       placeholder='Address'
       id='address'
+      name='address'
     />
   </div>
 
   <div class='mb-2'>
     <label for='birthday' class='form-label'>Date of birth</label>
-    <input type='date' class='form-control fs-6' id='birthday' />
+    <input
+      type='date'
+      class='form-control fs-6'
+      id='birthday'
+      name='birthday'
+    />
   </div>
 
   <div class='btn-container mx-auto mb-3 mt-3'>
@@ -133,3 +135,5 @@
     </p>
   </div>
 </form>
+
+<script src="/js/customer-signup.js"></script>

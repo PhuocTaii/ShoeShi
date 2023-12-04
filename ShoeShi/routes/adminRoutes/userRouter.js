@@ -16,4 +16,6 @@ router.delete('/user/:id', userController.deleteUser)
 //Client side
 router.get('/accounts', userController.getAccountsPage)
 
+router.get('/profile', userController.getAdminProfilePage)
+
 module.exports = router
