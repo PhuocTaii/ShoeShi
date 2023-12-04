@@ -6,6 +6,29 @@ const productService = {
     return products
   },
 
+  getProductByFilter(query) {
+    const conditions = {};
+
+    if (query.name) {
+      conditions.name = { $regex: query.name, $options: 'i' };
+    }
+
+    if (query.category) {
+        conditions.category = { $in: query.category };
+    }
+
+    if (query.manufacturer) { 
+        conditions.manufacturer = { $in: query.manufacturer };
+    }
+
+    if (query.price) {
+        conditions.price = { $gte: query.price.$gte, $lte: query.price.$lte };
+    }
+
+    const products = Product.find(conditions);
+    return products;
+  },
+
   addProduct(product, colorList, sizeList, categoryList, manufacturer, imageList) {
     cateList = []
     sList = []
@@ -26,7 +49,7 @@ const productService = {
     const newProduct = new Product({
       category: cateList,
       creationDate: product.creationDate,
-      manufacturer: manufacturer,
+      manufacturer: manufacturer._id,
       name: product.name,
       price: product.price,
       status: product.status,
@@ -55,6 +78,11 @@ const productService = {
     const foundProduct = Product.findById(id)
     return foundProduct
   },
+
+  getProductByName(name){
+    const foundProduct = Product.find({ name: { $regex: name, $options: 'i' } })
+    return foundProduct
+  }
 }
 
 module.exports = productService

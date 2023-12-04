@@ -25,6 +25,7 @@ const categoryService = {
     const foundCate = Category.findByIdAndDelete(id)
     return foundCate
   },
+  
   getCategoryByName(name) {
     const foundCate = Category.findOne({ name: name })
     return foundCate

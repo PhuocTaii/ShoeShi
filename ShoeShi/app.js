@@ -61,7 +61,6 @@ const store = session.MemoryStore()
 
 dotenv.config()
 
-console.log(cloudinary.config())
 mongoose
   .connect(process.env.MONGODB_URL)
   .then(() => {
