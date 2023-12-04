@@ -74,6 +74,20 @@ const productController = {
     }
   },
 
+  //SORT products
+  sortProducts: async (req, res) => {
+    try{
+      const { sort } = req.query;
+      const products = await productService.sortProducts(sort)
+      console.log(products)
+      res.status(200).json(products)
+
+    } catch(err){
+      res.status(500).json(err)
+    }
+  },
+
+
   //ADD product
   addProduct: async (req, res) => {
     try {

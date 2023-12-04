@@ -29,6 +29,25 @@ const productService = {
     return products;
   },
 
+  sortProducts(sort) {
+    if(sort == 'newest'){
+      const products = Product.find().sort({creationDate: -1})
+      return products
+    }
+    if(sort == 'oldest'){
+      const products = Product.find().sort({creationDate: 1})
+      return products
+    }
+    if(sort == 'low-high'){
+      const products = Product.find().sort({price: 1})
+      return products
+    }
+    if(sort == 'high-low'){
+      const products = Product.find().sort({price: -1})
+      return products
+    }
+  },
+
   addProduct(product, colorList, sizeList, categoryList, manufacturer, imageList) {
     cateList = []
     sList = []

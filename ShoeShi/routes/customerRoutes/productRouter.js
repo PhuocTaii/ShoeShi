@@ -7,6 +7,9 @@ router.get('/product', productController.getAllProducts)
 //Filter products
 router.get('/products/filter', productController.getProductByFilter)
 
+//Sort products
+router.get('/products/sort', productController.sortProducts)
+
 //Client side
 router.get('/products', productController.getProductPage)
 
