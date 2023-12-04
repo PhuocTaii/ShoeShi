@@ -8,11 +8,13 @@ const mongoose = require('mongoose')
 const dotenv = require('dotenv')
 const passport = require('passport')
 const session = require('express-session')
+
 // var bodyParser = require('body-parser');
 // const morgan = require('morgan');
 
 //Cloudinary config
 const cloudinary = require('./config/cloudinary.config')
+
 
 // // Website routes
 // const indexWebRouter = require('./routes/websiteRoutes/indexRouter')
@@ -59,6 +61,7 @@ const store = session.MemoryStore()
 
 dotenv.config()
 
+console.log(cloudinary.config())
 mongoose
   .connect(process.env.MONGODB_URL)
   .then(() => {

@@ -4,6 +4,9 @@ const router = require('express').Router()
 //GET all users
 router.get('/user', userController.getAllUsers)
 
+//ADD user
+router.post('/user', userController.addUser)
+
 //UPDATE user
 router.put('/user/:id', userController.updateUser)
 

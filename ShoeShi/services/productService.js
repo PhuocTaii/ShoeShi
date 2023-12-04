@@ -6,10 +6,11 @@ const productService = {
     return products
   },
 
-  addProduct(product, colorList, sizeList, categoryList, manufacturer) {
+  addProduct(product, colorList, sizeList, categoryList, manufacturer, imageList) {
     cateList = []
     sList = []
     cList = []
+    iList = []
     for (let i = 0; i < categoryList.length; i++) {
       cateList.push(categoryList[i]._id)
     }
@@ -18,6 +19,9 @@ const productService = {
     }
     for (let i = 0; i < colorList.length; i++) {
       cList.push(colorList[i]._id)
+    }
+    for(let i = 0; i < imageList.length; i++){
+      iList.push(imageList[i])
     }
     const newProduct = new Product({
       category: cateList,
@@ -31,7 +35,7 @@ const productService = {
       color: cList,
       size: sList,
       totalPurchase: product.totalPurchase,
-      productImage: product.productImage,
+      productImage: iList,
     })
     const savedProduct = newProduct.save()
     return savedProduct
