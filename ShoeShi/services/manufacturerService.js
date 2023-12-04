@@ -19,7 +19,7 @@ const manufacturerService = {
 
   findManufacturerByName(name) {
     const manufacturer = Manufacturer.findOne({ name: name })
-    return manufacturer._id
+    return manufacturer
   },
 }
 

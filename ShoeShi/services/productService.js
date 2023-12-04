@@ -1,8 +1,23 @@
 const Product = require('../models/product')
 
 const productService = {
+  productsPerPage: 2,
+
+  getTotalProducts() {
+    const totalProducts = Product.countDocuments()
+    return totalProducts
+  },
+
   getAllProducts() {
     const products = Product.find()
+    return products
+  },
+
+  getProducts(page) {
+    page = page - 1
+    const products = Product.find()
+      .skip(page * productService.productsPerPage)
+      .limit(productService.productsPerPage)
     return products
   },
 

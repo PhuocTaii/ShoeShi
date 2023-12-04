@@ -10,11 +10,33 @@ const productController = {
   //GET all products
   getAllProducts: async (req, res) => {
     try {
-      const products = await productService.getAllProducts()
-      if (!products) {
-        return res.status(500).json(err)
-      }
-      res.status(200).json(products)
+      const page = parseInt(req.query.page) || 1
+
+      const totalProducts = await productService.getTotalProducts()
+      const totalPages = Math.ceil(totalProducts / productService.productsPerPage)
+
+      const products = await productService.getProducts(page)
+
+      // const products = await productService.getAllProducts()
+
+      res.format({
+        html: function () {
+          res.render('customer/productList', {
+            products: products,
+            totalPages: totalPages,
+            activePage: page,
+            layout: 'customer/layout/main',
+            extraStyles: 'productList.css',
+          });
+        },
+        json: function () {
+          res.json({
+            products: products,
+            totalPages: totalPages,
+            activePage: page
+          });
+        }
+      });
     } catch (err) {
       res.status(500).json(err)
     }
@@ -89,13 +111,13 @@ const productController = {
     }
   },
 
-  //Client side
-  getProductPage: async (req, res) => {
-    res.render('customer/productList', {
-      layout: 'customer/layout/main',
-      extraStyles: 'productList.css',
-    })
-  },
+  // //Client side
+  // getProductPage: async (req, res) => {
+  //   res.render('customer/productList', {
+  //     layout: 'customer/layout/main',
+  //     extraStyles: 'productList.css',
+  //   })
+  // },
 
   getProductDetailPage: async (req, res) => {
     res.render('customer/productDetail', {

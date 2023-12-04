@@ -110,8 +110,21 @@
         </div>
       </div>
       <div class='product-container'>
-        <div class='row row-cols-4 row-col-md-1'>
+        <div id="product-list" class='row row-cols-4 row-col-md-1'>
+          {{#each products}}
           <div class='col'>
+            <div class='product mx-1 my-2'>
+              <img class='product-img' src='/assets/img/product.png' />
+              <div class='product-details'>
+                <p class='product-name'>{{this.name}}</p>
+                <p class='product-branch'>{{this.manufacturer}}</p>
+                <p class='product-price'>{{this.price}} ₫</p>
+              </div>
+            </div>
+          </div>
+          {{/each}}
+
+          {{!-- <div class='col'>
             <div class='product mx-1 my-2'>
               <img class='product-img' src='/assets/img/product.png' />
               <div class='product-details'>
@@ -190,11 +203,34 @@
                 <p class='product-price'>3,829,000 ₫</p>
               </div>
             </div>
-          </div>
+          </div> --}}
 
         </div>
       </div>
+      
+      <nav aria-label="page-navigation">
+        <ul class="pagination" id="product-pagination">
+          {{!-- <li class="page-item">
+            <a class="page-link" href="#" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <li class="page-item"><a class="page-link" href="#">1</a></li>
+          <li class="page-item"><a class="page-link" href="#">2</a></li>
+          <li class="page-item"><a class="page-link" href="#">3</a></li>
+          <li class="page-item">
+            <a class="page-link" href="#" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li> --}}
+        </ul>
+      </nav>
     </div>
   </div>
 </div>
-<script src='js/range-price.js'></script>
+<script src='/js/range-price.js'></script>
+<script 
+  data-total-pages="{{totalPages}}"
+  data-active-page="{{activePage}}"
+  src='/js/product-paging.js'>
+</script>
