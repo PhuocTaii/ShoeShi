@@ -17,6 +17,7 @@ passport.use(
       }
 
       return done(null, {
+        id: user._id,
         username: user.username,
         password: user.password,
         admin: user.admin,
@@ -31,7 +32,7 @@ passport.use(
 
 passport.serializeUser(function (user, cb) {
   process.nextTick(function () {
-    cb(null, { id: user.id, admin: user.admin })
+    cb(null, { id: user._id, admin: user.admin })
   })
 })
 

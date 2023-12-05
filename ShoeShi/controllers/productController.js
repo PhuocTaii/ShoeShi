@@ -4,18 +4,40 @@ const sizeService = require('../services/sizeService')
 const categoryService = require('../services/categoryService')
 const manufacturerService = require('../services/manufacturerService')
 const imageService = require('../services/imageService')
+const userService = require('../services/userService')
+
 
 const productController = {
   //GET all products
   getAllProducts: async (req, res) => {
     try {
-      const products = await productService.getAllProducts()
-      
-      // console.log(products)
-      if (!products) {
-        return res.status(500).json(err)
-      }
-      res.status(200).json(products)
+      const page = parseInt(req.query.page) || 1
+
+      const totalProducts = await productService.getTotalProducts()
+      const totalPages = Math.ceil(totalProducts / productService.productsPerPage)
+
+      const products = await productService.getProducts(page)
+
+      // const products = await productService.getAllProducts()
+
+      res.format({
+        html: function () {
+          res.render('customer/productList', {
+            products: products,
+            totalPages: totalPages,
+            activePage: page,
+            layout: 'customer/layout/main',
+            extraStyles: 'productList.css',
+          });
+        },
+        json: function () {
+          res.json({
+            products: products,
+            totalPages: totalPages,
+            activePage: page
+          });
+        }
+      });
     } catch (err) {
       res.status(500).json(err)
     }
@@ -170,25 +192,13 @@ const productController = {
     }
   },
 
-  //Client side
-  getProductPage: async (req, res) => {
-    try {
-    const products = await productService
-      .getAllProducts()
-      .populate('manufacturer')
-    const categories = await categoryService
-      .getAllCategories()
-    const manufacturers = await manufacturerService
-      .getAllManufacturers()
-      res.render('customer/productList', {
-        layout: 'customer/layout/main',
-        extraStyles: 'productList.css',
-        products, categories,manufacturers
-      })
-    } catch (err) {
-      res.status(500).json(err)
-    }
-  },
+  // //Client side
+  // getProductPage: async (req, res) => {
+  //   res.render('customer/productList', {
+  //     layout: 'customer/layout/main',
+  //     extraStyles: 'productList.css',
+  //   })
+  // },
 
   getProductDetailPage: async (req, res) => {
     res.render('customer/productDetail', {
@@ -203,5 +213,51 @@ const productController = {
       extraStyles: 'products.css',
     })
   },
+
+  getProductDetail: async (req, res) => {
+    try {
+      const page = parseInt(req.query.page) || 1
+
+      const details = await productService.getProductDetail(req.params.id, page)
+      const totalPages = Math.ceil(details[0].totalReviews / productService.reviewsPerPage)
+
+      res.format({
+        html: function () {
+          res.render('customer/productDetail', {
+            details: details[0],
+            totalPages,
+            activePage: page,
+            layout: 'customer/layout/main',
+            extraStyles: 'productDetail.css',
+          })
+        },
+        json: function () {
+          res.json({
+            details: details[0],
+            totalPages,
+            activePage: page,
+          });
+        }
+      });
+    } catch (err) {
+      res.status(500).json(err)
+      console.log(err)
+    }
+  },
+
+  addReview: async (req, res) => {
+    try {
+      const product = await productService.getProductById(req.params.id)
+      // console.log(req.user)
+      const reviewer = await userService.getUserById(req.user.id)
+      // console.log(reviewer)
+      const reviewedProduct = await productService.addReview(product, req.body, reviewer)
+      // console.log(reviewedProduct)
+      res.status(200).json(reviewedProduct)
+    } catch (err) {
+      res.status(500).json(err)
+      console.log(err)
+    }
+  }
 }
 module.exports = productController

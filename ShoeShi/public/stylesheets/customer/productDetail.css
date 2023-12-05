@@ -121,18 +121,6 @@ label {
   display: inline-block;
 }
 
-.option1 {
-  background: #000;
-}
-
-.option2 {
-  background-color: #d10000;
-}
-
-.option3 {
-  background-color: #00c868;
-}
-
 .size {
   display: flex;
   flex-direction: column;
@@ -249,7 +237,7 @@ label {
   display: block !important;
 }
 
-.reviewpage {
+#review-page {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
