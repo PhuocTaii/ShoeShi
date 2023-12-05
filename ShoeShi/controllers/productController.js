@@ -17,14 +17,16 @@ const productController = {
       const totalPages = Math.ceil(totalProducts / productService.productsPerPage)
 
       const products = await productService.getProducts(page)
-
-      // const products = await productService.getAllProducts()
+      const categories = await categoryService.getAllCategories()
+      const manufacturers = await manufacturerService.getAllManufacturers()
 
       res.format({
         html: function () {
           res.render('customer/productList', {
-            products: products,
-            totalPages: totalPages,
+            categories,
+            manufacturers,
+            products,
+            totalPages,
             activePage: page,
             layout: 'customer/layout/main',
             extraStyles: 'productList.css',
