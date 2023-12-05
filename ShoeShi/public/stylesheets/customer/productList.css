@@ -223,6 +223,12 @@
   font-weight: 500;
 }
 
+.product-details .product-status{
+  color: #000;
+  font-size: 14px;
+  font-weight: 500;
+}
+
 /*range input*/
 .range_container {
   display: flex;

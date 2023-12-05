@@ -1,6 +1,6 @@
 <div class='container-fluid mx-0'>
   <div class='body-head'>
-    <p class='body-tittle'>MEN</p>
+    <p class='body-tittle'>PRODUCTS LIST</p>
   </div>
   <div class='body-container'>
     <form class='product-filter' id="filter-form">
@@ -12,35 +12,23 @@
       <div class='component'>
         <p>Category</p>
         <div class='list'>
-          <div class='list-component'>
-            <input type='checkbox' class='list-checkbox' name="category" value="Slides"/>
-            <p>Slides</p>
+          {{#each categories}}
+            <div class='list-component'>
+              <input type='checkbox' class='list-checkbox' name="category" value="{{this.name}}"/>
+              <p>{{this.name}}</p>
           </div>
-          <div class='list-component'>
-            <input type='checkbox' class='list-checkbox' name="category" value="Running shoes" />
-            <p>Running shoes</p>
-          </div>
-          <div class='list-component'>
-            <input type='checkbox' class='list-checkbox' name="category" value="Sneakers"/>
-            <p>Sneakers</p>
-          </div>
+          {{/each}}
         </div>
       </div>
       <div class='component'>
         <p>Brand</p>
         <div class='list'>
-          <div class='list-component'>
-            <input type='checkbox' class='list-checkbox' name="manufacturer" value="Nike" />
-            <p>Nike</p>
+          {{#each manufacturers}}
+            <div class='list-component'>
+              <input type='checkbox' class='list-checkbox' name="manufacturer" value="{{this.name}}"/>
+              <p>{{this.name}}</p>
           </div>
-          <div class='list-component'>
-            <input type='checkbox' class='list-checkbox' name="manufacturer" value="Adidas" />
-            <p>Adidas</p>
-          </div>
-          <div class='list-component'>
-            <input type='checkbox' class='list-checkbox' name="manufacturer" value="New Balance" />
-            <p>New Balance</p>
-          </div>
+          {{/each}}
         </div>
       </div>
       <div class='component'>
@@ -113,87 +101,19 @@
       </div>
       <div class='product-container'>
         <div class='row row-cols-4 row-col-md-1'>
-          <div class='col'>
-            <div class='product mx-1 my-2'>
-              <img class='product-img' src='/assets/img/product.png' />
-              <div class='product-details'>
-                <p class='product-name'>Nike Dunk Low</p>
-                <p class='product-branch'>Nike</p>
-                <p class='product-price'>3,829,000 ₫</p>
+          {{#each products}}
+            <div class='col'>
+              <div class='product mx-1 my-2'>
+                <img class='product-img' src="https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/e6da41fa-1be4-4ce5-b89c-22be4f1f02d4/air-force-1-07-shoes-WrLlWX.png" />
+                <div class='product-details'>
+                  <p class='product-name'>{{this.name}}</p>
+                  <p class='product-branch'>{{this.manufacturer.name}}</p>
+                  <p class='product-price'>{{this.price}} ₫</p>
+                  <p class="product-status">{{this.status}}</p>
+                </div>
               </div>
             </div>
-          </div>
-          <div class='col'>
-            <div class='product mx-1 my-1'>
-              <img class='product-img' src='/assets/img/product.png' />
-              <div class='product-details'>
-                <p class='product-name'>Nike Dunk Low</p>
-                <p class='product-branch'>Nike</p>
-                <p class='product-price'>3,829,000 ₫</p>
-              </div>
-            </div>
-          </div>
-          <div class='col'>
-            <div class='product mx-1 my-1'>
-              <img class='product-img' src='/assets/img/product.png' />
-              <div class='product-details'>
-                <p class='product-name'>Nike Dunk Low</p>
-                <p class='product-branch'>Nike</p>
-                <p class='product-price'>3,829,000 ₫</p>
-              </div>
-            </div>
-          </div>
-          <div class='col'>
-            <div class='product mx-1 my-1'>
-              <img class='product-img' src='/assets/img/product.png' />
-              <div class='product-details'>
-                <p class='product-name'>Nike Dunk Low</p>
-                <p class='product-branch'>Nike</p>
-                <p class='product-price'>3,829,000 ₫</p>
-              </div>
-            </div>
-          </div>
-          <div class='col'>
-            <div class='product mx-1 my-1'>
-              <img class='product-img' src='/assets/img/product.png' />
-              <div class='product-details'>
-                <p class='product-name'>Nike Dunk Low</p>
-                <p class='product-branch'>Nike</p>
-                <p class='product-price'>3,829,000 ₫</p>
-              </div>
-            </div>
-          </div>
-          <div class='col'>
-            <div class='product mx-1 my-1'>
-              <img class='product-img' src='/assets/img/product.png' />
-              <div class='product-details'>
-                <p class='product-name'>Nike Dunk Low</p>
-                <p class='product-branch'>Nike</p>
-                <p class='product-price'>3,829,000 ₫</p>
-              </div>
-            </div>
-          </div>
-          <div class='col'>
-            <div class='product mx-1 my-1'>
-              <img class='product-img' src='/assets/img/product.png' />
-              <div class='product-details'>
-                <p class='product-name'>Nike Dunk Low</p>
-                <p class='product-branch'>Nike</p>
-                <p class='product-price'>3,829,000 ₫</p>
-              </div>
-            </div>
-          </div>
-          <div class='col'>
-            <div class='product mx-1 my-1'>
-              <img class='product-img' src='/assets/img/product.png' />
-              <div class='product-details'>
-                <p class='product-name'>Nike Dunk Low</p>
-                <p class='product-branch'>Nike</p>
-                <p class='product-price'>3,829,000 ₫</p>
-              </div>
-            </div>
-          </div>
-
+          {{/each}}
         </div>
       </div>
     </div>

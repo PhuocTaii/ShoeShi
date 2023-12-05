@@ -5,12 +5,12 @@ const categoryService = require('../services/categoryService')
 const manufacturerService = require('../services/manufacturerService')
 const imageService = require('../services/imageService')
 
-
 const productController = {
   //GET all products
   getAllProducts: async (req, res) => {
     try {
       const products = await productService.getAllProducts()
+      
       // console.log(products)
       if (!products) {
         return res.status(500).json(err)
@@ -29,7 +29,6 @@ const productController = {
 
       const conditions = {};
       if(productName){
-        // const pID = await productService.getProductByName(productName)
         conditions.name = productName
       }
 
@@ -87,6 +86,20 @@ const productController = {
     }
   },
 
+  //Get related products
+  getRelatedProducts: async(req, res) => {
+    try{
+      const product = await productService.getProductById(req.params.id)
+      const sampleProd = await productService.getOtherProducts(req.params.id)
+      const relatedProducts = await productService.getRelatedProducts(product, req.params.id)
+      console.log(relatedProducts)
+      res.status(200).json(123)
+    } catch(err){
+      console.log(err)
+      res.status(500).json(err)
+    }
+  },
+
 
   //ADD product
   addProduct: async (req, res) => {
@@ -107,7 +120,7 @@ const productController = {
         const categoryObj = await categoryService.getCategoryByName(category)
         categoryArr.push(categoryObj)
       }
-      for(image of req.body.productImage){
+      for (image of req.body.productImage) {
         imageUrl = await imageService.uploadImageToCloudinary(image)
         imageArr.push(imageUrl)
       }
@@ -159,10 +172,22 @@ const productController = {
 
   //Client side
   getProductPage: async (req, res) => {
-    res.render('customer/productList', {
-      layout: 'customer/layout/main',
-      extraStyles: 'productList.css',
-    })
+    try {
+    const products = await productService
+      .getAllProducts()
+      .populate('manufacturer')
+    const categories = await categoryService
+      .getAllCategories()
+    const manufacturers = await manufacturerService
+      .getAllManufacturers()
+      res.render('customer/productList', {
+        layout: 'customer/layout/main',
+        extraStyles: 'productList.css',
+        products, categories,manufacturers
+      })
+    } catch (err) {
+      res.status(500).json(err)
+    }
   },
 
   getProductDetailPage: async (req, res) => {

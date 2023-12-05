@@ -110,6 +110,10 @@
   overflow: hidden;
 }
 
+.sample-featured p{
+  margin: 0 0 10px;
+}
+
 .brand-container img {
   width: 35%;
 }
@@ -119,6 +123,25 @@
   border-radius: 10px;
 }
 
+.detail{
+  font-size: 14px;
+}
+
+
+.price-unit{
+  color: #000;
+  font-weight: 500;
+}
+
+.product-manufacturer{
+  color: #707072;
+  font-weight: 500;
+}
+
+.product-name{
+  color: #000;
+  font-weight: 40;
+}
 
 
 

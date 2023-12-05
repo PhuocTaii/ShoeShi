@@ -10,6 +10,9 @@ router.get('/products/filter', productController.getProductByFilter)
 //Sort products
 router.get('/products/sort', productController.sortProducts)
 
+//Get related products
+router.get('/products/related/:id', productController.getRelatedProducts)
+
 //Client side
 router.get('/products', productController.getProductPage)
 
