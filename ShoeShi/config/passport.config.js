@@ -17,6 +17,7 @@ passport.use(
       }
 
       return done(null, {
+        id: user._id,
         username: user.username,
         password: user.password,
         admin: user.admin,

@@ -61,7 +61,6 @@ const store = session.MemoryStore()
 
 dotenv.config()
 
-console.log(cloudinary.config())
 mongoose
   .connect(process.env.MONGODB_URL)
   .then(() => {
@@ -90,7 +89,7 @@ app.use(
     resave: false,
     secret: process.env.secret_key,
     cookie: {
-      maxAge: 1000 * 30,
+      maxAge: 1000 * 60 * 60,
     },
     store,
   })

@@ -19,10 +19,10 @@ const authController = {
       if (err) {
         return res.status(500).json(err)
       }
+      console.log(user)
       if (!user) {
         return res.status(401).json({ message: info.message })
       }
-      console.log(user)
       req.logIn(user, (loginErr) => {
         if (loginErr) {
           return res.status(500).json({ message: 'Login Error' })

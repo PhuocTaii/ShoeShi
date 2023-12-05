@@ -1,46 +1,34 @@
 <div class='container-fluid mx-0'>
   <div class='body-head'>
-    <p class='body-tittle'>MEN</p>
+    <p class='body-tittle'>PRODUCTS LIST</p>
   </div>
   <div class='body-container'>
-    <div class='product-filter'>
+    <form class='product-filter' id="filter-form">
       <p>Filters</p>
       <div class='product-name-block'>
         <p>Product name</p>
-        <input class='product-name' />
+        <input id="productName" name="product-name" class='product-name' placeholder="Input product name"/>
       </div>
       <div class='component'>
         <p>Category</p>
         <div class='list'>
-          <div class='list-component'>
-            <input type='checkbox' class='list-checkbox' />
-            <p>Slides</p>
+          {{#each categories}}
+            <div class='list-component'>
+              <input type='checkbox' class='list-checkbox' name="category" value="{{this.name}}"/>
+              <p>{{this.name}}</p>
           </div>
-          <div class='list-component'>
-            <input type='checkbox' class='list-checkbox' />
-            <p>Running shoes</p>
-          </div>
-          <div class='list-component'>
-            <input type='checkbox' class='list-checkbox' />
-            <p>Sneakers</p>
-          </div>
+          {{/each}}
         </div>
       </div>
       <div class='component'>
         <p>Brand</p>
         <div class='list'>
-          <div class='list-component'>
-            <input type='checkbox' class='list-checkbox' />
-            <p>Nike</p>
+          {{#each manufacturers}}
+            <div class='list-component'>
+              <input type='checkbox' class='list-checkbox' name="manufacturer" value="{{this.name}}"/>
+              <p>{{this.name}}</p>
           </div>
-          <div class='list-component'>
-            <input type='checkbox' class='list-checkbox' />
-            <p>Adidas</p>
-          </div>
-          <div class='list-component'>
-            <input type='checkbox' class='list-checkbox' />
-            <p>New Balance</p>
-          </div>
+          {{/each}}
         </div>
       </div>
       <div class='component'>
@@ -66,6 +54,7 @@
           <div class='form_control'>
             <div class='form_control_container'>
               <input
+                name = 'from-input'
                 class=''
                 type='number'
                 id='fromInput'
@@ -76,6 +65,7 @@
             </div>
             <div class='form_control_container'>
               <input
+                name = 'to-input'
                 class=''
                 type='number'
                 id='toInput'
@@ -86,21 +76,21 @@
             </div>
           </div>
         </div>
-
       </div>
-    </div>
+        <button class="filter-but" type="submit">Filter</button>
+    </form>
     <div class='main-content'>
       <div class='content-header'>
-        <nav aria-label='breadcrumb'>
+        {{!-- <nav aria-label='breadcrumb'>
           <ol class='breadcrumb'>
             <li class='breadcrumb-item'><a href='#'>Home</a></li>
             <li class='breadcrumb-item active' aria-current='page'><a
               >Men</a></li>
           </ol>
-        </nav>
+        </nav> --}}
         <div class='sort-info'>
           <label for='sort-products'>Sort by: </label>
-          <select id='sort-products' name='sort-options'>
+          <select id='sort-products' name='sort-options' onchange="sortProducts()" />
             <option value='none'>None</option>
             <option value='newest'>Newest</option>
             <option value='oldest'>Oldest</option>
@@ -110,91 +100,34 @@
         </div>
       </div>
       <div class='product-container'>
-        <div class='row row-cols-4 row-col-md-1'>
+        <div id="product-list" class='row row-cols-4 row-col-md-1'>
+          {{#each products}}
           <div class='col'>
-            <div class='product mx-1 my-2'>
-              <img class='product-img' src='/assets/img/product.png' />
+            <a class='product mx-1 my-2' href='/product/{{this._id}}'>
+              <img class='product-img' src={{this.productImage.[0]}} />
               <div class='product-details'>
-                <p class='product-name'>Nike Dunk Low</p>
-                <p class='product-branch'>Nike</p>
-                <p class='product-price'>3,829,000 ₫</p>
+                <p class='product-name'>{{this.name}}</p>
+                <p class='product-branch'>{{this.manufacturer.name}}</p>
+                <p class='product-price'>{{this.price}} ₫</p>
               </div>
-            </div>
+            </a>
           </div>
-          <div class='col'>
-            <div class='product mx-1 my-1'>
-              <img class='product-img' src='/assets/img/product.png' />
-              <div class='product-details'>
-                <p class='product-name'>Nike Dunk Low</p>
-                <p class='product-branch'>Nike</p>
-                <p class='product-price'>3,829,000 ₫</p>
-              </div>
-            </div>
-          </div>
-          <div class='col'>
-            <div class='product mx-1 my-1'>
-              <img class='product-img' src='/assets/img/product.png' />
-              <div class='product-details'>
-                <p class='product-name'>Nike Dunk Low</p>
-                <p class='product-branch'>Nike</p>
-                <p class='product-price'>3,829,000 ₫</p>
-              </div>
-            </div>
-          </div>
-          <div class='col'>
-            <div class='product mx-1 my-1'>
-              <img class='product-img' src='/assets/img/product.png' />
-              <div class='product-details'>
-                <p class='product-name'>Nike Dunk Low</p>
-                <p class='product-branch'>Nike</p>
-                <p class='product-price'>3,829,000 ₫</p>
-              </div>
-            </div>
-          </div>
-          <div class='col'>
-            <div class='product mx-1 my-1'>
-              <img class='product-img' src='/assets/img/product.png' />
-              <div class='product-details'>
-                <p class='product-name'>Nike Dunk Low</p>
-                <p class='product-branch'>Nike</p>
-                <p class='product-price'>3,829,000 ₫</p>
-              </div>
-            </div>
-          </div>
-          <div class='col'>
-            <div class='product mx-1 my-1'>
-              <img class='product-img' src='/assets/img/product.png' />
-              <div class='product-details'>
-                <p class='product-name'>Nike Dunk Low</p>
-                <p class='product-branch'>Nike</p>
-                <p class='product-price'>3,829,000 ₫</p>
-              </div>
-            </div>
-          </div>
-          <div class='col'>
-            <div class='product mx-1 my-1'>
-              <img class='product-img' src='/assets/img/product.png' />
-              <div class='product-details'>
-                <p class='product-name'>Nike Dunk Low</p>
-                <p class='product-branch'>Nike</p>
-                <p class='product-price'>3,829,000 ₫</p>
-              </div>
-            </div>
-          </div>
-          <div class='col'>
-            <div class='product mx-1 my-1'>
-              <img class='product-img' src='/assets/img/product.png' />
-              <div class='product-details'>
-                <p class='product-name'>Nike Dunk Low</p>
-                <p class='product-branch'>Nike</p>
-                <p class='product-price'>3,829,000 ₫</p>
-              </div>
-            </div>
-          </div>
-
+          {{/each}}
         </div>
       </div>
+      
+      <nav aria-label="page-navigation">
+        <ul class="pagination" id="product-pagination">
+
+        </ul>
+      </nav>
     </div>
   </div>
 </div>
-<script src='js/range-price.js'></script>
+<script src='/js/range-price.js'></script>
+<script
+  data-total-pages="{{totalPages}}"
+  data-active-page="{{activePage}}"
+  src='/js/product-paging.js'>
+</script>
+<script src="/js/customer-products.js"></script>

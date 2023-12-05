@@ -89,6 +89,10 @@
   align-self: stretch;
   flex-wrap: wrap;
 }
+.color-options .color-present {
+  border: 1px solid #000;
+}
+
 
 .option {
   display: flex;
@@ -113,24 +117,12 @@ label {
 
 .color-options .ri-check-line {
   font-size: x-large;
-  color: white;
+  color: green;
   display: none;
 }
 
 .color-options input[type='radio']:checked + label .ri-check-line {
   display: inline-block;
-}
-
-.option1 {
-  background: #000;
-}
-
-.option2 {
-  background-color: #d10000;
-}
-
-.option3 {
-  background-color: #00c868;
 }
 
 .size {
@@ -249,7 +241,7 @@ label {
   display: block !important;
 }
 
-.reviewpage {
+#review-page {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
