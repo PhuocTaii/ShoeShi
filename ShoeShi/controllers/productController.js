@@ -17,14 +17,16 @@ const productController = {
       const totalPages = Math.ceil(totalProducts / productService.productsPerPage)
 
       const products = await productService.getProducts(page)
-
-      // const products = await productService.getAllProducts()
+      const categories = await categoryService.getAllCategories()
+      const manufacturers = await manufacturerService.getAllManufacturers()
 
       res.format({
         html: function () {
           res.render('customer/productList', {
-            products: products,
-            totalPages: totalPages,
+            categories,
+            manufacturers,
+            products,
+            totalPages,
             activePage: page,
             layout: 'customer/layout/main',
             extraStyles: 'productList.css',
@@ -192,13 +194,25 @@ const productController = {
     }
   },
 
-  // //Client side
-  // getProductPage: async (req, res) => {
-  //   res.render('customer/productList', {
-  //     layout: 'customer/layout/main',
-  //     extraStyles: 'productList.css',
-  //   })
-  // },
+  //Client side
+  getProductPage: async (req, res) => {
+    try {
+    const products = await productService
+      .getAllProducts()
+      .populate('manufacturer')
+    const categories = await categoryService
+      .getAllCategories()
+    const manufacturers = await manufacturerService
+      .getAllManufacturers()
+      res.render('customer/productList', {
+        layout: 'customer/layout/main',
+        extraStyles: 'productList.css',
+        products, categories,manufacturers
+      })
+    } catch (err) {
+      res.status(500).json(err)
+    }
+  },
 
   getProductDetailPage: async (req, res) => {
     res.render('customer/productDetail', {
