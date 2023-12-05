@@ -3,7 +3,7 @@ const Customer = require('../models/customer')
 const mongoose = require('mongoose')
 
 const productService = {
-  productsPerPage: 2,
+  productsPerPage: 5,
   reviewsPerPage: 2,
 
   getTotalProducts() {
@@ -13,14 +13,6 @@ const productService = {
 
   getAllProducts() {
     const products = Product.find()
-    return products
-  },
-
-  getProducts(page) {
-    page = page - 1
-    const products = Product.find()
-      .skip(page * productService.productsPerPage)
-      .limit(productService.productsPerPage)
     return products
   },
 
@@ -76,29 +68,6 @@ const productService = {
     )
     return products
   },
-
-  getProductByFilter(query) {
-    const conditions = {};
-
-    if (query.name) {
-      conditions.name = { $regex: query.name, $options: 'i' };
-    }
-
-    if (query.category) {
-        conditions.category = { $in: query.category };
-    }
-
-    if (query.manufacturer) { 
-        conditions.manufacturer = { $in: query.manufacturer };
-    }
-
-    if (query.price) {
-        conditions.price = { $gte: query.price.$gte, $lte: query.price.$lte };
-    }
-
-    const products = Product.find(conditions);
-    return products;
-  },
   
 
   sortProducts(sort) {
@@ -130,7 +99,7 @@ const productService = {
     return products
   },
 
-  getProductByFilter(query) {
+  getQuery(query) {
     const conditions = {};
 
     if (query.name) {
@@ -148,9 +117,23 @@ const productService = {
     if (query.price) {
         conditions.price = { $gte: query.price.$gte, $lte: query.price.$lte };
     }
+    return conditions;
+  },
 
-    const products = Product.find(conditions);
+  getProductByFilter(query, page) {
+    page = page - 1
+    const conditions = productService.getQuery(query);
+
+    const products = Product.find(conditions)
+                          .skip(page * productService.productsPerPage)
+                          .limit(productService.productsPerPage);
     return products;
+  },
+
+  getTotalFilteredProducts(query) {
+    const conditions = productService.getQuery(query);
+    const totalProducts = Product.countDocuments(conditions);
+    return totalProducts;
   },
   
 
@@ -292,6 +275,9 @@ const productService = {
           color: 1,
           size: 1,
           manufacturer: 1,
+          totalReviews: {
+            $size: "$review",
+          },
           review: {
             $slice: ["$review", page*productService.reviewsPerPage, productService.reviewsPerPage],
           },
@@ -299,9 +285,6 @@ const productService = {
           totalPurchase: 1,
           status: 1,
           productImage: 1,
-          totalReviews: {
-            $size: "$review",
-          },
         },
       },
       {

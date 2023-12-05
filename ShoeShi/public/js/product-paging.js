@@ -1,9 +1,27 @@
 function paging(page) {
+	var currentUrl = window.location.href;
+
+	var indexOfPage = currentUrl.indexOf('page');
+
+	if(indexOfPage != -1) {
+		var indexOfAnd = currentUrl.indexOf('&');
+		currentUrl = currentUrl.substring(0, indexOfPage) + currentUrl.substring(indexOfAnd + 1);
+	}
+
+	var lastIndexOfQuestionMark = currentUrl.lastIndexOf('?');
+
+	var resultString = currentUrl.substring(lastIndexOfQuestionMark + 1);
+
+	
+	const url = '/products'+ '?page=' + page + '&' + resultString
+
+		
 	$.ajax({
-		url: window.location.href + '?page=' + page,
+		url: url,
 		type: 'GET',
 		dataType: 'json',
 		success: function(data) {
+			window.history.pushState({"html":data.html},"", url);
 			updateProduct(data.products)
 			updatePagination(data.totalPages, data.activePage)
 		},
@@ -11,6 +29,8 @@ function paging(page) {
 			console.log(err)
 		}
 	})
+	var currentUrl = window.location.href;
+	console.log(currentUrl);
 }
 
 function updateProduct(products) {
