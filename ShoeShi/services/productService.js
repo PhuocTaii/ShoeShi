@@ -1,12 +1,22 @@
 const Product = require('../models/product')
 
 const productService = {
+  getAllProductsWithManufacturer() {
+    return Product.find().populate('manufacturer').exec()
+  },
   getAllProducts() {
     const products = Product.find()
     return products
   },
 
-  addProduct(product, colorList, sizeList, categoryList, manufacturer, imageList) {
+  addProduct(
+    product,
+    colorList,
+    sizeList,
+    categoryList,
+    manufacturer,
+    imageList
+  ) {
     cateList = []
     sList = []
     cList = []
@@ -20,7 +30,7 @@ const productService = {
     for (let i = 0; i < colorList.length; i++) {
       cList.push(colorList[i]._id)
     }
-    for(let i = 0; i < imageList.length; i++){
+    for (let i = 0; i < imageList.length; i++) {
       iList.push(imageList[i])
     }
     const newProduct = new Product({

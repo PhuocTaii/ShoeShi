@@ -114,11 +114,11 @@
           {{#each products}}
             <div class='col'>
               <div class='product mx-1 my-2'>
-                <img class='product-img' src='/assets/img/product.png' />
+                <img class='product-img' src="https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/e6da41fa-1be4-4ce5-b89c-22be4f1f02d4/air-force-1-07-shoes-WrLlWX.png" />
                 <div class='product-details'>
-                  <p class='product-name'>Nike Dunk Low</p>
-                  <p class='product-branch'>Nike</p>
-                  <p class='product-price'>3,829,000 ₫</p>
+                  <p class='product-name'>{{this.name}}</p>
+                  <p class='product-branch'>{{this.manufacturer.name}}</p>
+                  <p class='product-price'>{{this.price}} ₫</p>
                 </div>
               </div>
             </div>
