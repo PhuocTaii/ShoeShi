@@ -20,6 +20,7 @@ passport.use(
         username: user.username,
         password: user.password,
         admin: user.admin,
+        id: user._id,
         active: true,
       })
     } catch (err) {
