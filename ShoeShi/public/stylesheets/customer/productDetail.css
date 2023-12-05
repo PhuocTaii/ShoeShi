@@ -89,6 +89,10 @@
   align-self: stretch;
   flex-wrap: wrap;
 }
+.color-options .color-present {
+  border: 1px solid #000;
+}
+
 
 .option {
   display: flex;
@@ -113,7 +117,7 @@ label {
 
 .color-options .ri-check-line {
   font-size: x-large;
-  color: white;
+  color: green;
   display: none;
 }
 

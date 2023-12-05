@@ -1,3 +1,6 @@
+const imageActiveCarousel = document.getElementById('carousel-images').querySelector('.carousel-item');
+imageActiveCarousel.classList.add('active');
+
 // format currency
 const productPrice = document.getElementById('main-product-detail').querySelector('.product-price span');
 const price = productPrice.getAttribute('data-price');
@@ -108,10 +111,10 @@ function sendReview(event) {
 		data,
 		dataType: 'json',
 		success: function(data) {
-			
+			alert('Review added')
 		},
 		error: function(err) {
-			console.log(err)
+			window.location.href = '/login'
 		}
 	})
 }

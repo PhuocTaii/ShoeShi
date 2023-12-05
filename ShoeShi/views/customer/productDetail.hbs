@@ -12,13 +12,13 @@
                 data-bs-slide-to='{{@index}}'
                 class='active'
                 aria-current='true'
-                aria-label='Slide '+ {{@index}}
+                aria-label='Slide {{@index}}'
               ></button>
               {{/each}}
             </div>
-            <div class='carousel-inner'>
+            <div id="carousel-images" class='carousel-inner'>
               {{#each details.productImage}}
-              <div class='carousel-item active'>
+              <div class='carousel-item'>
                 <img
                   class='product-image'
                   src={{this}}
@@ -29,7 +29,7 @@
             <button
               class='carousel-control-prev'
               type='button'
-              data-bs-target='#carouselProduct-image'
+              data-bs-target='#carousel-product-image'
               data-bs-slide='prev'
             >
               <span
@@ -41,7 +41,7 @@
             <button
               class='carousel-control-next'
               type='button'
-              data-bs-target='#carouselProduct-image'
+              data-bs-target='#carousel-product-image'
               data-bs-slide='next'
             >
               <span
@@ -69,7 +69,7 @@
                 name='color-option'
                 class='option'
               />
-              <label for='{{this._id}}' style="background-color: {{this.colorCode}};">
+              <label class="color-present" for='{{this._id}}' style="background-color: {{this.colorCode}};">
                 <i class='ri-check-line'></i>
               </label>
               {{/each}}
@@ -193,8 +193,8 @@
         <div class='carousel-item active'>
           <div class='product-container'>
             {{#each relatedProducts}}
-            <a class='product'>
-              <img class='product-img' src='/assets/img/product.png' />
+            <a class='product' href="/product/{{this._id}}">
+              <img class='product-img' src={{this.productImage.[0]}} />
               <div class='product-details'>
                 <p class='product-name'>{{this.name}}</p>
                 <p class='product-branch'>{{this.manufacturer.name}}</p>
