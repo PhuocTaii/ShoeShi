@@ -4,6 +4,7 @@ const sizeService = require('../services/sizeService')
 const categoryService = require('../services/categoryService')
 const manufacturerService = require('../services/manufacturerService')
 const imageService = require('../services/imageService')
+const userService = require('../services/userService')
 
 
 const productController = {
@@ -132,5 +133,37 @@ const productController = {
       extraStyles: 'products.css',
     })
   },
+
+  getProductDetail: async (req, res) => {
+    try {
+      const page = parseInt(req.query.page) || 1
+
+      const details = await productService.getProductDetail(req.params.id, page)
+      const totalPages = Math.ceil(details[0].totalReviews / productService.reviewsPerPage)
+
+      res.format({
+        html: function () {
+          res.render('customer/productDetail', {
+            details: details[0],
+            totalPages,
+            activePage: page,
+            layout: 'customer/layout/main',
+            extraStyles: 'productDetail.css',
+          })
+        },
+        json: function () {
+          res.json({
+            details: details[0],
+            totalPages,
+            activePage: page,
+          });
+        }
+      });
+    } catch (err) {
+      res.status(500).json(err)
+      console.log(err)
+    }
+  },
+
 }
 module.exports = productController
