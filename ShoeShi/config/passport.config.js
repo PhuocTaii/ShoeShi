@@ -21,7 +21,6 @@ passport.use(
         username: user.username,
         password: user.password,
         admin: user.admin,
-        id: user._id,
         active: true,
       })
     } catch (err) {
@@ -32,7 +31,7 @@ passport.use(
 
 passport.serializeUser(function (user, cb) {
   process.nextTick(function () {
-    cb(null, { id: user._id, admin: user.admin })
+    cb(null, { id: user.id, admin: user.admin })
   })
 })
 
