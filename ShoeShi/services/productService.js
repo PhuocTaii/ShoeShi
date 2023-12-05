@@ -95,7 +95,8 @@ const productService = {
       category: { $in: product.category }
     })
     .sort({ category: -1 })
-    .limit(12);
+    .limit(6)
+    .populate('manufacturer');
     return products
   },
 
@@ -125,7 +126,8 @@ const productService = {
 
     const products = Product.find(conditions)
                           .skip(page * productService.productsPerPage)
-                          .limit(productService.productsPerPage);
+                          .limit(productService.productsPerPage)
+                          .populate('manufacturer');
     return products;
   },
 
@@ -289,6 +291,7 @@ const productService = {
       {
         $unwind: {
           path: "$review",
+          "preserveNullAndEmptyArrays": true
         }
       },
       {
@@ -300,7 +303,10 @@ const productService = {
         }
       },
       {
-        $unwind: "$reviewsInfo"
+        $unwind: {
+          path: "$reviewsInfo",
+          "preserveNullAndEmptyArrays": true
+        }
       },
       {
         $group: {

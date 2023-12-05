@@ -292,12 +292,17 @@ const productController = {
       const details = await productService.getProductDetail(req.params.id, page)
       const totalPages = Math.ceil(details[0].totalReviews / productService.reviewsPerPage)
 
+      const product = await productService.getProductById(req.params.id)
+      const relatedProducts = await productService.getRelatedProducts(product, req.params.id)
+
       res.format({
         html: function () {
           res.render('customer/productDetail', {
             details: details[0],
             totalPages,
             activePage: page,
+            totalRelatedProducts: relatedProducts.length,
+            relatedProducts,
             layout: 'customer/layout/main',
             extraStyles: 'productDetail.css',
           })

@@ -1,16 +1,4 @@
 function paging(page) {
-	// var searchQuery = window.location.search
-	// if(searchQuery == '') {
-	// 	searchQuery = '?page=' + page
-	// }
-	// else {
-	// 	searchQuery = searchQuery.split('?')[1]
-	// 	searchParams = searchQuery.split('&')
-	// 	console.log(searchParams)
-	// 	searchParams = searchParams.filter(param => param.split('=')[0] != 'page')
-	// 	searchQuery = searchParams.join('&')
-	// 	console.log(searchQuery)
-	// }
 
 	const url = '/products'+ '?page=' + page
 	$.ajax({
@@ -36,7 +24,7 @@ function updateProduct(products) {
 		`
 		<div class='col'>
 			<div class='product mx-1 my-2'>
-				<img class='product-img' src='/assets/img/product.png' />
+				<img class='product-img' src=${prod.productImage[0]} />
 				<div class='product-details'>
 					<p class='product-name'>${prod.name}</p>
 					<p class='product-branch'>${prod.manufacturer}</p>

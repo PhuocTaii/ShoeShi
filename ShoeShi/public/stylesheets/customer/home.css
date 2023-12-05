@@ -104,10 +104,14 @@
   width: 100%;
 }
 
-.sample-featured > div {
+.sample-featured > a {
   border: 2px solid #000;
   border-radius: 10px;
   overflow: hidden;
+}
+.sample-featured > a:hover {
+  color: var(--my-black);
+  cursor: pointer;
 }
 
 .sample-featured p{

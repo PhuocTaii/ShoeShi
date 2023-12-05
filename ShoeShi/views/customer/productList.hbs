@@ -103,14 +103,14 @@
         <div id="product-list" class='row row-cols-4 row-col-md-1'>
           {{#each products}}
           <div class='col'>
-            <div class='product mx-1 my-2'>
-              <img class='product-img' src='/assets/img/product.png' />
+            <a class='product mx-1 my-2' href='/product/{{this._id}}'>
+              <img class='product-img' src={{this.productImage.[0]}} />
               <div class='product-details'>
                 <p class='product-name'>{{this.name}}</p>
-                <p class='product-branch'>{{this.manufacturer}}</p>
+                <p class='product-branch'>{{this.manufacturer.name}}</p>
                 <p class='product-price'>{{this.price}} ₫</p>
               </div>
-            </div>
+            </a>
           </div>
           {{/each}}
         </div>

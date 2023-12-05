@@ -110,6 +110,7 @@
           <div class='review show'>
             <div id='review-page'>
               {{#each details.review}}
+              {{#if this._id}}
               <div id={{this._id}} class='r-review' data-rating={{this.rating}}>
                 <p class='r-topic'>{{this.tittle}}</p>
                 <div class='r-rating'>
@@ -122,15 +123,18 @@
                 <p class='r-content'>{{this.content}}</p>
                 <p class='r-reviewer'>{{this.reviewer}} | {{this.reviewTime}}</p>
               </div>
+              {{/if}}
               {{/each}}
             </div>
           </div>
 
+          {{#if totalPages}}
           <nav aria-label='LinkToReviewPages'>
             <ul id="review-pagination" class='pagination' data-total-pages={{totalPages}} data-active-page={{activePage}}>
               
             </ul>
           </nav>
+          {{/if}}
         </div>
       </div>
       <div class='col-4 px-0'>
@@ -175,7 +179,7 @@
   <div class='other-products-container overflow-hidden'>
     <p class='others-tittle'>you might also like</p>
     <div id='carouselOther-products' class='carousel slide'>
-      <div class='carousel-indicators'>
+      {{!-- <div class='carousel-indicators'>
         <button
           type='button'
           data-bs-target='#carouselOther-products'
@@ -184,178 +188,24 @@
           aria-current='true'
           aria-label='Slide 1'
         ></button>
-        <button
-          type='button'
-          data-bs-target='#carouselOther-products'
-          data-bs-slide-to='1'
-          aria-label='Slide 2'
-        ></button>
-        <button
-          type='button'
-          data-bs-target='#carouselOther-products'
-          data-bs-slide-to='2'
-          aria-label='Slide 3'
-        ></button>
-      </div>
+      </div> --}}
       <div class='carousel-inner'>
         <div class='carousel-item active'>
           <div class='product-container'>
-            <div class='product'>
+            {{#each relatedProducts}}
+            <a class='product'>
               <img class='product-img' src='/assets/img/product.png' />
               <div class='product-details'>
-                <p class='product-name'>Nike Dunk Low</p>
-                <p class='product-branch'>Nike</p>
-                <p class='product-price'>3,829,000 ₫</p>
+                <p class='product-name'>{{this.name}}</p>
+                <p class='product-branch'>{{this.manufacturer.name}}</p>
+                <p class='product-price'>{{this.price}} ₫</p>
               </div>
-            </div>
-            <div class='product'>
-              <img class='product-img' src='/assets/img/product.png' />
-              <div class='product-details'>
-                <p class='product-name'>Nike Dunk Low</p>
-                <p class='product-branch'>Nike</p>
-                <p class='product-price'>3,829,000 ₫</p>
-              </div>
-            </div>
-            <div class='product'>
-              <img class='product-img' src='/assets/img/product.png' />
-              <div class='product-details'>
-                <p class='product-name'>Nike Dunk Low</p>
-                <p class='product-branch'>Nike</p>
-                <p class='product-price'>3,829,000 ₫</p>
-              </div>
-            </div>
-            <div class='product'>
-              <img class='product-img' src='/assets/img/product.png' />
-              <div class='product-details'>
-                <p class='product-name'>Nike Dunk Low</p>
-                <p class='product-branch'>Nike</p>
-                <p class='product-price'>3,829,000 ₫</p>
-              </div>
-            </div>
-            <div class='product'>
-              <img class='product-img' src='/assets/img/product.png' />
-              <div class='product-details'>
-                <p class='product-name'>Nike Dunk Low</p>
-                <p class='product-branch'>Nike</p>
-                <p class='product-price'>3,829,000 ₫</p>
-              </div>
-            </div>
-            <div class='product'>
-              <img class='product-img' src='/assets/img/product.png' />
-              <div class='product-details'>
-                <p class='product-name'>Nike Dunk Low</p>
-                <p class='product-branch'>Nike</p>
-                <p class='product-price'>3,829,000 ₫</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class='carousel-item'>
-          <div class='product-container'>
-            <div class='product'>
-              <img class='product-img' src='/assets/img/product.png' />
-              <div class='product-details'>
-                <p class='product-name'>Nike Dunk Low</p>
-                <p class='product-branch'>Nike</p>
-                <p class='product-price'>3,829,000 ₫</p>
-              </div>
-            </div>
-            <div class='product'>
-              <img class='product-img' src='/assets/img/product.png' />
-              <div class='product-details'>
-                <p class='product-name'>Nike Dunk Low</p>
-                <p class='product-branch'>Nike</p>
-                <p class='product-price'>3,829,000 ₫</p>
-              </div>
-            </div>
-            <div class='product'>
-              <img class='product-img' src='/assets/img/product.png' />
-              <div class='product-details'>
-                <p class='product-name'>Nike Dunk Low</p>
-                <p class='product-branch'>Nike</p>
-                <p class='product-price'>3,829,000 ₫</p>
-              </div>
-            </div>
-            <div class='product'>
-              <img class='product-img' src='/assets/img/product.png' />
-              <div class='product-details'>
-                <p class='product-name'>Nike Dunk Low</p>
-                <p class='product-branch'>Nike</p>
-                <p class='product-price'>3,829,000 ₫</p>
-              </div>
-            </div>
-            <div class='product'>
-              <img class='product-img' src='/assets/img/product.png' />
-              <div class='product-details'>
-                <p class='product-name'>Nike Dunk Low</p>
-                <p class='product-branch'>Nike</p>
-                <p class='product-price'>3,829,000 ₫</p>
-              </div>
-            </div>
-            <div class='product'>
-              <img class='product-img' src='/assets/img/product.png' />
-              <div class='product-details'>
-                <p class='product-name'>Nike Dunk Low</p>
-                <p class='product-branch'>Nike</p>
-                <p class='product-price'>3,829,000 ₫</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class='carousel-item'>
-          <div class='product-container'>
-            <div class='product'>
-              <img class='product-img' src='/assets/img/product.png' />
-              <div class='product-details'>
-                <p class='product-name'>Nike Dunk Low</p>
-                <p class='product-branch'>Nike</p>
-                <p class='product-price'>3,829,000 ₫</p>
-              </div>
-            </div>
-            <div class='product'>
-              <img class='product-img' src='/assets/img/product.png' />
-              <div class='product-details'>
-                <p class='product-name'>Nike Dunk Low</p>
-                <p class='product-branch'>Nike</p>
-                <p class='product-price'>3,829,000 ₫</p>
-              </div>
-            </div>
-            <div class='product'>
-              <img class='product-img' src='/assets/img/product.png' />
-              <div class='product-details'>
-                <p class='product-name'>Nike Dunk Low</p>
-                <p class='product-branch'>Nike</p>
-                <p class='product-price'>3,829,000 ₫</p>
-              </div>
-            </div>
-            <div class='product'>
-              <img class='product-img' src='/assets/img/product.png' />
-              <div class='product-details'>
-                <p class='product-name'>Nike Dunk Low</p>
-                <p class='product-branch'>Nike</p>
-                <p class='product-price'>3,829,000 ₫</p>
-              </div>
-            </div>
-            <div class='product'>
-              <img class='product-img' src='/assets/img/product.png' />
-              <div class='product-details'>
-                <p class='product-name'>Nike Dunk Low</p>
-                <p class='product-branch'>Nike</p>
-                <p class='product-price'>3,829,000 ₫</p>
-              </div>
-            </div>
-            <div class='product'>
-              <img class='product-img' src='/assets/img/product.png' />
-              <div class='product-details'>
-                <p class='product-name'>Nike Dunk Low</p>
-                <p class='product-branch'>Nike</p>
-                <p class='product-price'>3,829,000 ₫</p>
-              </div>
-            </div>
+            </a>
+            {{/each}}
           </div>
         </div>
       </div>
-      <button
+      {{!-- <button
         class='carousel-control-prev'
         type='button'
         data-bs-target='#carouselOther-products'
@@ -372,7 +222,7 @@
       >
         <span class='carousel-control-next-icon' aria-hidden='true'></span>
         <span class='visually-hidden'>Next</span>
-      </button>
+      </button> --}}
     </div>
   </div>
 </div>

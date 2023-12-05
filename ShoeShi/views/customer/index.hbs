@@ -56,7 +56,7 @@
 
     <div class='sample-featured row'>
       {{#each featuredProducts}}
-        <div class='col p-0 mx-2'>
+        <a class='col p-0 mx-2' href="/product/{{this._id}}">
           <img src='assets/img/nike-sample.png' alt='' />
           <div class='detail p-2 '>
             <p>{{this.name}}</p>
@@ -64,7 +64,7 @@
             <p class="price-unit">{{this.price}} đ</p>
             <p>{{this.status}}</p>
           </div>
-        </div>
+        </a>
       {{/each}}
     </div>
   </div>
