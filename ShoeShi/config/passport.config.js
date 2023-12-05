@@ -31,7 +31,7 @@ passport.use(
 
 passport.serializeUser(function (user, cb) {
   process.nextTick(function () {
-    cb(null, { id: user._id, admin: user.admin })
+    cb(null, { id: user.id, admin: user.admin })
   })
 })
 

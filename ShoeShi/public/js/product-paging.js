@@ -1,9 +1,24 @@
 function paging(page) {
+	// var searchQuery = window.location.search
+	// if(searchQuery == '') {
+	// 	searchQuery = '?page=' + page
+	// }
+	// else {
+	// 	searchQuery = searchQuery.split('?')[1]
+	// 	searchParams = searchQuery.split('&')
+	// 	console.log(searchParams)
+	// 	searchParams = searchParams.filter(param => param.split('=')[0] != 'page')
+	// 	searchQuery = searchParams.join('&')
+	// 	console.log(searchQuery)
+	// }
+
+	const url = '/products'+ '?page=' + page
 	$.ajax({
-		url: window.location.href + '?page=' + page,
+		url: url,
 		type: 'GET',
 		dataType: 'json',
 		success: function(data) {
+			window.history.pushState({"html":data.html},"", url);
 			updateProduct(data.products)
 			updatePagination(data.totalPages, data.activePage)
 		},
