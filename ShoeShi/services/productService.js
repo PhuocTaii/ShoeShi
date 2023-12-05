@@ -28,6 +28,7 @@ const productService = {
     const products = Product.find(conditions);
     return products;
   },
+  
 
   sortProducts(sort) {
     if(sort == 'newest'){
