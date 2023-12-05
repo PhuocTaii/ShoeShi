@@ -1,9 +1,6 @@
 const Product = require('../models/product')
 
 const productService = {
-  getAllProductsWithManufacturer() {
-    return Product.find().populate('manufacturer').exec()
-  },
   getAllProducts() {
     const products = Product.find()
     return products
