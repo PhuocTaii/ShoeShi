@@ -68,26 +68,6 @@ const productService = {
     )
     return products
   },
-  
-
-  sortProducts(sort) {
-    if(sort == 'newest'){
-      const products = Product.find().sort({creationDate: -1})
-      return products
-    }
-    if(sort == 'oldest'){
-      const products = Product.find().sort({creationDate: 1})
-      return products
-    }
-    if(sort == 'low-high'){
-      const products = Product.find().sort({price: 1})
-      return products
-    }
-    if(sort == 'high-low'){
-      const products = Product.find().sort({price: -1})
-      return products
-    }
-  },
 
   getRelatedProducts(product, id){
     const products = Product.find({
@@ -139,21 +119,26 @@ const productService = {
   },
   
 
-  sortProducts(sort) {
+  sortProducts(sort, page) {
+    page = page - 1
     if(sort == 'newest'){
-      const products = Product.find().sort({creationDate: -1})
+      const products = Product.find().sort({creationDate: -1}).skip(page * productService.productsPerPage)
+      .limit(productService.productsPerPage).populate('manufacturer')
       return products
     }
     if(sort == 'oldest'){
-      const products = Product.find().sort({creationDate: 1})
+      const products = Product.find().sort({creationDate: 1}).skip(page * productService.productsPerPage)
+      .limit(productService.productsPerPage).populate('manufacturer')
       return products
     }
     if(sort == 'low-high'){
-      const products = Product.find().sort({price: 1})
+      const products = Product.find().sort({price: 1}).skip(page * productService.productsPerPage)
+      .limit(productService.productsPerPage).populate('manufacturer')
       return products
     }
     if(sort == 'high-low'){
-      const products = Product.find().sort({price: -1})
+      const products = Product.find().sort({price: -1}).skip(page * productService.productsPerPage)
+      .limit(productService.productsPerPage).populate('manufacturer')
       return products
     }
   },

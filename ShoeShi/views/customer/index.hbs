@@ -57,7 +57,7 @@
     <div class='sample-featured row'>
       {{#each featuredProducts}}
         <a class='col p-0 mx-2' href="/product/{{this._id}}">
-          <img src='assets/img/nike-sample.png' alt='' />
+          <img src={{this.productImage.[0]}} alt='' />
           <div class='detail p-2 '>
             <p>{{this.name}}</p>
             <p class='product-manufacturer'>{{this.manufacturer}}</p>

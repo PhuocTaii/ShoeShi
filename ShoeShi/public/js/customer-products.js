@@ -25,13 +25,16 @@ function sortProducts(){
   console.log(sortElement);
   $.ajax({
     type: 'GET',
-    url: '/products/sort',
+    url: '/products',
     data: sortElement,
-    success: function (response) {
-      console.log(response)
+    dataType: 'json',
+    success: function (data) {
+      window.history.pushState({"html":data.html},"", '/products'+ '?' + sortElement);
+      updateProduct(data.products)
+      updatePagination(data.totalPages, data.activePage)
     },
     error: function (error) {
-      alert("Can's find")
+      // alert("Can's find")
     },
   })
 }

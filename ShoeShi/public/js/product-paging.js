@@ -44,7 +44,7 @@ function updateProduct(products) {
 				<img class='product-img' src=${prod.productImage[0]} />
 				<div class='product-details'>
 					<p class='product-name'>${prod.name}</p>
-					<p class='product-branch'>${prod.manufacturer}</p>
+					<p class='product-branch'>${prod.manufacturer.name}</p>
 					<p class='product-price'>${prod.price} ₫</p>
 				</div>
 			</div>
