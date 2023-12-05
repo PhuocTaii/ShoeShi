@@ -2,24 +2,18 @@
   <div class='banner-section row mx-0'>
     <div class='left-box-img col col-md p-0'>
       <div class='brand-banner p-0'>
-        <a href='#'><img src='assets/img/nike.png' alt='nike shoes' /></a>
-        <small class='brand-title-banner'>NIKE</small>
+        <img src='assets/img/nike.png' alt='nike shoes' />
+        <a href='/products?brand=nike'><small class='brand-title-banner'>NIKE</small></a>
       </div>
     </div>
     <div class='right-box-img col-md p-0'>
       <div class='brand-banner p-0'>
-        <a href='#'><img
-            src='assets/img/new-balance.png'
-            alt='new balance shoes'
-          /></a>
-        <small class='brand-title-banner'>NEW BALANCE</small>
+        <img src='assets/img/new-balance.png' alt='new balance shoes' />
+        <a href='/products?brand=newbalance'><small class='brand-title-banner'>NEW BALANCE</small></a>
       </div>
       <div class='brand-banner p-0'>
-        <a class='adidas-img' ref='#'><img
-            src='assets/img/adidas.png'
-            alt='adidas shoes'
-          /></a>
-        <small class='brand-title-banner'>ADIDAS</small>
+        <img src='assets/img/adidas.png' alt='adidas shoes' />
+        <a href='/products?brand=adidas'><small class='brand-title-banner'>ADIDAS</small></a>
       </div>
     </div>
   </div>
@@ -61,46 +55,17 @@
     <div class='fs-2 fw-bold mb-4'>F E A T U R E D</div>
 
     <div class='sample-featured row'>
-      <div class='col p-0 mx-2'>
-        <img src='assets/img/nike-sample.png' alt='' />
-        <div class='detail p-2'>
-          <div>Nike Dunk Low</div>
-          <div class='text-black-50'>Nike</div>
-          <div>3,829,000</div>
+      {{#each featuredProducts}}
+        <div class='col p-0 mx-2'>
+          <img src='assets/img/nike-sample.png' alt='' />
+          <div class='detail p-2 '>
+            <p>{{this.name}}</p>
+            <p class='product-manufacturer'>{{this.manufacturer}}</p>
+            <p class="price-unit">{{this.price}} đ</p>
+            <p>{{this.status}}</p>
+          </div>
         </div>
-      </div>
-      <div class='col p-0 mx-2'>
-        <img src='assets/img/nike-sample.png' alt='' />
-        <div class='detail p-2'>
-          <div>Nike Dunk Low</div>
-          <div class='text-black-50'>Nike</div>
-          <div>3,829,000</div>
-        </div>
-      </div>
-      <div class='col p-0 mx-2'>
-        <img src='assets/img/nike-sample.png' alt='' />
-        <div class='detail p-2'>
-          <div>Nike Dunk Low</div>
-          <div class='text-black-50'>Nike</div>
-          <div>3,829,000</div>
-        </div>
-      </div>
-      <div class='col p-0 mx-2'>
-        <img src='assets/img/nike-sample.png' alt='' />
-        <div class='detail p-2'>
-          <div>Nike Dunk Low</div>
-          <div class='text-black-50'>Nike</div>
-          <div>3,829,000</div>
-        </div>
-      </div>
-      <div class='col p-0 mx-2'>
-        <img src='assets/img/nike-sample.png' alt='' />
-        <div class='detail p-2'>
-          <div>Nike Dunk Low</div>
-          <div class='text-black-50'>Nike</div>
-          <div>3,829,000</div>
-        </div>
-      </div>
+      {{/each}}
     </div>
   </div>
 

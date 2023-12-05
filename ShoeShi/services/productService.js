@@ -24,7 +24,163 @@ const productService = {
     return products
   },
 
-  addProduct(product, colorList, sizeList, categoryList, manufacturer, imageList) {
+  getProducts(page) {
+    page = page - 1
+    const products = Product.find()
+      .skip(page * productService.productsPerPage)
+      .limit(productService.productsPerPage)
+    return products
+  },
+
+  getOtherProducts(id) {
+    const products = Product.find({ _id: { $ne: id } })
+    return products
+  },
+
+  getFeaturedProducts() {
+    const products = Product.aggregate(
+      [
+        {
+          $sort:
+            {
+              totalPurchase: -1,
+            },
+        },
+        {
+          $limit: 5,
+        },
+        {
+          $lookup: {
+            from: "manufacturers",
+            localField: "manufacturer",
+            foreignField: "_id",
+            as: "manufacturer",
+          },
+        },
+        {
+          $project: {
+            _id: 1,
+            name: 1,
+            price: 1,
+            productImage: 1,
+            status: 1,
+            manufacturer: "$manufacturer.name",
+          },
+        },
+        {
+          $unwind: {
+            path: "$manufacturer",
+          },
+        },
+      ]
+    )
+    return products
+  },
+
+  getProductByFilter(query) {
+    const conditions = {};
+
+    if (query.name) {
+      conditions.name = { $regex: query.name, $options: 'i' };
+    }
+
+    if (query.category) {
+        conditions.category = { $in: query.category };
+    }
+
+    if (query.manufacturer) { 
+        conditions.manufacturer = { $in: query.manufacturer };
+    }
+
+    if (query.price) {
+        conditions.price = { $gte: query.price.$gte, $lte: query.price.$lte };
+    }
+
+    const products = Product.find(conditions);
+    return products;
+  },
+  
+
+  sortProducts(sort) {
+    if(sort == 'newest'){
+      const products = Product.find().sort({creationDate: -1})
+      return products
+    }
+    if(sort == 'oldest'){
+      const products = Product.find().sort({creationDate: 1})
+      return products
+    }
+    if(sort == 'low-high'){
+      const products = Product.find().sort({price: 1})
+      return products
+    }
+    if(sort == 'high-low'){
+      const products = Product.find().sort({price: -1})
+      return products
+    }
+  },
+
+  getRelatedProducts(product, id){
+    const products = Product.find({
+      _id: { $ne: id },
+      category: { $in: product.category }
+    })
+    .sort({ category: -1 })
+    .limit(12);
+    return products
+  },
+
+  getProductByFilter(query) {
+    const conditions = {};
+
+    if (query.name) {
+      conditions.name = { $regex: query.name, $options: 'i' };
+    }
+
+    if (query.category) {
+        conditions.category = { $in: query.category };
+    }
+
+    if (query.manufacturer) { 
+        conditions.manufacturer = { $in: query.manufacturer };
+    }
+
+    if (query.price) {
+        conditions.price = { $gte: query.price.$gte, $lte: query.price.$lte };
+    }
+
+    const products = Product.find(conditions);
+    return products;
+  },
+  
+
+  sortProducts(sort) {
+    if(sort == 'newest'){
+      const products = Product.find().sort({creationDate: -1})
+      return products
+    }
+    if(sort == 'oldest'){
+      const products = Product.find().sort({creationDate: 1})
+      return products
+    }
+    if(sort == 'low-high'){
+      const products = Product.find().sort({price: 1})
+      return products
+    }
+    if(sort == 'high-low'){
+      const products = Product.find().sort({price: -1})
+      return products
+    }
+  },
+
+  addProduct(
+    product,
+    colorList,
+    sizeList,
+    categoryList,
+    manufacturer,
+    imageList
+  ) {
     cateList = []
     sList = []
     cList = []
@@ -38,13 +194,13 @@ const productService = {
     for (let i = 0; i < colorList.length; i++) {
       cList.push(colorList[i]._id)
     }
-    for(let i = 0; i < imageList.length; i++){
+    for (let i = 0; i < imageList.length; i++) {
       iList.push(imageList[i])
     }
     const newProduct = new Product({
       category: cateList,
       creationDate: product.creationDate,
-      manufacturer: manufacturer,
+      manufacturer: manufacturer._id,
       name: product.name,
       price: product.price,
       status: product.status,
@@ -71,6 +227,11 @@ const productService = {
 
   getProductById(id) {
     const foundProduct = Product.findById(id)
+    return foundProduct
+  },
+
+  getProductByName(name){
+    const foundProduct = Product.find({ name: { $regex: name, $options: 'i' } })
     return foundProduct
   },
 
