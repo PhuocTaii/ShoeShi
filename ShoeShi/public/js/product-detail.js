@@ -86,3 +86,32 @@ function updatePagination(totalPages, activePage) {
 
 updatePagination(parseInt(document.getElementById('review-pagination').getAttribute('data-total-pages'), 10), parseInt(document.getElementById('review-pagination').getAttribute('data-active-page'), 10))
 
+// ADD REVIEW
+function sendReview(event) {
+	event.preventDefault();
+
+	const form = document.forms['review-form']
+
+	const title = form['title'].value
+	const content = form['content'].value
+	const rating = document.getElementById('review-form').querySelector('.rating').getAttribute('data-rating-add')
+
+	const data = {
+		title,
+		content,
+		rating,
+	}
+
+	$.ajax({
+		url: window.location.href + '/review',
+		type: 'POST',
+		data,
+		dataType: 'json',
+		success: function(data) {
+			
+		},
+		error: function(err) {
+			console.log(err)
+		}
+	})
+}

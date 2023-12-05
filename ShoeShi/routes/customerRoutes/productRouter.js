@@ -7,6 +7,8 @@ router.get('/products', productController.getAllProducts)
 
 router.get('/product/:id', productController.getProductDetail)
 
+router.post('/product/:id/review', isAuth, productController.addReview)
+
 //Client side
 // router.get('/products', productController.getProductPage)
 

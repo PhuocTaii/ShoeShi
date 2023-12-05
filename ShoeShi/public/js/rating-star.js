@@ -9,7 +9,7 @@ function rate(event) {
 
     star.addEventListener('mouseleave', () => {
       resetStars(stars)
-      const rating = element.getAttribute('data-rating')
+      const rating = element.getAttribute('data-rating-add')
       if (rating) {
         highlightStars(stars, parseInt(rating))
       }
@@ -17,8 +17,8 @@ function rate(event) {
 
     star.addEventListener('click', () => {
       const rating = index + 1
-      element.setAttribute('data-rating', rating)
-      console.log(rating)
+      element.setAttribute('data-rating-add', rating)
+      // console.log(rating)
     })
   })
 }

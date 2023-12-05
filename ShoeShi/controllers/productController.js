@@ -165,5 +165,19 @@ const productController = {
     }
   },
 
+  addReview: async (req, res) => {
+    try {
+      const product = await productService.getProductById(req.params.id)
+      // console.log(req.user)
+      const reviewer = await userService.getUserById(req.user.id)
+      // console.log(reviewer)
+      const reviewedProduct = await productService.addReview(product, req.body, reviewer)
+      // console.log(reviewedProduct)
+      res.status(200).json(reviewedProduct)
+    } catch (err) {
+      res.status(500).json(err)
+      console.log(err)
+    }
+  }
 }
 module.exports = productController

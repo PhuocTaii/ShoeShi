@@ -188,6 +188,12 @@ const productService = {
     ]);
   },
 
+  addReview(product, review, reviewer) {
+    review.reviewer = reviewer
+    console.log(review)
+    product.review.push(review)
+    return product.save()
+  },
 }
 
 module.exports = productService
