@@ -1,6 +1,21 @@
 function paging(page) {
+	var currentUrl = window.location.href;
 
-	const url = '/products'+ '?page=' + page
+	var indexOfPage = currentUrl.indexOf('page');
+
+	if(indexOfPage != -1) {
+		var indexOfAnd = currentUrl.indexOf('&');
+		currentUrl = currentUrl.substring(0, indexOfPage) + currentUrl.substring(indexOfAnd + 1);
+	}
+
+	var lastIndexOfQuestionMark = currentUrl.lastIndexOf('?');
+
+	var resultString = currentUrl.substring(lastIndexOfQuestionMark + 1);
+
+	
+	const url = '/products'+ '?page=' + page + '&' + resultString
+
+		
 	$.ajax({
 		url: url,
 		type: 'GET',
@@ -14,6 +29,8 @@ function paging(page) {
 			console.log(err)
 		}
 	})
+	var currentUrl = window.location.href;
+	console.log(currentUrl);
 }
 
 function updateProduct(products) {

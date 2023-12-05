@@ -122,6 +122,7 @@ const productService = {
   },
 
   getProductByFilter(query, page) {
+    page = page - 1
     const conditions = productService.getQuery(query);
 
     const products = Product.find(conditions)

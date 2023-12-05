@@ -8,7 +8,6 @@ $(document).ready(function () {
         data: formData,
         dataType: 'json',
         success: function (data) {
-          console.log(data)
           window.history.pushState({"html":data.html},"", '/products'+ '?' + formData);
           updateProduct(data.products)
           updatePagination(data.totalPages, data.activePage)
