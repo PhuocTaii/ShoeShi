@@ -1,0 +1,57 @@
+#categories-container {
+  padding: 0 20px;
+}
+#categories-container > h3 {
+  margin: 40px 0 48px;
+}
+#categories-container > div:last-child {
+  margin-bottom: 40px;
+}
+h3,
+.card-header p:first-child,
+button {
+  text-transform: uppercase;
+}
+
+.card-header p:first-child {
+  font-weight: 500;
+  font-size: 20px;
+  margin: 0;
+}
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.card.col-lg {
+  width: 100%;
+  min-width: 307px;
+}
+.card {
+  height: fit-content;
+}
+.row {
+  gap: 20px;
+}
+
+table button {
+  border: none;
+  background-color: transparent;
+  padding: 0;
+  margin-right: 20px;
+}
+table button i {
+  font-size: 20px;
+}
+
+.modal-header p {
+  margin: 0;
+  text-transform: uppercase;
+  font-size: 24px;
+  font-weight: 600;
+}
+.modal-body input {
+  display: block;
+  width: 100%;
+  margin-top: 10px;
+}
