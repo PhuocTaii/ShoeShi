@@ -47,16 +47,6 @@ const orderController = {
     }
   },
 
-  // GET all orders
-  getAllOrders: async (req, res) => {
-    try {
-      const orders = await orderService.getAllOrders()
-      res.status(200).json(orders)
-    } catch (err) {
-      res.status(500).json(err)
-    }
-  },
-
   // GET an order by id
   getOrderById: async (req, res) => {
     try {
@@ -69,37 +59,6 @@ const orderController = {
       res.status(500).json(err)
     }
   },
-
-  // PUT update an order
-  updateOrder: async (req, res) => {
-    try {
-      const updatedOrder = await orderService.updateOrder(
-        req.params.id,
-        req.body
-      )
-      res.status(200).json(updatedOrder)
-    } catch (err) {
-      res.status(500).json(err)
-    }
-  },
-
-  // DELETE an order
-  deleteOrder: async (req, res) => {
-    try {
-      await orderService.deleteOrder(req.params.id)
-      res.status(200).json('Order has been deleted')
-    } catch (err) {
-      res.status(500).json(err)
-    }
-  },
-
-  //Client side
-  getAdminOrderPage: async (req, res) => {
-    res.render('admin/orders', {
-      layout: 'admin/layout/main',
-      extraStyles: 'order.css',
-    })
-  },  
 
   getOrderPage: async (req, res) => {
     res.render('customer/order', {

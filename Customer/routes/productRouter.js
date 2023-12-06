@@ -1,6 +1,6 @@
-const productController = require('../../controllers/productController')
+const productController = require('../controllers/productController')
 const router = require('express').Router()
-const {isAuth, isAdmin} = require('../../middleware/authenticationMiddleware')
+const {isAuth, isAdmin} = require('../middleware/authenticationMiddleware')
 
 //GET all products
 router.get('/products', productController.getAllProducts)

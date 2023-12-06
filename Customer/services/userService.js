@@ -2,11 +2,6 @@ const User = require('../models/customer')
 const Cart = require('../models/cart')
 
 const userService = {
-  getAllUsers() {
-    const users = User.find({ admin: false })
-    console.log(users)
-    return users
-  },
 
   addUser(user, imageUrl) {
     console.log(user)
@@ -38,11 +33,6 @@ const userService = {
 
   updateUser(id, body) {
     const user = User.findByIdAndUpdate(id, body)
-    return user
-  },
-
-  deleteUser(id) {
-    const user = User.findByIdAndDelete(id)
     return user
   },
 

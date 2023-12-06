@@ -6,17 +6,6 @@ const colorService = {
     return colors
   },
 
-  addColor(color) {
-    const newColor = new Color(color)
-    const savedColor = newColor.save()
-    return savedColor
-  },
-
-  deleteColor(id) {
-    const color = Color.findByIdAndDelete(id)
-    return color
-  },
-
   findColorByName(name) {
     const color = Color.findOne({ color: name })
     return color

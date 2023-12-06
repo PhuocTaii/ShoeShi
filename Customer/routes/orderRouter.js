@@ -1,4 +1,4 @@
-const orderController = require('../../controllers/orderController')
+const orderController = require('../controllers/orderController')
 const router = require('express').Router()
 
 //Server side

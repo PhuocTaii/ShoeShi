@@ -1,4 +1,4 @@
-const cartController = require('../../controllers/cartController')
+const cartController = require('../controllers/cartController')
 const router = require('express').Router()
 
 //ADD product to cart

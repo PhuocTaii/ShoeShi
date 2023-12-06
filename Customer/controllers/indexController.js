@@ -16,13 +16,6 @@ const indexController = {
             res.status(500).json(err)
         }
     },
-
-    getAdminHomePage: (req, res) => {
-        res.render('admin/index', {
-            extraStyles: 'dashboard.css',
-            layout: 'admin/layout/main',
-        })
-    }
 }
 
 module.exports = indexController;

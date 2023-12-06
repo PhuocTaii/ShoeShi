@@ -6,7 +6,6 @@ const manufacturerService = require('../services/manufacturerService')
 const imageService = require('../services/imageService')
 const userService = require('../services/userService')
 
-
 const productController = {
   //GET all products
   getAllProducts: async (req, res) => {
@@ -63,7 +62,6 @@ const productController = {
         if (priceMax) conditions.price.$lte = parseInt(priceMax);
 
         if(conditions) {
-          console.log(conditions)
           products = await productService.getProductByFilter(conditions, pageTo)
           totalProducts = await productService.getTotalFilteredProducts(conditions)
           totalPages = Math.ceil(totalProducts / productService.productsPerPage)
@@ -98,7 +96,6 @@ const productController = {
       });
     } catch (err) {
       res.status(500).json(err)
-      console.log(err)
     }
   },
 
@@ -155,7 +152,6 @@ const productController = {
         
     } catch(err){
       res.status(500).json(err)
-      console.log(err)
     }
   },
 
@@ -164,7 +160,6 @@ const productController = {
     try{
       const { sort } = req.query;
       const products = await productService.sortProducts(sort)
-      console.log(products)
       res.status(200).json(products)
 
     } catch(err){
@@ -178,14 +173,11 @@ const productController = {
       const product = await productService.getProductById(req.params.id)
       const sampleProd = await productService.getOtherProducts(req.params.id)
       const relatedProducts = await productService.getRelatedProducts(product, req.params.id)
-      console.log(relatedProducts)
       res.status(200).json(123)
     } catch(err){
-      console.log(err)
       res.status(500).json(err)
     }
   },
-
 
   //ADD product
   addProduct: async (req, res) => {
@@ -227,35 +219,6 @@ const productController = {
     }
   },
 
-  //UPDATE product
-  updateProduct: async (req, res) => {
-    try {
-      const product = await productService.updateProduct(
-        req.params.id,
-        req.body
-      )
-      if (!product) {
-        return res.status(500).json(err)
-      }
-      res.status(200).json(product)
-    } catch (err) {
-      res.status(500).json(err)
-    }
-  },
-
-  //DELETE product
-  deleteProduct: async (req, res) => {
-    try {
-      const product = await productService.deleteProduct(req.params.id)
-      if (!product) {
-        res.status(500).json(err)
-      }
-      res.status(200).json('The product has been deleted')
-    } catch (err) {
-      res.status(500).json(err)
-    }
-  },
-
   //Client side
   getProductPage: async (req, res) => {
     try {
@@ -280,13 +243,6 @@ const productController = {
     res.render('customer/productDetail', {
       layout: 'customer/layout/main',
       extraStyles: 'productDetail.css',
-    })
-  },
-
-  getAdminProductPage: async (req, res) => {
-    res.render('admin/products', {
-      layout: 'admin/layout/main',
-      extraStyles: 'products.css',
     })
   },
 
@@ -317,22 +273,17 @@ const productController = {
       });
     } catch (err) {
       res.status(500).json(err)
-      console.log(err)
     }
   },
 
   addReview: async (req, res) => {
     try {
       const product = await productService.getProductById(req.params.id)
-      // console.log(req.user)
       const reviewer = await userService.getUserById(req.user.id)
-      // console.log(reviewer)
       const reviewedProduct = await productService.addReview(product, req.body, reviewer)
-      // console.log(reviewedProduct)
       res.status(200).json(reviewedProduct)
     } catch (err) {
       res.status(500).json(err)
-      console.log(err)
     }
   }
 }

@@ -19,16 +19,12 @@ const authController = {
       if (err) {
         return res.status(500).json(err)
       }
-      console.log(user)
       if (!user) {
         return res.status(401).json({ message: info.message })
       }
       req.logIn(user, (loginErr) => {
         if (loginErr) {
           return res.status(500).json({ message: 'Login Error' })
-        }
-        if(user.admin === true){
-          return res.status(200).json({ redirect: '/admin' })
         }
         else
           return res.status(200).json({ redirect: '/' })
@@ -46,9 +42,6 @@ const authController = {
   },
 
   //Client side
-  getAdminLoginPage: (req, res) => {
-    res.render('admin/auth', { layout: 'admin/layout/auth' })
-  },
 
   getUserSignUpPage: (req, res) => {
     res.render('customer/signup', {
