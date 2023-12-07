@@ -23,6 +23,7 @@ const cartCustomerRouter = require('./routes/cartRouter')
 const orderCustomerRouter = require('./routes/orderRouter')
 const productCustomerRouter = require('./routes/productRouter')
 const userCustomerRouter = require('./routes/userRouter')
+const reviewCustomerRouter = require('./routes/reviewRouter')
 
 const app = express()
 const store = session.MemoryStore()
@@ -74,7 +75,8 @@ app.use(
   cartCustomerRouter,
   orderCustomerRouter,
   productCustomerRouter,
-  userCustomerRouter
+  userCustomerRouter,
+  reviewCustomerRouter
 )
 
 // catch 404 and forward to error handler
