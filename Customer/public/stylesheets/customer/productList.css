@@ -92,7 +92,7 @@
   font-weight: 400 !important;
 }
 
-.filter-but{
+.filter-but {
   width: 100%;
   border-radius: 5px;
   height: 40px;
@@ -210,10 +210,16 @@
   color: #000;
   font-size: 16px;
   font-weight: 400;
+  height: 50px;
+  max-width: 100%;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
 }
 
 .product-details .product-brand {
-
   color: #707072;
   font-size: 14px;
   font-weight: 500;
@@ -221,11 +227,11 @@
 
 .product-details .product-price {
   color: #000;
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 25px;
+  font-weight: bold;
 }
 
-.product-details .product-status{
+.product-details .product-status {
   color: #000;
   font-size: 14px;
   font-weight: 500;
