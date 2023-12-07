@@ -47,7 +47,7 @@ const authController = {
 
   //Client side
   getAdminLoginPage: (req, res) => {
-    res.render('admin/auth', { layout: 'admin/layout/auth' })
+    res.render('auth', { layout: 'layout/auth' })
   },
 
 }

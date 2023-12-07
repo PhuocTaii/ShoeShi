@@ -9,94 +9,94 @@ const userService = require('../services/userService')
 
 const productController = {
   //GET all products
-  getAllProducts: async (req, res) => {
-    try {
-      const { 'product-name': productName, category, manufacturer, page, sort } = req.query;
+  // getAllProducts: async (req, res) => {
+  //   try {
+  //     const { 'product-name': productName, category, manufacturer, page, sort } = req.query;
 
-      const pageTo = parseInt(page) || 1
+  //     const pageTo = parseInt(page) || 1
 
-      var products
-      var totalProducts
-      var totalPages
+  //     var products
+  //     var totalProducts
+  //     var totalPages
 
-      if(sort && sort != 'none') {
-        products = await productService.sortProducts(sort, pageTo)
-        totalProducts = await productService.getTotalProducts()
-        totalPages = Math.ceil(totalProducts / productService.productsPerPage)
-      }
-      else {
-        const conditions = {}
-        if(productName){
-          conditions.name = productName
-        }
+  //     if(sort && sort != 'none') {
+  //       products = await productService.sortProducts(sort, pageTo)
+  //       totalProducts = await productService.getTotalProducts()
+  //       totalPages = Math.ceil(totalProducts / productService.productsPerPage)
+  //     }
+  //     else {
+  //       const conditions = {}
+  //       if(productName){
+  //         conditions.name = productName
+  //       }
 
-        if (category){        
-          conditions.category = []
-          if(!Array.isArray(category)){
-            const cateID = await categoryService.getCategoryByName(category)
-            conditions.category.push(cateID)
-          }
-          else{
-            for(cate of category){
-              const cateID = await categoryService.getCategoryByName(cate)
-              conditions.category.push(cateID)
-            }
-          }
-        } 
+  //       if (category){        
+  //         conditions.category = []
+  //         if(!Array.isArray(category)){
+  //           const cateID = await categoryService.getCategoryByName(category)
+  //           conditions.category.push(cateID)
+  //         }
+  //         else{
+  //           for(cate of category){
+  //             const cateID = await categoryService.getCategoryByName(cate)
+  //             conditions.category.push(cateID)
+  //           }
+  //         }
+  //       } 
 
-        if(manufacturer){
-          conditions.manufacturer = []
-          if(!Array.isArray(manufacturer)){
-            const manuID = await manufacturerService.findManufacturerByName(manufacturer)
-            conditions.manufacturer.push(manuID)
-          }
-          else{
-            for(manu of manufacturer){
-              const manuID = await manufacturerService.findManufacturerByName(manu)
-              conditions.manufacturer.push(manuID)
-            }
-          }
-        }
+  //       if(manufacturer){
+  //         conditions.manufacturer = []
+  //         if(!Array.isArray(manufacturer)){
+  //           const manuID = await manufacturerService.findManufacturerByName(manufacturer)
+  //           conditions.manufacturer.push(manuID)
+  //         }
+  //         else{
+  //           for(manu of manufacturer){
+  //             const manuID = await manufacturerService.findManufacturerByName(manu)
+  //             conditions.manufacturer.push(manuID)
+  //           }
+  //         }
+  //       }
         
 
-        if(conditions) {
-          products = await productService.getProductByFilter(conditions, pageTo)
-          totalProducts = await productService.getTotalFilteredProducts(conditions)
-          totalPages = Math.ceil(totalProducts / productService.productsPerPage)
-        }
-        else {
-          products = await productService.getProducts(pageTo)
-        }
-      }
+  //       if(conditions) {
+  //         products = await productService.getProductByFilter(conditions, pageTo)
+  //         totalProducts = await productService.getTotalFilteredProducts(conditions)
+  //         totalPages = Math.ceil(totalProducts / productService.productsPerPage)
+  //       }
+  //       else {
+  //         products = await productService.getProducts(pageTo)
+  //       }
+  //     }
 
-      const categories = await categoryService.getAllCategories()
-      const manufacturers = await manufacturerService.getAllManufacturers()
+  //     const categories = await categoryService.getAllCategories()
+  //     const manufacturers = await manufacturerService.getAllManufacturers()
 
-      res.format({
-        html: function () {
-          res.render('customer/productList', {
-            categories,
-            manufacturers,
-            products,
-            totalPages,
-            activePage: pageTo,
-            layout: 'customer/layout/main',
-            extraStyles: 'productList.css',
-          });
-        },
-        json: function () {
-          res.json({
-            products,
-            totalPages,
-            activePage: pageTo
-          });
-        }
-      });
-    } catch (err) {
-      res.status(500).json(err)
-      console.log(err)
-    }
-  },
+  //     res.format({
+  //       html: function () {
+  //         res.render('productList', {
+  //           categories,
+  //           manufacturers,
+  //           products,
+  //           totalPages,
+  //           activePage: pageTo,
+  //           layout: 'layout/main',
+  //           extraStyles: 'productList.css',
+  //         });
+  //       },
+  //       json: function () {
+  //         res.json({
+  //           products,
+  //           totalPages,
+  //           activePage: pageTo
+  //         });
+  //       }
+  //     });
+  //   } catch (err) {
+  //     res.status(500).json(err)
+  //     console.log(err)
+  //   }
+  // },
 
 
   //GET products by filter
@@ -235,28 +235,28 @@ const productController = {
   },
 
   //Client side
-  getProductPage: async (req, res) => {
-    try {
-    const products = await productService
-      .getAllProducts()
-      .populate('manufacturer')
-    const categories = await categoryService
-      .getAllCategories()
-    const manufacturers = await manufacturerService
-      .getAllManufacturers()
-      res.render('customer/productList', {
-        layout: 'customer/layout/main',
-        extraStyles: 'productList.css',
-        products, categories,manufacturers
-      })
-    } catch (err) {
-      res.status(500).json(err)
-    }
-  },
+  // getProductPage: async (req, res) => {
+  //   try {
+  //   const products = await productService
+  //     .getAllProducts()
+  //     .populate('manufacturer')
+  //   const categories = await categoryService
+  //     .getAllCategories()
+  //   const manufacturers = await manufacturerService
+  //     .getAllManufacturers()
+  //     res.render('productList', {
+  //       layout: 'layout/main',
+  //       extraStyles: 'productList.css',
+  //       products, categories,manufacturers
+  //     })
+  //   } catch (err) {
+  //     res.status(500).json(err)
+  //   }
+  // },
 
   getAdminProductPage: async (req, res) => {
-    res.render('admin/products', {
-      layout: 'admin/layout/main',
+    res.render('products', {
+      layout: 'layout/main',
       extraStyles: 'products.css',
     })
   },

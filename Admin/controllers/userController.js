@@ -32,15 +32,15 @@ const userController = {
   },
 
   getAccountsPage: async (req, res) => {
-    res.render('admin/accounts', {
-      layout: 'admin/layout/main',
+    res.render('accounts', {
+      layout: 'layout/main',
       extraStyles: 'accounts.css',
     })
   },
 
   getAdminProfilePage: async (req, res) => {
-    res.render('admin/profile', {
-      layout: 'admin/layout/main',
+    res.render('profile', {
+      layout: 'layout/main',
       extraStyles: 'profile.css',
     })
   },

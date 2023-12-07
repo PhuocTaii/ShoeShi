@@ -53,8 +53,8 @@ const orderController = {
 
   //Client side
   getAdminOrderPage: async (req, res) => {
-    res.render('admin/orders', {
-      layout: 'admin/layout/main',
+    res.render('orders', {
+      layout: 'layout/main',
       extraStyles: 'order.css',
     })
   },  
