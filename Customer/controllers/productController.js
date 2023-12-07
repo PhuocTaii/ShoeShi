@@ -76,13 +76,13 @@ const productController = {
 
       res.format({
         html: function () {
-          res.render('customer/productList', {
+          res.render('productList', {
             categories,
             manufacturers,
             products,
             totalPages,
             activePage: pageTo,
-            layout: 'customer/layout/main',
+            layout: 'layout/main',
             extraStyles: 'productList.css',
           });
         },
@@ -171,7 +171,6 @@ const productController = {
   getRelatedProducts: async(req, res) => {
     try{
       const product = await productService.getProductById(req.params.id)
-      const sampleProd = await productService.getOtherProducts(req.params.id)
       const relatedProducts = await productService.getRelatedProducts(product, req.params.id)
       res.status(200).json(123)
     } catch(err){
@@ -229,8 +228,8 @@ const productController = {
       .getAllCategories()
     const manufacturers = await manufacturerService
       .getAllManufacturers()
-      res.render('customer/productList', {
-        layout: 'customer/layout/main',
+      res.render('productList', {
+        layout: 'layout/main',
         extraStyles: 'productList.css',
         products, categories,manufacturers
       })
@@ -240,8 +239,8 @@ const productController = {
   },
 
   getProductDetailPage: async (req, res) => {
-    res.render('customer/productDetail', {
-      layout: 'customer/layout/main',
+    res.render('productDetail', {
+      layout: 'layout/main',
       extraStyles: 'productDetail.css',
     })
   },
@@ -253,13 +252,18 @@ const productController = {
       const details = await productService.getProductDetail(req.params.id, page)
       const totalPages = Math.ceil(details[0].totalReviews / productService.reviewsPerPage)
 
+      const product = await productService.getProductById(req.params.id)
+      const relatedProducts = await productService.getRelatedProducts(product, req.params.id)
+
       res.format({
         html: function () {
-          res.render('customer/productDetail', {
+          res.render('productDetail', {
             details: details[0],
             totalPages,
             activePage: page,
-            layout: 'customer/layout/main',
+            totalRelatedProducts: relatedProducts.length,
+            relatedProducts,
+            layout: 'layout/main',
             extraStyles: 'productDetail.css',
           })
         },

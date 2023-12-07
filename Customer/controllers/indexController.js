@@ -6,9 +6,9 @@ const indexController = {
         try{
             const featuredProducts = await productService
             .getFeaturedProducts()
-            res.render('customer/index', {
+            res.render('index', {
                 extraStyles: 'home.css',
-                layout: 'customer/layout/main',
+                layout: 'layout/main',
                 featuredProducts,
             })
         } catch(err){

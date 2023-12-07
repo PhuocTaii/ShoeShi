@@ -44,15 +44,15 @@ const authController = {
   //Client side
 
   getUserSignUpPage: (req, res) => {
-    res.render('customer/signup', {
-      layout: 'customer/layout/auth',
+    res.render('signup', {
+      layout: 'layout/auth',
       extraStyles: 'signup.css',
     })
   },
 
   getUserLogInPage: (req, res) => {
-    res.render('customer/login', {
-      layout: 'customer/layout/auth',
+    res.render('login', {
+      layout: 'layout/auth',
       extraStyles: 'login.css',
     })
   }
