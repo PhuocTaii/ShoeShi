@@ -1,3 +1,4 @@
+// show images in carousel
 const imageActiveCarousel = document.getElementById('carousel-images').querySelector('.carousel-item');
 imageActiveCarousel.classList.add('active');
 
@@ -6,88 +7,86 @@ const productPrice = document.getElementById('main-product-detail').querySelecto
 const price = productPrice.getAttribute('data-price');
 productPrice.innerHTML = formatCurrency(price);
 
-function paging(page) {
-	$.ajax({
-		url: window.location.href + '?page=' + page,
-		type: 'GET',
-		dataType: 'json',
-		success: function(data) {
-			updateReview(data.details.review)
-			updatePagination(data.totalPages, data.activePage)
-		},
-		error: function(err) {
-			console.log(err)
-		}
-	})
-}
+Handlebars.registerHelper("disabledPage", function(i, activePage) {
+	return i == activePage ? 'disabled' : '';
+});
+Handlebars.registerHelper("activeCurrentPage", function(i, activePage) {
+	return i == activePage ? 'active':'';
+});
+Handlebars.registerHelper("loopTill", function(num, options) {
+	var result = '';
+  for (var i = 1; i <= num; i++) {
+    result += options.fn({...this, index: i});
+  }
+  return result;
+});
+Handlebars.registerHelper("add", function(a, b) {
+	return a + b;
+});
+Handlebars.registerHelper("lessThanOrEqual", function(a, b) {
+	return a <= b;
+});
 
-function updateReview(reviews) {
-    const reviewContainer = document.getElementById('review-page')
-    reviewContainer.innerHTML = ''
-    reviews.forEach(review => {
-			reviewContainer.innerHTML +=
-        `
-				<div id=${review._id} class='r-review' data-rating=${review.rating}>
-					<p class='r-topic'>${review.title}</p>
-					<div class='r-rating'>
-						<span class='rating-star'>&#9733</span>
-						<span class='rating-star'>&#9733</span>
-						<span class='rating-star'>&#9733</span>
-						<span class='rating-star'>&#9733</span>
-						<span class='rating-star'>&#9733</span>
-					</div>
-					<p class='r-content'>${review.content}</p>
-					<p class='r-reviewer'>${review.reviewer} | ${review.reviewTime}</p>
-				</div>
-        `
+const reviewTemplate = 
+`{{#each reviews}}
+<div id={{_id}} class='r-review' data-rating={{rating}}>
+	<p class='r-topic'>{{title}}</p>
+	
+	<div class='r-rating'>
+		{{#loopTill 5}}
+		{{#if (lessThanOrEqual index rating)}}
+		<span class='rating-star' style='color: #000'>&#9733</span>
+		{{else}}
+		<span class='rating-star'>&#9733</span>
+		{{/if}}
+		{{/loopTill}}
+	</div>
+	<p class='r-content'>{{content}}</p>
+	<p class='r-reviewer'>{{reviewer.name}} | {{reviewTime}}</p>
+</div>
+{{/each}}`
 
-			updateRatingReview(review._id, review.rating)
-    })
-}
-
-function updateRatingReview(id, rating) {
-	const star = document.getElementById(id).querySelectorAll('.r-rating span.rating-star')
-	for (let i = 0; i < rating; i++) {
-		star[i].style.color = '#000'
-	}
-}
-
-// show rating stars
-const allReviews = document.getElementById('review-page').querySelectorAll('.r-review')
-allReviews.forEach(review => {
-	const id = review.getAttribute('id')
-	const rating = review.getAttribute('data-rating')
-	updateRatingReview(id, rating)
-})
-
-
-function updatePagination(totalPages, activePage) {
-	const listNumPages = document.getElementById('review-pagination')
-	listNumPages.innerHTML = 
-	`
-	<li class="page-item ${activePage==1 ? 'disabled':''}">
-		<a class="page-link" aria-label="Previous" onclick="paging(${activePage-1})">
+const paginationTemplate = 
+`
+	<li class="page-item {{disabledPage 1 activePage}}">
+		<a class="page-link" aria-label="Previous" onclick="paging({{add activePage -1}})">
 			<span aria-hidden="true">&laquo;</span>
 		</a>
 	</li>
-	`
 
-	for(var i = 1; i <= totalPages; i++) {
-		listNumPages.innerHTML += 
-		`<li class="page-item ${i==activePage ? 'active':''}"><a class="page-link" onclick="paging(${i})">${i}</a></li>`
-	}
+	{{#loopTill totalPages}}
+		<li class="page-item {{activeCurrentPage index activePage}}"><a class="page-link" onclick=paging({{index}})>{{index}}</a></li>
+	{{/loopTill}}
 
-	listNumPages.innerHTML += 
-	`
-	<li class="page-item ${activePage==totalPages ? 'disabled':''}">
-		<a class="page-link" aria-label="Next" onclick="paging(${activePage+1})">
+	<li class="page-item {{disabledPage totalPages activePage}}">
+		<a class="page-link" aria-label="Next" onclick="paging({{add activePage 1}})">
 			<span aria-hidden="true">&raquo;</span>
 		</a>
 	</li>
-	`
+`
+
+const templateFunction = Handlebars.compile(reviewTemplate);
+const paginationTemplateFunction = Handlebars.compile(paginationTemplate);
+
+const productId = document.getElementById('main-product-detail').getAttribute('data-product-id')
+$.getJSON(`/review/${productId}`, function( data ) {
+  console.log(data);
+	document.getElementById("review-amount").innerHTML = '('+data.totalReviews+')';
+	document.getElementById("review-section").innerHTML = templateFunction(data);
+	document.getElementById("review-pagination").innerHTML = paginationTemplateFunction(data);
+});
+
+function paging(page) {
+	$.getJSON(`/review/${productId}?page=${page}`, function( data ) {
+		document.getElementById("review-amount").innerHTML = '('+data.totalReviews+')';
+		document.getElementById("review-section").innerHTML = templateFunction(data);
+		document.getElementById("review-pagination").innerHTML = paginationTemplateFunction(data);
+	});
 }
 
-updatePagination(parseInt(document.getElementById('review-pagination').getAttribute('data-total-pages'), 10), parseInt(document.getElementById('review-pagination').getAttribute('data-active-page'), 10))
+$.getJSON(`/product/${productId}`, function( data ) {
+	console.log(data);
+});
 
 // ADD REVIEW
 function sendReview(event) {

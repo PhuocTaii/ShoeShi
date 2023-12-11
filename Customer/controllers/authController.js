@@ -45,14 +45,14 @@ const authController = {
 
   getUserSignUpPage: (req, res) => {
     res.render('signup', {
-      layout: 'layout/auth',
+      layout: 'auth',
       extraStyles: 'signup.css',
     })
   },
 
   getUserLogInPage: (req, res) => {
     res.render('login', {
-      layout: 'layout/auth',
+      layout: 'auth',
       extraStyles: 'login.css',
     })
   }

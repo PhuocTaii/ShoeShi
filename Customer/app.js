@@ -8,6 +8,8 @@ const mongoose = require('mongoose')
 const dotenv = require('dotenv')
 const passport = require('passport')
 const session = require('express-session')
+const express_handlebars  = require('express-handlebars');
+const express_handlebars_sections = require('express-handlebars-sections');
 
 // var bodyParser = require('body-parser');
 // const morgan = require('morgan');
@@ -40,9 +42,14 @@ mongoose
   })
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'))
+const hbs = express_handlebars.create({
+  extname: '.hbs',
+  layoutsDir: path.join(__dirname, 'views', 'layout'),
+});
+express_handlebars_sections(hbs);
+app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs')
-// app.set('view options', { layout: 'layout/main' });
+app.set('views', path.join(__dirname, 'views'))
 
 // app.use(bodyParser.json());
 // app.use(morgan('common'));

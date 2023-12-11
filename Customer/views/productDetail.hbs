@@ -1,6 +1,7 @@
 <div class='container-fluid'>
   <div class='detail-container overflow-hidden'>
     <div class='row mx-0 img-detail'>
+      <!-- CAROUSEL -->
       <div class='col-8 px-0'>
         <div class='product-img'>
           <div id='carousel-product-image' class='carousel slide'>
@@ -53,8 +54,11 @@
           </div>
         </div>
       </div>
+      <!-- END CAROUSEL -->
+
+      <!-- PRODUCT DETAIL -->
       <div class='col-4 px-0'>
-        <div id="main-product-detail" class='product-detail'>
+        <div id="main-product-detail" class='product-detail' data-product-id={{details._id}}>
           <div class='name-price'>
             <p class='product-name'>{{details.name}}</p>
             <p class='product-price'><span data-price={{details.price}}></span> đ</p>
@@ -96,47 +100,36 @@
           </button>
         </div>
       </div>
+      <!-- END PRODUCT DETAIL -->
     </div>
   </div>
+
+  <!-- REVIEW SECTION -->
   <div class='review-container overflow-hidden'>
     <div class='row mx-0 view-make'>
+      <!-- REVIEWS -->
       <div class='col-8 px-0'>
-        <div class='review-view'>
+        <div id='review-view'>
           <div class='review-header'>
             <p class='r-header'>reviews
-              <span data-total-reviews={{details.totalReviews}} class='review-amount'>({{details.totalReviews}})</span></p>
+              <span id='review-amount'></span>
+            </p>
           </div>
           
-          <div class='review show'>
-            <div id='review-page'>
-              {{#each details.review}}
-              {{#if this._id}}
-              <div id={{this._id}} class='r-review' data-rating={{this.rating}}>
-                <p class='r-topic'>{{this.tittle}}</p>
-                <div class='r-rating'>
-                  <span class='rating-star'>&#9733</span>
-                  <span class='rating-star'>&#9733</span>
-                  <span class='rating-star'>&#9733</span>
-                  <span class='rating-star'>&#9733</span>
-                  <span class='rating-star'>&#9733</span>
-                </div>
-                <p class='r-content'>{{this.content}}</p>
-                <p class='r-reviewer'>{{this.reviewer}} | {{this.reviewTime}}</p>
-              </div>
-              {{/if}}
-              {{/each}}
-            </div>
+          <div id='review-section'>
+              
           </div>
 
-          {{#if totalPages}}
-          <nav aria-label='LinkToReviewPages'>
-            <ul id="review-pagination" class='pagination' data-total-pages={{totalPages}} data-active-page={{activePage}}>
+          <nav aria-label='link-to-review-pages'>
+            <ul id="review-pagination" class='pagination'>
               
             </ul>
           </nav>
-          {{/if}}
         </div>
       </div>
+      <!-- END REVIEWS -->
+
+      <!-- MAKE REVIEW -->
       <div class='col-4 px-0'>
         <form class='review-form' id='review-form' onsubmit="sendReview(event)">
           <p class='form-header'>Write a review</p>
@@ -171,11 +164,24 @@
               required
             ></textarea>
           </div>
-          <button class='f-review-button' type="submit">submit</button>
+          
+          <button 
+            class='f-review-button' 
+            type="submit" 
+            {{#unless user}}disabled{{/unless}}
+          >submit
+          </button>
+          {{#unless user}}
+          <p class="noti-not-authen">You must login to write review</p>
+          {{/unless}}
         </form>
       </div>
+      <!-- END MAKE REVIEW -->
     </div>
   </div>
+  <!-- END REVIEW SECTION -->
+
+  <!-- OTHER PRODUCTS -->
   <div class='other-products-container overflow-hidden'>
     <p class='others-tittle'>you might also like</p>
     <div id='carouselOther-products' class='carousel slide'>
@@ -225,12 +231,15 @@
       </button> --}}
     </div>
   </div>
+  <!-- END OTHER PRODUCTS -->
 </div>
 
-<script
-  src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js'
-></script>
-<script src='/js/pagination.js'></script>
-<script src='/js/rating-star.js'></script>
-<script src='/js/format-currency.js'></script>
-<script src='/js/product-detail.js'></script>
+{{#section 'scripts'}}
+    {{!-- <script
+      src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js'
+    ></script> --}}
+    <script src='/js/pagination.js'></script>
+    <script src='/js/rating-star.js'></script>
+    <script src='/js/format-currency.js'></script>
+    <script src='/js/product-detail.js'></script>
+{{/section}}

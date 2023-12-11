@@ -247,31 +247,35 @@ const productController = {
 
   getProductDetail: async (req, res) => {
     try {
-      const page = parseInt(req.query.page) || 1
+      // const page = parseInt(req.query.page) || 1
 
-      const details = await productService.getProductDetail(req.params.id, page)
-      const totalPages = Math.ceil(details[0].totalReviews / productService.reviewsPerPage)
+      const details = await productService.getProductDetail(req.params.id)
+      // const totalPages = Math.ceil(details[0].totalReviews / productService.reviewsPerPage)
 
-      const product = await productService.getProductById(req.params.id)
-      const relatedProducts = await productService.getRelatedProducts(product, req.params.id)
+      // const product = await productService.getProductById(req.params.id)
+      // const relatedProducts = await productService.getRelatedProducts(product, req.params.id)
 
       res.format({
         html: function () {
           res.render('productDetail', {
-            details: details[0],
-            totalPages,
-            activePage: page,
-            totalRelatedProducts: relatedProducts.length,
-            relatedProducts,
-            layout: 'layout/main',
+            details,
+            // details: details[0],
+            // totalPages,
+            // activePage: page,
+            // totalRelatedProducts: relatedProducts.length,
+            // relatedProducts,
+            layout: 'main',
             extraStyles: 'productDetail.css',
+            user: req.user || null,
           })
         },
         json: function () {
           res.json({
-            details: details[0],
-            totalPages,
-            activePage: page,
+            details,
+            user: req.user || null,
+            // details: details[0],
+            // totalPages,
+            // activePage: page,
           });
         }
       });
