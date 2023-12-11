@@ -1,5 +1,4 @@
 const Review = require('../models/review')
-const User = require('../models/customer')
 
 const reviewService = {
   reviewsPerPage: 2,
@@ -9,16 +8,9 @@ const reviewService = {
     return reviews
   },
 
-  addReview(review, product) {
-    const newReview = new Review({
-        product: product,
-        reviewer: review.reviewer,
-        rating: review.rating,
-        title: review.title,
-        content: review.content,
-    })
-    newReview.save()
-    return newReview
+  addReview(review, product, reviewer) {
+    const newReview = new Review({...review, product, reviewer})
+    return newReview.save()
   },
 
   getReviewByProduct(page, id) {
@@ -30,7 +22,15 @@ const reviewService = {
           path: 'reviewer',
           select: 'name',
         })
+        .lean()
     return reviews
+  },
+
+  formatReviewTime(reviews) {
+    return reviews.map(review => {
+      review.reviewTime = new Date(review.reviewTime).toLocaleString('en-GB');
+      return review;
+    });
   },
 
   getTotalReviewsByProduct(productId) {

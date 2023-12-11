@@ -70,7 +70,6 @@ const paginationTemplateFunction = Handlebars.compile(paginationTemplate);
 
 const productId = document.getElementById('main-product-detail').getAttribute('data-product-id')
 $.getJSON(`/review/${productId}`, function( data ) {
-  console.log(data);
 	document.getElementById("review-amount").innerHTML = '('+data.totalReviews+')';
 	document.getElementById("review-section").innerHTML = templateFunction(data);
 	document.getElementById("review-pagination").innerHTML = paginationTemplateFunction(data);
@@ -83,10 +82,6 @@ function paging(page) {
 		document.getElementById("review-pagination").innerHTML = paginationTemplateFunction(data);
 	});
 }
-
-$.getJSON(`/product/${productId}`, function( data ) {
-	console.log(data);
-});
 
 // ADD REVIEW
 function sendReview(event) {
@@ -104,16 +99,20 @@ function sendReview(event) {
 		rating,
 	}
 
+	const productId = document.getElementById('main-product-detail').getAttribute('data-product-id')
+
 	$.ajax({
-		url: window.location.href + '/review',
+		url: `/review/${productId}`,
 		type: 'POST',
 		data,
 		dataType: 'json',
 		success: function(data) {
-			alert('Review added')
+			alert('Review added successfully');
+			document.getElementById("review-amount").innerHTML = '('+data.totalReviews+')';
+			document.getElementById("review-section").innerHTML = templateFunction(data);
+			document.getElementById("review-pagination").innerHTML = paginationTemplateFunction(data);
 		},
 		error: function(err) {
-			window.location.href = '/login'
 		}
 	})
 }
