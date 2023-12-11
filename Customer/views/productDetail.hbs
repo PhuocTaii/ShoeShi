@@ -185,33 +185,7 @@
   <div class='other-products-container overflow-hidden'>
     <p class='others-tittle'>you might also like</p>
     <div id='carouselOther-products' class='carousel slide'>
-      {{!-- <div class='carousel-indicators'>
-        <button
-          type='button'
-          data-bs-target='#carouselOther-products'
-          data-bs-slide-to='0'
-          class='active'
-          aria-current='true'
-          aria-label='Slide 1'
-        ></button>
-      </div> --}}
-      <div class='carousel-inner'>
-        <div class='carousel-item active'>
-          <div class='product-container'>
-            {{#each relatedProducts}}
-            <a class='product' href="/product/{{this._id}}">
-              <img class='product-img' src={{this.productImage.[0]}} />
-              <div class='product-details'>
-                <p class='product-name'>{{this.name}}</p>
-                <p class='product-branch'>{{this.manufacturer.name}}</p>
-                <p class='product-price'>{{this.price}} ₫</p>
-              </div>
-            </a>
-            {{/each}}
-          </div>
-        </div>
-      </div>
-      {{!-- <button
+      <button
         class='carousel-control-prev'
         type='button'
         data-bs-target='#carouselOther-products'
@@ -220,6 +194,18 @@
         <span class='carousel-control-prev-icon' aria-hidden='true'></span>
         <span class='visually-hidden'>Previous</span>
       </button>
+      <div class='carousel-inner'>
+        <div class='carousel-item active'>
+          <div class='related-product-container row mx-0'>
+            
+          </div>
+        </div>
+        <div class='carousel-item'>
+          <div class='related-product-container row mx-0'>
+            
+          </div>
+        </div>
+      </div>
       <button
         class='carousel-control-next'
         type='button'
@@ -228,16 +214,13 @@
       >
         <span class='carousel-control-next-icon' aria-hidden='true'></span>
         <span class='visually-hidden'>Next</span>
-      </button> --}}
+      </button>
     </div>
   </div>
   <!-- END OTHER PRODUCTS -->
 </div>
 
 {{#section 'scripts'}}
-    {{!-- <script
-      src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js'
-    ></script> --}}
     <script src='/js/pagination.js'></script>
     <script src='/js/rating-star.js'></script>
     <script src='/js/format-currency.js'></script>

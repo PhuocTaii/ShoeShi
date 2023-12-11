@@ -4,6 +4,7 @@ const mongoose = require('mongoose')
 
 const productService = {
   productsPerPage: 5,
+  relatedProductPerPage: 6,
 
   getTotalProducts() {
     const totalProducts = Product.countDocuments()
@@ -69,13 +70,16 @@ const productService = {
   },
 
   getRelatedProducts(product, id){
+    // page = page - 1
     const products = Product.find({
       _id: { $ne: id },
       category: { $in: product.category }
     })
     .sort({ category: -1 })
-    .limit(6)
-    .populate('manufacturer');
+    // .skip(page*productService.relatedProductPerPage)
+    .limit(12)
+    .populate('manufacturer')
+    .lean()
     return products
   },
 
@@ -160,12 +164,6 @@ const productService = {
                   .populate('size')
                   .lean()
   }
-
-  // addReview(product, review, reviewer) {
-  //   review.reviewer = reviewer
-  //   product.review.push(review)
-  //   return product.save()
-  // },
 }
 
 module.exports = productService

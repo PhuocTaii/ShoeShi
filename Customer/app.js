@@ -81,10 +81,10 @@ app.use(
   authCustomerRouter,
   cartCustomerRouter,
   orderCustomerRouter,
-  productCustomerRouter,
   userCustomerRouter,
   reviewCustomerRouter
 )
+app.use('/product', productCustomerRouter)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

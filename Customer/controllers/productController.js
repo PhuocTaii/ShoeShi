@@ -170,9 +170,10 @@ const productController = {
   //Get related products
   getRelatedProducts: async(req, res) => {
     try{
+      const page = parseInt(req.query.page) || 1
       const product = await productService.getProductById(req.params.id)
       const relatedProducts = await productService.getRelatedProducts(product, req.params.id)
-      res.status(200).json(123)
+      res.status(200).json(relatedProducts)
     } catch(err){
       res.status(500).json(err)
     }
@@ -218,32 +219,32 @@ const productController = {
     }
   },
 
-  //Client side
-  getProductPage: async (req, res) => {
-    try {
-    const products = await productService
-      .getAllProducts()
-      .populate('manufacturer')
-    const categories = await categoryService
-      .getAllCategories()
-    const manufacturers = await manufacturerService
-      .getAllManufacturers()
-      res.render('productList', {
-        layout: 'layout/main',
-        extraStyles: 'productList.css',
-        products, categories,manufacturers
-      })
-    } catch (err) {
-      res.status(500).json(err)
-    }
-  },
+  // //Client side
+  // getProductPage: async (req, res) => {
+  //   try {
+  //   const products = await productService
+  //     .getAllProducts()
+  //     .populate('manufacturer')
+  //   const categories = await categoryService
+  //     .getAllCategories()
+  //   const manufacturers = await manufacturerService
+  //     .getAllManufacturers()
+  //     res.render('productList', {
+  //       layout: 'layout/main',
+  //       extraStyles: 'productList.css',
+  //       products, categories,manufacturers
+  //     })
+  //   } catch (err) {
+  //     res.status(500).json(err)
+  //   }
+  // },
 
-  getProductDetailPage: async (req, res) => {
-    res.render('productDetail', {
-      layout: 'layout/main',
-      extraStyles: 'productDetail.css',
-    })
-  },
+  // getProductDetailPage: async (req, res) => {
+  //   res.render('productDetail', {
+  //     layout: 'layout/main',
+  //     extraStyles: 'productDetail.css',
+  //   })
+  // },
 
   getProductDetail: async (req, res) => {
     try {
@@ -283,16 +284,5 @@ const productController = {
       res.status(500).json(err)
     }
   },
-
-  addReview: async (req, res) => {
-    try {
-      const product = await productService.getProductById(req.params.id)
-      const reviewer = await userService.getUserById(req.user.id)
-      const reviewedProduct = await productService.addReview(product, req.body, reviewer)
-      res.status(200).json(reviewedProduct)
-    } catch (err) {
-      res.status(500).json(err)
-    }
-  }
 }
 module.exports = productController

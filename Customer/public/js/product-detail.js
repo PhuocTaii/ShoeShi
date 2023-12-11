@@ -1,12 +1,14 @@
-// show images in carousel
+// SHOW IMAGES IN CAROUSEL
 const imageActiveCarousel = document.getElementById('carousel-images').querySelector('.carousel-item');
 imageActiveCarousel.classList.add('active');
 
-// format currency
+// FORMAT CURRENCY
 const productPrice = document.getElementById('main-product-detail').querySelector('.product-price span');
 const price = productPrice.getAttribute('data-price');
 productPrice.innerHTML = formatCurrency(price);
 
+
+// PRODUCT-REVIEW
 Handlebars.registerHelper("disabledPage", function(i, activePage) {
 	return i == activePage ? 'disabled' : '';
 });
@@ -26,9 +28,14 @@ Handlebars.registerHelper("add", function(a, b) {
 Handlebars.registerHelper("lessThanOrEqual", function(a, b) {
 	return a <= b;
 });
+Handlebars.registerHelper("formatCurrency", function(price) {
+	return formatCurrency(price);
+});
 
 const reviewTemplate = 
-`{{#each reviews}}
+`
+{{#if reviews.length}}
+{{#each reviews}}
 <div id={{_id}} class='r-review' data-rating={{rating}}>
 	<p class='r-topic'>{{title}}</p>
 	
@@ -44,10 +51,15 @@ const reviewTemplate =
 	<p class='r-content'>{{content}}</p>
 	<p class='r-reviewer'>{{reviewer.name}} | {{reviewTime}}</p>
 </div>
-{{/each}}`
+{{/each}}
+{{else}}
+	<p class='no-review'>No review yet</p>
+{{/if}}
+`
 
 const paginationTemplate = 
 `
+	{{#if totalPages}}
 	<li class="page-item {{disabledPage 1 activePage}}">
 		<a class="page-link" aria-label="Previous" onclick="paging({{add activePage -1}})">
 			<span aria-hidden="true">&laquo;</span>
@@ -63,6 +75,7 @@ const paginationTemplate =
 			<span aria-hidden="true">&raquo;</span>
 		</a>
 	</li>
+	{{/if}}
 `
 
 const templateFunction = Handlebars.compile(reviewTemplate);
@@ -116,3 +129,24 @@ function sendReview(event) {
 		}
 	})
 }
+
+// RELATED PRODUCTS
+const relatedProductsTemplate = 
+`
+	{{#each this}}
+	<a class='product col' href="/product/{{_id}}">
+		<img class='product-card-img' src={{productImage.[0]}} />
+		<div class='product-details'>
+			<p class='product-name'>{{name}}</p>
+			<p class='product-branch'>{{manufacturer.name}}</p>
+			<p class='product-price'>{{formatCurrency price}} ₫</p>
+		</div>
+	</a>
+	{{/each}}
+`
+const relatedProductsTemplateFunction = Handlebars.compile(relatedProductsTemplate);
+
+$.getJSON(`/product/related/${productId}`, function( data ) {
+	document.getElementsByClassName("related-product-container")[0].innerHTML = relatedProductsTemplateFunction(data.slice(0, 6));
+	document.getElementsByClassName("related-product-container")[1].innerHTML = relatedProductsTemplateFunction(data.slice(6, 12));
+});
