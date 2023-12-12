@@ -121,7 +121,7 @@
   width: 100%;
 }
 
-#product-list a.product {
+.product-list a.product {
   height: 100%;
   color: var(--my-black);
 }
@@ -187,17 +187,21 @@
   padding: 0 !important;
 }
 
-.product-container {
+#product-container {
   display: flex;
-  align-items: flex-start;
-  align-content: flex-start;
   gap: 20px;
-  align-self: stretch;
+  /* align-self: stretch; */
   flex-wrap: wrap;
 }
 
-.product-container .row {
+#product-container .row {
   margin: 0 !important;
+}
+
+#product-container p.no-products {
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 20px;
 }
 
 .product {

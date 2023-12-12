@@ -41,23 +41,31 @@ sortOptions.selected = true
 // PRODUCT CATALOG
 const productsTemplate = 
 `
-{{#each products}}
-<div class='col'>
-	<a class='product mx-1 my-2' href='/product/{{_id}}'>
-		<img class='product-img' src={{productImage.[0]}} />
-		<div class='product-details'>
-			<p class='product-name'>{{name}}</p>
-			<p class='product-brand'>{{manufacturer.name}}</p>
-			<p class='product-price'>{{formatPrice price}} ₫</p>
-		</div>
-	</a>
+{{#if totalPages}}
+
+<div class='product-list row row-cols-1 row-cols-md-3 row-cols-lg-4 g-2'>
+	{{#each products}}
+	<div class='col'>
+		<a class='product mx-1 my-2' href='/product/{{_id}}'>
+			<img class='product-img' src={{productImage.[0]}} />
+			<div class='product-details'>
+				<p class='product-name'>{{name}}</p>
+				<p class='product-brand'>{{manufacturer.name}}</p>
+				<p class='product-price'>{{formatPrice price}} ₫</p>
+			</div>
+		</a>
+	</div>
+	{{/each}}
 </div>
-{{/each}}
+
+{{else}}
+<p class='no-products'>No products found</p>
+{{/if}}
 `
 const productsTemplateFunction = Handlebars.compile(productsTemplate);
 
 function updateProductListView(data) {
-	document.getElementById("product-list").innerHTML = productsTemplateFunction(data);
+	document.getElementById("product-container").innerHTML = productsTemplateFunction(data);
 	document.getElementById("product-pagination").innerHTML = paginationTemplateFunction(data);
 }
 
