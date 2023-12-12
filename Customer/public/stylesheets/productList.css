@@ -66,6 +66,12 @@
   justify-content: center;
 }
 
+.product-filter {
+  padding: 15px;
+  border-radius: 5px;
+  border: 1px black solid;
+}
+
 .list-component {
   display: flex;
   gap: 12px;

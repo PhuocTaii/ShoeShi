@@ -10,7 +10,6 @@ const passport = require('passport')
 const session = require('express-session')
 const exphbs = require('./config/handlebars.config')
 const express_handlebars_sections = require('express-handlebars-sections');
-
 // var bodyParser = require('body-parser');
 // const morgan = require('morgan');
 

@@ -39,7 +39,7 @@ const colorController = {
 
   getColorPage: async(req, res) => {
     res.render('colors-sizes', {
-      layout: 'layout/main',
+      layout: 'main',
       extraStyles: 'color-size.css',
     })
   }
