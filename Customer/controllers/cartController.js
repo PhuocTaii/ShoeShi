@@ -87,7 +87,7 @@ const cartController = {
   //Client side
   getCartPage: async(req, res) => {
     res.render('cart', {
-      layout: 'layout/main',
+      layout: 'main',
       extraStyles: 'cart.css',
     })
   }

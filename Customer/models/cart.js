@@ -1,8 +1,8 @@
 const mongoose = require('mongoose')
-const Customer = require('../models/customer')
-const Product = require('../models/product')
-const Color = require('../models/color')
-const Size = require('../models/size')
+const Customer = require('./customer')
+const Product = require('./product')
+const Color = require('./color')
+const Size = require('./size')
 
 const cartSchema = new mongoose.Schema({
   customer: {

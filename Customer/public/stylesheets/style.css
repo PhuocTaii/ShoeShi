@@ -1,3 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Koulen&display=swap');
+
+:root {
+  --my-black: #111111;
+  --my-orange: #ff7100;
+}
+
 ::-webkit-scrollbar {
   width: 10px;
 }

@@ -62,7 +62,7 @@ const orderController = {
 
   getOrderPage: async (req, res) => {
     res.render('order', {
-      layout: 'layout/main',
+      layout: 'main',
       extraStyles: 'order.css',
     })
   },

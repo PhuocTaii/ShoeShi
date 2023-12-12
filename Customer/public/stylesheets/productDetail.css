@@ -16,11 +16,6 @@
   width: 100%;
 }
 
-.product-img {
-  align-items: flex-start;
-  width: 100%;
-}
-
 .product-image {
   object-fit: cover;
   width: 100%;
@@ -200,7 +195,7 @@ label {
   width: 100%;
 }
 
-.review-view {
+#review-view {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -226,18 +221,14 @@ label {
   margin: 0;
 }
 
-.review-amount {
+#review-amount {
   color: #707072;
   font-size: 24px;
   font-weight: 700;
   letter-spacing: 6px;
 }
 
-.review {
-  display: none;
-}
-
-.show {
+#review-section {
   display: block !important;
 }
 
@@ -402,9 +393,8 @@ label {
   display: flex;
   padding: 48px 36px;
   flex-direction: column;
-  align-items: flex-start;
   gap: 30px;
-  align-self: stretch;
+  height: fit-content;
 }
 
 .others-tittle {
@@ -415,13 +405,9 @@ label {
   text-transform: uppercase;
 }
 
-.product-container {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  align-self: stretch;
-  width: 100%;
+.related-product-container {
   gap: 10px;
+  height: 100%;
 }
 
 .product {
@@ -429,15 +415,21 @@ label {
   width: 100%;
   height: fit-content;
   flex-direction: column;
-  align-items: flex-start;
   border-radius: 10px;
   border: 1px solid #000;
   background: #fff;
   overflow: hidden;
 }
+.product.col {
+  padding: 0;
+  min-height: 100%;
+}
 
-.product-img {
-  width: 100%;
+.product-card-img {
+  width: auto;
+  height: 205px;
+  object-fit: cover;
+  object-position: center;
 }
 
 .product-details {
@@ -479,4 +471,32 @@ p {
 
 .carousel-indicators button {
   background-color: black !important;
+}
+
+#review-pagination li:hover {
+  cursor: pointer;
+}
+
+#review-form .noti-not-authen {
+  color: var(--my-orange);
+}
+#review-form button:disabled {
+  background-color: #ccc;
+}
+
+#carouselOther-products {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  height: 400px;
+}
+#carouselOther-products button {
+  width: fit-content;
+  position: static;
+}
+#carouselOther-products .carousel-item {
+  height: 100%;
+}
+#carouselOther-products .carousel-inner {
+  height: 100%;
 }

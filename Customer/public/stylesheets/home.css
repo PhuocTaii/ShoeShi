@@ -105,6 +105,7 @@
 }
 
 .sample-featured > a {
+  color: var(--my-black);
   border: 2px solid #000;
   border-radius: 10px;
   overflow: hidden;

@@ -48,7 +48,7 @@ const userController = {
 
   getProfilePage: async (req, res) => {
     res.render('customer/profile', {
-      layout: 'customer/layout/main',
+      layout: 'main',
       extraStyles: 'profile.css',
     })
   },

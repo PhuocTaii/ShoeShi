@@ -8,6 +8,8 @@ const mongoose = require('mongoose')
 const dotenv = require('dotenv')
 const passport = require('passport')
 const session = require('express-session')
+const exphbs = require('./config/handlebars.config')
+const express_handlebars_sections = require('express-handlebars-sections');
 
 // var bodyParser = require('body-parser');
 // const morgan = require('morgan');
@@ -23,6 +25,7 @@ const cartCustomerRouter = require('./routes/cartRouter')
 const orderCustomerRouter = require('./routes/orderRouter')
 const productCustomerRouter = require('./routes/productRouter')
 const userCustomerRouter = require('./routes/userRouter')
+const reviewCustomerRouter = require('./routes/reviewRouter')
 
 const app = express()
 const store = session.MemoryStore()
@@ -39,9 +42,10 @@ mongoose
   })
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'))
+express_handlebars_sections(exphbs);
+app.engine('hbs', exphbs.engine);
 app.set('view engine', 'hbs')
-// app.set('view options', { layout: 'layout/main' });
+app.set('views', path.join(__dirname, 'views'))
 
 // app.use(bodyParser.json());
 // app.use(morgan('common'));
@@ -67,15 +71,13 @@ app.use(
 app.use(passport.initialize())
 app.use(passport.session())
 
-app.use(
-  '/',
-  indexCustomerRouter,
-  authCustomerRouter,
-  cartCustomerRouter,
-  orderCustomerRouter,
-  productCustomerRouter,
-  userCustomerRouter
-)
+app.use('/', indexCustomerRouter)
+app.use('/', authCustomerRouter)
+app.use('/product', productCustomerRouter)
+app.use('/cart', cartCustomerRouter)
+app.use('/order', orderCustomerRouter)
+app.use('/profile', userCustomerRouter)
+app.use('/review', reviewCustomerRouter)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

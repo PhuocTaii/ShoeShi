@@ -3,20 +3,18 @@ const router = require('express').Router()
 const {isAuth, isAdmin} = require('../middleware/authenticationMiddleware')
 
 //GET all products
-router.get('/products', productController.getAllProducts)
+router.get('/', productController.getAllProducts)
 
-router.get('/product/:id', productController.getProductDetail)
-
-router.post('/product/:id/review', isAuth, productController.addReview)
+router.get('/:id', productController.getProductDetail)
 
 //Filter products
-router.get('/products/filter', productController.getProductByFilter)
+router.get('/filter', productController.getProductByFilter)
 
 //Sort products
-router.get('/products/sort', productController.sortProducts)
+router.get('/sort', productController.sortProducts)
 
 //Get related products
-router.get('/products/related/:id', productController.getRelatedProducts)
+router.get('/related/:id', productController.getRelatedProducts)
 
 
 module.exports = router
