@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang='en'>
   <head>
     <meta charset='utf-8' />
@@ -15,9 +16,8 @@
       integrity='sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN'
       crossorigin='anonymous'
     />
-    <link href='/stylesheets/styles.css' rel='stylesheet' />
-    <link href='/stylesheets/customer/style.css' rel='stylesheet' />
-    <link href='/stylesheets/customer/{{extraStyles}}' rel='stylesheet' />
+    <link href='/stylesheets/style.css' rel='stylesheet' />
+    <link href='/stylesheets/{{extraStyles}}' rel='stylesheet' />
 
     <link
       href='https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css'
@@ -41,9 +41,9 @@
       </a>
       <!-- Menu header -->
       <nav class='menu-header'>
-        <a href='/products?category=Men'>Men</a>
-        <a href='/products?category=Women'>Women</a>
-        <a href='/products?category=Kids'>Kids</a>
+        <a href='/product?category=Men'>Men</a>
+        <a href='/product?category=Women'>Women</a>
+        <a href='/product?category=Kids'>Kids</a>
         <div class='search-bar'>
           <i class='ri-search-2-line'></i>
           <input type='text' placeholder='Search...' />
@@ -83,9 +83,9 @@
           ></button>
         </div>
         <div class='offcanvas-body'>
-          <a href='/products/men'>Men</a>
-          <a href='/products/women'>Women</a>
-          <a href='/products/kids'>Kids</a>
+          <a href='/product?category=Men'>Men</a>
+          <a href='/product?category=Women'>Women</a>
+          <a href='/product?category=Kids'>Kids</a>
           <div class='search-bar'>
             <i class='ri-search-2-line'></i>
             <input type='text' placeholder='Search...' />

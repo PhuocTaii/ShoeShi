@@ -494,6 +494,9 @@ p {
   width: fit-content;
   position: static;
 }
-.carousel-item {
+#carouselOther-products .carousel-item {
+  height: 100%;
+}
+#carouselOther-products .carousel-inner {
   height: 100%;
 }

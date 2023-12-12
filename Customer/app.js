@@ -8,7 +8,7 @@ const mongoose = require('mongoose')
 const dotenv = require('dotenv')
 const passport = require('passport')
 const session = require('express-session')
-const express_handlebars  = require('express-handlebars');
+const exphbs = require('./config/handlebars.config')
 const express_handlebars_sections = require('express-handlebars-sections');
 
 // var bodyParser = require('body-parser');
@@ -42,12 +42,8 @@ mongoose
   })
 
 // view engine setup
-const hbs = express_handlebars.create({
-  extname: '.hbs',
-  layoutsDir: path.join(__dirname, 'views', 'layout'),
-});
-express_handlebars_sections(hbs);
-app.engine('hbs', hbs.engine);
+express_handlebars_sections(exphbs);
+app.engine('hbs', exphbs.engine);
 app.set('view engine', 'hbs')
 app.set('views', path.join(__dirname, 'views'))
 
@@ -75,16 +71,13 @@ app.use(
 app.use(passport.initialize())
 app.use(passport.session())
 
-app.use(
-  '/',
-  indexCustomerRouter,
-  authCustomerRouter,
-  cartCustomerRouter,
-  orderCustomerRouter,
-  userCustomerRouter,
-  reviewCustomerRouter
-)
+app.use('/', indexCustomerRouter)
+app.use('/', authCustomerRouter)
 app.use('/product', productCustomerRouter)
+app.use('/cart', cartCustomerRouter)
+app.use('/order', orderCustomerRouter)
+app.use('/profile', userCustomerRouter)
+app.use('/review', reviewCustomerRouter)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

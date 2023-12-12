@@ -4,9 +4,9 @@ const router = require('express').Router()
 
 //Server side
 //CREATE order
-router.post('/order/:cartID', isAuth ,orderController.createOrder)
+router.post('/:cartID', isAuth ,orderController.createOrder)
 
 //Client side
-router.get('/order', isAuth ,orderController.getOrderPage)
+router.get('/', isAuth ,orderController.getOrderPage)
 
 module.exports = router

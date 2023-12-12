@@ -11,9 +11,6 @@
                 type='button'
                 data-bs-target='#carousel-product-image'
                 data-bs-slide-to='{{@index}}'
-                class='active'
-                aria-current='true'
-                aria-label='Slide {{@index}}'
               ></button>
               {{/each}}
             </div>
@@ -61,7 +58,7 @@
         <div id="main-product-detail" class='product-detail' data-product-id={{details._id}}>
           <div class='name-price'>
             <p class='product-name'>{{details.name}}</p>
-            <p class='product-price'><span data-price={{details.price}}></span> đ</p>
+            <p class='product-price'><span data-price={{details.price}}></span>{{formatPrice details.price}} đ</p>
           </div>
           <div class='color'>
             <p class='attribute-name'>Color</p>
@@ -221,8 +218,6 @@
 </div>
 
 {{#section 'scripts'}}
-    <script src='/js/pagination.js'></script>
-    <script src='/js/rating-star.js'></script>
-    <script src='/js/format-currency.js'></script>
-    <script src='/js/product-detail.js'></script>
+    <script src='/js/hbsHelpers.js'></script>
+    <script src='/js/productDetail.js'></script>
 {{/section}}

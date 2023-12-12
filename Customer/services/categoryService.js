@@ -2,7 +2,7 @@ const Category = require('../models/category')
 
 const categoryService = {
   getAllCategories() {
-    const cates = Category.find()
+    const cates = Category.find().lean()
     return cates
   },
 

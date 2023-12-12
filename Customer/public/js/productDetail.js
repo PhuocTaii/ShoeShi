@@ -1,36 +1,44 @@
 // SHOW IMAGES IN CAROUSEL
+const carouselIndicators = document.getElementById('carousel-product-image').querySelector('.carousel-indicators button');
+carouselIndicators.classList.add('active');
 const imageActiveCarousel = document.getElementById('carousel-images').querySelector('.carousel-item');
 imageActiveCarousel.classList.add('active');
 
-// FORMAT CURRENCY
-const productPrice = document.getElementById('main-product-detail').querySelector('.product-price span');
-const price = productPrice.getAttribute('data-price');
-productPrice.innerHTML = formatCurrency(price);
-
 
 // PRODUCT-REVIEW
-Handlebars.registerHelper("disabledPage", function(i, activePage) {
-	return i == activePage ? 'disabled' : '';
-});
-Handlebars.registerHelper("activeCurrentPage", function(i, activePage) {
-	return i == activePage ? 'active':'';
-});
-Handlebars.registerHelper("loopTill", function(num, options) {
-	var result = '';
-  for (var i = 1; i <= num; i++) {
-    result += options.fn({...this, index: i});
+function rate(event) {
+  const element = event.currentTarget
+  const stars = element.querySelectorAll('span')
+  stars.forEach((star, index) => {
+    star.addEventListener('mouseenter', () => {
+      resetStars(stars)
+      highlightStars(stars, index + 1)
+    })
+
+    star.addEventListener('mouseleave', () => {
+      resetStars(stars)
+      const rating = element.getAttribute('data-rating-add')
+      if (rating) {
+        highlightStars(stars, parseInt(rating))
+      }
+    })
+
+    star.addEventListener('click', () => {
+      const rating = index + 1
+      element.setAttribute('data-rating-add', rating)
+    })
+  })
+}
+function resetStars(stars) {
+  stars.forEach((star) => {
+    star.style.color = '#ccc'
+  })
+}
+function highlightStars(stars, count) {
+  for (let i = 0; i < count; i++) {
+    stars[i].style.color = '#000'
   }
-  return result;
-});
-Handlebars.registerHelper("add", function(a, b) {
-	return a + b;
-});
-Handlebars.registerHelper("lessThanOrEqual", function(a, b) {
-	return a <= b;
-});
-Handlebars.registerHelper("formatCurrency", function(price) {
-	return formatCurrency(price);
-});
+}
 
 const reviewTemplate = 
 `
@@ -139,7 +147,7 @@ const relatedProductsTemplate =
 		<div class='product-details'>
 			<p class='product-name'>{{name}}</p>
 			<p class='product-branch'>{{manufacturer.name}}</p>
-			<p class='product-price'>{{formatCurrency price}} ₫</p>
+			<p class='product-price'>{{formatPrice price}} ₫</p>
 		</div>
 	</a>
 	{{/each}}

@@ -21,6 +21,7 @@ const productService = {
     const products = Product.find()
       .skip(page * productService.productsPerPage)
       .limit(productService.productsPerPage)
+      .lean()
     return products
   },
 
@@ -111,7 +112,8 @@ const productService = {
     const products = Product.find(conditions)
                           .skip(page * productService.productsPerPage)
                           .limit(productService.productsPerPage)
-                          .populate('manufacturer');
+                          .populate('manufacturer')
+                          .lean()
     return products;
   },
 
@@ -126,22 +128,22 @@ const productService = {
     page = page - 1
     if(sort == 'newest'){
       const products = Product.find().sort({creationDate: -1}).skip(page * productService.productsPerPage)
-      .limit(productService.productsPerPage).populate('manufacturer')
+      .limit(productService.productsPerPage).populate('manufacturer').lean()
       return products
     }
     if(sort == 'oldest'){
       const products = Product.find().sort({creationDate: 1}).skip(page * productService.productsPerPage)
-      .limit(productService.productsPerPage).populate('manufacturer')
+      .limit(productService.productsPerPage).populate('manufacturer').lean()
       return products
     }
     if(sort == 'low-high'){
       const products = Product.find().sort({price: 1}).skip(page * productService.productsPerPage)
-      .limit(productService.productsPerPage).populate('manufacturer')
+      .limit(productService.productsPerPage).populate('manufacturer').lean()
       return products
     }
     if(sort == 'high-low'){
       const products = Product.find().sort({price: -1}).skip(page * productService.productsPerPage)
-      .limit(productService.productsPerPage).populate('manufacturer')
+      .limit(productService.productsPerPage).populate('manufacturer').lean()
       return products
     }
   },

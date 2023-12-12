@@ -8,7 +8,7 @@ const indexController = {
             .getFeaturedProducts()
             res.render('index', {
                 extraStyles: 'home.css',
-                layout: 'layout/main',
+                layout: 'main',
                 featuredProducts,
             })
         } catch(err){
