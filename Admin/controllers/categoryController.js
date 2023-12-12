@@ -68,7 +68,7 @@ const categoryController = {
   //Client side
   getCategoriesManufacturersPage: async(req, res) => {
     res.render('categories', {
-      layout: 'layout/main',
+      layout: 'main',
       extraStyles: 'category.css',
     })
   }
