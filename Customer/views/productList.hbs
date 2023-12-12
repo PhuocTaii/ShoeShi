@@ -5,12 +5,12 @@
   <div class='body-container'>
     <form class='product-filter' id="filter-form">
       <p>Filters</p>
-      <div class='product-name-block'>
-        <p>Product name</p>
-        <input id="productName" name="product-name" class='product-name' placeholder="Input product name"/>
+      <div class='component-container product-name-block'>
+        <p class="title">Product name</p>
+        <input id="productName" name="product-name" class='product-name' placeholder="Input product name" />
       </div>
-      <div class='component'>
-        <p>Category</p>
+      <div class='component-container'>
+        <p>Category</p> 
         <div class='list'>
           {{#each categories}}
             <div class='list-component'>
@@ -107,7 +107,7 @@
               <img class='product-img' src={{this.productImage.[0]}} />
               <div class='product-details'>
                 <p class='product-name'>{{this.name}}</p>
-                <p class='product-branch'>{{this.manufacturer.name}}</p>
+                <p class='product-brand'>{{this.manufacturer.name}}</p>
                 <p class='product-price'>{{this.price}} ₫</p>
               </div>
             </a>
@@ -117,7 +117,7 @@
       </div>
       
       <nav aria-label="page-navigation">
-        <ul class="pagination" id="product-pagination">
+        <ul class="pagination d-flex justify-content-center" id="product-pagination">
 
         </ul>
       </nav>
