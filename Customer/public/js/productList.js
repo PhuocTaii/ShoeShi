@@ -1,3 +1,43 @@
+// UPDATE FILTER AND SORT WHEN LOADING PAGE
+function getUrlParams() {
+	const searchParams = new URLSearchParams(window.location.search);
+	const params = {};
+
+	for (const [key, value] of searchParams) {
+		if (params[key]) {
+			if (Array.isArray(params[key])) {
+					params[key].push(value);
+			} else {
+					params[key] = [params[key], value];
+			}
+		} else {
+			params[key] = value;
+		}
+	}
+
+	return params;
+}
+
+const urlParams = getUrlParams();
+
+const filterForm = document.getElementById('filter-form')
+filterForm['product-name'].value = urlParams['product-name'] || ''
+filterForm['from-input'].value = urlParams['from-input'] || 100000
+filterForm['to-input'].value = urlParams['to-input'] || 9000000
+controlFromInput(fromSlider, fromInput, toInput, toSlider)
+controlToInput(toSlider, fromInput, toInput, toSlider)
+const categoryCheckboxes = document.querySelectorAll('#filter-form input[name="category"]');
+categoryCheckboxes.forEach(checkbox => {
+		checkbox.checked = urlParams['category'] && urlParams['category'].includes(checkbox.value);
+});
+const manufacturerCheckboxes = document.querySelectorAll('#filter-form input[name="manufacturer"]');
+manufacturerCheckboxes.forEach(checkbox => {
+		checkbox.checked = urlParams['manufacturer'] && urlParams['manufacturer'].includes(checkbox.value);
+});
+const sortOptionSelected = urlParams['sort'] || 'none'
+const sortOptions = document.querySelector(`#sort-products option[value="${sortOptionSelected}"]`)
+sortOptions.selected = true
+
 // PRODUCT CATALOG
 const productsTemplate = 
 `
