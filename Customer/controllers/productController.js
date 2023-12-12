@@ -10,93 +10,90 @@ const productController = {
   //GET all products
   getAllProducts: async (req, res) => {
     try {
-      const { 'product-name': productName, category, manufacturer, 'from-input': priceMin, 'to-input': priceMax, page, sort } = req.query;
-
-      const pageTo = parseInt(page) || 1
-
-      var products
-      var totalProducts
-      var totalPages
-
-      if(sort && sort != 'none') {
-        products = await productService.sortProducts(sort, pageTo)
-        totalProducts = await productService.getTotalProducts()
-        totalPages = Math.ceil(totalProducts / productService.productsPerPage)
-      }
-      else {
-        const conditions = {}
-        if(productName){
-          conditions.name = productName
-        }
-
-        if (category){        
-          conditions.category = []
-          if(!Array.isArray(category)){
-            const cateID = await categoryService.getCategoryByName(category)
-            conditions.category.push(cateID)
-          }
-          else{
-            for(cate of category){
-              const cateID = await categoryService.getCategoryByName(cate)
-              conditions.category.push(cateID)
-            }
-          }
-        } 
-
-        if(manufacturer){
-          conditions.manufacturer = []
-          if(!Array.isArray(manufacturer)){
-            const manuID = await manufacturerService.findManufacturerByName(manufacturer)
-            conditions.manufacturer.push(manuID)
-          }
-          else{
-            for(manu of manufacturer){
-              const manuID = await manufacturerService.findManufacturerByName(manu)
-              conditions.manufacturer.push(manuID)
-            }
-          }
-        }
-        
-        if(priceMin || priceMax) conditions.price = {}
-        if (priceMin) conditions.price.$gte = parseInt(priceMin);
-        if (priceMax) conditions.price.$lte = parseInt(priceMax);
-
-        if(conditions) {
-          products = await productService.getProductByFilter(conditions, pageTo)
-          totalProducts = await productService.getTotalFilteredProducts(conditions)
-          totalPages = Math.ceil(totalProducts / productService.productsPerPage)
-        }
-        else {
-          products = await productService.getProducts(pageTo)
-        }
-      }
+      const acceptHeader = req.get('Accept');
 
       const categories = await categoryService.getAllCategories()
       const manufacturers = await manufacturerService.getAllManufacturers()
+  
+      if (acceptHeader && acceptHeader.includes('application/json')) {
+        const { 'product-name': productName, category, manufacturer, 'from-input': priceMin, 'to-input': priceMax, page, sort } = req.query;
 
-      res.format({
-        html: function () {
-          res.render('productList', {
-            categories,
-            manufacturers,
-            products,
-            totalPages,
-            activePage: pageTo,
-            layout: 'main',
-            extraStyles: 'productList.css',
-          });
-        },
-        json: function () {
-          res.json({
-            products,
-            totalPages,
-            activePage: pageTo
-          });
+        const pageTo = parseInt(page) || 1
+
+        var products
+        var totalProducts
+        var totalPages
+
+        if(sort && sort != 'none') {
+          products = await productService.sortProducts(sort, pageTo)
+          totalProducts = await productService.getTotalProducts()
+          totalPages = Math.ceil(totalProducts / productService.productsPerPage)
         }
-      });
-    } catch (err) {
-      res.status(500).json(err)
-    }
+        else {
+          const conditions = {}
+          if(productName){
+            conditions.name = productName
+          }
+
+          if (category){        
+            conditions.category = []
+            if(!Array.isArray(category)){
+              const cateID = await categoryService.getCategoryByName(category)
+              conditions.category.push(cateID)
+            }
+            else{
+              for(cate of category){
+                const cateID = await categoryService.getCategoryByName(cate)
+                conditions.category.push(cateID)
+              }
+            }
+          } 
+
+          if(manufacturer){
+            conditions.manufacturer = []
+            if(!Array.isArray(manufacturer)){
+              const manuID = await manufacturerService.findManufacturerByName(manufacturer)
+              conditions.manufacturer.push(manuID)
+            }
+            else{
+              for(manu of manufacturer){
+                const manuID = await manufacturerService.findManufacturerByName(manu)
+                conditions.manufacturer.push(manuID)
+              }
+            }
+          }
+          
+          if(priceMin || priceMax) conditions.price = {}
+          if (priceMin) conditions.price.$gte = parseInt(priceMin);
+          if (priceMax) conditions.price.$lte = parseInt(priceMax);
+
+          if(conditions) {
+            products = await productService.getProductByFilter(conditions, pageTo)
+            totalProducts = await productService.getTotalFilteredProducts(conditions)
+            totalPages = Math.ceil(totalProducts / productService.productsPerPage)
+          }
+          else {
+            products = await productService.getProducts(pageTo)
+          }
+        }
+
+        res.json({
+          products,
+          totalPages,
+          activePage: pageTo
+        });
+      }
+      else {
+        res.render('productList', {
+          categories,
+          manufacturers,
+          layout: 'main',
+          extraStyles: 'productList.css',
+        });
+      }
+      } catch (err) {
+        res.status(500).json(err)
+      }
   },
 
 
@@ -229,23 +226,6 @@ const productController = {
         extraStyles: 'productDetail.css',
         user: req.user || null,
       })
-
-      // res.format({
-      //   html: function () {
-      //     res.render('productDetail', {
-      //       details,
-      //       layout: 'main',
-      //       extraStyles: 'productDetail.css',
-      //       user: req.user || null,
-      //     })
-      //   },
-      //   json: function () {
-      //     res.json({
-      //       details,
-      //       user: req.user || null,
-      //     });
-      //   }
-      // });
     } catch (err) {
       res.status(500).json(err)
     }

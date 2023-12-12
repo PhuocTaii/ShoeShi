@@ -47,9 +47,9 @@ function sortProducts() {
   })
 }
 
-var divElement = document.querySelector('.component-container')
+// var divElement = document.querySelector('.component-container')
 
-// Add a click event listener
-divElement.addEventListener('click', function () {
-  divElement.style.backgroundColor = 'blue'
-})
+// // Add a click event listener
+// divElement.addEventListener('click', function () {
+//   divElement.style.backgroundColor = 'blue'
+// })
