@@ -80,7 +80,7 @@ const productController = {
   //           products,
   //           totalPages,
   //           activePage: pageTo,
-  //           layout: 'layout/main',
+  //           layout: 'main',
   //           extraStyles: 'productList.css',
   //         });
   //       },
@@ -245,7 +245,7 @@ const productController = {
   //   const manufacturers = await manufacturerService
   //     .getAllManufacturers()
   //     res.render('productList', {
-  //       layout: 'layout/main',
+  //       layout: 'main',
   //       extraStyles: 'productList.css',
   //       products, categories,manufacturers
   //     })
@@ -256,7 +256,7 @@ const productController = {
 
   getAdminProductPage: async (req, res) => {
     res.render('products', {
-      layout: 'layout/main',
+      layout: 'main',
       extraStyles: 'products.css',
     })
   },
