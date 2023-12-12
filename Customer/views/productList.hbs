@@ -90,13 +90,6 @@
     <!--PRODUCT CATALOG-->
     <div class='main-content'>
       <div class='content-header'>
-        {{!-- <nav aria-label='breadcrumb'>
-          <ol class='breadcrumb'>
-            <li class='breadcrumb-item'><a href='#'>Home</a></li>
-            <li class='breadcrumb-item active' aria-current='page'><a
-              >Men</a></li>
-          </ol>
-        </nav> --}}
         <div class='sort-info'>
           <label for='sort-products'>Sort by: </label>
           <select id='sort-products' name='sort-options' onchange="handleQuery(event)" class="form-select" />
@@ -110,18 +103,7 @@
       </div>
       <div class='product-container'>
         <div id="product-list" class='row row-cols-1 row-cols-md-3 row-cols-lg-4 g-2'>
-          {{!-- {{#each products}}
-          <div class='col'>
-            <a class='product mx-1 my-2' href='/product/{{this._id}}'>
-              <img class='product-img' src={{this.productImage.[0]}} />
-              <div class='product-details'>
-                <p class='product-name'>{{this.name}}</p>
-                <p class='product-brand'>{{this.manufacturer.name}}</p>
-                <p class='product-price'>{{this.price}} ₫</p>
-              </div>
-            </a>
-          </div>
-          {{/each}} --}}
+          
         </div>
       </div>
         
