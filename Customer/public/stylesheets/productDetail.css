@@ -423,6 +423,7 @@ label {
 .product.col {
   padding: 0;
   min-height: 100%;
+  color: var(--my-black);
 }
 
 .product-card-img {

@@ -99,72 +99,6 @@ const productController = {
   // },
 
 
-  //GET products by filter
-  getProductByFilter: async (req, res) => {
-    try{
-      const { 'product-name': productName, category, manufacturer } = req.query;
-
-      const conditions = {};
-      if(productName){
-        conditions.name = productName
-      }
-
-      if (category){        
-        conditions.category = []
-        if(!Array.isArray(category)){
-          const cateID = await categoryService.getCategoryByName(category)
-          conditions.category.push(cateID)
-        }
-        else{
-          for(cate of category){
-            const cateID = await categoryService.getCategoryByName(cate)
-            conditions.category.push(cateID)
-          }
-        }
-      } 
-
-      if(manufacturer){
-        conditions.manufacturer = []
-        if(!Array.isArray(manufacturer)){
-          const manuID = await manufacturerService.findManufacturerByName(manufacturer)
-          conditions.manufacturer.push(manuID)
-        }
-        else{
-          for(manu of manufacturer){
-            const manuID = await manufacturerService.findManufacturerByName(manu)
-            conditions.manufacturer.push(manuID)
-          }
-        }
-      }
-
-      const products = await productService.getProductByFilter(conditions)
-      
-      res.json({
-        products,
-        totalPages,
-        activePage: pageTo
-      });
-        
-    } catch(err){
-      res.status(500).json(err)
-      console.log(err)
-    }
-  },
-
-  //SORT products
-  sortProducts: async (req, res) => {
-    try{
-      const { sort } = req.query;
-      const products = await productService.sortProducts(sort)
-      console.log(products)
-      res.status(200).json(products)
-
-    } catch(err){
-      res.status(500).json(err)
-    }
-  },
-
-
   //ADD product
   addProduct: async (req, res) => {
     try {
@@ -234,32 +168,11 @@ const productController = {
     }
   },
 
-  //Client side
-  // getProductPage: async (req, res) => {
-  //   try {
-  //   const products = await productService
-  //     .getAllProducts()
-  //     .populate('manufacturer')
-  //   const categories = await categoryService
-  //     .getAllCategories()
-  //   const manufacturers = await manufacturerService
-  //     .getAllManufacturers()
-  //     res.render('productList', {
-  //       layout: 'main',
-  //       extraStyles: 'productList.css',
-  //       products, categories,manufacturers
-  //     })
-  //   } catch (err) {
-  //     res.status(500).json(err)
-  //   }
-  // },
-
   getAdminProductPage: async (req, res) => {
     res.render('products', {
       layout: 'main',
       extraStyles: 'products.css',
     })
   },
-
 }
 module.exports = productController

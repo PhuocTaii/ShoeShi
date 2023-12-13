@@ -1,9 +1,12 @@
-<div class='container-fluid mx-0'>
+<div class='container-fluid mx-0 px-0'>
   <div class='body-head'>
-    <p class='body-tittle'>PRODUCTS LIST</p>
+    <p class='body-title'>CATALOG</p>
   </div>
+
+  <!--BODY CONTAINER-->
   <div class='body-container'>
-    <form class='product-filter' id="filter-form">
+    <!--FILTERS-->
+    <form class='product-filter' id="filter-form" onsubmit="handleQuery(event)">
       <p>Filters</p>
       <div class='component-container product-name-block'>
         <p class="title">Product name</p>
@@ -24,16 +27,16 @@
         <p>Brand</p>
         <div class='list'>
           {{#each manufacturers}}
-            <div class='list-component'>
-              <input type='checkbox' class='list-checkbox' name="manufacturer" value="{{this.name}}"/>
-              <p>{{this.name}}</p>
+          <div class='list-component'>
+            <input type='checkbox' class='list-checkbox' name="manufacturer" value="{{this.name}}"/>
+            <p>{{this.name}}</p>
           </div>
           {{/each}}
         </div>
       </div>
+
       <div class='component'>
         <p>Price</p>
-
         <div class='range_container'>
           <div class='sliders_control'>
             <input
@@ -42,6 +45,7 @@
               value='100000'
               min='100000'
               max='9000000'
+              step="1000"
             />
             <input
               id='toSlider'
@@ -49,6 +53,7 @@
               value='9000000'
               min='100000'
               max='9000000'
+              step="1000"
             />
           </div>
           <div class='form_control'>
@@ -77,21 +82,18 @@
           </div>
         </div>
       </div>
-        <button class="filter-but" type="submit">Filter</button>
+
+      <button class="filter-but" type="submit">Filter</button>
     </form>
+    <!--END FILTERS-->
+
+    <!--PRODUCT CATALOG-->
     <div class='main-content'>
       <div class='content-header'>
-        {{!-- <nav aria-label='breadcrumb'>
-          <ol class='breadcrumb'>
-            <li class='breadcrumb-item'><a href='#'>Home</a></li>
-            <li class='breadcrumb-item active' aria-current='page'><a
-              >Men</a></li>
-          </ol>
-        </nav> --}}
         <div class='sort-info'>
           <label for='sort-products'>Sort by: </label>
-          <select id='sort-products' name='sort-options' onchange="sortProducts()" />
-            <option value='none'>None</option>
+          <select id='sort-products' name='sort-options' onchange="handleQuery(event)" class="form-select" />
+            <option selected value='none'>None</option>
             <option value='newest'>Newest</option>
             <option value='oldest'>Oldest</option>
             <option value='low-high'>Low price - High price</option>
@@ -99,35 +101,26 @@
           </select>
         </div>
       </div>
-      <div class='product-container'>
-        <div id="product-list" class='row row-cols-4 row-col-md-1'>
-          {{#each products}}
-          <div class='col'>
-            <a class='product mx-1 my-2' href='/product/{{this._id}}'>
-              <img class='product-img' src={{this.productImage.[0]}} />
-              <div class='product-details'>
-                <p class='product-name'>{{this.name}}</p>
-                <p class='product-brand'>{{this.manufacturer.name}}</p>
-                <p class='product-price'>{{this.price}} ₫</p>
-              </div>
-            </a>
-          </div>
-          {{/each}}
-        </div>
+      <div id='product-container'>
+        {{!-- <div class="product-list" class='row row-cols-1 row-cols-md-3 row-cols-lg-4 g-2'>
+          
+        </div> --}}
       </div>
-      
+        
       <nav aria-label="page-navigation">
         <ul class="pagination d-flex justify-content-center" id="product-pagination">
 
         </ul>
       </nav>
     </div>
+    <!--END PRODUCT CATALOG-->
   </div>
+  <!--END BODY CONTAINER-->
 </div>
-<script src='/js/range-price.js'></script>
-<script
-  data-total-pages="{{totalPages}}"
-  data-active-page="{{activePage}}"
-  src='/js/product-paging.js'>
-</script>
-<script src="/js/customer-products.js"></script>
+
+{{#section 'scripts'}}
+  <script src='/js/rangePrice.js'></script>
+  <script src='/js/hbsHelpers.js'></script>
+  <script src='/js/templates/pagination.js'></script>
+  <script src='/js/productList.js'></script>
+{{/section}}
