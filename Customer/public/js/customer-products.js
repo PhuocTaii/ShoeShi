@@ -47,6 +47,12 @@ function sortProducts() {
   })
 }
 
+function getProductDetail(){
+  let product = {
+    customer: user.id,
+  }
+}
+
 var divElement = document.querySelector('.component-container')
 
 // Add a click event listener
