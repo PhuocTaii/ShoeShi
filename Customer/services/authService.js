@@ -1,4 +1,5 @@
 const User = require('../models/customer')
+const Cart = require('../models/cart')
 const bcrypt = require('bcrypt')
 
 const authService = {
@@ -9,6 +10,9 @@ const authService = {
 
       const newUser = new User(user);
       newUser.password = hashedPassword;
+
+      const newCart = new Cart({ customer: newUser._id });
+      const savedCart = await newCart.save();
 
       const savedUser = await newUser.save();
       return savedUser;

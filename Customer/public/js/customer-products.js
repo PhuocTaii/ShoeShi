@@ -42,15 +42,9 @@ function sortProducts() {
       updatePagination(data.totalPages, data.activePage)
     },
     error: function (error) {
-      // alert("Can's find")
+      // alert("Can't find")
     },
   })
-}
-
-function getProductDetail(){
-  let product = {
-    customer: user.id,
-  }
 }
 
 var divElement = document.querySelector('.component-container')

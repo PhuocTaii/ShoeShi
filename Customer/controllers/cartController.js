@@ -24,16 +24,18 @@ const cartController = {
   //ADD product to cart
   addProductToCart: async (req, res) => {
     try {
-      const color = await colorSerice.findColorByName(req.body.color)
-      const size = await sizeService.getSizeByNumber(req.body.size)
-      const cart = await cartService.getOneCart(req.params.customerId)
-      const savedCart = cartService.addProductToCart(
-        cart,
-        req.body,
-        color,
-        size
-      )
-      res.status(200).json(savedCart)
+      // const color = await colorSerice.findColorByName(req.body.color)
+      // const size = await sizeService.getSizeByNumber(req.body.size)
+      if(req.user){
+        const cart = await cartService.getOneCart(req.user.id)
+        const savedCart = cartService.addProductToCart(
+          cart,
+          req.params.productID,
+          req.body.color,
+          req.body.size
+          )
+        return res.status(200).json(savedCart)  
+      }
     } catch (err) {
       console.log(err)
       res.status(500).json(err)
@@ -84,12 +86,45 @@ const cartController = {
     }
   },
 
+
   //Client side
   getCartPage: async(req, res) => {
-    res.render('cart', {
-      layout: 'main',
-      extraStyles: 'cart.css',
-    })
-  }
+  try{
+    if(req.user){
+      const cart = await cartService.getOneCart(req.user.id);
+      const productList = await cartService.getProductListById(cart)
+      const orderSummary = await cartService.getOrderSummary(cart)
+      res.render('cart', {
+        productList,
+        orderSummary,
+        layout: 'main',
+        extraStyles: 'cart.css',
+        user: req.user
+      })
+    }
+    else{
+      res.render('cart', {
+        layout: 'main',
+        extraStyles: 'cart.css',
+        user: null
+      })
+    }
+  } catch (err) {
+      res.status(500).json(err)
+      console.log(err)
+    }
+  },
+
+  getLocalCart: async (req, res) => {
+    try{
+      // console.log(req.body)
+      const productList = await cartService.getLocalCart(req.body)
+      console.log(productList)
+      res.status(200).json(productList)
+    } catch (err) {
+      res.status(500).json(err)
+      console.log(err)
+    }
+  },
 }
 module.exports = cartController

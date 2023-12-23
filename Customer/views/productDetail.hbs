@@ -55,10 +55,11 @@
 
       <!-- PRODUCT DETAIL -->
       <div class='col-4 px-0'>
+        <form class="product-form" id="product-form" onsubmit="addToCart(event)" data-user = {{user}}>
         <div id="main-product-detail" class='product-detail' data-product-id={{details._id}}>
           <div class='name-price'>
             <p class='product-name'>{{details.name}}</p>
-            <p class='product-price'><span data-price={{details.price}}></span>{{formatPrice details.price}} đ</p>
+            <p class='product-price'><span data-price={{details.price}}></span>{{formatPrice details.price}}₫</p>
           </div>
           <div class='color'>
             <p class='attribute-name'>Color</p>
@@ -69,6 +70,7 @@
                 id='{{this._id}}'
                 name='color-option'
                 class='option'
+                value="{{this._id}}"
               />
               <label class="color-present" for='{{this._id}}' style="background-color: {{this.colorCode}};">
                 <i class='ri-check-line'></i>
@@ -85,17 +87,19 @@
                 id='{{this._id}}'
                 name='size-option'
                 class='option'
+                value="{{this._id}}"
               />
               <label for='{{this._id}}' class='s-option'>
                 {{this.size}}
               </label>
               {{/each}}
+              </div>
             </div>
+            <button class='add-button' type="submit">
+             <p class='add-action'>add to cart</p>
+            </button>
           </div>
-          <button class='add-button' type="submit">
-            <p class='add-action'>add to cart</p>
-          </button>
-        </div>
+        </form>
       </div>
       <!-- END PRODUCT DETAIL -->
     </div>

@@ -4,31 +4,30 @@ const mongoose = require('mongoose')
 
 const productService = {
   productsPerPage: 5,
-  relatedProductPerPage: 6,
 
-  getTotalProducts() {
-    const totalProducts = Product.countDocuments()
-    return totalProducts
-  },
+  // getTotalProducts() {
+  //   const totalProducts = Product.countDocuments()
+  //   return totalProducts
+  // },
 
-  getAllProducts() {
-    const products = Product.find()
-    return products
-  },
+  // getAllProducts() {
+  //   const products = Product.find()
+  //   return products
+  // },
 
-  getProducts(page) {
-    page = page - 1
-    const products = Product.find()
-      .skip(page * productService.productsPerPage)
-      .limit(productService.productsPerPage)
-      .lean()
-    return products
-  },
+  // getProducts(page) {
+  //   page = page - 1
+  //   const products = Product.find()
+  //     .skip(page * productService.productsPerPage)
+  //     .limit(productService.productsPerPage)
+  //     .lean()
+  //   return products
+  // },
 
-  getOtherProducts(id) {
-    const products = Product.find({ _id: { $ne: id } })
-    return products
-  },
+  // getOtherProducts(id) {
+  //   const products = Product.find({ _id: { $ne: id } })
+  //   return products
+  // },
 
   getFeaturedProducts() {
     const products = Product.aggregate(
@@ -71,90 +70,19 @@ const productService = {
   },
 
   getRelatedProducts(product, id){
-    // page = page - 1
     const products = Product.find({
       _id: { $ne: id },
       category: { $in: product.category }
     })
     .sort({ category: -1 })
-    // .skip(page*productService.relatedProductPerPage)
     .limit(12)
     .populate('manufacturer')
     .lean()
     return products
   },
 
-  getQuery(query) {
-    const conditions = {};
-
-    if (query.name) {
-      conditions.name = { $regex: query.name, $options: 'i' };
-    }
-
-    if (query.category) {
-        conditions.category = { $in: query.category };
-    }
-
-    if (query.manufacturer) { 
-        conditions.manufacturer = { $in: query.manufacturer };
-    }
-
-    if (query.price) {
-        conditions.price = { $gte: query.price.$gte, $lte: query.price.$lte };
-    }
-    return conditions;
-  },
-
-  getProductByFilter(query, page) {
-    page = page - 1
-    const conditions = productService.getQuery(query);
-
-    const products = Product.find(conditions)
-                          .skip(page * productService.productsPerPage)
-                          .limit(productService.productsPerPage)
-                          .populate('manufacturer')
-                          .lean()
-    return products;
-  },
-
-  getTotalFilteredProducts(query) {
-    const conditions = productService.getQuery(query);
-    const totalProducts = Product.countDocuments(conditions);
-    return totalProducts;
-  },
-  
-
-  sortProducts(sort, page) {
-    page = page - 1
-    if(sort == 'newest'){
-      const products = Product.find().sort({creationDate: -1}).skip(page * productService.productsPerPage)
-      .limit(productService.productsPerPage).populate('manufacturer').lean()
-      return products
-    }
-    if(sort == 'oldest'){
-      const products = Product.find().sort({creationDate: 1}).skip(page * productService.productsPerPage)
-      .limit(productService.productsPerPage).populate('manufacturer').lean()
-      return products
-    }
-    if(sort == 'low-high'){
-      const products = Product.find().sort({price: 1}).skip(page * productService.productsPerPage)
-      .limit(productService.productsPerPage).populate('manufacturer').lean()
-      return products
-    }
-    if(sort == 'high-low'){
-      const products = Product.find().sort({price: -1}).skip(page * productService.productsPerPage)
-      .limit(productService.productsPerPage).populate('manufacturer').lean()
-      return products
-    }
-  },
-
   getProductById(id) {
     const foundProduct = Product.findById(id)
-    return foundProduct
-  },
-
-  getProductByName(name){
-    const foundProduct = Product.find({ name: { $regex: name, $options: 'i' } })
     return foundProduct
   },
 
@@ -165,6 +93,176 @@ const productService = {
                   .populate('color')
                   .populate('size')
                   .lean()
+  },
+
+  generatePipelineGetProducts(page, productName, category, manufacturer, priceMin, priceMax, sort) {
+    page = page - 1
+    productName = productName || ''
+    if(category) {
+      if(!Array.isArray(category)) {
+        category = [category]
+      }
+      else
+        category = category
+    }
+    else
+      category = []
+
+    if(manufacturer) {
+      if(!Array.isArray(manufacturer)) {
+        manufacturer = [manufacturer]
+      }
+      else
+        manufacturer = manufacturer
+    }
+    else
+      manufacturer = []
+
+    priceMin = parseInt(priceMin) || 100000
+    priceMax = parseInt(priceMax) || 9000000
+    sort = sort || 'none'
+
+    const pipeline =
+      [
+        {
+          $match: {
+            name: {
+              $regex: productName,
+              $options: "i",
+            },
+            price: {
+              $gte: priceMin,
+              $lte: priceMax,
+            },
+          },
+        },
+        {
+          $lookup:
+            {
+              from: "categories",
+              localField: "category",
+              foreignField: "_id",
+              as: "category",
+            },
+        },
+        {
+          $lookup:
+            {
+              from: "manufacturers",
+              localField: "manufacturer",
+              foreignField: "_id",
+              as: "manufacturer",
+            },
+        },
+        {
+          $unwind:
+            {
+              path: "$manufacturer",
+              preserveNullAndEmptyArrays: true,
+            },
+        },
+      ]
+    
+    if(category.length > 0) {
+      pipeline.push(
+        {
+          $match:
+            {
+              "category.name": {
+                $in: category,
+              },
+            },
+        },
+      )
+    }
+    if(manufacturer.length > 0) {
+      pipeline.push(
+        {
+          $match:
+            {
+              "manufacturer.name": {
+                $in: manufacturer,
+              },
+            },
+        },
+      )
+    }
+    if(sort == 'newest') {
+      pipeline.push(
+        {
+          $sort: {
+            creationDate: -1,
+          },
+        },
+      )
+    }
+    else if(sort == 'oldest') {
+      pipeline.push(
+        {
+          $sort: {
+            creationDate: 1,
+          },
+        },
+      )
+    }
+    else if(sort == 'low-high') {
+      pipeline.push(
+        {
+          $sort: {
+            price: 1,
+          },
+        },
+      )
+    }
+    else if(sort == 'high-low') {
+      pipeline.push(
+        {
+          $sort: {
+            price: -1,
+          },
+        },
+      )
+    }
+
+    return {pipeline, query: {page, productName, category, manufacturer, priceMin, priceMax, sort}}
+  },
+
+  getProductsWithCondition(page, productName, category, manufacturer, priceMin, priceMax, sort) {
+    const {pipeline, query} = productService.generatePipelineGetProducts(page, productName, category, manufacturer, priceMin, priceMax, sort)    
+
+    pipeline.push(
+      {
+        $skip: query.page*productService.productsPerPage,
+      },
+      {
+        $limit: productService.productsPerPage,
+      },
+      {
+        $project: {
+          _id: 1,
+          name: 1,
+          price: 1,
+          productImage: 1,
+          status: 1,
+          manufacturer: 1,
+          category: 1,
+        },
+      },
+    )
+    const products = Product.aggregate(pipeline)
+    return products
+  },
+
+  getTotalProductsWithCondition(page, productName, category, manufacturer, priceMin, priceMax, sort) {
+    const {pipeline, query} = productService.generatePipelineGetProducts(page, productName, category, manufacturer, priceMin, priceMax, sort)
+
+    pipeline.push(
+      {
+        $count: "totalCount",
+      },
+    )
+    const productsCount = Product.aggregate(pipeline)
+    return productsCount
   }
 }
 
