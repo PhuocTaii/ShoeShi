@@ -2,14 +2,13 @@ const User = require('../models/customer')
 const Cart = require('../models/cart')
 
 const userService = {
-
   addUser(user, imageUrl) {
     console.log(user)
     const newUser = new User({
       username: user.username,
       password: user.password,
       admin: user.admin,
-      name: user.name,  
+      name: user.name,
       birthday: user.birthday,
       phoneNum: user.phoneNum,
       gender: user.gender,
@@ -26,8 +25,8 @@ const userService = {
     return savedUser, savedCart
   },
 
-  updateAvatarUser(userId, image){
-    const user = User.findByIdAndUpdate(userId, {customerImage: image})
+  updateAvatarUser(userId, image) {
+    const user = User.findByIdAndUpdate(userId, { customerImage: image })
     return user
   },
 
@@ -38,6 +37,16 @@ const userService = {
 
   getUserById(id) {
     const user = User.findById(id)
+      .populate('username')
+      .populate('password')
+      .populate('name')
+      .populate('birthday')
+      .populate('phoneNum')
+      .populate('gender')
+      .populate('email')
+      .populate('address')
+      .populate('customerImage')
+      .lean()
     return user
   },
 }

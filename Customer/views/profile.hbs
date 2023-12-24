@@ -12,7 +12,7 @@
       />
     </div>
     <div class='col d-flex align-items-center'>
-      <h4 class='mb-0'>Your Name</h4>
+      <h4 class='mb-0'>{{user.name}}</h4>
     </div>
   </div>
 
@@ -42,6 +42,7 @@
             class='form-control fs-6'
             placeholder='Email'
             id='email'
+            value='{{user.email}}'
             required
           />
         </div>
@@ -54,6 +55,7 @@
             class='form-control fs-6'
             placeholder='Full Name'
             id='full-name'
+            value='{{user.name}}'
           />
         </div>
 
@@ -68,7 +70,7 @@
                 name='gender'
                 value='male'
                 class='form-check-input'
-                checked
+                {{#ifEquals user.gender "male"}}checked{{/ifEquals}}
               />
             </div>
 
@@ -80,6 +82,7 @@
                 name='gender'
                 value='female'
                 class='form-check-input'
+                {{#ifEquals user.gender "female"}}checked{{/ifEquals}}
               />
             </div>
           </div>
@@ -92,6 +95,7 @@
             class='form-control fs-6'
             placeholder='Phone Number'
             id='phone-number'
+            value='{{user.phoneNum}}'
           />
         </div>
 
@@ -102,12 +106,13 @@
             class='form-control fs-6'
             placeholder='Address'
             id='address'
+            value='{{user.address}}'
           />
         </div>
 
         <div class='mb-2'>
           <label for='birthday' class='form-label'>Date of birth</label>
-          <input type='date' class='form-control fs-6' id='birthday' />
+          <input type='date' class='form-control fs-6' id='birthday' value='{{formatDate user.birthday}}'/>
         </div>
 
         <button
