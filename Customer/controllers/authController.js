@@ -55,7 +55,20 @@ const authController = {
       layout: 'auth',
       extraStyles: 'login.css',
     })
+  },
+
+  getUserLogOut: (req, res) => {
+    req.logout((err) => {
+    if (err) {
+      // Handle logout error
+      return res.status(500).json({ message: 'Logout Error' });
+    }
+    res.redirect('/');
+  });
   }
+
 }
+
+
 
 module.exports = authController

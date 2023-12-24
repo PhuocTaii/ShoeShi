@@ -89,6 +89,7 @@ const cartController = {
     res.render('cart', {
       layout: 'main',
       extraStyles: 'cart.css',
+      user: req.user || null,
     })
   }
 }

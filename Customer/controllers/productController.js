@@ -4,7 +4,6 @@ const sizeService = require('../services/sizeService')
 const categoryService = require('../services/categoryService')
 const manufacturerService = require('../services/manufacturerService')
 const imageService = require('../services/imageService')
-const userService = require('../services/userService')
 
 const productController = {
   //GET all products
@@ -36,6 +35,7 @@ const productController = {
           manufacturers,
           layout: 'main',
           extraStyles: 'productList.css',
+          user: req.user || null,
         });
       }
       } catch (err) {

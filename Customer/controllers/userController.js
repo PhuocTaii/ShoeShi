@@ -4,15 +4,16 @@ const imageService = require('../services/imageService')
 const User = require('../models/customer')
 
 const userController = {
-
   // ADD customers
   addUser: async (req, res) => {
     try {
       let imageUrl = ''
-      if(req.body.customerImage){
-        imageUrl = await imageService.uploadImageToCloudinary(req.body.customerImage)
+      if (req.body.customerImage) {
+        imageUrl = await imageService.uploadImageToCloudinary(
+          req.body.customerImage
+        )
       }
-      console.log(imageUrl) 
+      console.log(imageUrl)
       const savedUser = await userService.addUser(req.body, imageUrl)
       res.status(200).json(savedUser)
     } catch (err) {
@@ -23,12 +24,14 @@ const userController = {
 
   //UPDATE avatar
   updateAvatar: async (req, res) => {
-    try{
+    try {
       let imageUrl = ''
-      imageUrl = await imageService.uploadImageToCloudinary(req.body.customerImage)
+      imageUrl = await imageService.uploadImageToCloudinary(
+        req.body.customerImage
+      )
       const user = await userService.updateAvatarUser(req.params.id, imageUrl)
       res.status(200).json(user)
-    } catch(err){
+    } catch (err) {
       res.status(500).json(err)
     }
   },
@@ -47,11 +50,13 @@ const userController = {
   },
 
   getProfilePage: async (req, res) => {
-    res.render('customer/profile', {
+    const details = await userService.getUserById(req.params.id)
+
+    res.render('profile', {
       layout: 'main',
       extraStyles: 'profile.css',
+      user: req.user || null,
     })
   },
-
 }
 module.exports = userController

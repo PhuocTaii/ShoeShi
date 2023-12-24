@@ -1,5 +1,6 @@
 const productService = require('../services/productService');
-
+const userService = require('../services/userService')
+const {isAuth, isAdmin} = require('../middleware/authenticationMiddleware')
 
 const indexController = {
     getCustomerHomePage: async(req, res) => {
@@ -10,6 +11,7 @@ const indexController = {
                 extraStyles: 'home.css',
                 layout: 'main',
                 featuredProducts,
+                user: req.user || null,
             })
         } catch(err){
             console.log(err)    
