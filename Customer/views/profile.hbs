@@ -1,5 +1,5 @@
 <div class='container'>
-  <h1 class='title fw-bold text-center my-5'>YOUR PROFILE</h1>
+  <h1 class='title fw-bold text-center my-5' id="main-profile-detail" profile-id={{user._id}}>YOUR PROFILE</h1>
 
   <div class='row space'></div>
 
@@ -19,21 +19,8 @@
   <div class='row'>
     <div class='col-lg'>
       <div class='text-uppercase fs-3 mb-3'>details</div>
-      <form class='form-details'>
-        <div class='mb-2'>
-          <label for='password' class='form-label'>Password
-            <small class='text-danger'>*</small></label>
-          <input
-            type='password'
-            class='form-control fs-6'
-            placeholder='Password'
-            id='password'
-            required
-            minlength='8'
-            pattern='(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}'
-          />
-        </div>
 
+      <form class='form-details' id='form-details' onsubmit="updateProfile(event)">
         <div class='mb-2'>
           <label for='email' class='form-label'>Email
             <small class='text-danger'>*</small></label>
@@ -42,6 +29,7 @@
             class='form-control fs-6'
             placeholder='Email'
             id='email'
+            name='email'
             value='{{user.email}}'
             required
           />
@@ -55,6 +43,7 @@
             class='form-control fs-6'
             placeholder='Full Name'
             id='full-name'
+            name="name"
             value='{{user.name}}'
           />
         </div>
@@ -95,6 +84,7 @@
             class='form-control fs-6'
             placeholder='Phone Number'
             id='phone-number'
+            name="phoneNum"
             value='{{user.phoneNum}}'
           />
         </div>
@@ -106,13 +96,14 @@
             class='form-control fs-6'
             placeholder='Address'
             id='address'
+            name="address"
             value='{{user.address}}'
           />
         </div>
 
         <div class='mb-2'>
           <label for='birthday' class='form-label'>Date of birth</label>
-          <input type='date' class='form-control fs-6' id='birthday' value='{{formatDate user.birthday}}'/>
+          <input type='date' class='form-control fs-6' id='birthday' name="birthday" value='{{formatDate user.birthday}}'/>
         </div>
 
         <button
@@ -125,6 +116,7 @@
 
     <div class='col-lg'>
       <div class='text-uppercase fs-3 mb-3'>Change password</div>
+
       <form class='form-reset-password'>
         <div class='mb-2'>
           <label for='current-password' class='form-label'>Current password
@@ -160,8 +152,12 @@
         >
           SAVE</button>
       </form>
+
     </div>
-
   </div>
-
 </div>
+
+
+{{#section 'scripts'}}
+    <script src='/js/profile.js'></script>
+{{/section}}

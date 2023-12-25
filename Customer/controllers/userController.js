@@ -3,11 +3,11 @@ const cartService = require('../services/cartService')
 const imageService = require('../services/imageService')
 const User = require('../models/customer')
 
-const handlebars = require('handlebars');
+const handlebars = require('handlebars')
 
-handlebars.registerHelper('eq', function(arg1, arg2, options) {
-  return arg1 === arg2 ? options.fn(this) : options.inverse(this);
-});
+handlebars.registerHelper('eq', function (arg1, arg2, options) {
+  return arg1 === arg2 ? options.fn(this) : options.inverse(this)
+})
 
 const userController = {
   // ADD customers
@@ -64,7 +64,6 @@ const userController = {
       user,
     })
   },
-  
 }
 
 module.exports = userController
