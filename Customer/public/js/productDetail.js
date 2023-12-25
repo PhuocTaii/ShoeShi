@@ -185,6 +185,7 @@ function addToCart(event) {
 			if(localCart[i].productId == productId && localCart[i].color == color && localCart[i].size == size){
 				localCart[i].quantity += 1;
 				localStorage.setItem('cartData', JSON.stringify(localCart));
+				alert('Add product successfully');
 				return;
 			}
 		}
@@ -198,6 +199,7 @@ function addToCart(event) {
 		}
 		localCart.push(data);
 		localStorage.setItem('cartData', JSON.stringify(localCart));
+		alert('Add product successfully');
 	}
 
 	
