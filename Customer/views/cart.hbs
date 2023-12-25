@@ -18,16 +18,16 @@
                 <div class='left-box-info col-6 card-title'>
                   <p class='mb-3 fw-bold'>{{this.product}}</p>
                   <div class='info'>
-                    <p class='mb-3'>Color: {{this.color}}</p>
-                    <p class='mb-3'>Size: {{this.size}}</p>
+                    <p class='mb-3'  id="product-color-{{this.id}}">Color: {{this.color}}</p>
+                    <p class='mb-3' id="product-size-{{this.id}}">Size: {{this.size}}</p>
                     <div class='mb-3 input-quant'>
                       <label>Quantity: </label>
-                      <input type='number' required min='1' value='1' />
+                    <input type='number' id="{{this.id}}" required min='1' value='{{this.quantity}}' oninput="updateCart('{{this.productID}}', '{{this.colorId}}', '{{this.sizeId}}')" />
                     </div>
                   </div>
                 </div>
                 <div class='right-box-info col-6'>
-                  <p class='m-0 fw-bold'>{{this.price}}</p>
+                <p class='m-0 fw-bold' data-product-price='{{this.price}}' id="product-price-{{this.id}}">{{this.price}}</p>
                   <img class='mb-3' src='assets/img/trash-icon.svg' alt='' />
                 </div>
               </div>
@@ -44,7 +44,7 @@
       <div class='row'>
         <div class='col'>
           {{#if user}}
-            <div> {{orderSummary.totalAmount}} items</div>
+            <div id="log-total-item"> {{orderSummary.totalAmount}} items</div>
           {{else}}
             <div id="total-item"></div>
           {{/if}}
@@ -52,7 +52,7 @@
         </div>
         <div class='col right-box'>
           {{#if user}}
-            <div>{{formatPrice orderSummary.totalPrice}}</div>
+            <div id="log-total-price">{{formatPrice orderSummary.totalPrice}}</div>
           {{else}}
             <div id="total-price"></div>
           {{/if}}
@@ -66,7 +66,7 @@
         </div>
         <div class='col right-box'>
           {{#if user}}      
-            <div>{{formatPrice orderSummary.total}}₫</div>
+            <div id="log-total">{{formatPrice orderSummary.total}}₫</div>
           {{else}}
             <div id="total"></div>
           {{/if}}

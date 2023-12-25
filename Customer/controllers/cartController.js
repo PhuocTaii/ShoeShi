@@ -45,12 +45,15 @@ const cartController = {
   //Change product to cart
   changeProductQuantity: async (req, res) => {
     try {
-      const cart = await cartService.getOneCart(req.params.customerId)
-      const savedcart = cartService.changeProductQuantity(
+      const cart = await cartService.getOneCart(req.user.id)
+      const savedcart = await cartService.changeProductQuantity(
         req.params.productId,
         cart,
-        req.body.quantity
+        req.body.quantity,
+        req.body.color,
+        req.body.size
       )
+      // console.log(savedcart)
       res.status(200).json(savedcart)
     } catch (err) {
       console.log(err)
@@ -86,7 +89,30 @@ const cartController = {
     }
   },
 
+  //GET productList
+  getProductList: async (req, res) => {
+    try{
+      const cart = await cartService.getOneCart(req.user.id);
+      const productList = await cartService.getProductListById(cart)
+      res.status(200).json(productList)
+    } catch (err) {
+      res.status(500).json(err)
+      console.log(err)
+    }
+  },
 
+  //GET local cart
+  getLocalCart: async (req, res) => {
+    try{
+      // console.log(req.body)
+      const productList = await cartService.getLocalCart(req.body)
+      console.log(productList)
+      res.status(200).json(productList)
+    } catch (err) {
+      res.status(500).json(err)
+      console.log(err)
+    }
+  },
   //Client side
   getCartPage: async(req, res) => {
   try{
@@ -115,16 +141,5 @@ const cartController = {
     }
   },
 
-  getLocalCart: async (req, res) => {
-    try{
-      // console.log(req.body)
-      const productList = await cartService.getLocalCart(req.body)
-      console.log(productList)
-      res.status(200).json(productList)
-    } catch (err) {
-      res.status(500).json(err)
-      console.log(err)
-    }
-  },
 }
 module.exports = cartController

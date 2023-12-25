@@ -152,18 +152,20 @@ function addToCart(event) {
 
 
 	const productId = document.getElementById('main-product-detail').getAttribute('data-product-id')
-
-	const data = {
-		productId,
-		quantity,
-		color,
-		size
-	}
+	const productPrice = document.getElementById('product-price').getAttribute('data-price')
+	console.log(productPrice);
 
 	const user = document.getElementById('product-form').getAttribute('data-user')
-
 	
 	if(user){
+		const data = {
+			productPrice,
+			productId,
+			quantity,
+			color,
+			size
+		}
+
 		$.ajax({
 			url: `/cart/${productId}`,
 			type: 'POST',
@@ -173,13 +175,22 @@ function addToCart(event) {
 				alert('Add product successfully');
 			},
 			error: function(err) {
-				// console.log(err)
+				console.log(err)
 			}
 		})
 	} else{
 		var localCart = JSON.parse(localStorage.getItem('cartData')) || [];
 		console.log(localCart);
+		for(let i = 0; i < localCart.length; i++){
+			if(localCart[i].productId == productId && localCart[i].color == color && localCart[i].size == size){
+				localCart[i].quantity += 1;
+				localStorage.setItem('cartData', JSON.stringify(localCart));
+				return;
+			}
+		}
+		console.log(productId + color + size)
 		const data = {
+			productPrice,
 			productId,
 			quantity,
 			color,
