@@ -79,8 +79,8 @@ const cartService = {
     return clearCart
   },
 
-  findCartById(cartId) {
-    const cart = Cart.findById(cartId)
+  findCartById(id) {
+    const cart = Cart.findOne({customer: id})
     return cart
   },
 
@@ -104,7 +104,6 @@ const cartService = {
   },
 
   getProductListById: async (cart) => {
-    // Assuming cartService.getOneCart returns a promise
     const productList = cart.productList
     var detailList = []
     for (let i = 0; i < productList.length; i++) {
@@ -115,6 +114,33 @@ const cartService = {
       const productDetail = {
         id: prod._id + clor._id + sze._id,
         price: prod.price,
+        image: prod.productImage[0],
+        product: prod.name,
+        productID: prod._id,
+        color: clor.color,
+        size: sze.size,
+        quantity: qty,
+        colorId: clor._id,
+        sizeId: sze._id,
+      }
+      detailList.push(productDetail)
+    }
+    console.log(detailList)
+    return detailList
+  },
+
+  getProductListByIdForCheckout: async (cart) => {
+    // Assuming cartService.getOneCart returns a promise
+    const productList = cart.productList
+    var detailList = []
+    for (let i = 0; i < productList.length; i++) {
+      const prod = await productService.getProductById(productList[i].product)
+      const clor = await colorService.findColorById(productList[i].color)
+      const sze = await sizeService.getSizeById(productList[i].size)
+      const qty = productList[i].quantity
+      const productDetail = {
+        id: prod._id + clor._id + sze._id,
+        price: prod.price * qty,
         image: prod.productImage[0],
         product: prod.name,
         productID: prod._id,

@@ -106,4 +106,18 @@ function updateCart(productId, colorId, sizeId) {
         document.getElementById("total").innerHTML = total + '₫'
     }
 
-  }
+}
+
+function checkoutPage(){
+    $.ajax({
+        type: 'GET',
+        url: '/checkout',
+        success: function () {
+            window.location.href = '/checkout'
+        },
+        error: function (error) {
+            alert("You have to login to checkout")
+            window.location.href = '/login'
+        },
+    })
+}

@@ -26,7 +26,6 @@ $(document).ready(function () {
 function sortProducts() {
   var sortElement = 'sort=' + document.getElementById('sort-products').value
 
-  console.log(sortElement)
   $.ajax({
     type: 'GET',
     url: '/products',
