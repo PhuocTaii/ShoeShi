@@ -1,0 +1,94 @@
+<div class='container-fluid my-5' id="user-checkout" data-user = {{user}}>
+  <div class='row mx-0'>
+    <div class="page-header"> checkout </div>
+    <div class='col-lg-7'>  
+      <form class="checkout-form" id="checkout-form" onsubmit="createOrder(event)">
+        <div class="row fs-1 fw-bold mb-3 ship-detail">
+          <p class='ship-header'>shipping detail</p>
+          <div class="detail">
+            <p class="detail-label">Name</p>
+            <input required type="text" class="detail-input" id="name" value='{{buyer.name}}' />
+          </div>
+          <div class="detail">
+            <p class="detail-label">Address</p>
+            <input required type="text" class="detail-input" id="address" value='{{buyer.address}}'/>
+          </div>
+          <div class="detail">
+            <p class="detail-label">Phone number</p>
+            <input required type="text" class="detail-input" id="phone-num" value='{{buyer.phoneNum}}'/>
+          </div>
+          <div class="detail-payment">
+            <p class="payment-label">payment</p>
+            <div class="payment-methods">
+              <div class="cod-method">
+                <input class="payment-option" type="radio" id="cod" name="payment-method" value="cod">
+                <label for="cod" class="payment-present">
+                  <svg class="method-icon" width="20" height="16" viewBox="0 0 20 16" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_405_1592)"><path d="M9.99552 11.9971C12.2046 11.9971 13.9955 10.2062 13.9955 7.99707C13.9955 5.78793 12.2046 3.99707 9.99552 3.99707C7.78635 3.99707 5.99549 5.78793 5.99549 7.99707C5.99549 10.2062 7.78635 11.9971 9.99552 11.9971ZM19 0H1C0.44772 0 0 0.44771 0 1V15C0 15.5523 0.44772 16 1 16H19C19.5523 16 20 15.5523 20 15V1C20 0.44771 19.5523 0 19 0ZM2 11.6434V4.35078C3.12577 4.01407 4.01348 3.12599 4.34967 2H15.6413C15.9784 3.129 16.8699 4.01882 18 4.35347V11.6407C16.868 11.9759 15.9753 12.8682 15.6395 14H4.35142C4.01656 12.8713 3.12773 11.9807 2 11.6434Z" fill="black"/></g><defs><clipPath id="cod-icon"><rect width="20" height="16" fill="white"/></clipPath></defs></svg>
+                  <p class="method-name">COD</p>
+                </label>
+              </div>
+              <div class="banking-method">
+                <input class="payment-option" type="radio" id="banking" name="payment-method" value="banking">
+                <label for="banking" class="payment-present">
+                  <svg class="method-icon" id="banking-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 20"><path d="M22.0049 9.99979V19.9998C22.0049 20.5521 21.5572 20.9998 21.0049 20.9998H3.00488C2.4526 20.9998 2.00488 20.5521 2.00488 19.9998V9.99979H22.0049ZM22.0049 7.99979H2.00488V3.99979C2.00488 3.4475 2.4526 2.99979 3.00488 2.99979H21.0049C21.5572 2.99979 22.0049 3.4475 22.0049 3.99979V7.99979ZM15.0049 15.9998V17.9998H19.0049V15.9998H15.0049Z" fill="currentColor"></path></svg>
+                  <p class="method-name">VNPAY</p>
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="checkout-btn">
+            <button class="btn">checkout</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class='col-lg-5 px-5'>
+      <div class="order">
+        <div class="order-summary">
+          <p class="order-summary-tittle">order summary</p>
+          <div class="row">
+            <div class="col">
+              <div id="total-item"> {{orderSummary.totalAmount}} items</div>
+              <div>Delivery</div>
+            </div>
+            <div class="col right-box">
+              <div id="total-price">{{formatPrice orderSummary.totalPrice}}</div>
+              <div>{{formatPrice 20000}}</div>
+            </div>
+          </div>
+
+          <div class="row total">
+            <div class="col">Total</div>
+            <div class="col right-box"> {{formatPrice orderSummary.total}} ₫</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-list">
+        {{#each productList}}
+          <div class="item row my-3 mx-0">
+            <div class='col-md-4 p-0'>
+              <img
+                src={{this.image}}
+                class='product-img'
+                alt='cart img'
+              />
+            </div>
+            <div class="col-md-8 product-details">
+              <p class="product-name">{{this.product}}</p>
+              <p class="product-detail">Color: {{this.color}}</p>
+              <p class="product-detail">Size: {{this.size}}</p>
+              <p class="product-detail">Quantity: {{this.quantity}}</p>
+              <p class="product-price">{{this.price}}₫</p>
+            </div>
+          </div>
+        {{/each}}
+      </div>
+    </div>
+  </div>
+</div>
+
+{{#section 'scripts'}}
+  <script src='/js/hbsHelpers.js'></script>
+  <script src='/js/customer-checkout.js'></script>
+{{/section}}
