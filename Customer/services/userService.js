@@ -37,7 +37,7 @@ const userService = {
   },
 
   getUserById(id) {
-    const user = User.findById(id)
+    const user = User.findById(id).lean()
     return user
   },
 }
