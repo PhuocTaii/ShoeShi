@@ -3,5 +3,6 @@ module.exports.isAuth = (req, res, next) => {
   else {
     res.redirect('/login')
     // res.status(401).json({message: 'You must login to access'})
+    res.status(401).json({message: 'You must login to access'})
   }
 }

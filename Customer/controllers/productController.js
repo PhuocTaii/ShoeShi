@@ -16,9 +16,7 @@ const productController = {
         const pageTo = parseInt(page) || 1
 
         const products = await productService.getProductsWithCondition(pageTo, productName, category, manufacturer, priceMin, priceMax, sort)
-        console.log(products)
         const totalProducts = await productService.getTotalProductsWithCondition(pageTo, productName, category, manufacturer, priceMin, priceMax, sort)
-        console.log(totalProducts)
         const amountProduct = totalProducts[0] ? totalProducts[0].totalCount : 0
         const totalPages = Math.ceil(amountProduct / productService.productsPerPage)
         res.json({

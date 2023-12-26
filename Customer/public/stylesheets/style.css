@@ -99,6 +99,11 @@ a {
 .cart {
   position: relative;
 }
+
+.order {
+  position: relative;
+}
+
 .number-cart-items {
   background: #ff7100;
   border-radius: 100px;

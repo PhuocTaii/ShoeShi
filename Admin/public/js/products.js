@@ -72,9 +72,13 @@ function removeSelectedItem(infoType, selectedValue) {
 
 function showSelectedPhoto() {
   const list = document.getElementById('photos-container')
+  const reader = new FileReader();
 
   list.innerHTML = info['photos'].map(photo => {
     const url = URL.createObjectURL(photo)
+    console.log(url)
+    
+    // console.log(reader.readAsDataURL(url))
     return(
       `
       <div class='photo-frame'>

@@ -1,84 +1,65 @@
-<div class='container-fluid my-5'>
+<div class='container-fluid my-5'id="user-cart" data-user = {{user}}>
   <div class='row mx-0'>
     <div class='col-lg-7'>
       <div class='row fs-1 fw-bold mb-3'>YOUR CART</div>
-      <div class='item row my-3'>
-        <!-- cart images div -->
-        <div class='col-md-3 p-0'>
-          <img
-            src='assets/img/nike-sample.png'
-            class='img-fluid'
-            alt='cart img'
-          />
-        </div>
-
-        <!-- cart product details -->
-        <div class='col-md-9 mx-auto px-4 mt-2'>
-          <div class='row h-100'>
-            <!-- product name  -->
-            <div class='left-box-info col-6 card-title'>
-              <p class='mb-3 fw-bold'>Nike Dunk Low Retro Premium</p>
-              <div class='info'>
-                <p class='mb-3'>Color: Silver</p>
-                <p class='mb-3'>Size: 40.5</p>
-                <div class='mb-3 input-quant'>
-                  <label>Quantity: </label>
-                  <input type='number' required min='1' value='1' />
+      {{#if user}}
+        {{#each productList}}
+          <div class="item row my-3">
+              <div class='col-md-3 p-0'>
+                <img
+                    src='{{this.image}}'
+                    class='img-fluid'
+                    alt='cart img'
+                  />
+              </div>
+            <div class='col-md-9 mx-auto px-4 mt-2'>
+              <div class='row h-100'>
+                <!-- product name  -->
+                <div class='left-box-info col-6 card-title'>
+                  <p class='mb-3 fw-bold'>{{this.product}}</p>
+                  <div class='info'>
+                    <p class='mb-3'  id="product-color-{{this.id}}">Color: {{this.color}}</p>
+                    <p class='mb-3' id="product-size-{{this.id}}">Size: {{this.size}}</p>
+                    <div class='mb-3 input-quant'>
+                      <label>Quantity: </label>
+                    <input type='number' id="{{this.id}}" required min='1' value='{{this.quantity}}' oninput="updateCart('{{this.productID}}', '{{this.colorId}}', '{{this.sizeId}}')" />
+                    </div>
+                  </div>
+                </div>
+                <div class='right-box-info col-6'>
+                <p class='m-0 fw-bold' data-product-price='{{this.price}}' id="product-price-{{this.id}}">{{this.price}}</p>
+                  <img class='mb-3' src='assets/img/trash-icon.svg' alt='' />
                 </div>
               </div>
             </div>
-            <div class='right-box-info col-6'>
-              <p class='m-0 fw-bold'>3,519,000₫</p>
-              <img class='mb-3' src='assets/img/trash-icon.svg' alt='' />
-            </div>
           </div>
-        </div>
-      </div>
-
-      <div class='item row my-3'>
-        <!-- cart images div -->
-        <div class='col-md-3 p-0'>
-          <img
-            src='assets/img/nike-sample.png'
-            class='img-fluid'
-            alt='cart img'
-          />
-        </div>
-
-        <!-- cart product details -->
-        <div class='col-md-9 mx-auto px-4 mt-2'>
-          <div class='row h-100'>
-            <!-- product name  -->
-            <div class='left-box-info col-6 card-title'>
-              <p class='mb-3 fw-bold'>Nike Dunk Low Retro Premium</p>
-              <div class='info'>
-                <p class='mb-3'>Color: Silver</p>
-                <p class='mb-3'>Size: 40.5</p>
-                <div class='mb-3 input-quant'>
-                  <label>Quantity: </label>
-                  <input type='number' required min='1' value='1' />
-                </div>
-              </div>
-            </div>
-            <div class='right-box-info col-6'>
-              <p class='m-0 fw-bold'>3,519,000₫</p>
-              <img class='mb-3' src='assets/img/trash-icon.svg' alt='' />
-            </div>
-          </div>
-        </div>
-      </div>
+        {{/each}}
+      {{else}}
+        <div id="local-cart"></div>
+      {{/if}}
     </div>
     <div class='col-lg-5 px-5'>
-      <button class='btn bg-dark text-white fw-bold w-100 py-3'>CHECK OUT</button>
+        <button class='btn bg-dark text-white fw-bold w-100 py-3' onclick="checkoutPage()"
+          >CHECK OUT
+        </button>
       <h4 class='py-3 fw-bold'>ORDER SUMMARY</h4>
       <div class='row'>
         <div class='col'>
-          <div>2 items</div>
+          {{#if user}}
+            <div id="log-total-item"> {{orderSummary.totalAmount}} items</div>
+          {{else}}
+            <div id="total-item"></div>
+          {{/if}}
           <div>Delivery</div>
         </div>
         <div class='col right-box'>
-          <div>7,038,000₫</div>
-          <div>0</div>
+          {{#if user}}
+            <div id="log-total-price">{{formatPrice orderSummary.totalPrice}}</div>
+          {{else}}
+            <div id="total-price"></div>
+          {{/if}}
+
+          <div>{{formatPrice 20000}}</div>
         </div>
       </div>
       <div class='row fw-bold py-3'>
@@ -86,9 +67,19 @@
           <div>Total</div>
         </div>
         <div class='col right-box'>
-          <div>7,038,000₫</div>
+          {{#if user}}      
+            <div id="log-total">{{formatPrice orderSummary.total}}₫</div>
+          {{else}}
+            <div id="total"></div>
+          {{/if}}
         </div>
       </div>
     </div>
   </div>
 </div>
+
+
+{{#section 'scripts'}}
+  <script src='/js/customer-cart.js'></script>
+  <script src='/js/hbsHelpers.js'></script>
+{{/section}}

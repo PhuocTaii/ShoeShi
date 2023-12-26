@@ -1,4 +1,7 @@
 const Cart = require('../models/cart')
+const colorService = require('./colorService')
+const sizeService = require('./sizeService')
+const productService = require('./productService')
 
 const cartService = {
   getAllCarts() {
@@ -12,26 +15,44 @@ const cartService = {
   },
 
   addProductToCart(cart, product, color, size) {
+    for(let i = 0; i < cart.productList.length; i++){
+      if(cart.productList[i].product == product && cart.productList[i].color == color && cart.productList[i].size == size){
+        cart.productList[i].quantity += 1
+        cart.save()
+        return cart
+      }
+    }
     const newProduct = new Object({
-      product: product.product,
-      quantity: product.quantity,
-      size: size._id,
-      color: color._id,
+      product: product,
+      quantity: 1,
+      size: size,
+      color: color,
     })
     cart.productList.push(newProduct)
     cart.save()
     return cart
   },
 
-  changeProductQuantity(productId, cart, quantity) {
+  changeProductQuantity: async(productId, cart, quantity, color, size) => {
+    var details = []
+
     for (let i = 0; i < cart.productList.length; i++) {
-      if (cart.productList[i].product == productId) {
+      if (cart.productList[i].product == productId && cart.productList[i].size.toString() == size.toString() && cart.productList[i].color.toString() == color.toString()) {
         cart.productList[i].quantity = quantity
-        cart.save()
-        return cart
       }
+      const prod = await productService.getProductById(cart.productList[i].product)
+      const detail = {
+        price: prod.price,
+        product: cart.productList[i].product,
+        quantity: cart.productList[i].quantity,
+        color: cart.productList[i].color,
+        size: cart.productList[i].size,
+      }
+      details.push(detail)
+
     }
-    return null
+    cart.save()
+    return details
   },
 
   deleteProductFromCart(cart, productId) {
@@ -58,14 +79,113 @@ const cartService = {
     return clearCart
   },
 
-  findCartById(cartId) {
-    const cart = Cart.findById(cartId)
+  findCartById(id) {
+    const cart = Cart.findOne({customer: id})
     return cart
   },
 
-  getProductListById(id) {
-    const cart = cartService.findCartById(id)
-    return cart.productList
+  getOrderSummary: async (cart) => {
+    const productList = cart.productList
+    var tPrice = 0
+    var tAmount = 0
+    for(let i = 0; i < productList.length; i++){
+      const pDetail = await productService.getProductById(productList[i].product)
+      tPrice += pDetail.price * productList[i].quantity
+      tAmount += Number(productList[i].quantity)
+    }
+    const total = tPrice + 20000
+    const summary = {
+      totalPrice: tPrice,
+      totalAmount: tAmount,
+      total: total,
+    }
+    console.log(summary)
+    return summary
+  },
+
+  getProductListById: async (cart) => {
+    const productList = cart.productList
+    var detailList = []
+    for (let i = 0; i < productList.length; i++) {
+      const prod = await productService.getProductById(productList[i].product)
+      const clor = await colorService.findColorById(productList[i].color)
+      const sze = await sizeService.getSizeById(productList[i].size)
+      const qty = productList[i].quantity
+      const productDetail = {
+        id: prod._id + clor._id + sze._id,
+        price: prod.price,
+        image: prod.productImage[0],
+        product: prod.name,
+        productID: prod._id,
+        color: clor.color,
+        size: sze.size,
+        quantity: qty,
+        colorId: clor._id,
+        sizeId: sze._id,
+      }
+      detailList.push(productDetail)
+    }
+    console.log(detailList)
+    return detailList
+  },
+
+  getProductListByIdForCheckout: async (cart) => {
+    // Assuming cartService.getOneCart returns a promise
+    const productList = cart.productList
+    var detailList = []
+    for (let i = 0; i < productList.length; i++) {
+      const prod = await productService.getProductById(productList[i].product)
+      const clor = await colorService.findColorById(productList[i].color)
+      const sze = await sizeService.getSizeById(productList[i].size)
+      const qty = productList[i].quantity
+      const productDetail = {
+        id: prod._id + clor._id + sze._id,
+        price: prod.price * qty,
+        image: prod.productImage[0],
+        product: prod.name,
+        productID: prod._id,
+        color: clor.color,
+        size: sze.size,
+        quantity: qty,
+        colorId: clor._id,
+        sizeId: sze._id,
+      }
+      detailList.push(productDetail)
+    }
+    console.log(detailList)
+    return detailList
+  },
+
+  getLocalCart: async (localCart) => {
+    var totalAmount = 0
+    var totalPrice = 0
+    var detailList = []
+    for (let i = 0; i < localCart.length; i++) {
+      const prod = await productService.getProductById(localCart[i].productId)
+      const clor = await colorService.findColorById(localCart[i].color)
+      const sze = await sizeService.getSizeById(localCart[i].size)
+      const qty = localCart[i].quantity
+      const productDetail = {
+        id: prod._id + clor._id + sze._id,
+        price: prod.price,
+        image: prod.productImage[0],
+        product: prod.name,
+        productID: prod._id,
+        color: clor.color,
+        size: sze.size,
+        quantity: qty,
+        colorId: clor._id,
+        sizeId: sze._id,
+      }
+      totalAmount += Number(qty)
+      totalPrice += qty * prod.price
+      // productList[i].product = productDetail
+      detailList.push(productDetail)
+    }
+    var total = totalPrice + 20000 
+    totalPrice = totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+    total = total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+    return {detailList, totalAmount, totalPrice, total}
   },
 }
 
