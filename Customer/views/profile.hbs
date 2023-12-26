@@ -45,6 +45,7 @@
             id='full-name'
             name="name"
             value='{{user.name}}'
+            required
           />
         </div>
 
@@ -80,14 +81,16 @@
         <div class='mb-2'>
           <label for='phone-number' class='form-label'>Phone number</label>
           <input
-            type='tel'
-            class='form-control fs-6'
-            placeholder='Phone Number'
-            id='phone-number'
-            name="phoneNum"
-            value='{{user.phoneNum}}'
+              type='tel'
+              class='form-control fs-6'
+              placeholder='Phone Number'
+              id='phone-number'
+              name="phoneNum"
+              value='{{user.phoneNum}}'
+              oninput="validatePhoneNumber(this)"
+              required
           />
-        </div>
+      </div>
 
         <div class='mb-2'>
           <label for='address' class='form-label'>Address</label>

@@ -1,3 +1,12 @@
+function validatePhoneNumber(input) {
+  const phoneNumberPattern = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
+  if (!phoneNumberPattern.test(input.value)) {
+      input.setCustomValidity('Phone number is not valid');
+  } else {
+      input.setCustomValidity('');
+  }
+}
+
 // UPDATE REVIEW
 function updateProfile(event) {
   event.preventDefault()
