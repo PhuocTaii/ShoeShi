@@ -9,5 +9,6 @@ router.get('/', isAuth, userController.getProfilePage)
 router.post('/:id', userController.updateUser);
 // router.post('/update', isAuth, userController.updateUser)
 
+router.post('/:id/update-password',isAuth, userController.updatePassword)
 
 module.exports = router

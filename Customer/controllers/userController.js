@@ -2,6 +2,7 @@ const userService = require('../services/userService')
 const cartService = require('../services/cartService')
 const imageService = require('../services/imageService')
 const User = require('../models/customer')
+const bcrypt = require('bcrypt')
 
 const handlebars = require('handlebars')
 
@@ -63,6 +64,36 @@ const userController = {
       extraStyles: 'profile.css',
       user,
     })
+  },
+
+  updatePassword: async (req, res) => {
+    const { id, oldPassword, newPassword } = req.body
+    try {
+      // Fetch user from database by username (pseudo code)
+      const user = await User.findById(id)
+      console.log(req.body)
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' })
+      }
+      console.log(user)
+      // Compare submitted old password with the stored hashed password
+      const oldPasswordMatch = await bcrypt.compare(oldPassword, user.password)
+
+      if (!oldPasswordMatch) {
+        return res.status(401).json({ message: 'Incorrect current password' })
+      }
+
+      // Hash the new password
+      const hashedNewPassword = await bcrypt.hash(newPassword, 10)
+
+      // Update user's password in the database
+      user.password = hashedNewPassword
+      await user.save()
+
+      return res.status(200).json({ message: 'Password updated successfully' })
+    } catch (error) {
+      return res.status(500).json({ message: error.message })
+    }
   },
 }
 

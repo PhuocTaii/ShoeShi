@@ -49,6 +49,10 @@ const userService = {
       .lean()
     return user
   },
+
+  checkOldPass(oldPassword, hashedPassword) {
+    return bcrypt.compare(oldPassword, hashedPassword)
+  },
 }
 
 module.exports = userService
