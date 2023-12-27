@@ -54,12 +54,12 @@
             2
           </div>
         </a>
-
-        <a class='order' href='/order'>
-          <i class="ri-file-list-line"></i>
-        </a>
-        
-        <a href='/login'><i class='ri-user-3-line'></i></a>
+        {{#if user}}       
+        <a href='/profile'><i class='ri-user-3-line'></i></a>
+        <a href='/logout' class="fw-bold">Log Out</a>
+        {{else}}
+        <a href='/login' class="fw-bold">Log In</a>
+        {{/if}}
       </nav>
       <!-- End Menu header -->
 
@@ -100,9 +100,6 @@
             <div class='number-cart-items'>
               2
             </div>
-          </a>
-          <a class='order' href='/order'>
-            <i class='ri-list-view'></i>
           </a>
           <a href='/login'><i class='ri-user-3-line'></i></a>
         </div>
