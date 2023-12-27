@@ -12,7 +12,6 @@ const userController = {
       if(req.body.customerImage){
         imageUrl = await imageService.uploadImageToCloudinary(req.body.customerImage)
       }
-      console.log(imageUrl) 
       const savedUser = await userService.addUser(req.body, imageUrl)
       res.status(200).json(savedUser)
     } catch (err) {
@@ -47,7 +46,7 @@ const userController = {
   },
 
   getProfilePage: async (req, res) => {
-    res.render('customer/profile', {
+    res.render('profile', {
       layout: 'main',
       extraStyles: 'profile.css',
     })

@@ -99,7 +99,6 @@ const cartService = {
       totalAmount: tAmount,
       total: total,
     }
-    console.log(summary)
     return summary
   },
 
@@ -125,7 +124,6 @@ const cartService = {
       }
       detailList.push(productDetail)
     }
-    console.log(detailList)
     return detailList
   },
 
@@ -152,7 +150,6 @@ const cartService = {
       }
       detailList.push(productDetail)
     }
-    console.log(detailList)
     return detailList
   },
 

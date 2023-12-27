@@ -53,7 +53,6 @@ const cartController = {
         req.body.color,
         req.body.size
       )
-      // console.log(savedcart)
       res.status(200).json(savedcart)
     } catch (err) {
       console.log(err)
@@ -104,9 +103,7 @@ const cartController = {
   //GET local cart
   getLocalCart: async (req, res) => {
     try{
-      // console.log(req.body)
       const productList = await cartService.getLocalCart(req.body)
-      console.log(productList)
       res.status(200).json(productList)
     } catch (err) {
       res.status(500).json(err)

@@ -46,7 +46,6 @@ if(!user){
         dataType: 'json',
         data: JSON.stringify(localCartData),
         success: function (data) {
-            console.log(data)
             document.getElementById('local-cart').innerHTML = localCartTemplateFunction(data.detailList);
             document.getElementById("total-item").innerHTML = data.totalAmount + ' items'
             document.getElementById("total-price").innerHTML = data.totalPrice
@@ -69,14 +68,12 @@ function updateCart(productId, colorId, sizeId) {
             data: {quantity: productQuantity, color: colorId.toString(), size: sizeId.toString()},
             dataType: 'json',
             success: function (data) {
-                console.log(data)
                 var tAmount = 0;
                 var tPrice = 0;
                 for(let i = 0; i < data.length; i++){
                     tAmount += data[i].quantity
                     tPrice += data[i].quantity * data[i].price
                 }
-                console.log(tAmount)
                 const total = Number(tPrice + 20000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                 
                 document.getElementById("log-total-item").innerHTML = tAmount + ' items'
@@ -116,8 +113,6 @@ function checkoutPage(){
             window.location.href = '/checkout'
         },
         error: function (error) {
-            alert("You have to login to checkout")
-            window.location.href = '/login'
         },
     })
 }

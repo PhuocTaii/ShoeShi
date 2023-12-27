@@ -9,15 +9,12 @@ const checkoutController = {
   // POST a new order
   createOrder: async (req, res) => {
     try {
-      console.log(req.user.id)
       const cart = await cartService.findCartById(req.user.id)
-      console.log(cart)
       var nameList = []
       var colorList = []
       var sizeList = []
       var priceList = []
       var TotalPrice = 0
-      // console.log(productList) 
       for (let i = 0; i < cart.productList.length; i++) {
         const product = await productService.getProductById(
           cart.productList[i].product

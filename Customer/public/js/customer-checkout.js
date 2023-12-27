@@ -16,11 +16,12 @@ function createOrder(event){
         data: {name: name, address: address, phone: phoneNum},
         dataType: 'json',
         success: function(data) {
-            console.log(data)
             alert('Create order successfully');
         },
         error: function(err) {
             console.log(err)
+            // redirect('/login');
+            window.location.href = '/login';
         }
     })
 }
