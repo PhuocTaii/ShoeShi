@@ -117,12 +117,14 @@ const cartController = {
       const cart = await cartService.getOneCart(req.user.id);
       const productList = await cartService.getProductListById(cart)
       const orderSummary = await cartService.getOrderSummary(cart)
+      const prodList = await cartService.getProductList(cart)
       res.render('cart', {
         productList,
         orderSummary,
         layout: 'main',
         extraStyles: 'cart.css',
-        user: req.user
+        user: req.user,
+        prodList,
       })
     }
     else{

@@ -14,6 +14,10 @@ const cartService = {
     return cart
   },
 
+  getProductList(cart){
+    return cart.productList
+  },
+
   addProductToCart(cart, product, color, size) {
     for(let i = 0; i < cart.productList.length; i++){
       if(cart.productList[i].product == product && cart.productList[i].color == color && cart.productList[i].size == size){

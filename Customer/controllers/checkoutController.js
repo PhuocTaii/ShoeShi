@@ -67,8 +67,10 @@ const checkoutController = {
     const productList = await cartService.getProductListByIdForCheckout(cart)
     const orderSummary = await cartService.getOrderSummary(cart)
     const buyer = await userService.getUserById(req.user.id)
+    const prodList = await cartService.getProductList(cart)
     res.render('checkout', {
       buyer,
+      prodList,
       productList,
       orderSummary,
       layout: 'main',

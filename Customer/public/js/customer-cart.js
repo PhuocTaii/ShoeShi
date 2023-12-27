@@ -54,6 +54,9 @@ if(!user){
         error: function (error) {
         },
     })
+    // document.getElementById("number-cart-items").innerHTML = localCartData.length
+    // console.log(localCartData.length)
+
 }
 
 function updateCart(productId, colorId, sizeId) {

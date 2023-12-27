@@ -50,11 +50,20 @@
         </div>
         <a class='cart' href='/cart'>
           <i class='ri-shopping-cart-line'></i>
-          <div class='number-cart-items'>
-            2
+          <div class='number-cart-items' id="number-cart-items">
+            {{!-- {{cart}} --}}
+            {{#if user}}
+              {{prodList.length}}
+            {{else}}
+            <script>
+              const localCartData = JSON.parse(localStorage.getItem('cartData'))
+              document.getElementById("number-cart-items").innerHTML = localCartData.length
+            </script>
+            {{/if}}
           </div>
         </a>
-        {{#if user}}       
+        {{#if user}}      
+        <a href='/order'><i class="ri-file-list-line"></i>  </a> 
         <a href='/profile'><i class='ri-user-3-line'></i></a>
         <a href='/logout' class="fw-bold">Log Out</a>
         {{else}}
@@ -97,8 +106,15 @@
           </div>
           <a class='cart' href='/cart'>
             <i class='ri-shopping-cart-line'></i>
-            <div class='number-cart-items'>
-              2
+            <div class='number-cart-items' id="number-cart-items">
+              {{#if user}}
+                {{prodList.length}}
+              {{else}}
+              <script>
+                const localCartData = JSON.parse(localStorage.getItem('cartData'))
+                document.getElementById("number-cart-items").innerHTML = localCartData.length
+              </script>
+              {{/if}}
             </div>
           </a>
           <a href='/login'><i class='ri-user-3-line'></i></a>
