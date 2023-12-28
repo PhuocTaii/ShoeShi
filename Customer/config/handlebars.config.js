@@ -12,6 +12,23 @@ const hbs = express_handlebars.create({
     ifEquals(arg1, arg2, options) {
       return arg1 == arg2 ? options.fn(this) : options.inverse(this)
     },
+    formatDateTime(dateString) {
+      const date = new Date(dateString)
+
+      const formattedDate = date.toLocaleDateString('vi-VN', {
+        year: 'numeric',
+        month: 'numeric',
+        day: 'numeric',
+      })
+
+      const formattedTime = date.toLocaleTimeString('vi-VN', {
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric',
+      })
+
+      return `${formattedDate} | ${formattedTime}`
+    },
     formatDate(date) {
       function pad(number) {
         if (number < 10) {
