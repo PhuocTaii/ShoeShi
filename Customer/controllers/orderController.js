@@ -1,71 +1,71 @@
-const orderService = require('../services/orderService')
-const cartService = require('../services/cartService')
 const userService = require('../services/userService')
-const colorService = require('../services/colorService')
-const sizeService = require('../services/sizeService')
 const productService = require('../services/productService')
+const orderService = require('../services/orderService')
 
 const orderController = {
-  // POST a new order
-  createOrder: async (req, res) => {
-    try {
-      const cart = await cartService.findCartById(req.params.cartID)
-      var nameList = []
-      var colorList = []
-      var sizeList = []
-      var priceList = []
-      var TotalPrice = 0
-      for (let i = 0; i < cart.productList.length; i++) {
-        const product = await productService.getProductById(
-          cart.productList[i].product
-        )
-        const color = await colorService.findColorById(
-          cart.productList[i].color
-        )
-        const size = await sizeService.getSizeById(cart.productList[i].size)
-        nameList.push(product.name)
-        priceList.push(product.price)
-        colorList.push(color.color)
-        sizeList.push(size.size)
-        TotalPrice += product.price * cart.productList[i].quantity
-      }
-      const user = await userService.getUserById(cart.customer)
-      const newOrder = await orderService.createOrder(
-        req.body,
-        cart,
-        user,
-        nameList,
-        colorList,
-        sizeList,
-        priceList,
-        TotalPrice
-      )
-      const clearCart = await cartService.clearProductList(cart.customer)
-      res.status(200).json(newOrder)
-    } catch (err) {
-      res.status(500).json(err)
-    }
-  },
-
-  // GET an order by id
   getOrderById: async (req, res) => {
     try {
-      const foundOrder = await orderService.getOrderById(req.params.id)
-      if (!foundOrder) {
-        return res.status(404).json('Order not found')
+      const order = await orderService.getOrderById(req.params.id) // Implement logic to fetch order by ID from your database
+      const formattedOrder = {
+        orderId: order._id, // Assuming _id is the ID of the order
+        date: order.orderTime,
+        status: order.status,
+        address: order.address,
+        totalPrice: order.totalPrice,
+        items:
+          order.productList && Array.isArray(order.productList)
+            ? order.productList.map((item) => ({
+                itemName: item.product,
+                itemPrice: item.price
+                  .toString()
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+                itemQuantity: item.quantity,
+                itemSize: item.size,
+                itemColor: item.color,
+                // Other item details you want to display
+              }))
+            : [], // If items is undefined or not an array, default to an empty array
+        totalPrice: order.totalPrice
+          ,
+        // Add other properties or modify existing ones as needed
       }
-      res.status(200).json(foundOrder)
-    } catch (err) {
-      res.status(500).json(err)
+      return res.status(200).json(formattedOrder) // Return the fetched order
+    } catch (error) {
+      throw new Error('Failed to fetch order') // Handle errors or throw custom error messages
     }
   },
 
   getOrderPage: async (req, res) => {
+    const orders = await orderService.getAllOrderById(req.user.id)
+
+    const formattedOrders = orders.map((order) => ({
+      status: order.status,
+      _id: order._id,
+      date: order.orderTime,
+      items:
+        order.productList && Array.isArray(order.productList)
+          ? order.productList.map((item) => ({
+              itemName: item.product,
+              itemPrice: item.price
+                .toString()
+                .replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+              // Other item details you want to display
+            }))
+          : [], // If items is undefined or not an array, default to an empty array
+      totalPrice: order.totalPrice
+        .toString()
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+      // Add other necessary fields here
+    }))
+
+    const user = await userService.getUserById(req.user.id)
+
     res.render('order', {
       layout: 'main',
       extraStyles: 'order.css',
+      formattedOrders,
+      user,
     })
   },
 }
-
 module.exports = orderController

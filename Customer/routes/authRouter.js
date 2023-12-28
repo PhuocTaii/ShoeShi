@@ -18,4 +18,8 @@ router.get('/signup', authController.getUserSignUpPage)
 //User login page
 router.get('/login', authController.getUserLogInPage)
 
+//User log out page
+router.get('/logout', authController.getUserLogOut)
+
+
 module.exports = router

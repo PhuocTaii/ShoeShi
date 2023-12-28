@@ -90,6 +90,7 @@ const templateFunction = Handlebars.compile(reviewTemplate);
 const paginationTemplateFunction = Handlebars.compile(paginationTemplate);
 
 const productId = document.getElementById('main-product-detail').getAttribute('data-product-id')
+
 $.getJSON(`/review/${productId}`, function( data ) {
 	document.getElementById("review-amount").innerHTML = '('+data.totalReviews+')';
 	document.getElementById("review-section").innerHTML = templateFunction(data);
@@ -120,6 +121,7 @@ function sendReview(event) {
 		rating,
 	}
 
+
 	const productId = document.getElementById('main-product-detail').getAttribute('data-product-id')
 
 	$.ajax({
@@ -136,6 +138,68 @@ function sendReview(event) {
 		error: function(err) {
 		}
 	})
+}
+
+
+//ADD Product to cart
+function addToCart(event) {
+	event.preventDefault();
+
+	const quantity = 1
+
+	const color = document.querySelector('input[name="color-option"]:checked').value;
+	const size = document.querySelector('input[name="size-option"]:checked').value;
+
+
+	const productId = document.getElementById('main-product-detail').getAttribute('data-product-id')
+	const productPrice = document.getElementById('product-price').getAttribute('data-price')
+
+	const user = document.getElementById('product-form').getAttribute('data-user')
+	
+	if(user){
+		const data = {
+			productPrice,
+			productId,
+			quantity,
+			color,
+			size
+		}
+
+		$.ajax({
+			url: `/cart/${productId}`,
+			type: 'POST',
+			data,
+			dataType: 'json',
+			success: function() {
+				alert('Add product successfully');
+			},
+			error: function(err) {
+				console.log(err)
+			}
+		})
+	} else{
+		var localCart = JSON.parse(localStorage.getItem('cartData')) || [];
+		for(let i = 0; i < localCart.length; i++){
+			if(localCart[i].productId == productId && localCart[i].color == color && localCart[i].size == size){
+				localCart[i].quantity += 1;
+				localStorage.setItem('cartData', JSON.stringify(localCart));
+				alert('Add product successfully');
+				return;
+			}
+		}
+		const data = {
+			productPrice,
+			productId,
+			quantity,
+			color,
+			size
+		}
+		localCart.push(data);
+		localStorage.setItem('cartData', JSON.stringify(localCart));
+		alert('Add product successfully');
+	}
+
+	
 }
 
 // RELATED PRODUCTS

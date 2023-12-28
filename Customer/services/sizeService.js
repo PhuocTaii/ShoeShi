@@ -16,11 +16,6 @@ const sizeService = {
     const foundSize = Size.findOne({ size: size })
     return foundSize
   },
-
-  getSizeById(id) {
-    const foundSize = Size.findById(id)
-    return foundSize
-  },
 }
 
 module.exports = sizeService

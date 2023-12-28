@@ -21,10 +21,12 @@ const cloudinary = require('./config/cloudinary.config')
 const indexCustomerRouter = require('./routes/indexRouter')
 const authCustomerRouter = require('./routes/authRouter')
 const cartCustomerRouter = require('./routes/cartRouter')
-const orderCustomerRouter = require('./routes/orderRouter')
+const checkoutCustomerRouter = require('./routes/checkoutRouter')
 const productCustomerRouter = require('./routes/productRouter')
 const userCustomerRouter = require('./routes/userRouter')
 const reviewCustomerRouter = require('./routes/reviewRouter')
+const orderCustomerRouter = require('./routes/orderRouter')
+// const checkoutCustomerRouter = require('./routes/checkoutRouter')
 
 const app = express()
 const store = session.MemoryStore()
@@ -74,9 +76,12 @@ app.use('/', indexCustomerRouter)
 app.use('/', authCustomerRouter)
 app.use('/product', productCustomerRouter)
 app.use('/cart', cartCustomerRouter)
-app.use('/order', orderCustomerRouter)
+// app.use('/order', orderCustomerRouter)
 app.use('/profile', userCustomerRouter)
 app.use('/review', reviewCustomerRouter)
+app.use('/checkout', checkoutCustomerRouter)
+app.use('/order', orderCustomerRouter)
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -93,5 +98,8 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500)
   res.render('error')
 })
+
+
+
 
 module.exports = app

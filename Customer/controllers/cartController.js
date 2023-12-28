@@ -24,16 +24,18 @@ const cartController = {
   //ADD product to cart
   addProductToCart: async (req, res) => {
     try {
-      const color = await colorSerice.findColorByName(req.body.color)
-      const size = await sizeService.getSizeByNumber(req.body.size)
-      const cart = await cartService.getOneCart(req.params.customerId)
-      const savedCart = cartService.addProductToCart(
-        cart,
-        req.body,
-        color,
-        size
-      )
-      res.status(200).json(savedCart)
+      // const color = await colorSerice.findColorByName(req.body.color)
+      // const size = await sizeService.getSizeByNumber(req.body.size)
+      if(req.user){
+        const cart = await cartService.getOneCart(req.user.id)
+        const savedCart = cartService.addProductToCart(
+          cart,
+          req.params.productID,
+          req.body.color,
+          req.body.size
+          )
+        return res.status(200).json(savedCart)  
+      }
     } catch (err) {
       console.log(err)
       res.status(500).json(err)
@@ -43,11 +45,13 @@ const cartController = {
   //Change product to cart
   changeProductQuantity: async (req, res) => {
     try {
-      const cart = await cartService.getOneCart(req.params.customerId)
-      const savedcart = cartService.changeProductQuantity(
+      const cart = await cartService.getOneCart(req.user.id)
+      const savedcart = await cartService.changeProductQuantity(
         req.params.productId,
         cart,
-        req.body.quantity
+        req.body.quantity,
+        req.body.color,
+        req.body.size
       )
       res.status(200).json(savedcart)
     } catch (err) {
@@ -84,12 +88,57 @@ const cartController = {
     }
   },
 
+  //GET productList
+  getProductList: async (req, res) => {
+    try{
+      const cart = await cartService.getOneCart(req.user.id);
+      const productList = await cartService.getProductListById(cart)
+      res.status(200).json(productList)
+    } catch (err) {
+      res.status(500).json(err)
+      console.log(err)
+    }
+  },
+
+  //GET local cart
+  getLocalCart: async (req, res) => {
+    try{
+      const productList = await cartService.getLocalCart(req.body)
+      res.status(200).json(productList)
+    } catch (err) {
+      res.status(500).json(err)
+      console.log(err)
+    }
+  },
   //Client side
   getCartPage: async(req, res) => {
-    res.render('cart', {
-      layout: 'main',
-      extraStyles: 'cart.css',
-    })
-  }
+  try{
+    if(req.user){
+      const cart = await cartService.getOneCart(req.user.id);
+      const productList = await cartService.getProductListById(cart)
+      const orderSummary = await cartService.getOrderSummary(cart)
+      const prodList = await cartService.getProductList(cart)
+      res.render('cart', {
+        productList,
+        orderSummary,
+        layout: 'main',
+        extraStyles: 'cart.css',
+        user: req.user,
+        prodList,
+      })
+    }
+    else{
+      res.render('cart', {
+        layout: 'main',
+        extraStyles: 'cart.css',
+        user: null
+      })
+    }
+  } catch (err) {
+      res.status(500).json(err)
+      console.log(err)
+    }
+  },
+
 }
 module.exports = cartController
