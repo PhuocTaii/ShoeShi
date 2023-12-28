@@ -1,69 +1,40 @@
 <div class='container'>
   <h1 class='title fw-bold text-center my-5'>YOUR ORDERS</h1>
 
-  <div
-    class='row orderView my-4'
-    data-toggle='modal'
-    data-target='#detailModal'
-  >
-    <div class='row fs-5'>
-      <div class='d-inline-flex justify-content-between'>
-        <div class='time fw-bold'>Date | Time</div>
-        <div class='status text-muted'>Pending</div>
+  {{#each formattedOrders}}
+
+    <div
+      class='row orderView my-4'
+      data-toggle='modal'
+      data-target='#detailModal'
+    >
+      <div class='row fs-5'>
+        <div class='d-inline-flex justify-content-between'>
+          <div class='time fw-bold'>{{this.date}}</div>
+          <div class='status text-muted'>{{this.status}}</div>
+        </div>
+      </div>
+
+      <hr class='my-3 bg-black' />
+
+      <div class='row order-detail'>
+        {{#each this.items}}
+          <div class='d-inline-flex justify-content-between'>
+            <div class='order-name'>{{this.itemName}}</div>
+            <div class='order-price'>{{this.itemPrice}}đ</div>
+          </div>
+        {{/each}}
+
+      </div>
+
+      <hr class='my-3 bg-black' />
+
+      <div class='row fs-5'>
+        <div class='total-price fw-bold'>{{this.totalPrice}}đ</div>
       </div>
     </div>
+  {{/each}}
 
-    <hr class='my-3 bg-black' />
-
-    <div class='row order-detail'>
-      <div class='d-inline-flex justify-content-between'>
-        <div class='order-name'>Item</div>
-        <div class='order-price'>2,000,000 đ</div>
-      </div>
-      <div class='d-inline-flex justify-content-between'>
-        <div class='order-name'>Item</div>
-        <div class='order-price'>2,000,000 đ</div>
-      </div>
-    </div>
-
-    <hr class='my-3 bg-black' />
-
-    <div class='row fs-5'>
-      <div class='total-price fw-bold'>2,000,000 đ</div>
-    </div>
-  </div>
-
-  <div
-    class='row orderView my-4'
-    data-toggle='modal'
-    data-target='#detailModal'
-  >
-    <div class='row fs-5'>
-      <div class='d-inline-flex justify-content-between rounded'>
-        <div class='time fw-bold'>Date | Time</div>
-        <div class='status text-muted'>Pending</div>
-      </div>
-    </div>
-
-    <hr class='my-3 bg-black' />
-
-    <div class='row order-detail'>
-      <div class='d-inline-flex justify-content-between'>
-        <div class='order-name'>Item</div>
-        <div class='order-price'>2,000,000 đ</div>
-      </div>
-      <div class='d-inline-flex justify-content-between'>
-        <div class='order-name'>Item</div>
-        <div class='order-price'>2,000,000 đ</div>
-      </div>
-    </div>
-
-    <hr class='my-3 bg-black' />
-
-    <div class='row fs-5'>
-      <div class='total-price fw-bold'>2,000,000 đ</div>
-    </div>
-  </div>
 </div>
 
 <!-- Modal -->
@@ -78,7 +49,6 @@
   <div class='modal-dialog modal-dialog-centered' role='document'>
     <div class='modal-content'>
       <div class='modal-body'>
-
         <div class='container'>
           <div class='d-flex flew-row justify-content-between'>
             <h3 class='fw-bold mb-3'>Date | Time</h3>
@@ -155,3 +125,7 @@
     </div>
   </div>
 </div>
+
+{{#section 'scripts'}}
+    <script src='/js/order.js'></script>
+{{/section}}
