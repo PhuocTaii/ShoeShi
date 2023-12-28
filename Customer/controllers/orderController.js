@@ -58,10 +58,13 @@ const orderController = {
       // Add other necessary fields here
     }))
 
+    const user = await userService.getUserById(req.user.id)
+
     res.render('order', {
       layout: 'main',
       extraStyles: 'order.css',
       formattedOrders,
+      user,
     })
   },
 }
