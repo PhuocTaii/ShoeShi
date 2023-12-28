@@ -7,12 +7,9 @@ const productService = require('../services/productService')
 
 const orderController = {
     getOrderPage: async (req, res) => {
-        const cart = await cartService.getOneCart(req.user.id);
-        const prodList = await cartService.getProductList(cart)
         res.render('order', {
         layout: 'main',
         extraStyles: 'order.css',
-        prodList
         })
     },
 }

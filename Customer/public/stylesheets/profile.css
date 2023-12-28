@@ -3,6 +3,7 @@
   height: 100px;
   border-radius: 50%;
   object-fit: cover;
+  cursor: pointer;
 }
 
 .row.space {
@@ -18,4 +19,16 @@
   .form-details {
     padding-right: 0px;
   }
+}
+
+#fileInput {
+  display: none;
+}
+
+#imageContainer {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  cursor: pointer;
 }

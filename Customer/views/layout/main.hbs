@@ -111,7 +111,6 @@
                 {{prodList.length}}
               {{else}}
               <script>
-                const localCartData = JSON.parse(localStorage.getItem('cartData'))
                 document.getElementById("number-cart-items").innerHTML = localCartData.length
               </script>
               {{/if}}
