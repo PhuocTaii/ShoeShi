@@ -14,10 +14,7 @@ router.get('/productlist', cartController.getProductList)
 router.put('/updateproduct/:productId',cartController.changeProductQuantity)
 
 //DELETE product from cart
-router.delete(
-  '/deleteproduct/:customerId/:productId',
-  cartController.deleteProductFromCart
-)
+router.delete('/',cartController.deleteProductFromCart)
 
 router.get('/', cartController.getCartPage)
 

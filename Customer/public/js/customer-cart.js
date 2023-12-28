@@ -1,7 +1,5 @@
 const user = document.getElementById('user-cart').getAttribute('data-user')
-
-if(!user){
-    const localCartTemplate = 
+const localCartTemplate = 
     `
     {{#each this}}
         <div class="item row my-3">
@@ -27,14 +25,16 @@ if(!user){
                 </div>
                 </div>
                 <div class='right-box-info col-6'>
-                <p class='m-0 fw-bold' data-product-price='{{this.price}}' id="product-price-{{this.id}}">{{this.price}}</p>
-                <img class='mb-3' src='assets/img/trash-icon.svg' alt='' />
+                    <p class='m-0 fw-bold' data-product-price='{{this.price}}' id="product-price-{{this.id}}">{{this.price}}</p>
+                    <img class='mb-3' src='assets/img/trash-icon.svg' alt='' onclick="removeFromCart('{{this.productID}}', '{{this.colorId}}', '{{this.sizeId}}')" />
                 </div>
             </div>
             </div>
         </div>
     {{/each}}
     `
+
+if(!user){
     
     const localCartTemplateFunction = Handlebars.compile(localCartTemplate);
     
@@ -105,7 +105,49 @@ function updateCart(productId, colorId, sizeId) {
         document.getElementById("total-price").innerHTML = totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
         document.getElementById("total").innerHTML = total + '₫'
     }
+}
 
+function removeFromCart(productId, colorId, sizeId){
+    const user = document.getElementById('user-cart').getAttribute('data-user')
+    if(user){
+        $.ajax({
+            type: 'DELETE',
+            url: `/cart`,
+            data: {productId: productId.toString(), color: colorId.toString(), size: sizeId.toString()},
+            dataType: 'json',
+            success: function (data) {
+                window.location.href = '/cart'
+
+            },
+            error: function (error) {
+            },
+        })  
+    } else{
+        var localCart = JSON.parse(localStorage.getItem('cartData'));
+        for(let i = 0; i < localCart.length; i++){
+            if(localCart[i].productId == productId && localCart[i].color == colorId && localCart[i].size == sizeId){
+                localCart.splice(i, 1)
+                localStorage.setItem('cartData', JSON.stringify(localCart));
+            }
+        }
+        window.location.href = '/cart'
+        // const localCartTemplateFunction = Handlebars.compile(localCartTemplate);
+        // $.ajax({
+        //     type: 'POST',
+        //     url: '/cart/local',
+        //     contentType: 'application/json',
+        //     dataType: 'json',
+        //     data: JSON.stringify(localCart),
+        //     success: function (data) {
+        //         document.getElementById('local-cart').innerHTML = localCartTemplateFunction(data.detailList);
+        //         document.getElementById("total-item").innerHTML = data.totalAmount + ' items'
+        //         document.getElementById("total-price").innerHTML = data.totalPrice
+        //         document.getElementById("total").innerHTML = data.total + '₫'
+        //     },
+        //     error: function (error) {
+        //     },
+        // })
+    }
 }
 
 function checkoutPage(){

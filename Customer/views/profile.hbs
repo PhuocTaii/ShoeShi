@@ -5,11 +5,15 @@
 
   <div class='row my-3'>
     <div class='col-auto'>
-      <img
-        src= {{user.customerImage}}
-        alt='Avatar'
-        class='img-fluid avatar'
-      />
+      <div id="imageContainer">
+        <img
+          src= {{user.customerImage}}
+          alt='Avatar'
+          class='img-fluid avatar'
+          id="customer-ava"
+        />
+      </div>
+      <input type="file" id="fileInput" name="customer-ava">
     </div>
     <div class='col d-flex align-items-center'>
       <h4 class='mb-0'>{{user.name}}</h4>
