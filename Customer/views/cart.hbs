@@ -28,7 +28,7 @@
                 </div>
                 <div class='right-box-info col-6'>
                 <p class='m-0 fw-bold' data-product-price='{{this.price}}' id="product-price-{{this.id}}">{{this.price}}</p>
-                  <img class='mb-3' src='assets/img/trash-icon.svg' alt='' />
+                  <img class='mb-3' src='assets/img/trash-icon.svg' alt='' onclick="removeFromCart('{{this.productID}}', '{{this.colorId}}', '{{this.sizeId}}')" />
                 </div>
               </div>
             </div>

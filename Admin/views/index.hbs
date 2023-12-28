@@ -16,7 +16,7 @@
               fill='white'
             /></clipPath></defs></svg>
       <div class='card-content'>Total revenue</div>
-      <a class='small stretched-link'>10.000.000 <span class='d'>đ</span> </a>
+      <a class='small stretched-link'>{{revenue}} <span class='d'>đ</span> </a>
     </div>
     <div class='card mb-4'>
       <svg
@@ -39,16 +39,16 @@
         </defs>
       </svg>
       <div class='card-content'>Total orders</div>
-      <a class='small stretched-link'>200</a>
+      <a class='small stretched-link'>{{orders.length}}</a>
     </div>
   </div>
   <div class='card mb-4'>
     <div class='card-header'>
       <p class='tableName'>overall sales</p>
       <div class='Date'>
-        <input type='date' class="date-choosing" />
+        <input type='date' class="date-choosing" id="start-date" />
         -
-        <input type='date' class="date-choosing" />
+        <input type='date' class="date-choosing" id="end-date" oninput="updateChart()" />
       </div>
     </div>
     <div class='card-body'><canvas

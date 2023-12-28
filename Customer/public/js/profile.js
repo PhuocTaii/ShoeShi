@@ -156,11 +156,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Append the img element to the image container
     imageContainer.appendChild(img);
+    console.log(img.src)
   }
 
   function uploadImage(file){
     const formData = new FormData();
     formData.append('customerImage', file);
+    console.log(formData)
     $.ajax({
       url: `/profile/${id}/update-avatar`,
       method: 'POST',

@@ -33,12 +33,9 @@ const userController = {
   //UPDATE avatar
   updateAvatar: async (req, res) => {
     try {
-      const file = req.file;
-      console.log(file);
-      const imageUrl = await imageService.uploadImageToCloudinary(file.buffer);
-      // console.log('Image uploaded to Cloudinary:', imageUrl);
+      const file = req.file
+      const imageUrl = await imageService.uploadImageToCloudinary(file.buffer)
       const user = await userService.updateAvatarUser(req.params.id, imageUrl)
-      // console.log(imageUrl)
       res.json(user);
     } catch (err) {
       // res.status(500).json(err)
@@ -56,6 +53,7 @@ const userController = {
       res.status(200).json(user)
     } catch (err) {
       res.status(500).json(err)
+      console.error(err)
     }
   },
 

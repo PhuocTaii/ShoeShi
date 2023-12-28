@@ -59,15 +59,24 @@ const cartService = {
     return details
   },
 
-  deleteProductFromCart(cart, productId) {
+  deleteProductFromCart: async(cart, productId, colorId, sizeId) => {
+    var details = []
     for (let i = 0; i < cart.productList.length; i++) {
-      if (cart.productList[i].product == productId) {
+      if (cart.productList[i].product.toString() == productId.toString() && cart.productList[i].color.toString() == colorId.toString() && cart.productList[i].size.toString() == sizeId.toString()) {
         cart.productList.splice(i, 1)
         cart.save()
-        return cart
       }
+      const prod = await productService.getProductById(cart.productList[i].product)
+      const detail = {
+        price: prod.price,
+        product: cart.productList[i].product,
+        quantity: cart.productList[i].quantity,
+        color: cart.productList[i].color,
+        size: cart.productList[i].size,
+      }
+      details.push(detail)
     }
-    return null
+    return details
   },
 
   deleteCart(customerId) {

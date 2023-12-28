@@ -5,7 +5,6 @@ module.exports.uploadImageToCloudinary = async (fileBuffer) => {
     try {
       return new Promise((resolve, reject) => {
         const stream = streamifier.createReadStream(fileBuffer);
-    
         const uploadStream = cloudinary.uploader.upload_stream(
           (error, result) => {
             if (result) {

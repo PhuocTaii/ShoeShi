@@ -41,6 +41,15 @@ const orderController = {
     }
   },
 
+  // getRevenue: async (req, res) => {
+  //   try {
+  //     const revenue = await orderService.getRevenue()
+  //     res.status(200).json(revenue)
+  //   } catch (err) {
+  //     res.status(500).json(err)
+  //   }
+  // },
+
   // DELETE an order
   deleteOrder: async (req, res) => {
     try {
