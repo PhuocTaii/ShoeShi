@@ -2,6 +2,10 @@ const productService = require('./productService')
 const Order = require('../models/order')
 
 const orderService = {
+  getOrderById(id) {
+    const orders = Order.findById(id)
+    return orders
+  },
   getAllOrders() {
     const orders = Order.find()
     return orders
@@ -9,7 +13,7 @@ const orderService = {
 
   getAllOrderById(user) {
     const order = Order.find({ user })
-      
+
     return order
   },
 

@@ -7,10 +7,11 @@
       class='row orderView my-4'
       data-toggle='modal'
       data-target='#detailModal'
+      data-id='{{this._id}}'
     >
       <div class='row fs-5'>
         <div class='d-inline-flex justify-content-between'>
-          <div class='time fw-bold'>{{this.date}}</div>
+          <div class='time fw-bold'>{{formatDateTime this.date}}</div>
           <div class='status text-muted'>{{this.status}}</div>
         </div>
       </div>
@@ -51,53 +52,21 @@
       <div class='modal-body'>
         <div class='container'>
           <div class='d-flex flew-row justify-content-between'>
-            <h3 class='fw-bold mb-3'>Date | Time</h3>
-            <button
-              type='button'
-              class='btn-close'
-              data-dismiss='modal'
-              aria-label='Close'
-            ></button>
+            <h3 class='fw-bold mb-3 date-modal'>Date | Time</h3>
+
           </div>
-          <div class='status text-muted'>Pending</div>
+          <div class='status-modal text-muted'></div>
           <div>
             <small class='fw-bold'>Address:</small>
-            <small>123 Vuon Lai, HCMC</small>
+            <small class='address-modal'>123 Vuon Lai, HCMC</small>
           </div>
 
           <hr class='my-3 bg-black' />
 
           <div>
             <div class='fw-bold'>ORDER SUMMARY:</div>
-            <div class='row'>
-              <div class='col d-inline-flex'>
-                <div class='number-item text-muted'>1x</div>
-                <div class='item-info flex-column'>
-                  <div class='item-name'>Item Name</div>
-                  <div class='item-property d-inline-flex flex-row'>
-                    <div class='color-item m-0'></div>
-                    <div class='size-item m-0'>│ Size: M</div>
-                  </div>
-                </div>
-              </div>
-              <div class='d-flex justify-content-end price col'>
-                1,000,000 đ
-              </div>
-            </div>
-            <div class='row'>
-              <div class='col d-inline-flex'>
-                <div class='number-item text-muted'>1x</div>
-                <div class='item-info flex-column'>
-                  <div class='item-name'>Item Name</div>
-                  <div class='item-property d-inline-flex flex-row'>
-                    <div class='color-item m-0'></div>
-                    <div class='size-item m-0'>│ Size: M</div>
-                  </div>
-                </div>
-              </div>
-              <div class='d-flex justify-content-end price col'>
-                1,000,000 đ
-              </div>
+            <div class="all-items-modal">
+
             </div>
           </div>
 
@@ -105,17 +74,17 @@
 
           <div class='d-flex flex-row justify-content-between'>
             <div class='title'>Subtotal</div>
-            <div>2,000,000 đ</div>
+            <div class='subtotal-modal'>2,000,000 đ</div>
           </div>
 
           <div class='d-flex flex-row justify-content-between'>
             <div class='title'>Delivery</div>
-            <div>0 đ</div>
+            <div>20,000 đ</div>
           </div>
 
           <div class='d-flex flex-row justify-content-between mt-3'>
             <div class='title fw-bold'>TOTAL COST</div>
-            <div>2,000,000 đ</div>
+            <div class='total-modal'>2,000,000 đ</div>
           </div>
 
         </div>
@@ -127,5 +96,5 @@
 </div>
 
 {{#section 'scripts'}}
-    <script src='/js/order.js'></script>
+  <script src='/js/order.js'></script>
 {{/section}}
