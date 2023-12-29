@@ -6,6 +6,7 @@ const bcrypt = require('bcrypt')
 const MagicLinkStrategy = require('passport-magic-link').Strategy;
 const sendgrid = require('@sendgrid/mail');
 const dotenv = require('dotenv')
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
 passport.use(
   new LocalStrategy(async (username, password, done) => {
@@ -72,5 +73,36 @@ passport.use(new MagicLinkStrategy({
 }, (req, user) => {
     return req.body;
 }));
+
+passport.use(new GoogleStrategy({
+  clientID: process.env.GOOGLE_CLIENT_ID,
+  clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+  callbackURL: 'http://' + process.env.HOST + ':' + process.env.PORT + '/oauth2/redirect/google'
+},
+async function(accessToken, refreshToken, profile, cb) {
+  try {
+    const user = await User.findOne({ googleId: profile.id })
+    // The account at Google has not logged in to this app before.
+    // Create a new user record and associate it with the Google account.
+    if (!user) {
+      const newUser = await User.create({
+        googleId: profile.id,
+        name: profile.displayName,
+        customerImage: profile.photos ? profile.photos[0].value : '',
+        active: true,
+      })
+      await new Cart({ customer: newUser._id }).save();
+      return cb(null, newUser)
+    }
+    // The account at Google has previously logged in to the app.
+    // Get the user record associated with the Google account and log the user in.
+    else {
+      return cb(null, user)
+    }
+  } catch (err) {
+    return cb(err)
+  }
+}
+));
 
 module.exports = passport

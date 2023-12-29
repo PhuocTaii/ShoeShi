@@ -88,6 +88,22 @@ const authController = {
       })
     })(req, res, next)
   },
+
+  loginGoogle: (req, res, next) => {
+    passport.authenticate('google', (err, user) => {
+      if (err) {
+        return res.status(500).json(err)
+      }
+      req.logIn(user, (loginErr) => {
+        if (loginErr) {
+          return res.status(500).json({ message: 'Login Error' })
+        }
+        else
+          return res.status(200).redirect('/')
+      })
+    })(req, res, next)
+  },
+
   //Logout
   logout: (req, res, next) => {
     req.logout(function (err) {

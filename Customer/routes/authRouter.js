@@ -26,6 +26,10 @@ router.post('/login', authController.login)
 //Logout
 router.post('/logout', authController.logout)
 
+router.get('/oauth2/google', passport.authenticate('google', { scope: ['profile'] }));
+
+router.get('/oauth2/redirect/google', authController.loginGoogle);
+
 //Client side
 //User signup page
 router.get('/signup', authController.getUserSignUpPage)
