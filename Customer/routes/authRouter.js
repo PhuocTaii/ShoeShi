@@ -10,8 +10,6 @@ router.post('/signup',
 );
 
 router.post('/signup/check-username', authController.checkValidUsername)
-router.post('/signup/check-password', authController.checkValidPassword)
-router.post('/signup/check-email', authController.checkValidEmail)
 
 router.get('/signup/verify',
   passport.authenticate('account-activation', { action : 'acceptToken' }),

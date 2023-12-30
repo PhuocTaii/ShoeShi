@@ -24,7 +24,7 @@
           id='username'
           name='username'
           required
-          onchange="checkValidUsername(this.value)"
+          oninput="checkValidUsername(this.value)"
           title='Please enter 6 to 20 characters'
           aria-describedby="feedback-username"
         />
@@ -41,7 +41,7 @@
           id='password'
           name='password'
           required
-          onchange="checkValidPassword(this.value)"
+          oninput="checkValidPassword(this.value)"
           title='Please enter with both letters and numbers, and a minimum of 8 characters.'
           aria-describedby="feedback-password"
         />
@@ -58,11 +58,11 @@
           id='email'
           required
           name='email'
-          onchange="checkValidEmail(this.value)"
+          oninput="checkValidEmail(this.value)"
           title='Please enter a valid email address'
           aria-describedby="feedback-email"
         />
-        <div id='feedback-email' class="invalid-feedback"></div>
+        <div id='feedback-email' class="invalid-feedback">Email is invalid</div>
       </div>
 
       <div class='mb-2 col'>
@@ -111,6 +111,7 @@
           placeholder='Phone Number'
           id='phone-number'
           name='phoneNum'
+          title="Please enter a valid phone number"
         />
       </div>
 
