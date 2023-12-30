@@ -10,11 +10,17 @@ const passport = require('passport')
 const session = require('express-session')
 const exphbs = require('./config/handlebars.config')
 const express_handlebars_sections = require('express-handlebars-sections');
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
+const multer = require('multer');
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 // var bodyParser = require('body-parser');
 // const morgan = require('morgan');
 
 //Cloudinary config
 const cloudinary = require('./config/cloudinary.config')
+
+// const upload = multer({ storage: storage });
 
 
 //CUSTOMER routes
@@ -76,7 +82,6 @@ app.use('/', indexCustomerRouter)
 app.use('/', authCustomerRouter)
 app.use('/product', productCustomerRouter)
 app.use('/cart', cartCustomerRouter)
-// app.use('/order', orderCustomerRouter)
 app.use('/profile', userCustomerRouter)
 app.use('/review', reviewCustomerRouter)
 app.use('/checkout', checkoutCustomerRouter)
@@ -98,5 +103,8 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500)
   res.render('error')
 })
+
+
+
 
 module.exports = app

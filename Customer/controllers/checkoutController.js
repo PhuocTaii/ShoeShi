@@ -9,15 +9,12 @@ const checkoutController = {
   // POST a new order
   createOrder: async (req, res) => {
     try {
-      console.log(req.user.id)
       const cart = await cartService.findCartById(req.user.id)
-      console.log(cart)
       var nameList = []
       var colorList = []
       var sizeList = []
       var priceList = []
       var TotalPrice = 0
-      // console.log(productList) 
       for (let i = 0; i < cart.productList.length; i++) {
         const product = await productService.getProductById(
           cart.productList[i].product
@@ -70,8 +67,10 @@ const checkoutController = {
     const productList = await cartService.getProductListByIdForCheckout(cart)
     const orderSummary = await cartService.getOrderSummary(cart)
     const buyer = await userService.getUserById(req.user.id)
+    const prodList = await cartService.getProductList(cart)
     res.render('checkout', {
       buyer,
+      prodList,
       productList,
       orderSummary,
       layout: 'main',

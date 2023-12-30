@@ -51,4 +51,8 @@ router.post('/login/forgot-password/verify', authController.resetPassword)
 
 router.post('/login/find-account', authController.findUserByUsername)
 
+//User log out page
+router.get('/logout', authController.getUserLogOut)
+
+
 module.exports = router

@@ -3,8 +3,8 @@ const colorService = require('../services/colorService')
 const sizeService = require('../services/sizeService')
 const categoryService = require('../services/categoryService')
 const manufacturerService = require('../services/manufacturerService')
+const cartService = require('../services/cartService')
 const imageService = require('../services/imageService')
-const userService = require('../services/userService')
 
 const productController = {
   //GET all products
@@ -29,12 +29,27 @@ const productController = {
       else {
         const categories = await categoryService.getAllCategories()
         const manufacturers = await manufacturerService.getAllManufacturers()
-        res.render('productList', {
-          categories,
-          manufacturers,
-          layout: 'main',
-          extraStyles: 'productList.css',
-        });
+        if(req.user){
+          const cart = await cartService.getOneCart(req.user.id);
+          const prodList = await cartService.getProductList(cart)
+          res.render('productList', {
+            categories,
+            manufacturers,
+            layout: 'main',
+            extraStyles: 'productList.css',
+            user: req.user,
+            prodList
+          });
+        } else{
+          res.render('productList', {
+            categories,
+            manufacturers,
+            layout: 'main',
+            extraStyles: 'productList.css',
+            user: null,
+          });
+        }
+
       }
       } catch (err) {
         res.status(500).json(err)
@@ -57,13 +72,25 @@ const productController = {
   getProductDetail: async (req, res) => {
     try {
       const details = await productService.getProductDetail(req.params.id)
-
-      res.render('productDetail', {
-        details,
-        layout: 'main',
-        extraStyles: 'productDetail.css',
-        user: req.user || null,
-      })
+      if(req.user){
+        const cart = await cartService.getOneCart(req.user.id);
+        const prodList = await cartService.getProductList(cart)
+        res.render('productDetail', {
+          details,
+          layout: 'main',
+          extraStyles: 'productDetail.css',
+          user: req.user,
+          prodList
+        })
+      } else{
+        res.render('productDetail', {
+          details,
+          layout: 'main',
+          extraStyles: 'productDetail.css',
+          user: null,
+        })
+      }
+      
     } catch (err) {
       res.status(500).json(err)
     }

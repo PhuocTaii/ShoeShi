@@ -50,16 +50,25 @@
         </div>
         <a class='cart' href='/cart'>
           <i class='ri-shopping-cart-line'></i>
-          <div class='number-cart-items'>
-            2
+          <div class='number-cart-items' id="number-cart-items">
+            {{!-- {{cart}} --}}
+            {{#if user}}
+              {{prodList.length}}
+            {{else}}
+            <script>
+              const cartSize = JSON.parse(localStorage.getItem('cartData')).length || 0
+              document.getElementById("number-cart-items").innerHTML =  cartSize
+            </script>
+            {{/if}}
           </div>
         </a>
-
-        <a class='order' href='/order'>
-          <i class="ri-file-list-line"></i>
-        </a>
-        
-        <a href='/login'><i class='ri-user-3-line'></i></a>
+        {{#if user}}      
+        <a href='/order'><i class="ri-file-list-line"></i>  </a> 
+        <a href='/profile'><i class='ri-user-3-line'></i></a>
+        <a href='/logout' class="fw-bold">Log Out</a>
+        {{else}}
+        <a href='/login' class="fw-bold">Log In</a>
+        {{/if}}
       </nav>
       <!-- End Menu header -->
 
@@ -97,12 +106,15 @@
           </div>
           <a class='cart' href='/cart'>
             <i class='ri-shopping-cart-line'></i>
-            <div class='number-cart-items'>
-              2
+            <div class='number-cart-items' id="number-cart-items">
+              {{#if user}}
+                {{prodList.length}}
+              {{else}}
+              <script>
+                document.getElementById("number-cart-items").innerHTML = cartSize
+              </script>
+              {{/if}}
             </div>
-          </a>
-          <a class='order' href='/order'>
-            <i class='ri-list-view'></i>
           </a>
           <a href='/login'><i class='ri-user-3-line'></i></a>
         </div>
