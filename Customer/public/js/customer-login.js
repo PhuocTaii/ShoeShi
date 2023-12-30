@@ -78,25 +78,16 @@ $('#form-forgot-password').submit(function (event) {
 })
 
 function checkValidPassword(password) {
-  $.ajax({
-    type: 'POST',
-    url: '/signup/check-password',
-    data: { password: password },
-    success: function (response) {
-      const input = document.getElementById('new-password')
-      if (response.valid) {
-        input.classList.remove("is-invalid");
-        input.classList.add("is-valid");
-      }
-      else {
-        input.classList.remove("is-valid");
-        input.classList.add("is-invalid");
-        document.getElementById('feedback-new-password').innerHTML = response.message
-      }
-    },
-    error: function (error) {
-    },
-  })
+  const input = document.getElementById('new-password')
+  const pattern = /^(?=.*[a-zA-Z])(?=.*\d).{8,}$/
+  if (pattern.test(password)) {
+    input.classList.remove("is-invalid");
+    input.classList.add("is-valid");
+  } else {
+    input.classList.remove("is-valid");
+    input.classList.add("is-invalid");
+    document.getElementById('feedback-new-password').innerHTML = 'Must be at least 8 characters. Include letters and numbers'
+  }
 }
 
 function showToastResetError(errorMsg) {
