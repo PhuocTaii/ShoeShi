@@ -54,7 +54,6 @@ if(!user){
         error: function (error) {
         },
     })
-    // document.getElementById("number-cart-items").innerHTML = localCartData.length
     // console.log(localCartData.length)
 
 }
@@ -73,10 +72,12 @@ function updateCart(productId, colorId, sizeId) {
             success: function (data) {
                 var tAmount = 0;
                 var tPrice = 0;
+
                 for(let i = 0; i < data.length; i++){
                     tAmount += data[i].quantity
                     tPrice += data[i].quantity * data[i].price
                 }
+
                 const total = Number(tPrice + 20000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                 
                 document.getElementById("log-total-item").innerHTML = tAmount + ' items'
@@ -117,6 +118,7 @@ function removeFromCart(productId, colorId, sizeId){
             dataType: 'json',
             success: function (data) {
                 window.location.href = '/cart'
+                document.getElementById("number-cart-items").innerHTML = data.length
 
             },
             error: function (error) {
@@ -131,22 +133,6 @@ function removeFromCart(productId, colorId, sizeId){
             }
         }
         window.location.href = '/cart'
-        // const localCartTemplateFunction = Handlebars.compile(localCartTemplate);
-        // $.ajax({
-        //     type: 'POST',
-        //     url: '/cart/local',
-        //     contentType: 'application/json',
-        //     dataType: 'json',
-        //     data: JSON.stringify(localCart),
-        //     success: function (data) {
-        //         document.getElementById('local-cart').innerHTML = localCartTemplateFunction(data.detailList);
-        //         document.getElementById("total-item").innerHTML = data.totalAmount + ' items'
-        //         document.getElementById("total-price").innerHTML = data.totalPrice
-        //         document.getElementById("total").innerHTML = data.total + '₫'
-        //     },
-        //     error: function (error) {
-        //     },
-        // })
     }
 }
 
