@@ -62,10 +62,12 @@ const cartService = {
   deleteProductFromCart: async(cart, productId, colorId, sizeId) => {
     var details = []
     for (let i = 0; i < cart.productList.length; i++) {
-      if (cart.productList[i].product.toString() == productId.toString() && cart.productList[i].color.toString() == colorId.toString() && cart.productList[i].size.toString() == sizeId.toString()) {
+      if (cart.productList[i].product == productId.toString() && cart.productList[i].color.toString() == colorId.toString() && cart.productList[i].size.toString() == sizeId.toString()) {
         cart.productList.splice(i, 1)
         cart.save()
       }
+    }
+    for (let i = 0; i < cart.productList.length; i++) {
       const prod = await productService.getProductById(cart.productList[i].product)
       const detail = {
         price: prod.price,
