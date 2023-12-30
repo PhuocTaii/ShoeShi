@@ -77,7 +77,7 @@ function checkValidEmail(email) {
 function accountActivation(formData) {
   $.ajax({
     type: "POST", 
-    url: "/signup", 
+    url: "/signup",
     data: formData,
     success: function (response) {
       const container = document.getElementById('signup-container')

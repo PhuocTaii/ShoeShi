@@ -24,13 +24,13 @@ const authController = {
         active: true,
       }, (loginErr) => {
       if (loginErr) {
-        return res.status(500).redirect('/signup')
+        res.status(500).redirect('/signup')
       }
       else
-        return res.status(200).redirect('/')
+        res.status(200).redirect('/')
     })
     } catch (err) {
-      return res.status(500).redirect('/signup')
+      res.status(500).redirect('/signup')
     }
   },
 
@@ -38,14 +38,14 @@ const authController = {
     try {
         const err = authService.checkValidUsername(req.body.username)
         if (err && err.errors && err.errors.username) {
-          return res.status(200).json({ valid: false, message: err.errors.username.message })
+          res.status(200).json({ valid: false, message: err.errors.username.message })
         }
 
         const foundUser = await authService.checkExistsUsername(req.body.username)
         if (foundUser) {
-          return res.status(200).json({ valid: false, message: 'Username already exists' })
+          res.status(200).json({ valid: false, message: 'Username already exists' })
         } else {
-          return res.status(200).json({ valid: true, message: 'Username is valid' })
+          res.status(200).json({ valid: true, message: 'Username is valid' })
         }
       
     } catch (err) {
@@ -57,34 +57,34 @@ const authController = {
   checkValidPassword: (req, res, next) => {
     const err = authService.checkValidPassword(req.body.password)
     if (err && err.errors && err.errors.password) {
-      return res.status(200).json({ valid: false, message: err.errors.password.message })
+      res.status(200).json({ valid: false, message: err.errors.password.message })
     }
-    return res.status(200).json({ valid: true, message: 'Password is valid' })
+    res.status(200).json({ valid: true, message: 'Password is valid' })
   },
 
   checkValidEmail: (req, res, next) => {
     const err = authService.checkValidEmail(req.body.email)
     if (err && err.errors && err.errors.email) {
-      return res.status(200).json({ valid: false, message: err.errors.email.message })
+      res.status(200).json({ valid: false, message: err.errors.email.message })
     }
-    return res.status(200).json({ valid: true, message: 'Email is valid' })
+    res.status(200).json({ valid: true, message: 'Email is valid' })
   },
 
   //Login
   login: (req, res, next) => {
     passport.authenticate('local', (err, user, info) => {
       if (err) {
-        return res.status(500).json(err)
+        res.status(500).json(err)
       }
       if (!user) {
-        return res.status(401).json({ message: info.message })
+        res.status(401).json({ message: info.message })
       }
       req.logIn(user, (loginErr) => {
         if (loginErr) {
-          return res.status(500).json({ message: 'Login Error' })
+          res.status(500).json({ message: 'Login Error' })
         }
         else
-          return res.status(200).json({ redirect: '/' })
+          res.status(200).json({ redirect: '/' })
       })
     })(req, res, next)
   },
@@ -92,16 +92,28 @@ const authController = {
   loginGoogle: (req, res, next) => {
     passport.authenticate('google', (err, user) => {
       if (err) {
-        return res.status(500).json(err)
+        res.status(500).json(err)
       }
       req.logIn(user, (loginErr) => {
         if (loginErr) {
-          return res.status(500).json({ message: 'Login Error' })
+          res.status(500).json({ message: 'Login Error' })
         }
         else
-          return res.status(200).redirect('/')
+          res.status(200).redirect('/')
       })
     })(req, res, next)
+  },
+
+  resetPassword: async (req, res, next) => {
+    try {
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(req.body.newPassword, salt);
+      await authService.resetPassword(req.body.id, hashedPassword)
+      res.status(200).json({hashedPassword})
+    } catch (err) {
+      console.log(err)
+      return res.status(500).json(err)
+    }
   },
 
   //Logout
@@ -127,6 +139,37 @@ const authController = {
     res.render('login', {
       layout: 'auth',
       extraStyles: 'login.css',
+    })
+  },
+
+  getForgotPasswordPage: (req, res) => {
+    res.render('forgotPassword', {
+      layout: 'auth',
+      extraStyles: 'login.css',
+    })
+  },
+
+  findUserByUsername: async (req, res) => {
+    try {
+      const foundUser = await authService.getUserByUsername(req.body.username)
+      if(!foundUser) {
+        return res.status(200).json(null)
+      }
+
+      return res.status(200).json(foundUser)
+      // return res.status(200).json({id: foundUser._id})
+    } catch (err) {
+      console.log(err)
+      return res.status(500).json(err)
+    }
+  },
+
+  getResetPasswordPage: (req, res) => {
+    
+    res.render('resetPassword', {
+      layout: 'auth',
+      extraStyles: 'login.css',
+      user: req.user
     })
   }
 }

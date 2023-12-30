@@ -1,5 +1,8 @@
 const User = require('../models/customer')
 const Cart = require('../models/cart')
+const sendgrid = require('@sendgrid/mail');
+
+sendgrid.setApiKey(process.env['SENDGRID_API_KEY']);
 
 const authService = {
   assignCart(user) {
@@ -34,6 +37,32 @@ const authService = {
   checkValidEmail(email) {
     const user = new User({ email: email })
     return user.validateSync();
+  },
+
+  generateRandomPassword() {
+    return Math.random().toString(36).slice(2) +
+          Math.random().toString(36).toUpperCase().slice(2);
+  },
+
+  sendNewPassword(user, newPassword) {
+    const msg = {
+      to: user.email,
+      from: process.env['EMAIL'],
+      subject: 'Reset password',
+      text: 'Your new password: ' + newPassword,
+      html: 
+        `<p style="font-size: 16px; color: black;">Your new password: ${newPassword}</p>
+        `
+    };
+    return sendgrid.send(msg);
+  },
+
+  resetPassword(id, newPassword) {
+    return User.findByIdAndUpdate(id, {password: newPassword})
+  },
+
+  getUserByUsername(username) {
+    return User.findOne({ username: username })
   },
 }
 

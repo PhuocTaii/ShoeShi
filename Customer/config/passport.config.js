@@ -49,9 +49,9 @@ passport.deserializeUser(function (user, cb) {
 dotenv.config()
 sendgrid.setApiKey(process.env['SENDGRID_API_KEY']);
 
-passport.use(new MagicLinkStrategy({
+passport.use('account-activation', new MagicLinkStrategy({
   secret: process.env.secret_key,
-  userFields: [ 'username', 'password', 'email' ],
+  userFields: [ 'email' ],
   tokenField: 'token',
   passReqToCallbacks: true,
 }, (req, user, token) => {
@@ -74,35 +74,58 @@ passport.use(new MagicLinkStrategy({
     return req.body;
 }));
 
+passport.use('reset-password', new MagicLinkStrategy({
+  secret: process.env.secret_key,
+  userFields: [ 'email' ],
+  tokenField: 'token',
+  passReqToCallbacks: true,
+}, (req, user, token) => {
+  const link = 'http://' + process.env.HOST + ':' + process.env.PORT + '/login/forgot-password/verify?token=' + token;
+  const msg = {
+    to: user.email,
+    from: process.env['EMAIL'],
+    subject: 'Reset password',
+    text: 'Click the link below to confirm reset password:\r\n\n' + link,
+    html: 
+      `
+      <p style="font-size: 14px; color: black;">Click the link below to confirm reset password:</p>
+      <p style="font-size: 16px; color: #ff7100; text-decoration: underline, "><a href="${link}">Go to reset password</a></p>
+      `
+  };
+  sendgrid.send(msg);
+}, (req, user) => {
+    return req.body;
+}));
+
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID,
   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
   callbackURL: 'http://' + process.env.HOST + ':' + process.env.PORT + '/oauth2/redirect/google'
 },
-async function(accessToken, refreshToken, profile, cb) {
-  try {
-    const user = await User.findOne({ googleId: profile.id })
-    // The account at Google has not logged in to this app before.
-    // Create a new user record and associate it with the Google account.
-    if (!user) {
-      const newUser = await User.create({
-        googleId: profile.id,
-        name: profile.displayName,
-        customerImage: profile.photos ? profile.photos[0].value : '',
-        active: true,
-      })
-      await new Cart({ customer: newUser._id }).save();
-      return cb(null, newUser)
+  async function(accessToken, refreshToken, profile, cb) {
+    try {
+      const user = await User.findOne({ googleId: profile.id })
+      // The account at Google has not logged in to this app before.
+      // Create a new user record and associate it with the Google account.
+      if (!user) {
+        const newUser = await User.create({
+          googleId: profile.id,
+          name: profile.displayName,
+          customerImage: profile.photos ? profile.photos[0].value : '',
+          active: true,
+        })
+        await new Cart({ customer: newUser._id }).save();
+        return cb(null, newUser)
+      }
+      // The account at Google has previously logged in to the app.
+      // Get the user record associated with the Google account and log the user in.
+      else {
+        return cb(null, user)
+      }
+    } catch (err) {
+      return cb(err)
     }
-    // The account at Google has previously logged in to the app.
-    // Get the user record associated with the Google account and log the user in.
-    else {
-      return cb(null, user)
-    }
-  } catch (err) {
-    return cb(err)
   }
-}
 ));
 
 module.exports = passport

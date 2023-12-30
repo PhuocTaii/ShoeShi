@@ -5,10 +5,8 @@ const passport = require('../config/passport.config')
 //Server side
 //Signup
 router.post('/signup', 
-  passport.authenticate('magiclink', { action: 'requestToken' }), 
-  (req, res, next) => {
-    res.status(200).json({ message: 'Email sent' })
-  }
+  passport.authenticate('account-activation', { action: 'requestToken' }), 
+  (req, res, next) => res.status(200).json({ message: 'Email sent' })
 );
 
 router.post('/signup/check-username', authController.checkValidUsername)
@@ -16,7 +14,7 @@ router.post('/signup/check-password', authController.checkValidPassword)
 router.post('/signup/check-email', authController.checkValidEmail)
 
 router.get('/signup/verify',
-  passport.authenticate('magiclink', { action : 'acceptToken' }),
+  passport.authenticate('account-activation', { action : 'acceptToken' }),
   authController.signup
 )
 
@@ -36,5 +34,21 @@ router.get('/signup', authController.getUserSignUpPage)
 
 //User login page
 router.get('/login', authController.getUserLogInPage)
+
+router.get('/login/forgot-password', authController.getForgotPasswordPage)
+
+router.post('/login/forgot-password',
+  passport.authenticate('reset-password', { action: 'requestToken' }), 
+  (req, res, next) => {
+    res.status(200).json(req.body)
+  }
+);
+router.get('/login/forgot-password/verify',
+  passport.authenticate('reset-password', { action : 'acceptToken' }),
+  authController.getResetPasswordPage
+)
+router.post('/login/forgot-password/verify', authController.resetPassword)
+
+router.post('/login/find-account', authController.findUserByUsername)
 
 module.exports = router
