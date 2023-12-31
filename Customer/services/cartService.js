@@ -199,6 +199,40 @@ const cartService = {
     total = total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
     return {detailList, totalAmount, totalPrice, total}
   },
+
+  getLoggedlCart: async (cart) => {
+    var totalAmount = 0
+    var totalPrice = 0
+    var detailList = []
+    console.log(cart.productList)
+    for (let i = 0; i < cart.productList.length; i++) {
+      const prod = await productService.getProductById(cart.productList[i].product)
+      const clor = await colorService.findColorById(cart.productList[i].color)
+      const sze = await sizeService.getSizeById(cart.productList[i].size)
+      const qty = cart.productList[i].quantity
+      console.log(prod)
+      const productDetail = {
+        id: prod._id + clor._id + sze._id,
+        price: prod.price,
+        image: prod.productImage[0],
+        product: prod.name,
+        productID: prod._id,
+        color: clor.color,
+        size: sze.size,
+        quantity: qty,
+        colorId: clor._id,
+        sizeId: sze._id,
+      }
+      totalAmount += Number(qty)
+      totalPrice += qty * prod.price
+      // productList[i].product = productDetail
+      detailList.push(productDetail)
+    }
+    var total = totalPrice + 20000 
+    totalPrice = totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+    total = total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+    return {detailList, totalAmount, totalPrice, total}
+  },
 }
 
 module.exports = cartService

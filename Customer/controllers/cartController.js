@@ -115,6 +115,17 @@ const cartController = {
       console.log(err)
     }
   },
+
+  getLoggedCart: async (req, res) => {
+    try{
+      const cart = await cartService.getOneCart(req.user.id);
+      const productList = await cartService.getLoggedlCart(cart);
+      res.status(200).json(productList)
+    } catch (err) {
+      res.status(500).json(err)
+      console.log(err)
+    }
+  },
   //Client side
   getCartPage: async(req, res) => {
   try{
