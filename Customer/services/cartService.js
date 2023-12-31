@@ -65,6 +65,7 @@ const cartService = {
       if (cart.productList[i].product == productId.toString() && cart.productList[i].color.toString() == colorId.toString() && cart.productList[i].size.toString() == sizeId.toString()) {
         cart.productList.splice(i, 1)
         cart.save()
+        break;
       }
     }
     for (let i = 0; i < cart.productList.length; i++) {
