@@ -32,3 +32,6 @@
   padding: 5px 50px;
 }
 
+.pagination li:hover {
+	cursor: pointer;
+}

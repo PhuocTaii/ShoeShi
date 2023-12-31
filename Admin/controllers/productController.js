@@ -98,6 +98,41 @@ const productController = {
   //   }
   // },
 
+  //GET all products
+  getAllProducts: async (req, res) => {
+    try {
+      const acceptHeader = req.get('Accept');
+  
+      if (acceptHeader && acceptHeader.includes('application/json')) {
+        const { 'product-name': productName, category, manufacturer, page, sort } = req.query;
+        const pageTo = parseInt(page) || 1
+
+        const products = await productService.getProductsWithCondition(pageTo, productName, category, manufacturer, sort)
+        const totalProducts = await productService.getTotalProductsWithCondition(pageTo, productName, category, manufacturer, sort)
+        const amountProduct = totalProducts[0] ? totalProducts[0].totalCount : 0
+        const totalPages = Math.ceil(amountProduct / productService.productsPerPage)
+        res.json({
+          products,
+          totalPages,
+          activePage: pageTo
+        });
+      }
+      else {
+        const categories = await categoryService.getAllCategories()
+        const manufacturers = await manufacturerService.getAllManufacturers()
+
+        res.render('products', {
+          categories,
+          manufacturers,
+          layout: 'main',
+          extraStyles: 'products.css',
+        });
+      }
+      } catch (err) {
+        res.status(500).json(err)
+      }
+  },
+
 
   //ADD product
   addProduct: async (req, res) => {

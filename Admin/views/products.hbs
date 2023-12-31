@@ -3,44 +3,36 @@
 
   <div class="row">
     <!-- Filters -->
-    <div class='col-2 filter-container'>
+    <form class='col-2 filter-container' id="filter-form">
       <h4>Filters</h4>
       <div class="cate-section">
         <p>Categories</p>
         <div class="cate-list">
+          {{#each categories}}
           <div class="form-check">
-            <input class="form-check-input" type="checkbox">
-            <label class="form-check-label">
-              Men
+            <input id="c-{{this._id}}" class="form-check-input" type="checkbox" name="category" value="{{this.name}}" onchange="handleQuery(event)">
+            <label for="c-{{this._id}}" class="form-check-label">
+              {{this.name}}
             </label>
           </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox">
-            <label class="form-check-label">
-              Running shoes
-            </label>
-          </div>
+          {{/each}}
         </div>
       </div>
       <hr>
       <div class="manu-section">
         <p>Manufacturers</p>
         <div class="manu-list">
+          {{#each manufacturers}}
           <div class="form-check">
-            <input class="form-check-input" type="checkbox">
-            <label class="form-check-label">
-              Nike
+            <input id="m-{{this._id}}" class="form-check-input" type="checkbox" name="manufacturer" value="{{this.name}}" onchange="handleQuery(event)">
+            <label for="m-{{this._id}}" class="form-check-label">
+              {{this.name}}
             </label>
           </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox">
-            <label class="form-check-label">
-              Adidas
-            </label>
-          </div>
+          {{/each}}
         </div>
       </div>
-    </div>
+    </form>
 
     <!-- Product table-->
     <div class='col-10 card'>
@@ -49,7 +41,7 @@
         <div class="action-table">
           <div class="sort-table">
             <label for="product-sort">Sort by</label>
-            <select class="form-select" name="sort-options" id="product-sort">
+            <select class="form-select" name="sort-options" id="product-sort" onchange="handleQuery(event)">
               <option selected value="none">None</option>
               <option value="newest">Creation time: Newest</option>
               <option value="oldest">Creation time: Oldest</option>
@@ -61,8 +53,8 @@
           </div>
           <div class="search-table">
             <label for="products-filter-name">Name: </label>
-            <input class="form-control" type="text" id="products-filter-name">
-            <button type="button" class="btn">Search</button>
+            <input class="form-control" type="text" id="products-filter-name" name="product-name" onchange="handleQuery(event)">
+            {{!-- <button type="button" class="btn">Search</button> --}}
           </div>
         </div>
       </div>
@@ -94,138 +86,15 @@
               <th></th>
             </tr>
           </tfoot>
-          <tbody class="table-group-divider">
-            <tr>
-              <td>Nike Pegasus FlyEase</td>
-              <td>Running shoes</td>
-              <td>Nike</td>
-              <td>09/11/2023</td>
-              <td>2,991,149</td>
-              <td>20</td>
-              <td>4</td>
-              <td>On stock</td>
-              <td>
-                <button class='edit-btn' onclick="toggleUpdateProduct(id)"><i class='ri-pencil-line'></i></button>
-                <button class='delete-btn' onclick="toggleDeleteProduct(id)"><i
-                    class='ri-delete-bin-6-line'
-                  ></i></button>
-              </td>
-            </tr>
-            <tr>
-              <td>Nike Pegasus FlyEase</td>
-              <td>Running shoes</td>
-              <td>Nike</td>
-              <td>09/11/2023</td>
-              <td>2,991,149</td>
-              <td>20</td>
-              <td>4</td>
-              <td>On stock</td>
-              <td>
-                <button class='edit-btn'><i class='ri-pencil-line'></i></button>
-                <button class='delete-btn'><i
-                    class='ri-delete-bin-6-line'
-                  ></i></button>
-              </td>
-            </tr>
-            <tr>
-              <td>Nike Pegasus FlyEase</td>
-              <td>Running shoes</td>
-              <td>Nike</td>
-              <td>09/11/2023</td>
-              <td>2,991,149</td>
-              <td>20</td>
-              <td>4</td>
-              <td>On stock</td>
-              <td>
-                <button class='edit-btn'><i class='ri-pencil-line'></i></button>
-                <button class='delete-btn'><i
-                    class='ri-delete-bin-6-line'
-                  ></i></button>
-              </td>
-            </tr>
-            <tr>
-              <td>Nike Pegasus FlyEase</td>
-              <td>Running shoes</td>
-              <td>Nike</td>
-              <td>09/11/2023</td>
-              <td>2,991,149</td>
-              <td>20</td>
-              <td>4</td>
-              <td>On stock</td>
-              <td>
-                <button class='edit-btn'><i class='ri-pencil-line'></i></button>
-                <button class='delete-btn'><i
-                    class='ri-delete-bin-6-line'
-                  ></i></button>
-              </td>
-            </tr>
-            <tr>
-              <td>Nike Pegasus FlyEase</td>
-              <td>Running shoes</td>
-              <td>Nike</td>
-              <td>09/11/2023</td>
-              <td>2,991,149</td>
-              <td>20</td>
-              <td>4</td>
-              <td>On stock</td>
-              <td>
-                <button class='edit-btn'><i class='ri-pencil-line'></i></button>
-                <button class='delete-btn'><i
-                    class='ri-delete-bin-6-line'
-                  ></i></button>
-              </td>
-            </tr>
-            <tr>
-              <td>Nike Pegasus FlyEase</td>
-              <td>Running shoes</td>
-              <td>Nike</td>
-              <td>09/11/2023</td>
-              <td>2,991,149</td>
-              <td>20</td>
-              <td>4</td>
-              <td>On stock</td>
-              <td>
-                <button class='edit-btn'><i class='ri-pencil-line'></i></button>
-                <button class='delete-btn'><i
-                    class='ri-delete-bin-6-line'
-                  ></i></button>
-              </td>
-            </tr>
-            <tr>
-              <td>Nike Pegasus FlyEase</td>
-              <td>Running shoes</td>
-              <td>Nike</td>
-              <td>09/11/2023</td>
-              <td>2,991,149</td>
-              <td>20</td>
-              <td>4</td>
-              <td>On stock</td>
-              <td>
-                <button class='edit-btn'><i class='ri-pencil-line'></i></button>
-                <button class='delete-btn'><i
-                    class='ri-delete-bin-6-line'
-                  ></i></button>
-              </td>
-            </tr>
+          <tbody id="table-products" class="table-group-divider">
+            
           </tbody>
         </table>
       </div>
       <div class="card-footer">
         <nav aria-label="navigation table">
-          <ul class="pagination">
-            <li class="page-item">
-              <a class="page-link" href="#" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-              </a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-              <a class="page-link" href="#" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-              </a>
-            </li>
+          <ul class="pagination" id="product-pagination">
+            
           </ul>
         </nav>
       </div>
@@ -423,5 +292,7 @@
 </div>
 
 {{#section 'scripts'}}
+  <script src='/js/hbsHelpers.js'></script>
+  <script src='/js/templates/pagination.js'></script>
   <script src='/js/products.js'></script>
 {{/section}}
