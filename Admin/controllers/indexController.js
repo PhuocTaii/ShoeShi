@@ -13,7 +13,26 @@ const indexController = {
             extraStyles: 'dashboard.css',
             layout: 'main',
         })
-    }
+    },
+
+    getChartData: async(req, res) => {
+        try{
+            const orders = await orderService.getAllDoneOrders();
+            console.log(orders);
+            console.log(req.body.month);
+            const revenue = await orderService.getDataByMonth(orders, req.body.month);
+            // const products = await productService.getAllProducts();
+            // const data = {
+            //     orders,
+            //     revenue,
+            //     products,
+            // }
+            // res.json(req.body);
+            res.json(revenue);
+        } catch(err) {
+            console.log(err);
+        }
+    } 
 }
 
 module.exports = indexController;

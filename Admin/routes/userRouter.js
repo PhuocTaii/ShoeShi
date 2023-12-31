@@ -8,7 +8,7 @@ router.get('/user', userController.getAllUsers)
 router.delete('/user/:id', userController.deleteUser)
 
 //Client side
-router.get('/accounts', userController.getAccountsPage)
+router.get('/', userController.getAccountsPage)
 
 router.get('/profile', userController.getAdminProfilePage)
 

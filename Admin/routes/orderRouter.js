@@ -9,7 +9,7 @@ router.put('/order/:id', orderController.updateOrder)
 
 router.delete('/order/:id', orderController.deleteOrder)
 
-router.get('/orders', orderController.getAdminOrderPage)
+router.get('/', orderController.getAdminOrderPage)
   
 
 module.exports = router

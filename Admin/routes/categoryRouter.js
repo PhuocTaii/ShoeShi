@@ -18,6 +18,6 @@ router.put('/category/:id', categoryController.updateCategory)
 router.delete('/category/:id', categoryController.deleteCategory)
 
 //Client side
-router.get('/categories-manufacturers',categoryController.getCategoriesManufacturersPage)
+router.get('/',categoryController.getCategoriesManufacturersPage)
 
 module.exports = router

@@ -14,6 +14,6 @@ router.put('/product/:id', productController.updateProduct)
 router.delete('/product/:id', productController.deleteProduct)
 
 //Client side
-router.get('/products', productController.getAdminProductPage)
+router.get('/', productController.getAdminProductPage)
 
 module.exports = router

@@ -9,6 +9,10 @@ const orderService = {
     return await Order.find()
   },
 
+  getAllDoneOrders: async () => {
+    return await Order.find({status: 'Done'})
+  },
+
   // Get an order by id
   getOrderById: async (id) => {
     return await Order.findById(id)
@@ -20,10 +24,6 @@ const orderService = {
     const orders = await orderService.getAllOrders()
     console.log(orders)
     for(let i = 0; i < orders.length; i++) {
-      // // const date = new Date(orders[i].createTime).toLocaleDateString('en-us')
-      // console.log(orders[i].orderTime.toLocaleDateString('en-us'))
-      // // console.log(new Date(orders[i].orderTime))
-      // // console.log(orders[i].createTime)
       if(orders[i].status.toString() == 'Done') {
         revenue += orders[i].totalPrice
       }
@@ -52,6 +52,30 @@ const orderService = {
   deleteOrder: async (id) => {
     return await Order.findByIdAndDelete(id)
   },
+
+  getDataByMonth: async(orders, months) => {
+    const y = months.slice(0, 4)
+    const m = months.slice(5)
+    console.log(orders)
+    console.log(y, m)
+    const dayOfMonth = new Date(y, m, 0).getDate()
+    console.log(dayOfMonth)
+    var result = [dayOfMonth]
+    for(let i = 0; i < dayOfMonth; i++) {
+      result[i] = 0
+    }
+    for(let i = 0; i < orders.length; i++) {
+      const year = orders[i].orderTime.getFullYear()
+      const month = (orders[i].orderTime.getMonth() + 1).toString().padStart(2, '0')
+      const day = orders[i].orderTime.getDate()
+      const date = year + '-' + month
+
+      if(date == months) {
+        result[day - 1] += orders[i].totalPrice
+      }
+    }
+    return result
+  }
 }
 
 module.exports = orderService

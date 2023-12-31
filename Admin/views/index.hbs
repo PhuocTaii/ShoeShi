@@ -46,9 +46,7 @@
     <div class='card-header'>
       <p class='tableName'>overall sales</p>
       <div class='Date'>
-        <input type='date' class="date-choosing" id="start-date" />
-        -
-        <input type='date' class="date-choosing" id="end-date" oninput="updateChart()" />
+        <input type='month' class="date-choosing" id="month" oninput="updateChart()"/>
       </div>
     </div>
     <div class='card-body'><canvas
@@ -76,13 +74,13 @@
             <th>Revenue</th>
           </tr>
         </thead>
-        <tfoot>
+        {{!-- <tfoot>
           <tr>
             <th>Name</th>
             <th>Sold</th>
             <th>Revenue</th>
           </tr>
-        </tfoot>
+        </tfoot> --}}
         <tbody class="table-group-divider">
           <tr>
             <td>Lorem ipsum dolor sit amet</td>
