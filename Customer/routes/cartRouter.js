@@ -4,6 +4,10 @@ const router = require('express').Router()
 //GET local cart
 router.post('/local', cartController.getLocalCart)
 
+//GET logged cart
+router.post('/logged', cartController.getLoggedCart)
+
+
 //ADD product to cart
 router.post('/:productID', cartController.addProductToCart)
 

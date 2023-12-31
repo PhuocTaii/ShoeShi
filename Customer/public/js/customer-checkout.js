@@ -16,6 +16,8 @@ function createOrder(event){
         data: {name: name, address: address, phone: phoneNum},
         dataType: 'json',
         success: function(data) {
+            console.log(data);
+            window.location.href = '/order';
             alert('Create order successfully');
         },
         error: function(err) {
