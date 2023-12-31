@@ -73,8 +73,16 @@ $.getJSON(window.location.href, function( data ) {
 	updateProductListView(data)
 });
 function paging(page) {
-	const url = window.location.href
-	$.getJSON(url+`&page=${page}`, function( data ) {
+	const url = new URL(window.location.href);
+  const query = url.search;
+  if(query.length > 0) {
+    url.searchParams.set('page', page);
+  }
+  else {
+    url.search = `?page=${page}`;
+  }
+  $.getJSON(url.href, function( data ) {
+		window.history.pushState({"data":data},"", url.href);
 		updateProductListView(data)
 	});
 }
@@ -82,16 +90,30 @@ function paging(page) {
 // FILTER
 function getQueryString() {
 	const filter = $('#filter-form').serialize()
+  const url = new URL(window.location.href);
+
+	const urlParams = new URLSearchParams(filter);
+	if(urlParams.get('product-name')==='')
+		urlParams.delete('product-name')
+	if(urlParams.get('from-input')==='100000')
+		urlParams.delete('from-input')
+	if(urlParams.get('to-input')==='9000000')
+		urlParams.delete('to-input')
+
+	url.search = '?' + urlParams.toString()
+  
 	const sortVal = document.getElementById('sort-products').value
-	const sort = (sortVal!=='none') ? 'sort=' + document.getElementById('sort-products').value : ''
-	return sort!=='' ? filter+'&'+sort : filter
+  if(sortVal!=='none')
+    url.searchParams.set('sort', sortVal);
+
+  return url.search
 }
 
 function handleQuery(event) {
 	event.preventDefault()
 	const query = getQueryString()
-	$.getJSON('/product?'+query, function( data ) {
-		window.history.pushState({"html":data.html},"", '/product?'+query);
+	$.getJSON('/product'+query, function( data ) {
+		window.history.pushState({"data":data},"", '/product'+query);
 		updateProductListView(data)
 	});
 }

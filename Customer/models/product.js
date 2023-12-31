@@ -19,32 +19,6 @@ const productSchema = new mongoose.Schema({
     type: Number,
   },
 
-  review: [
-    {
-      reviewer: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Customer',
-      },
-
-      rating: {
-        type: Number,
-      },
-
-      title: {
-        type: String,
-      },
-
-      content: {
-        type: String,
-      },
-
-      reviewTime: {
-        type: Date,
-        default: Date.now,
-      },
-    },
-  ],
-
   size: [
     {
       type: mongoose.Schema.Types.ObjectId,
@@ -69,6 +43,11 @@ const productSchema = new mongoose.Schema({
   creationDate: {
     type: Date,
     default: Date.now,
+  },
+
+  quantity: {
+    type: Number,
+    default: 0,
   },
 
   totalPurchase: {
