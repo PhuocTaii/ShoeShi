@@ -33,7 +33,26 @@ const userController = {
 
   handlePaging: async (req, res) => {
     try {
-      const users = await userService.getAllUsers()
+      const {
+        page = 1,
+        limit = 10,
+        sortBy,
+        sortOrder,
+        filterBy,
+        search,
+      } = req.query
+
+      const filter = {}
+      if (filterBy && search) {
+        filter[filterBy] = { $regex: search, $options: 'i' }
+      }
+
+      const sort = {}
+      if (sortBy) {
+        sort[sortBy] = sortOrder === 'desc' ? -1 : 1
+      }
+
+      const users = await userService.getUserByFilterAndSort(filter, sort)
       const totalUsers = users.length
       const totalPage = Math.ceil(totalUsers / 5)
       const pages = Array.from({ length: totalPage }, (_, i) => i + 1)
@@ -52,8 +71,7 @@ const userController = {
     } catch (err) {
       res.status(500).json(err)
     }
-  }
-  ,
+  },
   getAccountsPage: async (req, res) => {
     const currentPage = Number(req.query.pageUser) || 1
     const itemPerPage = 5
@@ -65,7 +83,7 @@ const userController = {
 
     const totalUsers = await User.countDocuments()
     const totalPage = Math.ceil(totalUsers / itemPerPage)
-    const pages = Array.from({length: totalPage}, (_, i) => i + 1);
+    const pages = Array.from({ length: totalPage }, (_, i) => i + 1)
 
     const formattedUsers = users.map((user) => ({
       username: user.username,
@@ -90,6 +108,5 @@ const userController = {
       extraStyles: 'profile.css',
     })
   },
-  
 }
 module.exports = userController
