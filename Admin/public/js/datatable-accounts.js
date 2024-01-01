@@ -26,6 +26,7 @@ function fetchPage(pageNumber) {
 
       data.usersInPage.forEach((customer) => {
         const row = document.createElement('tr')
+        row.setAttribute('data-id', customer._id)
 
         const usernameCell = document.createElement('td')
         usernameCell.textContent = customer.username
@@ -104,3 +105,55 @@ document.addEventListener('DOMContentLoaded', (event) => {
     fetchPage(currentPage)
   })
 })
+
+document.addEventListener('DOMContentLoaded', (event) => {
+  // ... rest of your code ...
+
+  const table = document.getElementById('table-accounts')
+  table.addEventListener('click', (event) => {
+    const target = event.target
+    const row = target.closest('tr')
+    if (!row) return
+
+    const id = $(row).data('id')
+
+    $.ajax({
+      url: `/accounts/${id}`,
+      method: 'GET', // Change the method as per your requirement
+      success: function (response) {
+        // Handle the response from the server if needed
+        const { id, name, gender, address, email, phone, dob, username } = response
+
+        $('.username-modal').text(username)
+        $('.name-modal').text(name)
+        $('.gender-modal').text(gender)
+        $('.address-modal').text(address)
+        $('.email-modal').text(email)
+        $('.phone-modal').text(phone)
+        $('.dob-modal').text(formatDate(dob))
+        // $('.address-modal').text(address)
+
+        var myModal = new bootstrap.Modal(
+          document.getElementById('modal-account-detail')
+        )
+        myModal.show()
+      },
+      error: function (error) {
+        console.error('Error sending data:', error)
+      },
+    })
+  })
+})
+
+function formatDate(dateString) {
+  const date = new Date(dateString)
+
+  const formattedDate = date.toLocaleDateString('vi-VN', {
+    year: 'numeric',
+    month: 'numeric',
+    day: 'numeric',
+  })
+
+
+  return `${formattedDate}`
+}

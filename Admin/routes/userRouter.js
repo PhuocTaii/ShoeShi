@@ -13,5 +13,6 @@ router.get('/accounts', userController.getAccountsPage)
 router.get('/accounts/api', userController.handlePaging)
 
 router.get('/profile', isAdmin, userController.getAdminProfilePage)
+router.get('/accounts/:id', userController.getUserById)
 
 module.exports = router
