@@ -60,9 +60,7 @@
     <div class='card-header'>
       <p class='tableName'>best selling product</p>
       <div class='Date'>
-        <input type='date' />
-        -
-        <input type='date' />
+        <input type='month' class="date-choosing" id="month-table" oninput="updateTable()"/>
       </div>
     </div>
     <div class='card-body table-responsive'>
@@ -74,15 +72,15 @@
             <th>Revenue</th>
           </tr>
         </thead>
-        {{!-- <tfoot>
+        <tfoot>
           <tr>
             <th>Name</th>
             <th>Sold</th>
             <th>Revenue</th>
           </tr>
-        </tfoot> --}}
-        <tbody class="table-group-divider">
-          <tr>
+        </tfoot>
+        <tbody class="table-group-divider" id="table-data">
+          {{!-- <tr>
             <td>Lorem ipsum dolor sit amet</td>
             <td>10</td>
             <td>10</td>
@@ -126,7 +124,8 @@
             <td>quis sem nec, vulputate fringillu</td>
             <td>10</td>
             <td>10</td>
-          </tr>
+          </tr> --}}
+          {{!-- <tr id="table-data"></tr> --}}
         </tbody>
       </table>
     </div>
@@ -139,4 +138,5 @@
     crossorigin='anonymous'
   ></script>
   <script src='/assets/demo/chart-area-demo.js'></script>
+  <script src='/js/admin-index.js'></script>
 {{/section}}

@@ -115,7 +115,6 @@ function updateChart() {
   const Year = document.getElementById('month').value.split('-')[0];
   const AllDaysInMonth  = getAllDaysOfMonthFormatted(Year, Month);
   const date = `${Year}-${Month.toString().padStart(2, '0')}`;
-  console.log(date);
 
   $.ajax({
     url: '/chartdata',
