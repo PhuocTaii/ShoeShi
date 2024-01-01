@@ -49,6 +49,11 @@ const customerSchema = new mongoose.Schema({
   customerImage: {
     type: String,
   },
+
+  isBan: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 const Customer = mongoose.model('Customer', customerSchema)
