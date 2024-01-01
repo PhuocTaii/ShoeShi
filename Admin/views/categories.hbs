@@ -7,10 +7,14 @@
       <div class='col-lg px-0 card'>
         <div class='card-header'>
           <p class='my-0'>categories</p>
-          <button type='button' class='btn btn-dark category' onclick="handleAddCate()">add</button>
+          <button
+            type='button'
+            class='btn btn-dark category'
+            onclick='handleAddCate()'
+          >add</button>
         </div>
         <div class='card-body table-responsive'>
-          <table class="table table-striped table-hover">
+          <table class='table table-striped table-hover'>
             <thead>
               <tr>
                 <th>ID</th>
@@ -25,46 +29,8 @@
                 <th> </th>
               </tr>
             </tfoot>
-            <tbody class="table-group-divider">
-              <tr>
-                <td>1</td>
-                <td>Slides</td>
-                <td>
-                  <button class='edit-btn' onclick="handleModifyCate(id)">
-                    <i class='ri-pencil-line'
-                    ></i>
-                  </button>
-                  <button class='delete-btn' onclick="handleDeleteCate(id)">
-                    <i
-                      class='ri-delete-bin-6-line'
-                    ></i>
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>Running shoes</td>
-                <td>
-                  <button class='edit-btn'><i
-                      class='ri-pencil-line'
-                    ></i></button>
-                  <button class='delete-btn'><i
-                      class='ri-delete-bin-6-line'
-                    ></i></button>
-                </td>
-              </tr>
-              <tr>
-                <td>3</td>
-                <td>Sneakers</td>
-                <td>
-                  <button class='edit-btn'><i
-                      class='ri-pencil-line'
-                    ></i></button>
-                  <button class='delete-btn'><i
-                      class='ri-delete-bin-6-line'
-                    ></i></button>
-                </td>
-              </tr>
+            <tbody class='table-group-divider' id='table-category'>
+
             </tbody>
           </table>
         </div>
@@ -74,10 +40,14 @@
       <div class='col-lg px-0 card'>
         <div class='card-header'>
           <p class='my-0'>manufacturers</p>
-          <button type='button' class='btn btn-dark manufacturer' onclick="handleAddManu()">add</button>
+          <button
+            type='button'
+            class='btn btn-dark manufacturer'
+            onclick='handleAddManu()'
+          >add</button>
         </div>
         <div class='card-body table-responsive'>
-          <table class="table table-striped table-hover">
+          <table class='table table-striped table-hover'>
             <thead>
               <tr>
                 <th>ID</th>
@@ -92,67 +62,7 @@
                 <th></th>
               </tr>
             </tfoot>
-            <tbody class="table-group-divider">
-              <tr>
-                <td>1</td>
-                <td>Nike</td>
-                <td>
-                  <button class='edit-btn' onclick="handleModifyManu(id)"><i
-                      class='ri-pencil-line'
-                    ></i></button>
-                  <button class='delete-btn' onclick="handleDeleteManu(id)"><i
-                      class='ri-delete-bin-6-line'
-                    ></i></button>
-                </td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>Adidas</td>
-                <td>
-                  <button class='edit-btn'><i
-                      class='ri-pencil-line'
-                    ></i></button>
-                  <button class='delete-btn'><i
-                      class='ri-delete-bin-6-line'
-                    ></i></button>
-                </td>
-              </tr>
-              <tr>
-                <td>3</td>
-                <td>New Balance</td>
-                <td>
-                  <button class='edit-btn'><i
-                      class='ri-pencil-line'
-                    ></i></button>
-                  <button class='delete-btn'><i
-                      class='ri-delete-bin-6-line'
-                    ></i></button>
-                </td>
-              </tr>
-              <tr>
-                <td>4</td>
-                <td>Converse</td>
-                <td>
-                  <button class='edit-btn'><i
-                      class='ri-pencil-line'
-                    ></i></button>
-                  <button class='delete-btn'><i
-                      class='ri-delete-bin-6-line'
-                    ></i></button>
-                </td>
-              </tr>
-              <tr>
-                <td>5</td>
-                <td>Vans</td>
-                <td>
-                  <button class='edit-btn'><i
-                      class='ri-pencil-line'
-                    ></i></button>
-                  <button class='delete-btn'><i
-                      class='ri-delete-bin-6-line'
-                    ></i></button>
-                </td>
-              </tr>
+            <tbody class='table-group-divider' id='table-manufacturer'>
             </tbody>
           </table>
         </div>
@@ -192,7 +102,7 @@
         <input type='text' id='item-name' />
       </div>
       <div class='modal-footer'>
-        <button type='button' class='btn btn-dark'>save</button>
+        <button type='button' class='btn btn-dark confirm-btn'>save</button>
       </div>
     </div>
   </div>
@@ -233,7 +143,7 @@
           class='btn btn-secondary'
           data-bs-dismiss='modal'
         >No, cancel</button>
-        <button type='button' class='btn btn-danger'>Yes, confirm</button>
+        <button type='button' class='btn btn-danger confirm-btn'>Yes, confirm</button>
       </div>
     </div>
   </div>
