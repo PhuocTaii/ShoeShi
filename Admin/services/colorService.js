@@ -2,7 +2,7 @@ const Color = require('../models/color')
 
 const colorService = {
   getAllColors() {
-    const colors = Color.find()
+    const colors = Color.find().lean()
     return colors
   },
 

@@ -1,19 +1,22 @@
 const productController = require('../controllers/productController')
 const router = require('express').Router()
+const { isAdmin } = require('../middleware/authenticationMiddleware')
 
 //GET all products
-// router.get('/product', productController.getAllProducts)
+router.get('/', isAdmin, productController.getAllProducts)
+
+router.get('/:id', isAdmin, productController.getProductById)
 
 //ADD one product
-router.post('/product', productController.addProduct)
+router.post('/', isAdmin, productController.addProduct)
 
 //MODIFY product
-router.put('/product/:id', productController.updateProduct)
+router.put('/:id', productController.updateProduct)
 
 //DELETE product
-router.delete('/product/:id', productController.deleteProduct)
+router.delete('/:id', productController.deleteProduct)
 
 //Client side
-router.get('/', productController.getAdminProductPage)
+// router.get('/products', productController.getAdminProductPage)
 
 module.exports = router

@@ -14,7 +14,7 @@ function checkOldPassword(input) {
 
   $.ajax({
     url: 'profile/check-password',
-    method: 'POST',
+    method: 'POST', 
     data: {
       id,
       input,
@@ -45,11 +45,13 @@ function updateProfile(event) {
   const address = form['address'].value
   const birthday = form['birthday'].value
 
-  const phoneValidationResult = validatePhoneNumber(phoneNum)
+  if(phoneNum != '') {
+    const phoneValidationResult = validatePhoneNumber(phoneNum)
 
-  if (phoneValidationResult) {
-    alert(phoneValidationResult)
-    return
+    if (phoneValidationResult) {
+      alert(phoneValidationResult)
+      return
+    }
   }
 
   const id = document

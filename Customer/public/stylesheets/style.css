@@ -227,3 +227,37 @@ footer .get-help {
 .left-box-auth .form-label {
   font-weight: 600;
 }
+
+.other-method-container {
+  margin-top: 30px;
+}
+.other-method-container .title {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.other-method-container .title .text {
+  white-space: nowrap;
+  margin: 0;
+}
+.other-method-container .line {
+  width: 100%;
+  height: 0.8px;
+  background-color: var(--my-black);
+}
+.other-method-container .social-container {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+.other-method-container .btn-social {
+  width: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.other-method-container .btn-social p {
+  margin: 0;
+}

@@ -1,8 +1,27 @@
+#signup-container {
+  margin: 30px 0;
+}
 .left-box-auth {
   height: fit-content;
 }
-
 .img-bg {
-  object-fit: cover;
+  height: 100%;
   width: 100%;
+  object-fit: cover;
+}
+
+.title-check-mail {
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 24px;
+}
+#mail-sent {
+  font-weight: 500;
+}
+.btn.resend-mail {
+  font-weight: 600;
+}
+
+.hide-container {
+  display: none;
 }

@@ -2,7 +2,7 @@ const Manufacturer = require('../models/manufacturer')
 
 const manufacturerService = {
   getAllManufacturers() {
-    const manufacturers = Manufacturer.find()
+    const manufacturers = Manufacturer.find().lean()
     return manufacturers
   },
 
