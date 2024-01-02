@@ -91,7 +91,7 @@ app.use('/categories-manufacturers', categoryAdminRouter)
 app.use('/colors-sizes', colorAdminRouter)
 app.use('/manufacturer', manufacturerAdminRouter)
 app.use('/orders', orderAdminRouter)
-app.use('/products', productAdminRouter)
+app.use('/product', productAdminRouter)
 app.use('/size', sizeAdminRouter)
 app.use('/accounts', userAdminRouter)
 

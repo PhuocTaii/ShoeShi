@@ -270,19 +270,21 @@ function handleSaveProduct(event, id) {
   info['status'] = document.querySelector('#status-product').value
   info['quantity'] = document.querySelector('#quant-product').value
 
-  var formDataList = []
   var oldPhotos = []
   const formData = new FormData()
   info['photos'].forEach((item, index) => {
     if(item.isNew) {
-      formData.append(`productImg${index}`, item.file)
+      formData.append("productImage", item.file)
       // formDataList.push(formData)
-
     }
     else {
       oldPhotos.push(item.file)
+      formData.append('photos', item.file)
     }
   })
+
+  // console.log([...formData])
+
   formData.append('name', info.name)
   formData.append('price', info.price)
   formData.append('manufacturer', info.manufacturer)
@@ -291,11 +293,12 @@ function handleSaveProduct(event, id) {
   formData.append('cates', JSON.stringify(info.cates))
   formData.append('colors', JSON.stringify(info.colors))
   formData.append('sizes', JSON.stringify(info.sizes))
-  formData.append('photos', oldPhotos)
+  // formData.append('photos', oldPhotos)
+//   const oldPhotoUrls = oldPhotos.map(photo => photo.url); // Giả sử mỗi đối tượng ảnh có thuộc tính 'url'
+// formData.append('photos', JSON.stringify(oldPhotoUrls));
 
-
-  console.log(formDataList)
-  console.log(oldPhotos)
+  console.log(formData)
+  // console.log(oldPhotos)
 
   $.ajax({
     type: id == null ? "POST" : "PUT", 
@@ -308,6 +311,8 @@ function handleSaveProduct(event, id) {
     //   newPhotos: formData
     // },
     data: formData,
+    processData: false,
+    contentType: false,
     success: function (response) {
       handleQuery(event)
 

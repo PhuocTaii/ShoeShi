@@ -13,7 +13,6 @@ const productService = {
   addProduct(product) {
     const newProduct = new Product({
       ...product,
-      productImage: [],// temp
       creationDate: Date.now(),
     })
     return newProduct.save()
