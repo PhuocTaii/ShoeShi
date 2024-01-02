@@ -32,6 +32,41 @@
   padding: 5px 50px;
 }
 
+/*PAGINATION*/
 .pagination li:hover {
 	cursor: pointer;
+}
+
+/*TOAST NOTI*/
+.toast i {
+  font-size: 16px;
+}
+
+.toast.error .toast-header {
+  background-color: var(--bs-danger);
+  color: var(--bs-white);
+}
+.toast.error .toast-body {
+  background-color: var(--bs-danger);
+  color: var(--bs-white);
+}
+.toast button {
+  color: var(--bs-white);
+  font-size: 20px;
+  padding: 0;
+}
+.toast button:focus {
+  border: none;
+}
+
+.toast.success .toast-header {
+  background-color: var(--bs-success);
+  color: var(--bs-white);
+}
+.toast.success .toast-body {
+  background-color: var(--bs-success);
+  color: var(--bs-white);
+}
+.toast .mail-text {
+  font-weight: 600;
 }

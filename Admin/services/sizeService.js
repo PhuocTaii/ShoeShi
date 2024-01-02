@@ -2,7 +2,7 @@ const Size = require('../models/size')
 
 const sizeService = {
   getAllSizes() {
-    const sizes = Size.find()
+    const sizes = Size.find().lean()
     return sizes
   },
 

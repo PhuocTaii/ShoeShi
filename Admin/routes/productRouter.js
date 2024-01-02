@@ -1,11 +1,12 @@
 const productController = require('../controllers/productController')
 const router = require('express').Router()
+const { isAdmin } = require('../middleware/authenticationMiddleware')
 
 //GET all products
-router.get('/', productController.getAllProducts)
+router.get('/', isAdmin, productController.getAllProducts)
 
 //ADD one product
-router.post('/', productController.addProduct)
+router.post('/', isAdmin, productController.addProduct)
 
 //MODIFY product
 router.put('/:id', productController.updateProduct)

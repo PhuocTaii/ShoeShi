@@ -10,46 +10,58 @@ const productService = {
     return products
   },
 
-  addProduct(
-    product,
-    colorList,
-    sizeList,
-    categoryList,
-    manufacturer,
-    imageList
-  ) {
-    cateList = []
-    sList = []
-    cList = []
-    iList = []
-    for (let i = 0; i < categoryList.length; i++) {
-      cateList.push(categoryList[i]._id)
-    }
-    for (let i = 0; i < sizeList.length; i++) {
-      sList.push(sizeList[i]._id)
-    }
-    for (let i = 0; i < colorList.length; i++) {
-      cList.push(colorList[i]._id)
-    }
-    for (let i = 0; i < imageList.length; i++) {
-      iList.push(imageList[i])
-    }
+  // addProduct(
+  //   product,
+  //   colorList,
+  //   sizeList,
+  //   categoryList,
+  //   manufacturer,
+  //   imageList
+  // ) {
+  //   cateList = []
+  //   sList = []
+  //   cList = []
+  //   iList = []
+  //   for (let i = 0; i < categoryList.length; i++) {
+  //     cateList.push(categoryList[i]._id)
+  //   }
+  //   for (let i = 0; i < sizeList.length; i++) {
+  //     sList.push(sizeList[i]._id)
+  //   }
+  //   for (let i = 0; i < colorList.length; i++) {
+  //     cList.push(colorList[i]._id)
+  //   }
+  //   for (let i = 0; i < imageList.length; i++) {
+  //     iList.push(imageList[i])
+  //   }
+  //   const newProduct = new Product({
+  //     category: cateList,
+  //     creationDate: product.creationDate,
+  //     manufacturer: manufacturer._id,
+  //     name: product.name,
+  //     price: product.price,
+  //     status: product.status,
+  //     totalPurchase: product.totalPurchase,
+  //     review: product.review,
+  //     color: cList,
+  //     size: sList,
+  //     totalPurchase: product.totalPurchase,
+  //     productImage: iList,
+  //   })
+  //   const savedProduct = newProduct.save()
+  //   return savedProduct
+  // },
+
+  addProduct(product) {
     const newProduct = new Product({
-      category: cateList,
-      creationDate: product.creationDate,
-      manufacturer: manufacturer._id,
-      name: product.name,
-      price: product.price,
-      status: product.status,
-      totalPurchase: product.totalPurchase,
-      review: product.review,
-      color: cList,
-      size: sList,
-      totalPurchase: product.totalPurchase,
-      productImage: iList,
+      ...product,
+      category: product.cates.map((cate) => cate.id),
+      color: product.colors.map((color) => color.id),
+      size: product.sizes.map((size) => size.id),
+      productImage: [],
+      creationDate: Date.now(),
     })
-    const savedProduct = newProduct.save()
-    return savedProduct
+    return newProduct.save()
   },
 
   updateProduct(id, product) {
@@ -232,12 +244,13 @@ const productService = {
           name: 1,
           category: 1,
           manufacturer: 1,
-          creationDate: {
-            $dateToString: {
-              format: "%d-%m-%Y %H:%M",
-              date: "$creationDate",
-            },
-          },
+          // creationDate: {
+          //   $dateToString: {
+          //     format: "%d-%m-%Y %H:%M",
+          //     date: "$creationDate",
+          //   },
+          // },
+          creationDate: 1,
           price: 1,
           quantity: 1,
           totalPurchase: 1,
