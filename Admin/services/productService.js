@@ -10,63 +10,18 @@ const productService = {
     return products
   },
 
-  // addProduct(
-  //   product,
-  //   colorList,
-  //   sizeList,
-  //   categoryList,
-  //   manufacturer,
-  //   imageList
-  // ) {
-  //   cateList = []
-  //   sList = []
-  //   cList = []
-  //   iList = []
-  //   for (let i = 0; i < categoryList.length; i++) {
-  //     cateList.push(categoryList[i]._id)
-  //   }
-  //   for (let i = 0; i < sizeList.length; i++) {
-  //     sList.push(sizeList[i]._id)
-  //   }
-  //   for (let i = 0; i < colorList.length; i++) {
-  //     cList.push(colorList[i]._id)
-  //   }
-  //   for (let i = 0; i < imageList.length; i++) {
-  //     iList.push(imageList[i])
-  //   }
-  //   const newProduct = new Product({
-  //     category: cateList,
-  //     creationDate: product.creationDate,
-  //     manufacturer: manufacturer._id,
-  //     name: product.name,
-  //     price: product.price,
-  //     status: product.status,
-  //     totalPurchase: product.totalPurchase,
-  //     review: product.review,
-  //     color: cList,
-  //     size: sList,
-  //     totalPurchase: product.totalPurchase,
-  //     productImage: iList,
-  //   })
-  //   const savedProduct = newProduct.save()
-  //   return savedProduct
-  // },
-
   addProduct(product) {
     const newProduct = new Product({
       ...product,
-      category: product.cates,
-      color: product.colors,
-      size: product.sizes,
-      productImage: [],
+      productImage: [],// temp
       creationDate: Date.now(),
     })
     return newProduct.save()
   },
 
   updateProduct(id, product) {
-    const Product = Product.findByIdAndUpdate(id, product)
-    return Product
+    const updateProduct = Product.findByIdAndUpdate(id, product)
+    return updateProduct
   },
 
   deleteProduct(id) {
@@ -75,7 +30,14 @@ const productService = {
   },
 
   getProductById(id) {
-    const foundProduct = Product.findById(id)
+    const foundProduct = Product
+    .findById(id)
+    .populate('category')
+    .populate('manufacturer')
+    .populate('size')
+    .populate('color')
+    .populate('color')
+    .lean()
     return foundProduct
   },
 

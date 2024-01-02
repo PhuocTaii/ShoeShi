@@ -5,6 +5,8 @@ const { isAdmin } = require('../middleware/authenticationMiddleware')
 //GET all products
 router.get('/', isAdmin, productController.getAllProducts)
 
+router.get('/:id', isAdmin, productController.getProductById)
+
 //ADD one product
 router.post('/', isAdmin, productController.addProduct)
 

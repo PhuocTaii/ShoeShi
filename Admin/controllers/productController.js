@@ -47,16 +47,20 @@ const productController = {
       }
   },
 
-
   //ADD product
   addProduct: async (req, res) => {
     try {
-      const product = {...req.body,
-                        cates: JSON.parse(req.body.cates),
-                        colors: JSON.parse(req.body.colors),
-                        sizes: JSON.parse(req.body.sizes),
-                        photos: JSON.parse(req.body.photos)
+      const product = {name: req.body.name,
+                        manufacturer: req.body.manufacturer,
+                        price: req.body.price,
+                        quantity: req.body.quantity,
+                        status: req.body.status,
+                        category: JSON.parse(req.body.cates),
+                        color: JSON.parse(req.body.colors),
+                        size: JSON.parse(req.body.sizes)
                       }
+      const newPhotos = req.body.newPhotos
+      //
       const savedProduct = await productService.addProduct(product)
 
       res.status(200).json(savedProduct)
@@ -66,18 +70,44 @@ const productController = {
     }
   },
 
+  getProductById: async (req, res) => {
+    try {
+      const product = await productService.getProductById(req.params.id)
+      console.log(product)
+      res.status(200).json(product)
+    } catch (err) {
+      console.log(err)
+      res.status(500).json(err)
+    }
+  },
+
   //UPDATE product
   updateProduct: async (req, res) => {
     try {
-      const product = await productService.updateProduct(
-        req.params.id,
-        req.body
-      )
-      if (!product) {
-        return res.status(500).json(err)
-      }
-      res.status(200).json(product)
+      // const updatedInfo = {
+      //   name: req.body.name,
+      //   manufacturer: req.body.manufacturer,
+      //   price: req.body.price,
+      //   quantity: req.body.quantity,
+      //   status: req.body.status,
+      //   category: JSON.parse(req.body.cates),
+      //   color: JSON.parse(req.body.colors),
+      //   size: JSON.parse(req.body.sizes),
+      //   productImage: req.body.photos
+      // }
+      // const newPhotos = req.body.newPhotos
+      console.log(req.body)
+      console.log(req.file)
+      //
+      // const product = await productService.updateProduct(
+      //   req.params.id,
+      //   updatedInfo
+      // )
+      
+      // console.log(product)
+      res.status(200).json(123)
     } catch (err) {
+      console.log(err)
       res.status(500).json(err)
     }
   },

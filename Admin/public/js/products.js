@@ -48,8 +48,8 @@ const productsTemplate =
   <td>{{totalPurchase}}</td>
   <td>{{status}}</td>
   <td>
-    <button class='edit-btn' onclick="toggleUpdateProduct({{_id}})"><i class='ri-pencil-line'></i></button>
-    <button class='delete-btn' onclick="toggleDeleteProduct({{_id}})">
+    <button class='edit-btn' onclick="toggleUpdateProduct('{{_id}}')"><i class='ri-pencil-line'></i></button>
+    <button class='delete-btn' onclick="toggleDeleteProduct('{{_id}}')">
       <i class='ri-delete-bin-6-line'></i>
     </button>
   </td>
@@ -115,12 +115,25 @@ const selectedListTemplate =
 `
 <li id='{{infoType}}-{{id}}'>
   <p>{{name}}</p>
-  <button class='remove-icon' onclick="removeSelectedItem('{{infoType}}', '{{id}}')">
+  <button class='remove-icon' onclick="removeSelectedItem(event, '{{infoType}}', '{{id}}')">
     <i class='ri-subtract-line'>
     </i>
 </li>
 `
 const selectedListTemplateFunction = Handlebars.compile(selectedListTemplate);
+
+// PHOTO TEMPLATE
+const photoTemplate = 
+`
+<div class='photo-frame photo-{{index}}'>
+  <img src='{{url}}' alt='photo-product'>
+  <button class='remove-icon' onclick='removeSelectedPhoto(event, {{index}})'>
+    <i class='ri-subtract-line'>
+    </i>
+  </button>
+</div>
+`
+const photoTemplateFunction = Handlebars.compile(photoTemplate);
 
 const info = {
   photos: [],
@@ -129,7 +142,7 @@ const info = {
   sizes: [],
 }
 
-function toggleAddProduct() {
+function resetModal() {
   info.photos.splice(0, info.photos.length)
   info.cates.splice(0, info.cates.length)
   info.colors.splice(0, info.colors.length)
@@ -145,19 +158,53 @@ function toggleAddProduct() {
   document.querySelector('#manufacturer-product').value = document.querySelector('#manufacturer-product option:first-child').value
   document.querySelector('#status-product').value = document.querySelector('#status-product option:first-child').value
   document.querySelector('#quant-product').value = ''
+}
+
+function toggleAddProduct() {
+  resetModal()
 
   $('#modal-manage-product').modal('toggle')
   document.getElementById('action-product').innerHTML = `Add new product`
+  document.querySelector('#modal-manage-product .modal-content').setAttribute('onsubmit', 'handleSaveProduct(event, null)')
 }
 
 function toggleUpdateProduct(id) {
-  // get product info
+  resetModal()
 
-  // set product info to modal
+  // get product info
+  $.getJSON(`/product/${id}`, function( data ) {
+    document.getElementById('name-product').value = data.name
+    document.getElementById('price-product').value = data.price
+    document.getElementById(`ma-${data.manufacturer._id}`).selected = true;
+    document.getElementById('status-product').value = data.status
+    document.getElementById('quant-product').value = data.quantity
+
+    var list = document.querySelector(".chosen-list.cates")
+    data.category.forEach(item => {
+      info['cates'].push(item._id)
+      list.insertAdjacentHTML('beforeend', selectedListTemplateFunction({id: item._id, name: item.name, infoType: 'cates'}))
+    })
+    list = document.querySelector(".chosen-list.colors")
+    data.color.forEach(item => {
+      info['colors'].push(item._id)
+      list.insertAdjacentHTML('beforeend', selectedListTemplateFunction({id: item._id, name: item.color, infoType: 'colors'}))
+    })
+    list = document.querySelector(".chosen-list.sizes")
+    data.size.forEach(item => {
+      info['sizes'].push(item._id)
+      list.insertAdjacentHTML('beforeend', selectedListTemplateFunction({id: item._id, name: item.size, infoType: 'sizes'}))
+    })
+    list = document.getElementById('photos-container')
+    data.productImage.forEach((item, index) => {
+      info['photos'].push({file: item, isNew: false})
+      list.insertAdjacentHTML('beforeend', photoTemplateFunction({index: index, url: item}))
+    })
+  });
 
   // open modal
   $('#modal-manage-product').modal('toggle')
   document.getElementById('action-product').innerHTML = `Update product`
+  document.querySelector('#modal-manage-product .modal-content').setAttribute('onsubmit', `handleSaveProduct(event, "${id}")`)
 }
 
 function toggleDeleteProduct(id) {
@@ -178,7 +225,8 @@ function addSelectedItem(event, infoType) {
     event.target.selectedIndex = 0
 }
 
-function removeSelectedItem(infoType, selectedId) {
+function removeSelectedItem(event, infoType, selectedId) {
+  event.preventDefault()
   // remove from array
   info[infoType] = info[infoType].filter(item => item !== selectedId)
 
@@ -188,23 +236,12 @@ function removeSelectedItem(infoType, selectedId) {
 
 // onclick="removeSelectedPhoto('${photo}')"
 
-const photoTemplate = 
-`
-<div class='photo-frame photo-{{index}}'>
-  <img src='{{url}}' alt='photo-product'>
-  <button class='remove-icon' onclick='removeSelectedPhoto({{index}})'>
-    <i class='ri-subtract-line'>
-    </i>
-  </button>
-</div>
-`
-const photoTemplateFunction = Handlebars.compile(photoTemplate);
-
 function addSelectedPhoto(event) {
   const selectedFile = event.target.files[0]
   if(selectedFile) {
     // push to array
-    info['photos'].push(selectedFile)
+    info['photos'].push({file: selectedFile, isNew: true})
+
     // show to chosen list
     const url = URL.createObjectURL(selectedFile)
     const list = document.getElementById('photos-container')
@@ -212,7 +249,8 @@ function addSelectedPhoto(event) {
   }
 }
 
-function removeSelectedPhoto(idx) {
+function removeSelectedPhoto(event, idx) {
+  event.preventDefault()
   // remove from array
   info['photos'].splice(idx, 1);
 
@@ -222,7 +260,7 @@ function removeSelectedPhoto(idx) {
 }
 
 
-function handleSaveProduct(event) {
+function handleSaveProduct(event, id) {
   event.preventDefault()
 
   // get product info
@@ -232,14 +270,44 @@ function handleSaveProduct(event) {
   info['status'] = document.querySelector('#status-product').value
   info['quantity'] = document.querySelector('#quant-product').value
 
+  var formDataList = []
+  var oldPhotos = []
+  const formData = new FormData()
+  info['photos'].forEach((item, index) => {
+    if(item.isNew) {
+      formData.append(`productImg${index}`, item.file)
+      // formDataList.push(formData)
+
+    }
+    else {
+      oldPhotos.push(item.file)
+    }
+  })
+  formData.append('name', info.name)
+  formData.append('price', info.price)
+  formData.append('manufacturer', info.manufacturer)
+  formData.append('status', info.status)
+  formData.append('quantity', info.quantity)
+  formData.append('cates', JSON.stringify(info.cates))
+  formData.append('colors', JSON.stringify(info.colors))
+  formData.append('sizes', JSON.stringify(info.sizes))
+  formData.append('photos', oldPhotos)
+
+
+  console.log(formDataList)
+  console.log(oldPhotos)
+
   $.ajax({
-    type: "POST", 
-    url: "/product",
-    data: {...info,
-      cates: JSON.stringify(info.cates),
-      colors: JSON.stringify(info.colors),
-      sizes: JSON.stringify(info.sizes),
-      photos: JSON.stringify(info.photos)},
+    type: id == null ? "POST" : "PUT", 
+    url: id == null ? "/product" : `/product/${id}`,
+    // data: {...info,
+    //   cates: JSON.stringify(info.cates),
+    //   colors: JSON.stringify(info.colors),
+    //   sizes: JSON.stringify(info.sizes),
+    //   photos: oldPhotos,
+    //   newPhotos: formData
+    // },
+    data: formData,
     success: function (response) {
       handleQuery(event)
 
