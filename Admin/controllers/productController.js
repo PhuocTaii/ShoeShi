@@ -68,7 +68,6 @@ const productController = {
                         size: JSON.parse(req.body.sizes),
                         productImage: productImageList
                       }
-      //
       const savedProduct = await productService.addProduct(product)
 
       res.status(200).json(savedProduct)
@@ -100,7 +99,6 @@ const productController = {
           const imageUrl = await imageService.uploadImageToCloudinary(file.buffer)
           productImageList.push(imageUrl)
         }
-        console.log(productImageList)
       }
 
       const updatedInfo = {
@@ -131,9 +129,6 @@ const productController = {
   deleteProduct: async (req, res) => {
     try {
       const product = await productService.deleteProduct(req.params.id)
-      if (!product) {
-        res.status(500).json(err)
-      }
       res.status(200).json('The product has been deleted')
     } catch (err) {
       res.status(500).json(err)

@@ -99,8 +99,7 @@ function getQueryString() {
   return url.search
 }
 
-function handleQuery(event) {
-	event.preventDefault()
+function handleQuery() {
 	const query = getQueryString()
 	$.getJSON('/product'+query, function( data ) {
 		window.history.pushState({"data":data},"", '/product'+query);
@@ -135,6 +134,7 @@ const photoTemplate =
 `
 const photoTemplateFunction = Handlebars.compile(photoTemplate);
 
+// temp arrays to store info
 const info = {
   photos: [],
   cates: [],
@@ -163,9 +163,15 @@ function resetModal() {
 function toggleAddProduct() {
   resetModal()
 
+  // show modal
   $('#modal-manage-product').modal('toggle')
+  // set title
   document.getElementById('action-product').innerHTML = `Add new product`
-  document.querySelector('#modal-manage-product .modal-content').setAttribute('onsubmit', 'handleSaveProduct(event, null)')
+  // set submit action
+  document.querySelector('#modal-manage-product form').onsubmit = function(event) {
+    event.preventDefault()
+    handleSaveProduct(null)
+  }
 }
 
 function toggleUpdateProduct(id) {
@@ -173,6 +179,7 @@ function toggleUpdateProduct(id) {
 
   // get product info
   $.getJSON(`/product/${id}`, function( data ) {
+    // set info to modal
     document.getElementById('name-product').value = data.name
     document.getElementById('price-product').value = data.price
     document.getElementById(`ma-${data.manufacturer._id}`).selected = true;
@@ -203,12 +210,13 @@ function toggleUpdateProduct(id) {
 
   // open modal
   $('#modal-manage-product').modal('toggle')
+  // set title
   document.getElementById('action-product').innerHTML = `Update product`
-  document.querySelector('#modal-manage-product .modal-content').setAttribute('onsubmit', `handleSaveProduct(event, "${id}")`)
-}
-
-function toggleDeleteProduct(id) {
-  $('#modal-delete-product').modal('toggle')
+  // set submit action
+  document.querySelector('#modal-manage-product form').onsubmit = function(event) {
+    event.preventDefault()
+    handleSaveProduct(id)
+  }
 }
 
 function addSelectedItem(event, infoType) {
@@ -234,15 +242,12 @@ function removeSelectedItem(event, infoType, selectedId) {
   item.remove()
 }
 
-// onclick="removeSelectedPhoto('${photo}')"
-
 function addSelectedPhoto(event) {
   const selectedFile = event.target.files[0]
   if(selectedFile) {
     // push to array
     info['photos'].push({file: selectedFile, isNew: true})
-
-    // show to chosen list
+    // show chosen list
     const url = URL.createObjectURL(selectedFile)
     const list = document.getElementById('photos-container')
     list.insertAdjacentHTML('beforeend', photoTemplateFunction({index: info['photos'].length - 1, url: url}))
@@ -253,72 +258,44 @@ function removeSelectedPhoto(event, idx) {
   event.preventDefault()
   // remove from array
   info['photos'].splice(idx, 1);
-
-  // show to chosen list
+  // show chosen list
   const item = document.querySelector("#photos-container .photo-frame.photo-" + idx)
   item.remove()
 }
 
-
-function handleSaveProduct(event, id) {
-  event.preventDefault()
-
+function handleSaveProduct(id) {
   // get product info
-  info['name'] = document.querySelector('#name-product').value
-  info['price'] = document.querySelector('#price-product').value
-  info['manufacturer'] = document.querySelector('#manufacturer-product').value
-  info['status'] = document.querySelector('#status-product').value
-  info['quantity'] = document.querySelector('#quant-product').value
-
-  var oldPhotos = []
   const formData = new FormData()
   info['photos'].forEach((item, index) => {
     if(item.isNew) {
       formData.append("productImage", item.file)
-      // formDataList.push(formData)
     }
     else {
-      oldPhotos.push(item.file)
       formData.append('photos', item.file)
     }
   })
 
-  // console.log([...formData])
-
-  formData.append('name', info.name)
-  formData.append('price', info.price)
-  formData.append('manufacturer', info.manufacturer)
-  formData.append('status', info.status)
-  formData.append('quantity', info.quantity)
+  formData.append('name', document.querySelector('#name-product').value)
+  formData.append('price', document.querySelector('#price-product').value)
+  formData.append('manufacturer', document.querySelector('#manufacturer-product').value)
+  formData.append('status', document.querySelector('#status-product').value)
+  formData.append('quantity', document.querySelector('#quant-product').value)
   formData.append('cates', JSON.stringify(info.cates))
   formData.append('colors', JSON.stringify(info.colors))
   formData.append('sizes', JSON.stringify(info.sizes))
-  // formData.append('photos', oldPhotos)
-//   const oldPhotoUrls = oldPhotos.map(photo => photo.url); // Giả sử mỗi đối tượng ảnh có thuộc tính 'url'
-// formData.append('photos', JSON.stringify(oldPhotoUrls));
 
-  console.log(formData)
-  // console.log(oldPhotos)
-
+  // call ajax
   $.ajax({
     type: id == null ? "POST" : "PUT", 
     url: id == null ? "/product" : `/product/${id}`,
-    // data: {...info,
-    //   cates: JSON.stringify(info.cates),
-    //   colors: JSON.stringify(info.colors),
-    //   sizes: JSON.stringify(info.sizes),
-    //   photos: oldPhotos,
-    //   newPhotos: formData
-    // },
     data: formData,
     processData: false,
     contentType: false,
     success: function (response) {
-      handleQuery(event)
-
+      // format toast
       document.getElementById('toast-noti-product').innerHTML = toastTemplateFunction({
-        title: 'Add product',
-        message: 'Add product successfully',
+        title: (id == null ? "Add" : "Update") + ' product',
+        message: (id == null ? "Add" : "Update") + ' product successfully',
         success: true,
       });
       // Trigger toast
@@ -328,11 +305,58 @@ function handleSaveProduct(event, id) {
 
       // close modal
       $('#modal-manage-product').modal('toggle')
+
+      // update with new product list
+      handleQuery()
     },
-    error: function (xhr) {
+    error: function (err) {
       document.getElementById('toast-noti-product').innerHTML = toastTemplateFunction({
-        title: 'Add product',
-        message: 'Add product failed! System error. Please try again!',
+        title: (id == null ? "Add" : "Update") + ' product',
+        message: (id == null ? "Add" : "Update") + ' product failed! System error. Please try again!',
+        success: false,
+      });
+      // Trigger toast
+      const toastElement = document.querySelector('.toast');
+      const toast = bootstrap.Toast.getOrCreateInstance(toastElement);
+      toast.show();
+    }
+  });
+}
+
+function toggleDeleteProduct(id) {
+  $('#modal-delete-product').modal('toggle')
+  document.querySelector('#modal-delete-product form').onsubmit = function(event) {
+    event.preventDefault()
+    handleDeleteProduct(id)
+  }
+}
+
+function handleDeleteProduct(id) {
+  $.ajax({
+    type: "DELETE",
+    url: `/product/${id}`,
+    success: function (response) {
+      // format toast
+      document.getElementById('toast-noti-product').innerHTML = toastTemplateFunction({
+        title: 'Delete product',
+        message: 'Delete product successfully',
+        success: true,
+      });
+      // Trigger toast
+      const toastElement = document.querySelector('.toast');
+      const toast = bootstrap.Toast.getOrCreateInstance(toastElement);
+      toast.show();
+
+      // close modal
+      $('#modal-delete-product').modal('toggle')
+
+      // update with new product list
+      handleQuery()
+    },
+    error: function (err) {
+      document.getElementById('toast-noti-product').innerHTML = toastTemplateFunction({
+        title: 'Delete product',
+        message: 'Delete product failed! System error. Please try again!',
         success: false,
       });
       // Trigger toast

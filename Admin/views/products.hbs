@@ -10,7 +10,7 @@
         <div class="cate-list">
           {{#each categories}}
           <div class="form-check">
-            <input id="c-{{this._id}}" class="form-check-input" type="checkbox" name="category" value="{{this.name}}" onchange="handleQuery(event)">
+            <input id="c-{{this._id}}" class="form-check-input" type="checkbox" name="category" value="{{this.name}}" onchange="handleQuery()">
             <label for="c-{{this._id}}" class="form-check-label">
               {{this.name}}
             </label>
@@ -24,7 +24,7 @@
         <div class="manu-list">
           {{#each manufacturers}}
           <div class="form-check">
-            <input id="m-{{this._id}}" class="form-check-input" type="checkbox" name="manufacturer" value="{{this.name}}" onchange="handleQuery(event)">
+            <input id="m-{{this._id}}" class="form-check-input" type="checkbox" name="manufacturer" value="{{this.name}}" onchange="handleQuery()">
             <label for="m-{{this._id}}" class="form-check-label">
               {{this.name}}
             </label>
@@ -41,7 +41,7 @@
         <div class="action-table">
           <div class="sort-table">
             <label for="product-sort">Sort by</label>
-            <select class="form-select" name="sort-options" id="product-sort" onchange="handleQuery(event)">
+            <select class="form-select" name="sort-options" id="product-sort" onchange="handleQuery()">
               <option selected value="none">None</option>
               <option value="newest">Creation time: Newest</option>
               <option value="oldest">Creation time: Oldest</option>
@@ -53,7 +53,7 @@
           </div>
           <div class="search-table">
             <label for="products-filter-name">Name: </label>
-            <input class="form-control" type="text" id="products-filter-name" name="product-name" onchange="handleQuery(event)">
+            <input class="form-control" type="text" id="products-filter-name" name="product-name" onchange="handleQuery()">
             {{!-- <button type="button" class="btn">Search</button> --}}
           </div>
         </div>
@@ -252,7 +252,7 @@
   aria-labelledby='staticBackdropLabel'
   aria-hidden='true'
 >
-  <div
+  <form
     class='modal-dialog modal-dialog-centered modal-dialog-scrollable'
     data-bs-keyboard='false'
     tabindex='-1'
@@ -278,10 +278,10 @@
           class='btn btn-secondary'
           data-bs-dismiss='modal'
         >No, cancel</button>
-        <button type='button' class='btn btn-danger'>Yes, confirm</button>
+        <button type='submit' class='btn btn-danger confirm'>Yes, confirm</button>
       </div>
     </div>
-  </div>
+  </form>
 </div>
 
 <div id="toast-noti-product">

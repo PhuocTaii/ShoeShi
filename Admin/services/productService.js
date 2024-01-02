@@ -24,8 +24,8 @@ const productService = {
   },
 
   deleteProduct(id) {
-    const Product = Product.findByIdAndDelete(id)
-    return Product
+    const deletedProduct = Product.findByIdAndDelete(id)
+    return deletedProduct
   },
 
   getProductById(id) {
