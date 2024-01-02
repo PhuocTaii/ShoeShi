@@ -1,19 +1,20 @@
 const sizeController = require('../controllers/sizeController')
 const router = require('express').Router()
+const { isAdmin } = require('../middleware/authenticationMiddleware')
 
 //GET all sizes
-router.get('/sizes', sizeController.getAllSizes)
+router.get('/', isAdmin, sizeController.getAllSizes)
 
 // GET a size by id
-router.get('/size/:id', sizeController.getSizeById)
+router.get('/:id', isAdmin, sizeController.getSizeById)
 
 // ADD a size
-router.post('/size', sizeController.addSize)
+router.post('/', isAdmin, sizeController.addSize)
 
 // UPDATE a size by id
-router.put('/size/:id', sizeController.updateSize)
+router.put('/:id', isAdmin, sizeController.updateSize)
 
 // DELETE a size by id
-router.delete('/size/:id', sizeController.deleteSize)
+router.delete('/:id', isAdmin, sizeController.deleteSize)
 
 module.exports = router

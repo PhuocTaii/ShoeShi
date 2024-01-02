@@ -53,7 +53,7 @@
             aria-labelledby='navbarDropdown'
           >
             {{#if user}}
-              <li><a class='dropdown-item' href='/profile'>Profile</a></li>
+              <li><a class='dropdown-item' href='/user/profile'>Profile</a></li>
               <li><a class='dropdown-item' href='/logout'>Log Out</a></li>
             {{else}}
               <li><a class='dropdown-item' href='/login'>Log In</a></li>
@@ -74,19 +74,19 @@
                   ></i></div>
                 Dashboard
               </a>
-              <a class='nav-link' href='/accounts'>
+              <a class='nav-link' href='/user'>
                 <div class='sb-nav-link-icon'><i
                     class='ri-account-circle-fill'
                   ></i></div>
                 Accounts
               </a>
-              <a class='nav-link' href='/categories-manufacturers'>
+              <a class='nav-link' href='/category'>
                 <div class='sb-nav-link-icon'><i
                     class='ri-bookmark-fill'
                   ></i></div>
                 Categories - Manufacturers
               </a>
-              <a class='nav-link' href='/colors-sizes'>
+              <a class='nav-link' href='/color'>
                 <div class='sb-nav-link-icon'>
                   <i class='ri-pantone-fill'></i>
                 </div>
@@ -98,7 +98,7 @@
                   ></i></div>
                 Products
               </a>
-              <a class='nav-link' href='/orders'>
+              <a class='nav-link' href='/order'>
                 <div class='sb-nav-link-icon'><i class='ri-bill-fill'></i></div>
                 Orders
               </a>

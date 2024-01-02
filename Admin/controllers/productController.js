@@ -81,7 +81,6 @@ const productController = {
   getProductById: async (req, res) => {
     try {
       const product = await productService.getProductById(req.params.id)
-      console.log(product)
       res.status(200).json(product)
     } catch (err) {
       console.log(err)
@@ -133,13 +132,6 @@ const productController = {
     } catch (err) {
       res.status(500).json(err)
     }
-  },
-
-  getAdminProductPage: async (req, res) => {
-    res.render('products', {
-      layout: 'main',
-      extraStyles: 'products.css',
-    })
   },
 }
 module.exports = productController

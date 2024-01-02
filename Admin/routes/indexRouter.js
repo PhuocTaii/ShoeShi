@@ -4,11 +4,9 @@ const indexController = require('../controllers/indexController')
 const router = express.Router()
 
 /* GET home page. */
-router.get('/', indexController.getAdminHomePage)
+router.get('/', isAdmin, indexController.getAdminHomePage)
 
-router.post('/chartdata', indexController.getChartData)
-router.post('/tabledata', indexController.getTableData)
-
-// router.get('/', isAdmin , indexController.getAdminHomePage)
+router.post('/chartdata', isAdmin, indexController.getChartData)
+router.post('/tabledata', isAdmin, indexController.getTableData)
 
 module.exports = router

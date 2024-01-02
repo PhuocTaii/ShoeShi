@@ -1,16 +1,17 @@
 const colorController = require('../controllers/colorController')
 const router = require('express').Router()
+const { isAdmin } = require('../middleware/authenticationMiddleware')
 
 //Server side
 //GET all colors
-router.get('/getcolor', colorController.getAllColors)
+// router.get('/', isAdmin, colorController.getAllColors)
 
 //ADD one color
-router.post('/addcolor', colorController.addColor)
+router.post('/', isAdmin, colorController.addColor)
 
 //DELETE color
-router.delete('/deletecolor/:id', colorController.deleteColor)
+router.delete('/:id', isAdmin, colorController.deleteColor)
 
-router.get('/', colorController.getColorPage)
+router.get('/', isAdmin, colorController.getColorPage)
 
 module.exports = router

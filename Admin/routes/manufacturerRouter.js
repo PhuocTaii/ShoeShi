@@ -1,16 +1,14 @@
 const manufacturerController = require('../controllers/manufacturerController')
 const router = require('express').Router()
+const { isAdmin } = require('../middleware/authenticationMiddleware')
 
 //GET all manufacturers
-router.get('/getmanufacturer', manufacturerController.getAllManufacturers)
+router.get('/', isAdmin, manufacturerController.getAllManufacturers)
 
 //ADD one manufacturer
-router.post('/addmanufacturer', manufacturerController.addManufacturer)
+router.post('/', isAdmin, manufacturerController.addManufacturer)
 
 //DELETE manufacturer
-router.delete(
-  '/deletemanufacturer/:id',
-  manufacturerController.deleteManufacturer
-)
+router.delete('/:id', isAdmin, manufacturerController.deleteManufacturer)
 
 module.exports = router

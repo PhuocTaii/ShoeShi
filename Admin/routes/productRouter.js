@@ -5,6 +5,7 @@ const { isAdmin } = require('../middleware/authenticationMiddleware')
 const multer = require('multer');
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
+
 //GET all products
 router.get('/', isAdmin, productController.getAllProducts)
 
@@ -14,12 +15,9 @@ router.get('/:id', isAdmin, productController.getProductById)
 router.post('/', isAdmin, upload.array('productImage', 10), productController.addProduct)
 
 //MODIFY product
-router.put('/:id', isAdmin,upload.array('productImage', 10), productController.updateProduct)
+router.put('/:id', isAdmin, upload.array('productImage', 10), productController.updateProduct)
 
 //DELETE product
-router.delete('/:id', productController.deleteProduct)
-
-//Client side
-router.get('/product', productController.getAdminProductPage)
+router.delete('/:id', isAdmin, productController.deleteProduct)
 
 module.exports = router

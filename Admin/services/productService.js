@@ -1,6 +1,4 @@
 const Product = require('../models/product')
-const Customer = require('../models/customer')
-const mongoose = require('mongoose')
 
 const productService = {
   productsPerPage: 5,
@@ -205,12 +203,6 @@ const productService = {
           name: 1,
           category: 1,
           manufacturer: 1,
-          // creationDate: {
-          //   $dateToString: {
-          //     format: "%d-%m-%Y %H:%M",
-          //     date: "$creationDate",
-          //   },
-          // },
           creationDate: 1,
           price: 1,
           quantity: 1,

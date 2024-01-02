@@ -72,28 +72,15 @@ app.use(
 app.use(passport.initialize())
 app.use(passport.session())
 
-// app.use(
-//   '/',
-//   indexAdminRouter,
-//   authAdminRouter,
-//   categoryAdminRouter,
-//   colorAdminRouter,
-//   manufacturerAdminRouter,
-//   orderAdminRouter,
-//   productAdminRouter,
-//   sizeAdminRouter,
-//   userAdminRouter
-// )
-
 app.use('/', indexAdminRouter)
 app.use('/', authAdminRouter)
-app.use('/categories-manufacturers', categoryAdminRouter)
-app.use('/colors-sizes', colorAdminRouter)
+app.use('/category', categoryAdminRouter)
+app.use('/color', colorAdminRouter)
 app.use('/manufacturer', manufacturerAdminRouter)
-app.use('/orders', orderAdminRouter)
+app.use('/order', orderAdminRouter)
 app.use('/product', productAdminRouter)
 app.use('/size', sizeAdminRouter)
-app.use('/accounts', userAdminRouter)
+app.use('/user', userAdminRouter)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

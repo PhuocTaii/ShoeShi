@@ -17,7 +17,7 @@ function toggleAccountDetail(id) {
 
 function fetchPage(pageNumber) {
   fetch(
-    `/accounts/api?pageUser=${pageNumber}&sortBy=${sortBy}&sortOrder=${sortOrder}&filterBy=${filterOption}&search=${filter}`
+    `/user/api?pageUser=${pageNumber}&sortBy=${sortBy}&sortOrder=${sortOrder}&filterBy=${filterOption}&search=${filter}`
   )
     .then((response) => response.json())
     .then((data) => {
