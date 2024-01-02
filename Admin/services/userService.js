@@ -17,6 +17,10 @@ const userService = {
     const user = User.findById(id)
     return user
   },
+
+  getUserByFilterAndSort(filter, sort) {
+    return User.find(filter).sort(sort)
+  }
 }
 
 module.exports = userService

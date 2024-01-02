@@ -31,10 +31,74 @@ const userController = {
     }
   },
 
+  handlePaging: async (req, res) => {
+    try {
+      const {
+        page = 1,
+        limit = 10,
+        sortBy,
+        sortOrder,
+        filterBy,
+        search,
+      } = req.query
+
+      const filter = {}
+      if (filterBy && search) {
+        filter[filterBy] = { $regex: search, $options: 'i' }
+      }
+
+      const sort = {}
+      if (sortBy) {
+        sort[sortBy] = sortOrder === 'desc' ? -1 : 1
+      }
+
+      const users = await userService.getUserByFilterAndSort(filter, sort)
+      const totalUsers = users.length
+      const totalPage = Math.ceil(totalUsers / 5)
+      const pages = Array.from({ length: totalPage }, (_, i) => i + 1)
+      let currentPage = Number(req.query.pageUser) || 1
+      if (currentPage > totalPage) {
+        currentPage = totalPage
+      }
+      if (currentPage < 1) {
+        currentPage = 1
+      }
+      const usersPerPage = 5
+      const startIndex = (currentPage - 1) * usersPerPage
+      const endIndex = currentPage * usersPerPage
+      const usersInPage = users.slice(startIndex, endIndex)
+      res.status(200).json({ usersInPage, pages, currentPage })
+    } catch (err) {
+      res.status(500).json(err)
+    }
+  },
   getAccountsPage: async (req, res) => {
+    const currentPage = Number(req.query.pageUser) || 1
+    const itemPerPage = 5
+
+    const users = await User.find()
+      .select('username name email createTime')
+      .skip((currentPage - 1) * itemPerPage)
+      .limit(itemPerPage)
+
+    const totalUsers = await User.countDocuments()
+    const totalPage = Math.ceil(totalUsers / itemPerPage)
+    const pages = Array.from({ length: totalPage }, (_, i) => i + 1)
+
+    const formattedUsers = users.map((user) => ({
+      username: user.username,
+      name: user.name,
+      email: user.email,
+      createTime: user.createTime,
+    }))
+
     res.render('accounts', {
       layout: 'main',
       extraStyles: 'accounts.css',
+      customers: formattedUsers,
+      currentPage: currentPage,
+      pages: pages,
+      totalPage,
     })
   },
 

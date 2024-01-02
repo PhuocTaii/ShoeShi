@@ -93,7 +93,7 @@ const orderService = {
     }
 
     productsName.sort((a, b) => b.revenue - a.revenue);
-
+    productsName = productsName.slice(0, 5)
     for(let i = 0; i < productsName.length; i++) {
       productsName[i].revenue = productsName[i].revenue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
     }
