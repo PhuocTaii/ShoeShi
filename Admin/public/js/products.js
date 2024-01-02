@@ -110,6 +110,18 @@ function handleQuery(event) {
 
 // MANAGE PRODUCT
 
+// ITEM IN LIST TEMPLATE
+const selectedListTemplate =
+`
+<li id='{{infoType}}-{{id}}'>
+  <p>{{name}}</p>
+  <button class='remove-icon' onclick="removeSelectedItem('{{infoType}}', '{{id}}')">
+    <i class='ri-subtract-line'>
+    </i>
+</li>
+`
+const selectedListTemplateFunction = Handlebars.compile(selectedListTemplate);
+
 const info = {
   photos: [],
   cates: [],
@@ -122,10 +134,11 @@ function toggleAddProduct() {
   info.cates.splice(0, info.cates.length)
   info.colors.splice(0, info.colors.length)
   info.sizes.splice(0, info.sizes.length)
-  showSelectedItem('cates')
-  showSelectedItem('colors')
-  showSelectedItem('sizes')
-  showSelectedPhoto()
+
+  document.querySelector(".chosen-list.cates").innerHTML = ''
+  document.querySelector(".chosen-list.colors").innerHTML = ''
+  document.querySelector(".chosen-list.sizes").innerHTML = ''
+  document.getElementById('photos-container').innerHTML = ''
 
   document.querySelector('#name-product').value = ''
   document.querySelector('#price-product').value = ''
@@ -151,78 +164,41 @@ function toggleDeleteProduct(id) {
   $('#modal-delete-product').modal('toggle')
 }
 
-function showSelectedItem(infoType) {
-  const list = document.getElementsByClassName("chosen-list " + infoType)[0]
-
-  list.innerHTML = info[infoType].map(item => {
-    return(
-      `
-      <li>
-        <p>${item.name}</p>
-        <button class='remove-icon' onclick="removeSelectedItem('${infoType}', '${item.id}')">
-          <i class='ri-subtract-line'>
-          </i>
-      </li>
-      `
-    )
-  }).join('')
-}
-
 function addSelectedItem(event, infoType) {
     const selectedId = event.target.value
     const selectedValue = event.target.options[event.target.selectedIndex].text
 
-    const ifIncludes = info[infoType].some(item => {
-      return item.id === selectedId && item.name === selectedValue;
-    });
-
-    if(!ifIncludes) {
+    if(!info[infoType].includes(selectedId)) {
       // push to array
-      info[infoType].push({id: selectedId, name: selectedValue})
-      // show to chosen list
-      showSelectedItem(infoType)
+      info[infoType].push(selectedId)
+      // show chosen list
+      const list = document.querySelector(".chosen-list." + infoType)
+      list.insertAdjacentHTML('beforeend', selectedListTemplateFunction({id: selectedId, name: selectedValue, infoType: infoType}))
     }
     event.target.selectedIndex = 0
 }
 
 function removeSelectedItem(infoType, selectedId) {
   // remove from array
-  info[infoType] = info[infoType].filter(item => item.id !== selectedId)
-  // show to chosen list
-  showSelectedItem(infoType)
+  info[infoType] = info[infoType].filter(item => item !== selectedId)
+
+  const item = document.querySelector(".chosen-list." + infoType + " li[id='" + infoType + "-" + selectedId + "']")
+  item.remove()
 }
 
 // onclick="removeSelectedPhoto('${photo}')"
 
-function showSelectedPhoto() {
-  const list = document.getElementById('photos-container')
-  const reader = new FileReader();
-
-  list.innerHTML = info['photos'].map(photo => {
-    const url = URL.createObjectURL(photo)
-    console.log(url)
-    
-    // console.log(reader.readAsDataURL(url))
-    return(
-      `
-      <div class='photo-frame'>
-        <img src='${url}' alt='photo-product'>
-        <button class='remove-icon'>
-          <i class='ri-subtract-line'>
-          </i>
-        </button>
-      </div>
-      `
-    )
-  }).join('')
-
-  const removeBtns = document.getElementById('photos-container').getElementsByClassName('remove-icon')
-  for(let i = 0; i < removeBtns.length; i++) {
-    removeBtns[i].addEventListener('click', () => {
-      removeSelectedPhoto(info['photos'][i])
-    })
-  }
-}
+const photoTemplate = 
+`
+<div class='photo-frame photo-{{index}}'>
+  <img src='{{url}}' alt='photo-product'>
+  <button class='remove-icon' onclick='removeSelectedPhoto({{index}})'>
+    <i class='ri-subtract-line'>
+    </i>
+  </button>
+</div>
+`
+const photoTemplateFunction = Handlebars.compile(photoTemplate);
 
 function addSelectedPhoto(event) {
   const selectedFile = event.target.files[0]
@@ -230,15 +206,19 @@ function addSelectedPhoto(event) {
     // push to array
     info['photos'].push(selectedFile)
     // show to chosen list
-    showSelectedPhoto()
+    const url = URL.createObjectURL(selectedFile)
+    const list = document.getElementById('photos-container')
+    list.insertAdjacentHTML('beforeend', photoTemplateFunction({index: info['photos'].length - 1, url: url}))
   }
 }
 
-function removeSelectedPhoto(selectedPhoto) {
+function removeSelectedPhoto(idx) {
   // remove from array
-  info['photos'] = info['photos'].filter(photo => photo !== selectedPhoto)
+  info['photos'].splice(idx, 1);
+
   // show to chosen list
-  showSelectedPhoto()
+  const item = document.querySelector("#photos-container .photo-frame.photo-" + idx)
+  item.remove()
 }
 
 

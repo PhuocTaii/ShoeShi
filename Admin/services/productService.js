@@ -55,9 +55,9 @@ const productService = {
   addProduct(product) {
     const newProduct = new Product({
       ...product,
-      category: product.cates.map((cate) => cate.id),
-      color: product.colors.map((color) => color.id),
-      size: product.sizes.map((size) => size.id),
+      category: product.cates,
+      color: product.colors,
+      size: product.sizes,
       productImage: [],
       creationDate: Date.now(),
     })
