@@ -83,34 +83,6 @@
           </tr>
         </tfoot>
         <tbody class='table-group-divider' id='table-order'>
-          <tr>
-            <td>thanhvan26</td>
-            <td>14/11/2023, 15:07</td>
-            <td>Nike Air Max Excee, Jordan One Take 4 PF, Nike Air Max Excee,
-              Jordan One Take 4 PF</td>
-            <td>7,200,000 ₫</td>
-            <td>3</td>
-            <td>
-              <select class='form-select'>
-                <option selected value='pending'>pending</option>
-                <option value='shipping'>shipping</option>
-                <option value='done'>done</option>
-              </select>
-            </td>
-            <td class='order-actions'>
-              <button type='button' class='btn' onclick='toggleViewDetail(id)'>
-                <i class='ri-more-fill'></i>
-              </button>
-              <button
-                type='button'
-                class='btn'
-                onclick='toggleDeleteOrderConfirm(id)'
-              >
-                <i class='ri-delete-bin-line'></i>
-              </button>
-            </td>
-          </tr>
-
         </tbody>
       </table>
     </div>
@@ -149,14 +121,16 @@
       <div class='modal-body'>
         <div class='customer-info'>
           <p>Name: <span class='customer-name'>Nguyen Van A</span></p>
+          <p>Username: <span class='customer-username'>abcd</span></p>
           <p>Address:
             <span class='customer-address'>123 Vườn Lài, Tân Phú</span></p>
-          <p>Phone number: <span class='customer-phone'>0123456789</span></p>
+          <p>Phone number: <span class='customer-phone'>012389</span></p>
         </div>
         <hr />
         <div class='order-summary'>
           <p>order summary</p>
-          <div class='order-item'>
+          <div class="all-items-modal"></div>
+          {{!-- <div class='order-item'>
             <p class='item-quant'><span class='quantity'>1</span>x</p>
             <div class='item-detail'>
               <p class='name'>Nike Dunk Low Retro Premium</p>
@@ -167,8 +141,8 @@
               </div>
             </div>
             <p class='price'><span>3,519,000</span> ₫</p>
-          </div>
-          <div class='order-item'>
+          </div> --}}
+          {{!-- <div class='order-item'>
             <p class='item-quant'><span class='quantity'>1</span>x</p>
             <div class='item-detail'>
               <p class='name'>Nike Dunk Low Retro Premium</p>
@@ -179,21 +153,21 @@
               </div>
             </div>
             <p class='price'><span>3,519,000</span> ₫</p>
-          </div>
+          </div> --}}
         </div>
       </div>
       <div class='modal-footer'>
         <div class='subtotal'>
           <p>subtotal</p>
-          <p><span>7,038,000</span> ₫</p>
+          <p><span class="sub-price">7,038,000</span> ₫</p>
         </div>
         <div class='delivery'>
           <p>delivery</p>
-          <p><span>0</span> ₫</p>
+          <p><span class="delivery-price">20,000</span> ₫</p>
         </div>
         <div class='total'>
           <p>total cost</p>
-          <p><span>7,038,000</span> ₫</p>
+          <p><span class="total-price">7,038,000</span> ₫</p>
         </div>
       </div>
     </div>

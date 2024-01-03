@@ -69,7 +69,7 @@ $(document).ready(function () {
         $('.status-modal').text(status)
         $('.address-modal').text(address)
         $('.subtotal-modal').text(
-          `${(totalPrice - 20000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} đ`
+          `${(totalPrice - 20000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`
         )
         $('.total-modal').text(
           `${totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} đ`

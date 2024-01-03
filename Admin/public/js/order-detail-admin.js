@@ -1,5 +1,72 @@
+const templateOrder = `
+  <div class='row   '>
+    <div class='col d-inline-flex'>
+      <div class='number-item text-muted quantity-modal'>1x</div>
+      <div class='item-info flex-column'>
+        <div class='item-name item-modal'>Item Name</div>
+        <div class='item-property d-inline-flex flex-row'>
+          <div class='color-item m-0 color-modal'></div>
+          <div class='size-item m-0 size-modal'>│ Size: M</div>
+        </div>
+      </div>
+    </div>
+    <div
+      class='d-flex justify-content-end price col price-item-modal'
+    >
+      1,000,000 đ
+    </div>
+  </div>
+`
+
 function toggleViewDetail(id) {
-  $('#modal-view-order').modal('toggle')
+  $.ajax({
+    url: `/order/${id}`,
+    method: 'GET', // Change the method as per your requirement
+    success: function (response) {
+      // Handle the response from the server if needed
+      const { date, status, address, totalPrice, items, name ,username, phone } = response
+
+      const adjustedSubPrice = parseFloat(totalPrice) - 20000 // Subtract 20,000 VND
+      const formattedAdjustedSubPrice = adjustedSubPrice.toLocaleString('vi-VN') // Format with commas for thousands separators
+      console.log(adjustedSubPrice)
+
+      $('.datetime').text(formatDateTime(date))
+      $('.status').text(status)
+      $('.customer-name').text(name)
+      $('.customer-phone').text(phone)
+      $('.customer-username').text(username)
+      $('.customer-address').text(address)
+      $('.sub-price').text(
+        `${(totalPrice - 20000)
+          .toString()
+          .replace(/\B(?=(\d{3})+(?!\d))/g, ',')} đ`
+      )
+      $('.total-price').text(
+        `${totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} đ`
+      )
+
+      const itemSummaryContainer = $('.all-items-modal')
+      itemSummaryContainer.empty() // Clear previous items
+
+      items.forEach((item) => {
+        const itemDiv = $('<div>').html(templateOrder)
+        itemDiv.find('.item-name').text(item.itemName)
+        itemDiv.find('.size-modal').text(`│ Size: ${item.itemSize}`)
+        itemDiv.find('.price-item-modal').text(`${item.itemPrice} đ`)
+        itemDiv.find('.color-modal').css({
+          'background-color': item.itemColor,
+          border: '1px solid black', // Add black border
+        })
+
+        itemSummaryContainer.append(itemDiv)
+      })
+
+      $('#modal-view-order').modal('toggle')
+    },
+    error: function (error) {
+      console.error('Error sending data:', error)
+    },
+  })
 }
 function toggleDeleteOrderConfirm(id) {
   $('#modal-delete-order').modal('toggle')

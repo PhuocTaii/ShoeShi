@@ -9,6 +9,7 @@ const orderController = {
   getAllOrders: async (req, res) => {
     try {
       const orders = await orderService.getAllOrders()
+      const user = await userService.getUserById(orders.user)
       res.status(200).json(orders)
     } catch (err) {
       res.status(500).json(err)
@@ -18,11 +19,35 @@ const orderController = {
   // GET an order by id
   getOrderById: async (req, res) => {
     try {
-      const foundOrder = await orderService.getOrderById(req.params.id)
-      if (!foundOrder) {
-        return res.status(404).json('Order not found')
+      const order = await orderService.getOrderById(req.params.id) // Implement logic to fetch order by ID from your database
+      const user = await userService.getUserById(order.user)
+      const formattedOrder = {
+        orderId: order._id, // Assuming _id is the ID of the order
+        date: order.orderTime,
+        name: order.buyer,
+        username: user.username,
+        status: order.status,
+        address: order.address,
+        totalPrice: order.totalPrice,
+        phone: order.phone,
+        items:
+          order.productList && Array.isArray(order.productList)
+            ? order.productList.map((item) => ({
+                itemName: item.product,
+                itemPrice: item.price
+                  .toString()
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+                itemQuantity: item.quantity,
+                itemSize: item.size,
+                itemColor: item.color,
+                // Other item details you want to display
+              }))
+            : [], // If items is undefined or not an array, default to an empty array
+        totalPrice: order.totalPrice
+          ,
+        // Add other properties or modify existing ones as needed
       }
-      res.status(200).json(foundOrder)
+      return res.status(200).json(formattedOrder) // Return the fetched order
     } catch (err) {
       res.status(500).json(err)
     }
