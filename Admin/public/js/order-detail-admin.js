@@ -4,20 +4,22 @@ function toggleViewDetail(id) {
 function toggleDeleteOrderConfirm(id) {
   $('#modal-delete-order').modal('toggle')
 
-  $('.confirm-delete-btn').off('click').click(function () {
-    $.ajax({
-      url: `/order/${id}`,
-      method: 'DELETE',
-      success: function (response) {
-        console.log('Category deleted successfully')
-        fetchAllOrders()
-        $('#modal-delete-order').modal('hide')
-      },
-      error: function (error) {
-        console.error('Error deleting category:', error)
-      },
+  $('.confirm-delete-btn')
+    .off('click')
+    .click(function () {
+      $.ajax({
+        url: `/order/${id}`,
+        method: 'DELETE',
+        success: function (response) {
+          console.log('Category deleted successfully')
+          fetchAllOrders()
+          $('#modal-delete-order').modal('hide')
+        },
+        error: function (error) {
+          console.error('Error deleting category:', error)
+        },
+      })
     })
-  })
 }
 
 function getProductName(data) {
@@ -73,12 +75,12 @@ function fetchAllOrders() {
         const status = $('<td></td>')
         status.html(`
         <select class="form-select">
-								<option selected value="pending">pending</option>
+								<option value="pending">pending</option>
 								<option value="shipping">shipping</option>
 								<option value="done">done</option>
 							</select>
   `)
-
+        status.find('select').val(order.status.toLowerCase())
         row.append(status)
 
         // Add buttons
@@ -128,9 +130,24 @@ document.addEventListener('DOMContentLoaded', (event) => {
     if (target.hasClass('delete-btn')) {
       toggleDeleteOrderConfirm(id)
     }
+
+    if (target.hasClass('form-select')) {
+      const status = target.val()
+      const capitalizedStatus = status.charAt(0).toUpperCase() + status.slice(1)
+      $.ajax({
+        url: `/order/${id}`,
+        type: 'PUT',
+        data: { capitalizedStatus },
+        success: function (response) {
+          console.log('Status updated successfully')
+        },
+        error: function (error) {
+          console.error('Error updating status:', error)
+        },
+      })
+    }
   })
 })
-
 
 function formatDateTime(dateString) {
   const date = new Date(dateString)

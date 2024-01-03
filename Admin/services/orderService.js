@@ -16,7 +16,7 @@ const orderService = {
 
   // Update an order
   updateOrder: async (id, data) => {
-    return await Order.findByIdAndUpdate(id, { $set: data })
+    return await Order.findByIdAndUpdate(id, { status: data })
   },
 
   // Delete an order

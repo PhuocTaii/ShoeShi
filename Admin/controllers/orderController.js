@@ -33,7 +33,7 @@ const orderController = {
     try {
       const updatedOrder = await orderService.updateOrder(
         req.params.id,
-        req.body
+        req.body.capitalizedStatus
       )
       res.status(200).json(updatedOrder)
     } catch (err) {
