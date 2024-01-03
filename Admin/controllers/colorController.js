@@ -1,4 +1,5 @@
 const colorService = require('../services/colorService')
+const sizeService = require('../services/sizeService')
 
 const colorController = {
   //GET all colors
@@ -14,8 +15,22 @@ const colorController = {
   //ADD color
   addColor: async (req, res) => {
     try {
+      console.log(req.body)
       const savedColor = await colorService.addColor(req.body)
-      res.status(200).json(savedColor)
+      const colors = await colorService.getAllColors()
+      res.status(200).json(colors)
+    } catch (err) {
+      res.status(500).json(err)
+      console.log(err)
+    }
+  },
+
+  //UPDATE color
+  updateColor: async (req, res) => {
+    try {
+      const updatedColor = await colorService.updateColor(req.params.id, req.body)
+      const colors = await colorService.getAllColors()
+      res.status(200).json(updatedColor)
     } catch (err) {
       res.status(500).json(err)
     }
@@ -28,17 +43,28 @@ const colorController = {
       if (!color) {
         res.status(500).json(err)
       }
-      res.status(200).json('The color has been deleted')
+      const colors = await colorService.getAllColors()
+      res.status(200).json(colors)
     } catch (err) {
       res.status(500).json(err)
     }
   },
 
   getColorPage: async(req, res) => {
-    res.render('colors-sizes', {
-      layout: 'main',
-      extraStyles: 'color-size.css',
-    })
+    try {
+      const acceptHeader = req.get('Accept');
+      if (acceptHeader && acceptHeader.includes('application/json')) {
+        const colors = await colorService.getAllColors()
+        res.status(200).json(colors)
+      } else{
+        res.render('colors-sizes', {
+          layout: 'main',
+          extraStyles: 'color-size.css',
+        })
+      }      
+    } catch (err) {
+      res.status(500).json(err)
+    }
   }
 }
 module.exports = colorController

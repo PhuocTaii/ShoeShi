@@ -3,7 +3,7 @@ const Size = require('../models/size')
 const sizeService = {
   getAllSizes() {
     const sizes = Size.find().lean()
-    return sizes
+    return sizes.sort({'size': 1})
   },
 
   getSizeById(id) {

@@ -13,7 +13,6 @@
           <table class="table table-striped table-hover color">
             <thead>
               <tr>
-                <th>ID</th>
                 <th>Name</th>
                 <th></th>
                 <th></th>
@@ -21,62 +20,12 @@
             </thead>
             <tfoot>
               <tr>
-                <th>ID</th>
                 <th>Name</th>
                 <th></th>
                 <th></th>
               </tr>
             </tfoot>
-            <tbody class="table-group-divider">
-              <tr>
-                <td>1</td>
-                <td>Black</td>
-                <td>
-									<div class="color-present"></div>
-								</td>
-                <td>
-                  <button class='edit-btn' onclick="toggleModifyColor(id)">
-                    <i class='ri-pencil-line'
-                    ></i>
-                  </button>
-                  <button class='delete-btn' onclick="toggleDeleteItem(id)">
-                    <i
-                      class='ri-delete-bin-6-line'
-                    ></i>
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>White</td>
-								<td>
-									<div class="color-present"></div>
-								</td>
-                <td>
-                  <button class='edit-btn'><i
-                      class='ri-pencil-line'
-                    ></i></button>
-                  <button class='delete-btn'><i
-                      class='ri-delete-bin-6-line'
-                    ></i></button>
-                </td>
-              </tr>
-              <tr>
-                <td>3</td>
-                <td>Green</td>
-								<td>
-									<div class="color-present"></div>
-								</td>
-                <td>
-                  <button class='edit-btn'><i
-                      class='ri-pencil-line'
-                    ></i></button>
-                  <button class='delete-btn'><i
-                      class='ri-delete-bin-6-line'
-                    ></i></button>
-                </td>
-              </tr>
-            </tbody>
+            <tbody class="table-group-divider" id="color-table"></tbody>
           </table>
         </div>
       </div>
@@ -91,80 +40,17 @@
           <table class="table table-striped table-hover">
             <thead>
               <tr>
-                <th>ID</th>
                 <th>Size</th>
                 <th></th>
               </tr>
             </thead>
             <tfoot>
               <tr>
-                <th>ID</th>
                 <th>Size</th>
                 <th></th>
               </tr>
             </tfoot>
-            <tbody class="table-group-divider">
-              <tr>
-                <td>1</td>
-                <td>36</td>
-                <td>
-                  <button class='edit-btn' onclick="toggleModifySize(id)"><i
-                      class='ri-pencil-line'
-                    ></i></button>
-                  <button class='delete-btn' onclick="toggleDeleteItem(id)"><i
-                      class='ri-delete-bin-6-line'
-                    ></i></button>
-                </td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>37</td>
-                <td>
-                  <button class='edit-btn'><i
-                      class='ri-pencil-line'
-                    ></i></button>
-                  <button class='delete-btn'><i
-                      class='ri-delete-bin-6-line'
-                    ></i></button>
-                </td>
-              </tr>
-              <tr>
-                <td>3</td>
-                <td>38</td>
-                <td>
-                  <button class='edit-btn'><i
-                      class='ri-pencil-line'
-                    ></i></button>
-                  <button class='delete-btn'><i
-                      class='ri-delete-bin-6-line'
-                    ></i></button>
-                </td>
-              </tr>
-              <tr>
-                <td>4</td>
-                <td>39</td>
-                <td>
-                  <button class='edit-btn'><i
-                      class='ri-pencil-line'
-                    ></i></button>
-                  <button class='delete-btn'><i
-                      class='ri-delete-bin-6-line'
-                    ></i></button>
-                </td>
-              </tr>
-              <tr>
-                <td>5</td>
-                <td>40</td>
-                <td>
-                  <button class='edit-btn'><i
-                      class='ri-pencil-line'
-                    ></i></button>
-                  <button class='delete-btn'><i
-                      class='ri-delete-bin-6-line'
-                    ></i></button>
-                </td>
-              </tr>
-            </tbody>
+            <tbody class="table-group-divider" id="size-table"></tbody>
           </table>
         </div>
       </div>
@@ -187,8 +73,9 @@
     tabindex='-1'
     aria-labelledby='staticBackdropLabel'
     aria-hidden='true'
+    {{!-- id='modal-manage-color' --}}
   >
-    <div class='modal-content'>
+    <form class='modal-content'>
       <div class='modal-header'>
         <p id='action-color'></p>
         <button
@@ -201,17 +88,17 @@
       <div class='modal-body row m-0'>
 				<div class="col-6">
 					<label for='item-name'>Name:</label>
-					<input type='text' id="item-name" />
+					<input type='text' id="item-name" required />
 				</div>
 				<div class="col-3">
 					<p>Color code: <span id="color-code-chosen"></span></p>
-					<input type='color' onchange='showColorCode(event.target.value)'/>
+					<input type='color' id="item-color" onchange='showColorCode(event.target.value)'/>
 				</div>
       </div>
       <div class='modal-footer'>
-        <button type='button' class='btn btn-dark'>save</button>
+        <button type='submit' class='btn btn-dark'>save</button>
       </div>
-    </div>
+    </form>
   </div>
 </div>
 
@@ -231,7 +118,7 @@
     aria-labelledby='staticBackdropLabel'
     aria-hidden='true'
   >
-    <div class='modal-content'>
+    <form class='modal-content'>
       <div class='modal-header'>
         <p id='action-size'></p>
         <button
@@ -243,12 +130,12 @@
       </div>
       <div class='modal-body'>
 				<label for="item-size">Size</label>
-				<input type='number' id="item-size"/>
+				<input type='number' step="0.01" id="item-size"/>
       </div>
       <div class='modal-footer'>
-        <button type='button' class='btn btn-dark'>save</button>
+        <button type='submit' class='btn btn-dark'>save</button>
       </div>
-    </div>
+    </form>
   </div>
 </div>
 
@@ -267,8 +154,9 @@
     tabindex='-1'
     aria-labelledby='staticBackdropLabel'
     aria-hidden='true'
+    id='modal-delete-item'
   >
-    <div class='modal-content'>
+    <form class='modal-content'>
       <div class='modal-header'>
         <p>Sure you want to delete?</p>
         <button
@@ -287,12 +175,15 @@
           class='btn btn-secondary'
           data-bs-dismiss='modal'
         >No, cancel</button>
-        <button type='button' class='btn btn-danger'>Yes, confirm</button>
+        <button type='submit' class='btn btn-danger'>Yes, confirm</button>
       </div>
-    </div>
+    </form>
   </div>
 </div>
 
+<div id="toast-noti-product"></div>
+
 {{#section 'scripts'}}
+  <script src='/js/templates/toast.js'></script>
   <script src='/js/color-size.js'></script>
 {{/section}}

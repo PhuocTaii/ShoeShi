@@ -5,7 +5,7 @@ var currentYear = today.getFullYear();
 var formattedDate = `${currentYear}-${currentMonth.toString().padStart(2, '0')}`;
 document.getElementById('month-table').value = formattedDate;
 
-const tabelTemplate = `
+const table = `
     {{#each this}}
         <tr>
             <td>{{this.product}}</td>
@@ -15,7 +15,7 @@ const tabelTemplate = `
     {{/each}}
 `
 
-const tableFunction = Handlebars.compile(tabelTemplate);   
+const tableFunction = Handlebars.compile(table);   
 
 $.ajax({
     type: 'POST',
