@@ -90,7 +90,6 @@ const customerSchema = new mongoose.Schema({
 const Customer = mongoose.model('Customer', customerSchema)
 customerSchema.pre('remove', async function (next) {
   try {
-    // Xóa tất cả các Cart có trường customer bằng _id của Customer đang được xóa
     await Cart.deleteOne({ customer: this._id });
     await Order.deleteMany({ user: this._id });
     await Review.deleteMany({ reviewer: this._id });

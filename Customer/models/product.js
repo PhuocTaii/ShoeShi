@@ -71,7 +71,6 @@ const productSchema = new mongoose.Schema({
 const Product = mongoose.model('Product', productSchema)
 productSchema.pre('remove', async function (next) {
   try {
-    // Xóa tất cả các Cart có sản phẩm cần xóa từ productList
     await Cart.updateMany(
       { 'productList.product': this._id },
       { $pull: { productList: { product: this._id } } }

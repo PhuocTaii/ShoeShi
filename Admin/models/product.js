@@ -63,5 +63,20 @@ const productSchema = new mongoose.Schema({
 })
 
 const Product = mongoose.model('Product', productSchema)
+productSchema.pre('remove', async function (next) {
+  try {
+    await Cart.updateMany(
+      { 'productList.product': this._id },
+      { $pull: { productList: { product: this._id } } }
+    );
+    await Order.updateMany(
+      { 'productList.product': this.name },
+      { $pull: { productList: { product: this.name } } }
+    );
+    next();
+  } catch (error) {
+    next(error);
+  }
+});
 
 module.exports = Product

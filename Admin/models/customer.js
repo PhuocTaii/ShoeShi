@@ -52,5 +52,14 @@ const customerSchema = new mongoose.Schema({
 })
 
 const Customer = mongoose.model('Customer', customerSchema)
+customerSchema.pre('remove', async function (next) {
+  try {
+    await Cart.deleteOne({ customer: this._id });
+    await Order.deleteMany({ user: this._id });
+    next();
+  } catch (error) {
+    next(error);
+  }
+});
 
 module.exports = Customer
