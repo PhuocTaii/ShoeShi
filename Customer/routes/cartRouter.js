@@ -1,11 +1,12 @@
 const cartController = require('../controllers/cartController')
 const router = require('express').Router()
+const { isAuth } = require('../middleware/authenticationMiddleware')
 
 //GET local cart
 router.post('/local', cartController.getLocalCart)
 
 //GET logged cart
-router.post('/logged', cartController.getLoggedCart)
+router.post('/logged', isAuth, cartController.getLoggedCart)
 
 
 //ADD product to cart
