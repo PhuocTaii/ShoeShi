@@ -3,6 +3,8 @@ const router = require('express').Router()
 
 router.get('/order', orderController.getAllOrders)
 
+router.get('/order/search', orderController.getAllOrderByFilter)
+
 router.get('/order/:id', orderController.getOrderById)
 
 router.put('/order/:id', orderController.updateOrder)

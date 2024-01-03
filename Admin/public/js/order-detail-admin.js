@@ -38,68 +38,72 @@ function countQuantity(data) {
   return result
 }
 
+function showOrders(data) {
+  const table = $('#table-order')
+  table.html('')
+
+  $.each(data, function (index, order) {
+    const row = $('<tr></tr>')
+    row.attr('data-id', order._id)
+
+    const buyer = $('<td></td>')
+    buyer.text(order.buyer)
+    row.append(buyer)
+
+    const creationTime = $('<td></td>')
+    creationTime.text(formatDateTime(order.orderTime))
+    row.append(creationTime)
+
+    const productList = $('<td></td>')
+    productList.html(getProductName(order.productList))
+    row.append(productList)
+
+    const totalPrice = $('<td></td>')
+    totalPrice.text(formatPrice(order.totalPrice))
+    row.append(totalPrice)
+
+    const totalQuantity = $('<td></td>')
+    const quantities = countQuantity(order.productList)
+    totalQuantity.text(quantities)
+    row.append(totalQuantity)
+
+    // Add status
+    const status = $('<td></td>')
+    status.html(`
+    <select class="form-select">
+                <option value="pending">pending</option>
+                <option value="shipping">shipping</option>
+                <option value="done">done</option>
+              </select>
+  `)
+    status.find('select').val(order.status.toLowerCase())
+    row.append(status)
+
+    // Add buttons
+    const buttons = $('<td></td>')
+    buttons.html(`
+    <td class="order-actions">
+    <button type="button" class="btn detail-btn">
+      <i class="ri-more-fill"></i>
+    </button>
+    <button type="button" class="btn delete-btn">
+      <i class="ri-delete-bin-line"></i>
+    </button>
+  </td>
+  `)
+    row.append(buttons)
+
+    // Add the row to the table
+    table.append(row)
+  })
+}
+
 function fetchAllOrders() {
   $.ajax({
     url: '/order',
     type: 'GET',
     success: function (data) {
-      const table = $('#table-order')
-      table.html('')
-
-      $.each(data, function (index, order) {
-        const row = $('<tr></tr>')
-        row.attr('data-id', order._id)
-
-        const buyer = $('<td></td>')
-        buyer.text(order.buyer)
-        row.append(buyer)
-
-        const creationTime = $('<td></td>')
-        creationTime.text(formatDateTime(order.orderTime))
-        row.append(creationTime)
-
-        const productList = $('<td></td>')
-        productList.html(getProductName(order.productList))
-        row.append(productList)
-
-        const totalPrice = $('<td></td>')
-        totalPrice.text(formatPrice(order.totalPrice))
-        row.append(totalPrice)
-
-        const totalQuantity = $('<td></td>')
-        const quantities = countQuantity(order.productList)
-        totalQuantity.text(quantities)
-        row.append(totalQuantity)
-
-        // Add status
-        const status = $('<td></td>')
-        status.html(`
-        <select class="form-select">
-								<option value="pending">pending</option>
-								<option value="shipping">shipping</option>
-								<option value="done">done</option>
-							</select>
-  `)
-        status.find('select').val(order.status.toLowerCase())
-        row.append(status)
-
-        // Add buttons
-        const buttons = $('<td></td>')
-        buttons.html(`
-        <td class="order-actions">
-        <button type="button" class="btn detail-btn">
-          <i class="ri-more-fill"></i>
-        </button>
-        <button type="button" class="btn delete-btn">
-          <i class="ri-delete-bin-line"></i>
-        </button>
-      </td>
-  `)
-        row.append(buttons)
-
-        // Add the row to the table
-        table.append(row)
-      })
+      showOrders(data)
     },
     error: function (error) {
       console.error(error)
@@ -138,15 +142,41 @@ document.addEventListener('DOMContentLoaded', (event) => {
         url: `/order/${id}`,
         type: 'PUT',
         data: { capitalizedStatus },
-        success: function (response) {
-          console.log('Status updated successfully')
-        },
+        success: function (response) {},
         error: function (error) {
           console.error('Error updating status:', error)
         },
       })
     }
   })
+})
+
+document.addEventListener('DOMContentLoaded', (event) => {
+  const radioButtons = document.getElementsByName('status')
+  for (let i = 0; i < radioButtons.length; i++) {
+    radioButtons[i].addEventListener('change', (event) => {
+      console.log('trigger')
+      if (event.target.checked) {
+        const label = document.querySelector(`label[for="${event.target.id}"]`)
+        const status = label.textContent
+        const capitalizedStatus =
+          status.charAt(0).toUpperCase() + status.slice(1)
+
+        if (capitalizedStatus === 'None') {
+          fetchAllOrders()
+          return
+        }
+
+        $.ajax({
+          url: `/order/search?filterBy=${capitalizedStatus}`,
+          type: 'GET',
+          success: function (data) {
+            showOrders(data)
+          },
+        })
+      }
+    })
+  }
 })
 
 function formatDateTime(dateString) {

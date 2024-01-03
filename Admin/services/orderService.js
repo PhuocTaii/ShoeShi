@@ -9,6 +9,10 @@ const orderService = {
     return await Order.find().sort({ orderTime: -1 });
   },
 
+  getAllOrderByFilter: async (filter) => {
+    return await Order.find({ status: filter }).sort({ orderTime: -1 });
+  },
+
   // Get an order by id
   getOrderById: async (id) => {
     return await Order.findById(id)
