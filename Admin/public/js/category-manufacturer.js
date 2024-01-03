@@ -189,8 +189,6 @@ function fetchManufacturerTable() {
         const row = $('<tr></tr>')
         row.attr('data-id', manufac._id)
 
-        row.attr('data-id', manufac._id)
-
         // Add index
         const order = $('<td></td>')
         order.text(index + 1)
@@ -276,3 +274,22 @@ document.addEventListener('DOMContentLoaded', (event) => {
     }
   })
 })
+
+function formatDate(dateString) {
+  const date = new Date(dateString)
+
+  const formattedDate = date.toLocaleDateString('vi-VN', {
+    year: 'numeric',
+    month: 'numeric',
+    day: 'numeric',
+  })
+
+  const formattedTime = date.toLocaleTimeString('vi-VN', {
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric',
+  })
+
+  return `${formattedDate} | ${formattedTime}`
+}
+

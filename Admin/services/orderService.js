@@ -6,7 +6,7 @@ const orderService = {
   // Create a new order
   // Get all orders
   getAllOrders: async () => {
-    return await Order.find()
+    return await Order.find().sort({ orderTime: -1 });
   },
 
   // Get an order by id
