@@ -37,7 +37,7 @@ const userService = {
   },
 
   getUserByFilterAndSort(filter, sort) {
-    return User.find({admin: false},filter).sort(sort)
+    return User.find(filter).sort(sort)
   }
 }
 
