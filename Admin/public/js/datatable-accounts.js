@@ -217,3 +217,102 @@ function formatDate(dateString) {
 
   return `${formattedDate}`
 }
+
+function toggleAddAdmin() {
+  // resetModal()
+
+  // show modal
+  $('#modal-manage-admin').modal('toggle')
+  // set title
+  document.getElementById('action-admin').innerHTML = `Add new admin`
+  // set submit action
+  document.querySelector('#modal-manage-admin form').onsubmit = function(event) {
+    event.preventDefault()
+    handleSaveAdmin()
+  }
+}
+
+function handleSaveAdmin() {
+  // get product info
+  // const formData = new FormData()
+
+
+
+
+  // const data {
+  //   username = document.querySelector('#admin-username').value,
+  // }
+  var gender
+
+  // formData.append('username', document.querySelector('#admin-username').value)
+  // formData.append('password', document.querySelector('#admin-password').value)
+  // formData.append('email', document.querySelector('#admin-email').value)
+  // formData.append('name', document.querySelector('#admin-name').value)
+  var genderRadios = document.getElementsByName('gender');
+  for (let i = 0; i < genderRadios.length; i++) {
+    if (genderRadios[i].checked) {
+      var selectedGender = genderRadios[i].value;
+      // formData.append('gender', selectedGender)
+      gender = selectedGender
+      break;
+    }
+  }
+  // formData.append('phoneNum', document.querySelector('#admin-phone').value)
+  // formData.append('address', document.querySelector('#admin-address').value)
+  // formData.append('birthday', document.querySelector('#admin-birthday').value)
+
+  const username = document.querySelector('#admin-username').value
+  const password = document.querySelector('#admin-password').value
+  const email = document.querySelector('#admin-email').value
+  const name = document.querySelector('#admin-name').value
+  const phoneNum = document.querySelector('#admin-phone').value
+  const address = document.querySelector('#admin-address').value
+  const birthday = document.querySelector('#admin-birthday').value
+
+  const data = {
+    username: username,
+    password: password,
+    email: email,
+    name: name,
+    phoneNum: phoneNum,
+    address: address,
+    birthday: birthday,
+    gender: gender
+  }
+  // call ajax
+  $.ajax({
+    type: "POST",
+    url: '/user',
+    data,
+    dataType: 'json',
+    // processData: false,
+    // contentType: false,
+    success: function (response) {
+      // format toast
+      document.getElementById('toast-noti-product').innerHTML = toastTemplateFunction({
+        title: 'Add admin',
+        message: 'Add admin successfully',
+        success: true,
+      });
+      // Trigger toast
+      const toastElement = document.querySelector('.toast');
+      const toast = bootstrap.Toast.getOrCreateInstance(toastElement);
+      toast.show();
+
+      // close modal
+      $('#modal-manage-admin').modal('toggle')
+
+    },
+    error: function (err) {
+      document.getElementById('toast-noti-product').innerHTML = toastTemplateFunction({
+        title: 'Add admin',
+        message: 'Add admin failed! System error. Please try again!',
+        success: false,
+      });
+      // Trigger toast
+      const toastElement = document.querySelector('.toast');
+      const toast = bootstrap.Toast.getOrCreateInstance(toastElement);
+      toast.show();
+    }
+  });
+}
