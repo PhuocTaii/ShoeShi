@@ -48,6 +48,7 @@ const customerSchema = new mongoose.Schema({
 
   customerImage: {
     type: String,
+    default: 'https://via.placeholder.com/100',
   },
 
   isBan: {

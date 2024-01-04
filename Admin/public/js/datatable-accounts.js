@@ -46,7 +46,17 @@ function fetchPage(pageNumber, pageAdmin, isAdmin) {
         row.appendChild(emailCell)
 
         const createTimeCell = document.createElement('td')
-        createTimeCell.textContent = customer.createTime
+        const dateObject = new Date(customer.createTime);
+        const formattedDate = dateObject.toLocaleString('en-US', {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit',
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+          timeZone: 'UTC'
+        });
+        createTimeCell.textContent = formattedDate
         row.appendChild(createTimeCell)
 
         const checkBox = document.createElement('td')
@@ -197,9 +207,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
       method: 'GET', // Change the method as per your requirement
       success: function (response) {
         // Handle the response from the server if needed
-        const { id, name, gender, address, email, phone, dob, username } =
+        const { id, name, gender, address, email, phone, dob, username, img } =
           response
-
+        console.log(response)
         $('.username-modal').text(username)
         $('.name-modal').text(name)
         $('.gender-modal').text(gender)
@@ -207,6 +217,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
         $('.email-modal').text(email)
         $('.phone-modal').text(phone)
         $('.dob-modal').text(formatDate(dob))
+        $('.img-frame').attr('src', img)
+
 
         var myModal = new bootstrap.Modal(
           document.getElementById('modal-account-detail')
@@ -298,8 +310,6 @@ function formatDate(dateString) {
 }
 
 function toggleAddAdmin() {
-  // resetModal()
-
   // show modal
   $('#modal-manage-admin').modal('toggle')
   // set title
@@ -327,6 +337,7 @@ function handleSaveAdmin() {
   // formData.append('email', document.querySelector('#admin-email').value)
   // formData.append('name', document.querySelector('#admin-name').value)
   var genderRadios = document.getElementsByName('gender')
+  var genderRadios = document.getElementsByName('gender');
   for (let i = 0; i < genderRadios.length; i++) {
     if (genderRadios[i].checked) {
       var selectedGender = genderRadios[i].value
@@ -335,9 +346,6 @@ function handleSaveAdmin() {
       break
     }
   }
-  // formData.append('phoneNum', document.querySelector('#admin-phone').value)
-  // formData.append('address', document.querySelector('#admin-address').value)
-  // formData.append('birthday', document.querySelector('#admin-birthday').value)
 
   const username = document.querySelector('#admin-username').value
   const password = document.querySelector('#admin-password').value

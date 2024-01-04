@@ -17,5 +17,6 @@ router.get('/login', authController.getAdminLoginPage)
 
 router.get('/banned', authController.banUser)
 
+router.get('/logout', authController.getAdminLogOut)
 
 module.exports = router

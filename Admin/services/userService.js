@@ -37,8 +37,13 @@ const userService = {
   },
 
   getUserByFilterAndSort(filter, sort) {
-    return User.find(filter).sort(sort)
-  }
+    return User.find({admin:false}).find(filter).sort(sort)
+  },
+
+  updateAvatarUser(userId, image) {
+    const user = User.findByIdAndUpdate(userId, { customerImage: image })
+    return user
+  },
 }
 
 module.exports = userService

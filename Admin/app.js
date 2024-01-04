@@ -27,6 +27,7 @@ const orderAdminRouter = require('./routes/orderRouter')
 const productAdminRouter = require('./routes/productRouter')
 const sizeAdminRouter = require('./routes/sizeRouter')
 const userAdminRouter = require('./routes/userRouter')
+const profileRouter = require('./routes/profileRouter')
 
 
 const app = express()
@@ -81,6 +82,7 @@ app.use('/order', orderAdminRouter)
 app.use('/product', productAdminRouter)
 app.use('/size', sizeAdminRouter)
 app.use('/user', userAdminRouter)
+app.use('/profile', profileRouter)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

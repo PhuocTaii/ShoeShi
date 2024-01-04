@@ -1,5 +1,4 @@
 const userService = require('../services/userService')
-const imageService = require('../services/imageService')
 const User = require('../models/customer')
 
 const userController = {
@@ -140,8 +139,8 @@ const userController = {
         email: user.email,
         phone: user.phoneNum,
         dob: user.birthday,
-        username: user.username,  
-        avatar: user.avatar,
+        username: user.username,
+        img: user.customerImage
       }
       return res.status(200).json(formattedUser) // Return the fetched user
     } catch (err) {

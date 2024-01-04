@@ -12,7 +12,6 @@ router.delete('/:id', isAdmin, userController.deleteUser)
 router.get('/', isAdmin, userController.getAccountsPage)
 router.get('/api', isAdmin, userController.handlePaging)
 
-router.get('/profile', isAdmin, userController.getAdminProfilePage)
 router.get('/:id', userController.getUserById)
 
 router.post('/ban/:id', userController.banAccount)

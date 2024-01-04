@@ -1,48 +1,39 @@
-<div class='container'>
+<div class='container' id="main-profile-detail" profile-id={{user._id}}>
   <h1 class='title fw-bold text-center my-5'>YOUR PROFILE</h1>
 
   <div class='row space'></div>
 
   <div class='row my-3'>
     <div class='col-auto'>
-      <img
-        src='https://via.placeholder.com/100'
-        alt='Avatar'
-        class='img-fluid avatar'
-      />
+      <div id="imageContainer">
+        <img
+          src= '{{user.customerImage}}'
+          alt='Avatar'
+          class='img-fluid avatar'
+          id="admin-ava"
+        />
+      </div>
+       <input type="file" id="fileInput" name="admin-ava">
     </div>
     <div class='col d-flex align-items-center'>
-      <h4 class='mb-0'>Your Name</h4>
+      <h4 class='mb-0'>{{user.name}}</h4>
     </div>
   </div>
 
   <div class='row'>
     <div class='col-lg'>
       <div class='text-uppercase fs-3 mb-3'>details</div>
-      <form class='form-details'>
-        <div class='mb-2'>
-          <label for='password' class='form-label'>Password
-            <small class='text-danger'>*</small></label>
-          <input
-            type='password'
-            class='form-control fs-6'
-            placeholder='Password'
-            id='password'
-            required
-            minlength='8'
-            pattern='(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}'
-          />
-        </div>
-
+      <form class='form-details' id="admin-details" onsubmit="updateProfile(event)">
         <div class='mb-2'>
           <label for='email' class='form-label'>Email
             <small class='text-danger'>*</small></label>
           <input
             type='email'
             class='form-control fs-6'
-            placeholder='Email'
+            value='{{user.email}}'
             id='email'
             required
+            name='email'
           />
         </div>
 
@@ -52,8 +43,9 @@
           <input
             type='text'
             class='form-control fs-6'
-            placeholder='Full Name'
-            id='full-name'
+            value= '{{user.name}}'
+            id= 'full-name'
+            name="name"
           />
         </div>
 
@@ -68,7 +60,7 @@
                 name='gender'
                 value='male'
                 class='form-check-input'
-                checked
+                {{#ifEquals user.gender "male"}}checked{{/ifEquals}}
               />
             </div>
 
@@ -80,6 +72,7 @@
                 name='gender'
                 value='female'
                 class='form-check-input'
+                {{#ifEquals user.gender "female"}}checked{{/ifEquals}}
               />
             </div>
           </div>
@@ -90,8 +83,9 @@
           <input
             type='tel'
             class='form-control fs-6'
-            placeholder='Phone Number'
+            value='{{user.phoneNum}}'
             id='phone-number'
+            name='phoneNum'
           />
         </div>
 
@@ -100,14 +94,15 @@
           <input
             type='text'
             class='form-control fs-6'
-            placeholder='Address'
+            value='{{user.address}}'
             id='address'
+            name='address'
           />
         </div>
 
         <div class='mb-2'>
           <label for='birthday' class='form-label'>Date of birth</label>
-          <input type='date' class='form-control fs-6' id='birthday' />
+          <input type='date' class='form-control fs-6' id='birthday' value={{formatDate user.birthday}} name="birthday" />
         </div>
 
         <button
@@ -120,7 +115,7 @@
 
     <div class='col-lg'>
       <div class='text-uppercase fs-3 mb-3'>Change password</div>
-      <form class='form-reset-password'>
+      <form class='form-reset-password' id="form-reset-password" onsubmit="updatePassword(event)">
         <div class='mb-2'>
           <label for='current-password' class='form-label'>Current password
             <small class='text-danger'>*</small></label>
@@ -130,9 +125,11 @@
             placeholder='Current password'
             id='current-password'
             required
-            minlength='8'
-            pattern='(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}'
+            {{!-- pattern='(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}' --}}
+            oninput="checkOldPassword()"
+            aria-describedby="feedback-current-password"
           />
+          <div id="feedback-current-password" class="invalid-feedback"></div>
         </div>
 
         <div class='mb-2'>
@@ -145,13 +142,15 @@
             id='new-password'
             required
             minlength='8'
-            pattern='(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}'
+            {{!-- pattern='(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}' --}}
           />
         </div>
 
         <button
           class='btn btn-dark fs-6 text-center my-4 px-5 py-3'
-          type='submit'
+          type="submit"
+          id="btn-reset-password"
+          disabled
         >
           SAVE</button>
       </form>
@@ -162,4 +161,5 @@
 </div>
 
 {{#section 'scripts'}}
+  <script src='/js/profile.js'></script>
 {{/section}}
