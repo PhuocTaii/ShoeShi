@@ -19,6 +19,11 @@ const checkoutController = {
         const product = await productService.getProductById(
           cart.productList[i].product
         )
+        if(product.quantity < cart.productList[i].quantity){
+          return res.status(400).json('Not enough product')
+        }
+        product.totalPurchase += cart.productList[i].quantity
+        product.quantity -= cart.productList[i].quantity
         const color = await colorService.findColorById(
           cart.productList[i].color
         )
@@ -28,6 +33,7 @@ const checkoutController = {
         colorList.push(color.color)
         sizeList.push(size.size)
         TotalPrice += Number(product.price * cart.productList[i].quantity)
+        product.save()
       }
       // const user = await userService.getUserById(req.user.id)
       const newOrder = await checkoutService.createOrder(
