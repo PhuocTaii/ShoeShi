@@ -1,5 +1,4 @@
 const userService = require('../services/userService')
-const imageService = require('../services/imageService')
 const User = require('../models/customer')
 
 const userController = {
@@ -115,13 +114,6 @@ const userController = {
     })
   },
 
-  getAdminProfilePage: async (req, res) => {
-    res.render('profile', {
-      layout: 'main',
-      extraStyles: 'profile.css',
-    })
-  },
-
   getUserById: async (req, res) => {
     try {
       const user = await userService.getUserById(req.params.id)
@@ -134,6 +126,7 @@ const userController = {
         phone: user.phoneNum,
         dob: user.birthday,
         username: user.username,
+        img: user.customerImage
       }
       return res.status(200).json(formattedUser) // Return the fetched user
     } catch (err) {

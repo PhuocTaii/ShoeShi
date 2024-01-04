@@ -7,27 +7,27 @@ function validatePhoneNumber(input) {
   return ''
 }
 
-function checkOldPassword(input) {
-  const id = document
-    .getElementById('main-profile-detail')
-    .getAttribute('profile-id')
+// function checkOldPassword(input) {
+//   const id = document
+//     .getElementById('main-profile-detail')
+//     .getAttribute('profile-id')
 
-  $.ajax({
-    url: 'profile/check-password',
-    method: 'POST', 
-    data: {
-      id,
-      input,
-    },
-    success: function (response) {
-      console.log('Profile updated successfully:', response)
-      input.setCustomValidity('')
-    },
-    error: function (xhr, status, error) {
-      input.setCustomValidity('Password incorrect')
-    },
-  })
-}
+//   $.ajax({
+//     url: 'profile/check-password',
+//     method: 'POST', 
+//     data: {
+//       id,
+//       input,
+//     },
+//     success: function (response) {
+//       console.log('Profile updated successfully:', response)
+//       input.setCustomValidity('')
+//     },
+//     error: function (xhr, status, error) {
+//       input.setCustomValidity('Password incorrect')
+//     },
+//   })
+// }
 
 const id = document.getElementById('main-profile-detail').getAttribute('profile-id')
 
@@ -71,11 +71,14 @@ function updateProfile(event) {
       birthday,
     },
     success: function (response) {
-      console.log('Profile updated successfully:', response)
+      alert('Profile updated successfully')
+      // console.log('Profile updated successfully:', response)
     },
     error: function (xhr, status, error) {
       // Handle error
-      console.error('Error updating profile:', error)
+      alert('Error updating profile')
+
+      // console.error('Error updating profile:', error)
       // Show an error message to the user, if necessary
     },
   })
@@ -110,6 +113,9 @@ function updatePassword(event) {
     success: function (response) {
       console.log('Password updated successfully:', response);
       alert('Password updated successfully');
+      document.getElementById('current-password').value='';
+      document.getElementById('new-password').value='';
+      document.getElementById('confirm-password').value='';
       // Optionally, show a success message to the user
     },
     error: function (xhr, status, error) {

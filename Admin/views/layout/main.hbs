@@ -53,7 +53,7 @@
             aria-labelledby='navbarDropdown'
           >
             {{#if user}}
-              <li><a class='dropdown-item' href='/user/profile'>Profile</a></li>
+              <li><a class='dropdown-item' href='/profile'>Profile</a></li>
               <li><a class='dropdown-item' href='/logout'>Log Out</a></li>
             {{else}}
               <li><a class='dropdown-item' href='/login'>Log In</a></li>
@@ -136,10 +136,13 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.8/handlebars.min.js" integrity="sha512-E1dSFxg+wsfJ4HKjutk/WaCzK7S2wv1POn1RRPGh8ZK+ag9l244Vqxji3r6wgz9YBf6+vhQEYJZpSjqWFPg9gg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+    {{!-- <script src='/js/hbsHelpers.js'></script> --}}
     
     <script src='/js/scripts.js'></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.8/handlebars.min.js" integrity="sha512-E1dSFxg+wsfJ4HKjutk/WaCzK7S2wv1POn1RRPGh8ZK+ag9l244Vqxji3r6wgz9YBf6+vhQEYJZpSjqWFPg9gg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+    {{!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.8/handlebars.min.js" integrity="sha512-E1dSFxg+wsfJ4HKjutk/WaCzK7S2wv1POn1RRPGh8ZK+ag9l244Vqxji3r6wgz9YBf6+vhQEYJZpSjqWFPg9gg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> --}}
 
     {{{_sections.scripts}}}
   </body>

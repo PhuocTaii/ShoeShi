@@ -12,6 +12,7 @@ const indexController = {
             revenue,
             extraStyles: 'dashboard.css',
             layout: 'main',
+            user: req.user
         })
     },
 
