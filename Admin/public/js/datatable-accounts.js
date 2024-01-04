@@ -15,13 +15,17 @@ function toggleAccountDetail(id) {
   $('#modal-account-detail').modal('toggle')
 }
 
-function fetchPage(pageNumber) {
-  fetch(
-    `/user/api?pageUser=${pageNumber}&sortBy=${sortBy}&sortOrder=${sortOrder}&filterBy=${filterOption}&search=${filter}`
-  )
-    .then((response) => response.json())
-    .then((data) => {
-      const table = document.getElementById('table-accounts')
+let adminSearch = true
+
+function fetchPage(pageNumber, pageAdmin, isAdmin) {
+  $.ajax({
+    url: `/user/api?pageUser=${pageNumber}&pageAdmin=${pageAdmin}&sortBy=${sortBy}&sortOrder=${sortOrder}&filterBy=${filterOption}&search=${filter}&isAdmin=${isAdmin}`,
+    type: 'GET',
+    dataType: 'json',
+    success: function (data) {
+      const table = document.getElementById(
+        isAdmin ? 'table-admins' : 'table-accounts'
+      )
       table.innerHTML = ''
 
       data.usersInPage.forEach((customer) => {
@@ -68,39 +72,77 @@ function fetchPage(pageNumber) {
         // Add the row to the table
         table.appendChild(row)
       })
-    })
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.error(textStatus, errorThrown)
+    },
+  })
 }
 
 let currentPage = 1
+let currentPageAdmin = 1
 
 document.getElementById('nextPage').addEventListener('click', () => {
   event?.preventDefault()
   currentPage++
-  fetchPage(currentPage)
+  adminSearch = false
+  fetchPage(currentPage, currentPageAdmin, adminSearch)
 })
 
 document.getElementById('prevPage').addEventListener('click', () => {
   event?.preventDefault()
   if (currentPage > 1) {
     currentPage--
-    fetchPage(currentPage)
+    adminSearch = false
+    fetchPage(currentPage, currentPageAdmin, adminSearch)
+  }
+})
+
+document.getElementById('nextPageAdmin').addEventListener('click', () => {
+  event?.preventDefault()
+  currentPageAdmin++
+  adminSearch = true
+  fetchPage(currentPage, currentPageAdmin, adminSearch)
+})
+
+document.getElementById('prevPageAdmin').addEventListener('click', () => {
+  event?.preventDefault()
+  if (currentPageAdmin > 1) {
+    currentPageAdmin--
+    adminSearch = true
+    fetchPage(currentPage, currentPageAdmin, adminSearch)
   }
 })
 
 const totalPage = document.getElementById('totalUserPage').textContent
-
+const totalPageAdmin = document.getElementById('totalAdminPage').textContent
 for (let i = 1; i <= totalPage; i++) {
   document.getElementById(`page${i}`).addEventListener('click', (event) => {
     event.preventDefault()
     currentPage = i
-    fetchPage(currentPage)
+    adminSearch = false
+    fetchPage(currentPage, currentPageAdmin, adminSearch)
   })
+}
+
+for (let i = 1; i <= totalPageAdmin; i++) {
+  document
+    .getElementById(`pageAdmin${i}`)
+    .addEventListener('click', (event) => {
+      event.preventDefault()
+      currentPageAdmin = i
+      adminSearch = true
+      fetchPage(currentPage, currentPageAdmin, adminSearch)
+    })
 }
 
 document.addEventListener('DOMContentLoaded', (event) => {
   event.preventDefault()
   currentPage = 1
-  fetchPage(currentPage)
+  currentPageAdmin = 1
+  // fetchPage(currentPage,false)
+  fetchPage(currentPage, currentPageAdmin, true)
+  fetchPage(currentPage, currentPageAdmin, false)
 })
 
 document.addEventListener('DOMContentLoaded', (event) => {
@@ -117,16 +159,38 @@ document.addEventListener('DOMContentLoaded', (event) => {
       filter = filterInput.value
       filterOption = filterSelect.value
     }
+    adminSearch = false
+    fetchPage(currentPage, currentPageAdmin, adminSearch)
+  })
+})
 
-    fetchPage(currentPage)
+document.addEventListener('DOMContentLoaded', (event) => {
+  const sortSelect = document.getElementById('customer-sort-admin')
+  const filterSelect = document.getElementById('customer-filter-admin')
+  const filterInput = document.querySelector(
+    '.search-table .form-control-admin'
+  )
+  const searchButton = document.querySelector('.search-table .btn-admin')
+
+  searchButton.addEventListener('click', () => {
+    const selectedSortOption = sortOptions[sortSelect.value]
+    if (selectedSortOption) {
+      sortBy = selectedSortOption.sortBy
+      sortOrder = selectedSortOption.sortOrder
+      filter = filterInput.value
+      filterOption = filterSelect.value
+    }
+    adminSearch = true
+    fetchPage(currentPage, currentPageAdmin, adminSearch)
   })
 })
 
 document.addEventListener('DOMContentLoaded', (event) => {
   // ... rest of your code ...
 
-  const table = document.getElementById('table-accounts')
-  table.addEventListener('click', (event) => {
+  const tableAccounts = document.getElementById('table-accounts')
+  const tableAdmins = document.getElementById('table-admins')
+  const handleClick = (event) => {
     const target = event.target
     if (target.type === 'checkbox') {
       event.stopPropagation()
@@ -164,15 +228,18 @@ document.addEventListener('DOMContentLoaded', (event) => {
         console.error('Error sending data:', error)
       },
     })
-  })
+  }
+
+  tableAccounts.addEventListener('click', handleClick)
+  tableAdmins.addEventListener('click', handleClick)
 })
 
 document.addEventListener('DOMContentLoaded', (event) => {
   // Get the table element
-  const table = document.getElementById('table-accounts')
+  const tableAccounts = document.getElementById('table-accounts')
+  const tableAdmins = document.getElementById('table-admins')
 
-  // Add a click event listener to the table
-  table.addEventListener('click', (event) => {
+  const banAccount = (event) => {
     const target = event.target
     const row = target.closest('tr')
     if (!row) return
@@ -180,6 +247,14 @@ document.addEventListener('DOMContentLoaded', (event) => {
     // If the clicked element is a checkbox, ban the account
     if (target.type === 'checkbox') {
       const accountId = row.getAttribute('data-id')
+
+      const userId = document.getElementById('userId').textContent
+
+      if (accountId === userId) {
+        alert("You can't ban your own account.")
+        target.checked = false
+        return
+      }
 
       if (target.checked) {
         // If the checkbox is checked, send a request to ban the account
@@ -215,7 +290,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
           })
       }
     }
-  })
+  }
+  
+  tableAccounts.addEventListener('click', banAccount)
+  tableAdmins.addEventListener('click', banAccount)
 })
 
 function formatDate(dateString) {
@@ -236,21 +314,35 @@ function toggleAddAdmin() {
   // set title
   document.getElementById('action-admin').innerHTML = `Add new admin`
   // set submit action
-  document.querySelector('#modal-manage-admin form').onsubmit = function(event) {
+  document.querySelector('#modal-manage-admin form').onsubmit = function (
+    event
+  ) {
     event.preventDefault()
     handleSaveAdmin()
   }
 }
 
 function handleSaveAdmin() {
+  // get product info
+  // const formData = new FormData()
+
+  // const data {
+  //   username = document.querySelector('#admin-username').value,
+  // }
   var gender
+
+  // formData.append('username', document.querySelector('#admin-username').value)
+  // formData.append('password', document.querySelector('#admin-password').value)
+  // formData.append('email', document.querySelector('#admin-email').value)
+  // formData.append('name', document.querySelector('#admin-name').value)
+  var genderRadios = document.getElementsByName('gender')
   var genderRadios = document.getElementsByName('gender');
   for (let i = 0; i < genderRadios.length; i++) {
     if (genderRadios[i].checked) {
-      var selectedGender = genderRadios[i].value;
+      var selectedGender = genderRadios[i].value
       // formData.append('gender', selectedGender)
       gender = selectedGender
-      break;
+      break
     }
   }
 
@@ -270,11 +362,11 @@ function handleSaveAdmin() {
     phoneNum: phoneNum,
     address: address,
     birthday: birthday,
-    gender: gender
+    gender: gender,
   }
   // call ajax
   $.ajax({
-    type: "POST",
+    type: 'POST',
     url: '/user',
     data,
     dataType: 'json',
@@ -282,30 +374,31 @@ function handleSaveAdmin() {
     // contentType: false,
     success: function (response) {
       // format toast
-      document.getElementById('toast-noti-product').innerHTML = toastTemplateFunction({
-        title: 'Add admin',
-        message: 'Add admin successfully',
-        success: true,
-      });
+      document.getElementById('toast-noti-product').innerHTML =
+        toastTemplateFunction({
+          title: 'Add admin',
+          message: 'Add admin successfully',
+          success: true,
+        })
       // Trigger toast
-      const toastElement = document.querySelector('.toast');
-      const toast = bootstrap.Toast.getOrCreateInstance(toastElement);
-      toast.show();
+      const toastElement = document.querySelector('.toast')
+      const toast = bootstrap.Toast.getOrCreateInstance(toastElement)
+      toast.show()
 
       // close modal
       $('#modal-manage-admin').modal('toggle')
-
     },
     error: function (err) {
-      document.getElementById('toast-noti-product').innerHTML = toastTemplateFunction({
-        title: 'Add admin',
-        message: 'Add admin failed! System error. Please try again!',
-        success: false,
-      });
+      document.getElementById('toast-noti-product').innerHTML =
+        toastTemplateFunction({
+          title: 'Add admin',
+          message: 'Add admin failed! System error. Please try again!',
+          success: false,
+        })
       // Trigger toast
-      const toastElement = document.querySelector('.toast');
-      const toast = bootstrap.Toast.getOrCreateInstance(toastElement);
-      toast.show();
-    }
-  });
+      const toastElement = document.querySelector('.toast')
+      const toast = bootstrap.Toast.getOrCreateInstance(toastElement)
+      toast.show()
+    },
+  })
 }

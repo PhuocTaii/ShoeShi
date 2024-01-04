@@ -1,6 +1,7 @@
 <div id='account-container'>
   <h3>ACCOUNTS</h3>
 
+  <div id="userId" style="display: none;">{{userId}}</div>
   <!-- Customer table-->
   <div id="totalUserPage" style="display: none;">{{totalPage}}</div>
   <div class='card mb-4'>
@@ -95,7 +96,7 @@
   </div>
 
   <!-- Admin table-->
-
+  <div id="totalAdminPage" style="display: none;">{{totalPageAdmin}}</div>
   <div class='card mb-4'>
     <div class='card-header'>
       <div>
@@ -105,8 +106,8 @@
 
       <div class='action-table'>
         <div class='sort-table'>
-          <label for='admin-sort'>Sort by</label>
-          <select class='form-select' name='sort-options' id='admin-sort'>
+          <label for='customer-sort'>Sort by</label>
+          <select class='form-select' name='sort-options' id='customer-sort-admin'>
             <option selected value='none'>None</option>
             <option value='name-a-z'>Name: A-Z</option>
             <option value='name-z-a'>Name: Z-A</option>
@@ -117,14 +118,18 @@
           </select>
         </div>
         <div class='search-table'>
-          <label for='admin-filter'>Filter by</label>
-          <select class='form-select' name='search-options' id='admin-filter'>
+          <label for='customer-filter'>Filter by</label>
+          <select
+            class='form-select'
+            name='search-options'
+            id='customer-filter-admin'
+          >
             <option selected value='username'>Username</option>
             <option value='name'>Name</option>
             <option value='email'>Email</option>
           </select>
-          <input class='form-control' type='text' />
-          <button type='button' class='btn'>Search</button>
+          <input class='form-control-admin' type='text' />
+          <button type='button' class='btn-admin'>Search</button>
         </div>
       </div>
     </div>
@@ -149,97 +154,8 @@
             <th>Ban</th>
           </tr>
         </tfoot>
-        <tbody class='table-group-divider'>
-          <tr>
-            <td>AnNguyen</td>
-            <td>Nguyễn Văn An</td>
-            <td>nva@example.com</td>
-            <td>09/11/2023</td>
-            <td>
-              <input class='form-check-input' type='checkbox' value='' />
-            </td>
-          </tr>
-          <tr>
-            <td>BinhTran</td>
-            <td>Trần Thị Bình</td>
-            <td>ttb@example.com</td>
-            <td>09/11/2023</td>
-            <td>
-              <input class='form-check-input' type='checkbox' value='' />
-            </td>
-          </tr>
-          <tr>
-            <td>ChauLe</td>
-            <td>Lê Minh Châu</td>
-            <td>lmc@example.com</td>
-            <td>09/11/2023</td>
-            <td>
-              <input class='form-check-input' type='checkbox' value='' />
-            </td>
-          </tr>
-          <tr>
-            <td>DungPham</td>
-            <td>Phạm Thanh Dung</td>
-            <td>ptd@example.com</td>
-            <td>09/11/2023</td>
-            <td>
-              <input class='form-check-input' type='checkbox' value='' />
-            </td>
-          </tr>
-          <tr>
-            <td>Giang Đặng</td>
-            <td>Đặng Hồng Giang</td>
-            <td>dhg@example.com</td>
-            <td>09/11/2023</td>
-            <td>
-              <input class='form-check-input' type='checkbox' value='' />
-            </td>
-          </tr>
-          <tr>
-            <td>HuyBui</td>
-            <td>Bùi Xuân Huy</td>
-            <td>bxh@example.com</td>
-            <td>09/11/2023</td>
-            <td>
-              <input class='form-check-input' type='checkbox' value='' />
-            </td>
-          </tr>
-          <tr>
-            <td>KhanhDo</td>
-            <td>Đỗ Hà Khanh</td>
-            <td>dhk@example.com</td>
-            <td>09/11/2023</td>
-            <td>
-              <input class='form-check-input' type='checkbox' value='' />
-            </td>
-          </tr>
-          <tr>
-            <td>LanPhan</td>
-            <td>Phan Thế Lân</td>
-            <td>ptl@example.com</td>
-            <td>09/11/2023</td>
-            <td>
-              <input class='form-check-input' type='checkbox' value='' />
-            </td>
-          </tr>
-          <tr>
-            <td>NhuVo</td>
-            <td>Võ Thanh Như</td>
-            <td>vtn@example.com</td>
-            <td>09/11/2023</td>
-            <td>
-              <input class='form-check-input' type='checkbox' value='' />
-            </td>
-          </tr>
-          <tr>
-            <td>Phong Hồ</td>
-            <td>Hồ Hải Phong</td>
-            <td>hhp@example.com</td>
-            <td>09/11/2023</td>
-            <td>
-              <input class='form-check-input' type='checkbox' value='' />
-            </td>
-          </tr>
+        <tbody class='table-group-divider' id="table-admins">
+
         </tbody>
       </table>
     </div>
@@ -247,15 +163,27 @@
       <nav aria-label='navigation table'>
         <ul class='pagination'>
           <li class='page-item'>
-            <a class='page-link' href='#' aria-label='Previous'>
+            <a
+              id='prevPageAdmin'
+              class='page-link'
+              href='?pageUser={{decrement currentPage}}'
+              aria-label='Previous'
+            >
               <span aria-hidden='true'>&laquo;</span>
             </a>
           </li>
-          <li class='page-item'><a class='page-link' href='#'>1</a></li>
-          <li class='page-item'><a class='page-link' href='#'>2</a></li>
-          <li class='page-item'><a class='page-link' href='#'>3</a></li>
+          {{#each pagesAdmin as |page|}}
+            <li class='page-item'>
+              <a class='page-link' href='?pageUser={{page}}' id='pageAdmin{{page}}'>{{page}}</a>
+            </li>
+          {{/each}}
           <li class='page-item'>
-            <a class='page-link' href='#' aria-label='Next'>
+            <a
+              id='nextPageAdmin'
+              class='page-link'
+              href='?pageUser={{increment currentPage}}'
+              aria-label='Next'
+            >
               <span aria-hidden='true'>&raquo;</span>
             </a>
           </li>

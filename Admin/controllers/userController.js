@@ -50,11 +50,16 @@ const userController = {
         sortOrder,
         filterBy,
         search,
+        isAdmin,
       } = req.query
 
       const filter = {}
       if (filterBy && search) {
         filter[filterBy] = { $regex: search, $options: 'i' }
+      }
+
+      if (isAdmin !== undefined) {
+        filter.admin = isAdmin === 'true'
       }
 
       const sort = {}
@@ -66,7 +71,15 @@ const userController = {
       const totalUsers = users.length
       const totalPage = Math.ceil(totalUsers / 5)
       const pages = Array.from({ length: totalPage }, (_, i) => i + 1)
-      let currentPage = Number(req.query.pageUser) || 1
+
+      let currentPage
+      if(isAdmin === 'true') {
+        currentPage = Number(req.query.pageAdmin) || 1
+      }
+      else {
+        currentPage = Number(req.query.pageUser) || 1
+      }
+      
       if (currentPage > totalPage) {
         currentPage = totalPage
       }
@@ -84,33 +97,34 @@ const userController = {
     }
   },
   getAccountsPage: async (req, res) => {
-    const currentPage = Number(req.query.pageUser) || 1
     const itemPerPage = 5
+    const currentPage = Number(req.query.pageUser) || 1
+    const currentPageAdmin = Number(req.query.pageAdmin) || 1
 
-    const users = await User.find()
-      .select('username name email createTime')
-      .skip((currentPage - 1) * itemPerPage)
-      .limit(itemPerPage)
-
-    const totalUsers = await User.countDocuments()
-    const totalPage = Math.ceil(totalUsers / itemPerPage)
+    const totalCustomer = await User.countDocuments({ admin: false })
+    const totalAdmin = await User.countDocuments({ admin: true })
+    const totalPage = Math.ceil(totalCustomer / itemPerPage)
+    const totalPageAdmin = Math.ceil(totalAdmin / itemPerPage)
     const pages = Array.from({ length: totalPage }, (_, i) => i + 1)
+    const pagesAdmin = Array.from({ length: totalPageAdmin }, (_, i) => i + 1)
 
-    const formattedUsers = users.map((user) => ({
-      username: user.username,
-      name: user.name,
-      email: user.email,
-      createTime: user.createTime,
-      isBan: user.isBan,
-    }))
+    console.log(req.user.id)
 
     res.render('accounts', {
       layout: 'main',
       extraStyles: 'accounts.css',
-      customers: formattedUsers,
-      currentPage: currentPage,
       pages: pages,
+      pagesAdmin: pagesAdmin,
       totalPage,
+      totalPageAdmin,
+      userId: req.user.id,
+    })
+  },
+
+  getAdminProfilePage: async (req, res) => {
+    res.render('profile', {
+      layout: 'main',
+      extraStyles: 'profile.css',
     })
   },
 
