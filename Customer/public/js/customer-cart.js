@@ -1,7 +1,5 @@
 const user = document.getElementById('user-cart').getAttribute('data-user')
-
-if(!user){
-    const localCartTemplate = 
+const cartTemplate = 
     `
     {{#each this}}
         <div class="item row my-3">
@@ -27,16 +25,17 @@ if(!user){
                 </div>
                 </div>
                 <div class='right-box-info col-6'>
-                <p class='m-0 fw-bold' data-product-price='{{this.price}}' id="product-price-{{this.id}}">{{this.price}}</p>
-                <img class='mb-3' src='assets/img/trash-icon.svg' alt='' />
+                    <p class='m-0 fw-bold' data-product-price='{{this.price}}' id="product-price-{{this.id}}">{{this.price}}</p>
+                    <img class='mb-3' src='assets/img/trash-icon.svg' alt='' onclick="removeFromCart('{{this.productID}}', '{{this.colorId}}', '{{this.sizeId}}')" />
                 </div>
             </div>
             </div>
         </div>
     {{/each}}
     `
-    
-    const localCartTemplateFunction = Handlebars.compile(localCartTemplate);
+
+if(!user){
+    const localCartTemplateFunction = Handlebars.compile(cartTemplate);
     
     const localCartData = JSON.parse(localStorage.getItem('cartData'))
     $.ajax({
@@ -46,7 +45,8 @@ if(!user){
         dataType: 'json',
         data: JSON.stringify(localCartData),
         success: function (data) {
-            document.getElementById('local-cart').innerHTML = localCartTemplateFunction(data.detailList);
+            console.log(data)
+            document.getElementById('cart').innerHTML = localCartTemplateFunction(data.detailList);
             document.getElementById("total-item").innerHTML = data.totalAmount + ' items'
             document.getElementById("total-price").innerHTML = data.totalPrice
             document.getElementById("total").innerHTML = data.total + '₫'
@@ -54,9 +54,25 @@ if(!user){
         error: function (error) {
         },
     })
-    // document.getElementById("number-cart-items").innerHTML = localCartData.length
     // console.log(localCartData.length)
 
+} else{
+    const cartTemplateFunction = Handlebars.compile(cartTemplate);
+    
+    $.ajax({
+        type: 'POST',
+        url: '/cart/logged',
+        contentType: 'application/json',
+        success: function (response) {
+            console.log(response)
+            document.getElementById('cart').innerHTML = cartTemplateFunction(response.detailList);
+            document.getElementById("total-item").innerHTML = response.totalAmount + ' items'
+            document.getElementById("total-price").innerHTML = response.totalPrice
+            document.getElementById("total").innerHTML = response.total + '₫'
+        },
+        error: function (error) {
+        },
+    })
 }
 
 function updateCart(productId, colorId, sizeId) {
@@ -73,15 +89,17 @@ function updateCart(productId, colorId, sizeId) {
             success: function (data) {
                 var tAmount = 0;
                 var tPrice = 0;
+
                 for(let i = 0; i < data.length; i++){
                     tAmount += data[i].quantity
                     tPrice += data[i].quantity * data[i].price
                 }
+
                 const total = Number(tPrice + 20000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                 
-                document.getElementById("log-total-item").innerHTML = tAmount + ' items'
-                document.getElementById("log-total-price").innerHTML = tPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                document.getElementById("log-total").innerHTML = total + '₫'
+                document.getElementById("total-item").innerHTML = tAmount + ' items'
+                document.getElementById("total-price").innerHTML = tPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                document.getElementById("total").innerHTML = total + '₫'
             },
             error: function (error) {
             },
@@ -105,7 +123,68 @@ function updateCart(productId, colorId, sizeId) {
         document.getElementById("total-price").innerHTML = totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
         document.getElementById("total").innerHTML = total + '₫'
     }
+}
 
+function removeFromCart(productId, colorId, sizeId){
+    const user = document.getElementById('user-cart').getAttribute('data-user')
+    if(user){
+        $.ajax({
+            type: 'DELETE',
+            url: `/cart`,
+            data: {productId: productId.toString(), color: colorId.toString(), size: sizeId.toString()},
+            dataType: 'json',
+            success: function (data) {
+                document.getElementById("number-cart-items").innerHTML = data.length
+                const cartTemplateFunction = Handlebars.compile(cartTemplate);
+    
+                $.ajax({
+                    type: 'POST',
+                    url: '/cart/logged',
+                    contentType: 'application/json',
+                    success: function (response) {
+                        console.log(response)
+                        document.getElementById('cart').innerHTML = cartTemplateFunction(response.detailList);
+                        document.getElementById("total-item").innerHTML = response.totalAmount + ' items'
+                        document.getElementById("total-price").innerHTML = response.totalPrice
+                        document.getElementById("total").innerHTML = response.total + '₫'
+                    },
+                    error: function (error) {
+                    },
+                })
+            },
+            error: function (error) {
+            },
+        })  
+    } else{
+        var localCart = JSON.parse(localStorage.getItem('cartData'));
+        for(let i = 0; i < localCart.length; i++){
+            if(localCart[i].productId == productId && localCart[i].color == colorId && localCart[i].size == sizeId){
+                localCart.splice(i, 1)
+                localStorage.setItem('cartData', JSON.stringify(localCart));
+            }
+        }
+        const localCartTemplateFunction = Handlebars.compile(cartTemplate);
+    
+        const localCartData = JSON.parse(localStorage.getItem('cartData'))
+        $.ajax({
+            type: 'POST',
+            url: '/cart/local',
+            contentType: 'application/json',
+            dataType: 'json',
+            data: JSON.stringify(localCartData),
+            success: function (data) {
+                console.log(data)
+                document.getElementById('cart').innerHTML = localCartTemplateFunction(data.detailList);
+                document.getElementById("total-item").innerHTML = data.totalAmount + ' items'
+                document.getElementById("total-price").innerHTML = data.totalPrice
+                document.getElementById("total").innerHTML = data.total + '₫'
+                document.getElementById("number-cart-items").innerHTML = data.detailList.length
+
+            },
+            error: function (error) {
+            },
+        })
+    }
 }
 
 function checkoutPage(){

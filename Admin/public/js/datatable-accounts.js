@@ -17,7 +17,7 @@ function toggleAccountDetail(id) {
 
 function fetchPage(pageNumber) {
   fetch(
-    `/accounts/api?pageUser=${pageNumber}&sortBy=${sortBy}&sortOrder=${sortOrder}&filterBy=${filterOption}&search=${filter}`
+    `/user/api?pageUser=${pageNumber}&sortBy=${sortBy}&sortOrder=${sortOrder}&filterBy=${filterOption}&search=${filter}`
   )
     .then((response) => response.json())
     .then((data) => {
@@ -128,7 +128,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const id = $(row).data('id')
 
     $.ajax({
-      url: `/accounts/${id}`,
+      url: `/user/${id}`,
       method: 'GET', // Change the method as per your requirement
       success: function (response) {
         // Handle the response from the server if needed
@@ -171,7 +171,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
       if (target.checked) {
         // If the checkbox is checked, send a request to ban the account
-        fetch(`/accounts/ban/${accountId}`, {
+        fetch(`/user/ban/${accountId}`, {
           method: 'POST',
         })
           .then((response) => response.json())
@@ -187,7 +187,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
           })
       } else {
         // If the checkbox is checked, send a request to ban the account
-        fetch(`/accounts/ban/${accountId}`, {
+        fetch(`/user/ban/${accountId}`, {
           method: 'POST',
         })
           .then((response) => response.json())

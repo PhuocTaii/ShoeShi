@@ -68,6 +68,7 @@ function toggleViewDetail(id) {
     },
   })
 }
+
 function toggleDeleteOrderConfirm(id) {
   $('#modal-delete-order').modal('toggle')
 
@@ -77,6 +78,7 @@ function toggleDeleteOrderConfirm(id) {
       $.ajax({
         url: `/order/${id}`,
         method: 'DELETE',
+        contentType: 'application/json',
         success: function (response) {
           console.log('Category deleted successfully')
           fetchAllOrders()
@@ -167,9 +169,12 @@ function showOrders(data) {
 
 function fetchAllOrders() {
   $.ajax({
-    url: '/order',
     type: 'GET',
+    url: '/order',
+    contentType: 'application/json',
+    dataType: 'json',
     success: function (data) {
+      // console.log(data)
       showOrders(data)
     },
     error: function (error) {

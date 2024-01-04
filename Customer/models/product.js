@@ -2,6 +2,8 @@ const mongoose = require('mongoose')
 const Customer = require('./customer')
 const Size = require('./size')
 const Color = require('./color')
+const Cart = require('./cart')
+const Order = require('./order')
 const Category = require('./category')
 const Manufacturer = require('./manufacturer')
 
@@ -18,32 +20,6 @@ const productSchema = new mongoose.Schema({
   price: {
     type: Number,
   },
-
-  review: [
-    {
-      reviewer: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Customer',
-      },
-
-      rating: {
-        type: Number,
-      },
-
-      title: {
-        type: String,
-      },
-
-      content: {
-        type: String,
-      },
-
-      reviewTime: {
-        type: Date,
-        default: Date.now,
-      },
-    },
-  ],
 
   size: [
     {
@@ -71,6 +47,11 @@ const productSchema = new mongoose.Schema({
     default: Date.now,
   },
 
+  quantity: {
+    type: Number,
+    default: 0,
+  },
+
   totalPurchase: {
     type: Number,
     default: 0,
@@ -88,5 +69,21 @@ const productSchema = new mongoose.Schema({
 })
 
 const Product = mongoose.model('Product', productSchema)
+productSchema.pre('remove', async function (next) {
+  try {
+    await Cart.updateMany(
+      { 'productList.product': this._id },
+      { $pull: { productList: { product: this._id } } }
+    );
+    await Order.updateMany(
+      { 'productList.product': this.name },
+      { $pull: { productList: { product: this.name } } }
+    );
+    await Review.deleteMany({ product: this._id });
+    next();
+  } catch (error) {
+    next(error);
+  }
+});
 
 module.exports = Product

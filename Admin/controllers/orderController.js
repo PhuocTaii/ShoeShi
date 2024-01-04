@@ -78,10 +78,21 @@ const orderController = {
 
   //Client side
   getAdminOrderPage: async (req, res) => {
-    res.render('orders', {
-      layout: 'main',
-      extraStyles: 'order.css',
-    })
+    try{
+      const acceptHeader = req.get('Accept');
+      if (acceptHeader && acceptHeader.includes('application/json')) {
+        const orders = await orderService.getAllOrders()
+        // const user = await userService.getUserById(orders.user)
+        res.status(200).json(orders)
+      } else{
+        res.render('orders', {
+          layout: 'main',
+          extraStyles: 'order.css',
+        })
+      }
+    } catch(err){
+      res.status(500).json(err)
+    }
   },  
 
   getAllOrderByFilter: async (req, res) => {

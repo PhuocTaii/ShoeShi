@@ -56,8 +56,8 @@
               {{prodList.length}}
             {{else}}
             <script>
-              const localCartData = JSON.parse(localStorage.getItem('cartData'))
-              document.getElementById("number-cart-items").innerHTML = localCartData.length
+              const cartSize = JSON.parse(localStorage.getItem('cartData')).length || 0
+              document.getElementById("number-cart-items").innerHTML =  cartSize
             </script>
             {{/if}}
           </div>
@@ -111,8 +111,7 @@
                 {{prodList.length}}
               {{else}}
               <script>
-                const localCartData = JSON.parse(localStorage.getItem('cartData'))
-                document.getElementById("number-cart-items").innerHTML = localCartData.length
+                document.getElementById("number-cart-items").innerHTML = cartSize
               </script>
               {{/if}}
             </div>

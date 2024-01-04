@@ -3,6 +3,7 @@ const cartService = require('../services/cartService')
 const imageService = require('../services/imageService')
 const User = require('../models/customer')
 const bcrypt = require('bcrypt')
+const streamifier = require('streamifier');
 
 const handlebars = require('handlebars')
 
@@ -32,14 +33,13 @@ const userController = {
   //UPDATE avatar
   updateAvatar: async (req, res) => {
     try {
-      let imageUrl = ''
-      imageUrl = await imageService.uploadImageToCloudinary(
-        req.body.customerImage
-      )
+      const file = req.file
+      const imageUrl = await imageService.uploadImageToCloudinary(file.buffer)
       const user = await userService.updateAvatarUser(req.params.id, imageUrl)
-      res.status(200).json(user)
+      res.json(user);
     } catch (err) {
-      res.status(500).json(err)
+      // res.status(500).json(err)
+      console.log(err)
     }
   },
 
@@ -53,16 +53,19 @@ const userController = {
       res.status(200).json(user)
     } catch (err) {
       res.status(500).json(err)
+      console.error(err)
     }
   },
 
   getProfilePage: async (req, res) => {
     const user = await userService.getUserById(req.user.id)
-
+    const cart = await cartService.getOneCart(req.user.id);
+    const prodList = await cartService.getProductList(cart)
     res.render('profile', {
       layout: 'main',
       extraStyles: 'profile.css',
       user,
+      prodList,
     })
   },
 

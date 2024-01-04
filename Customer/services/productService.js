@@ -5,30 +5,6 @@ const mongoose = require('mongoose')
 const productService = {
   productsPerPage: 5,
 
-  // getTotalProducts() {
-  //   const totalProducts = Product.countDocuments()
-  //   return totalProducts
-  // },
-
-  // getAllProducts() {
-  //   const products = Product.find()
-  //   return products
-  // },
-
-  // getProducts(page) {
-  //   page = page - 1
-  //   const products = Product.find()
-  //     .skip(page * productService.productsPerPage)
-  //     .limit(productService.productsPerPage)
-  //     .lean()
-  //   return products
-  // },
-
-  // getOtherProducts(id) {
-  //   const products = Product.find({ _id: { $ne: id } })
-  //   return products
-  // },
-
   getFeaturedProducts() {
     const products = Product.aggregate(
       [
@@ -263,7 +239,7 @@ const productService = {
     )
     const productsCount = Product.aggregate(pipeline)
     return productsCount
-  }
+  },
 }
 
 module.exports = productService

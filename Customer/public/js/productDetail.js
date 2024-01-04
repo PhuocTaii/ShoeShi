@@ -170,8 +170,11 @@ function addToCart(event) {
 			type: 'POST',
 			data,
 			dataType: 'json',
-			success: function() {
+			success: function(data) {
 				alert('Add product successfully');
+				console.log(data)
+				document.getElementById("number-cart-items").innerHTML = data.productList.length
+
 			},
 			error: function(err) {
 				console.log(err)
@@ -196,6 +199,7 @@ function addToCart(event) {
 		}
 		localCart.push(data);
 		localStorage.setItem('cartData', JSON.stringify(localCart));
+		document.getElementById("number-cart-items").innerHTML = localCart.length
 		alert('Add product successfully');
 	}
 

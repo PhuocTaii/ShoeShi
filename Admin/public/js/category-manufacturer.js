@@ -135,8 +135,9 @@ function handleDeleteManu(id) {
 
 function fetchCategoryTable() {
   $.ajax({
-    url: '/categories',
+    url: '/category',
     type: 'GET',
+    contentType: 'application/json',
     dataType: 'json',
     success: function (data) {
       const table = $('#table-category')
@@ -178,7 +179,7 @@ function fetchCategoryTable() {
 
 function fetchManufacturerTable() {
   $.ajax({
-    url: '/manufacturers',
+    url: '/manufacturer',
     type: 'GET',
     dataType: 'json',
     success: function (data) {

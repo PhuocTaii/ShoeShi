@@ -63,14 +63,19 @@ const cartController = {
   //Delete product from cart
   deleteProductFromCart: async (req, res) => {
     try {
-      const cart = await cartService.getOneCart(req.params.customerId)
-
-      const savedcart = cartService.deleteProductFromCart(
+      const cart = await cartService.getOneCart(req.user.id)
+      console.log(cart)
+      const savedcart = await cartService.deleteProductFromCart(
         cart,
-        req.params.productId
+        req.body.productId,
+        req.body.color,
+        req.body.size
       )
+      console.log(123)
+      console.log(savedcart)
       res.status(200).json(savedcart)
     } catch (err) {
+      console.log(err)
       res.status(500).json(err)
     }
   },
@@ -104,6 +109,17 @@ const cartController = {
   getLocalCart: async (req, res) => {
     try{
       const productList = await cartService.getLocalCart(req.body)
+      res.status(200).json(productList)
+    } catch (err) {
+      res.status(500).json(err)
+      console.log(err)
+    }
+  },
+
+  getLoggedCart: async (req, res) => {
+    try{
+      const cart = await cartService.getOneCart(req.user.id);
+      const productList = await cartService.getLoggedlCart(cart);
       res.status(200).json(productList)
     } catch (err) {
       res.status(500).json(err)

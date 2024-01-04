@@ -59,6 +59,7 @@ $(document).ready(function () {
       success: function (response) {
         // Handle the response from the server if needed
         const { date, status, address, totalPrice, items } = response
+		    // document.getElementById("number-cart-items").innerHTML = 0;
 
         const adjustedSubPrice = parseFloat(totalPrice) - 20000 // Subtract 20,000 VND
         const formattedAdjustedSubPrice =
@@ -72,7 +73,8 @@ $(document).ready(function () {
           `${(totalPrice - 20000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`
         )
         $('.total-modal').text(
-          `${totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} đ`
+          `${(totalPrice).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} đ`
+
         )
 
         const itemSummaryContainer = $('.all-items-modal')
@@ -92,6 +94,7 @@ $(document).ready(function () {
         })
 
         $('#detailModal').modal('show')
+
         console.log('Data sent successfully')
       },
       error: function (error) {

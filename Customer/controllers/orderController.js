@@ -1,6 +1,7 @@
 const userService = require('../services/userService')
 const productService = require('../services/productService')
 const orderService = require('../services/orderService')
+const cartService = require('../services/cartService')
 
 const orderController = {
   getOrderById: async (req, res) => {
@@ -59,12 +60,15 @@ const orderController = {
     }))
 
     const user = await userService.getUserById(req.user.id)
+    const cart = await cartService.getOneCart(req.user.id);
+    const prodList = await cartService.getProductList(cart)
 
     res.render('order', {
       layout: 'main',
       extraStyles: 'order.css',
       formattedOrders,
       user,
+      prodList
     })
   },
 }

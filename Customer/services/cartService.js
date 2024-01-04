@@ -59,15 +59,27 @@ const cartService = {
     return details
   },
 
-  deleteProductFromCart(cart, productId) {
+  deleteProductFromCart: async(cart, productId, colorId, sizeId) => {
+    var details = []
     for (let i = 0; i < cart.productList.length; i++) {
-      if (cart.productList[i].product == productId) {
+      if (cart.productList[i].product == productId.toString() && cart.productList[i].color.toString() == colorId.toString() && cart.productList[i].size.toString() == sizeId.toString()) {
         cart.productList.splice(i, 1)
         cart.save()
-        return cart
+        break;
       }
     }
-    return null
+    for (let i = 0; i < cart.productList.length; i++) {
+      const prod = await productService.getProductById(cart.productList[i].product)
+      const detail = {
+        price: prod.price,
+        product: cart.productList[i].product,
+        quantity: cart.productList[i].quantity,
+        color: cart.productList[i].color,
+        size: cart.productList[i].size,
+      }
+      details.push(detail)
+    }
+    return details
   },
 
   deleteCart(customerId) {
@@ -166,6 +178,40 @@ const cartService = {
       const clor = await colorService.findColorById(localCart[i].color)
       const sze = await sizeService.getSizeById(localCart[i].size)
       const qty = localCart[i].quantity
+      const productDetail = {
+        id: prod._id + clor._id + sze._id,
+        price: prod.price,
+        image: prod.productImage[0],
+        product: prod.name,
+        productID: prod._id,
+        color: clor.color,
+        size: sze.size,
+        quantity: qty,
+        colorId: clor._id,
+        sizeId: sze._id,
+      }
+      totalAmount += Number(qty)
+      totalPrice += qty * prod.price
+      // productList[i].product = productDetail
+      detailList.push(productDetail)
+    }
+    var total = totalPrice + 20000 
+    totalPrice = totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+    total = total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+    return {detailList, totalAmount, totalPrice, total}
+  },
+
+  getLoggedlCart: async (cart) => {
+    var totalAmount = 0
+    var totalPrice = 0
+    var detailList = []
+    console.log(cart.productList)
+    for (let i = 0; i < cart.productList.length; i++) {
+      const prod = await productService.getProductById(cart.productList[i].product)
+      const clor = await colorService.findColorById(cart.productList[i].color)
+      const sze = await sizeService.getSizeById(cart.productList[i].size)
+      const qty = cart.productList[i].quantity
+      console.log(prod)
       const productDetail = {
         id: prod._id + clor._id + sze._id,
         price: prod.price,
