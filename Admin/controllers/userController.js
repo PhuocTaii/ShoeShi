@@ -19,6 +19,17 @@ const userController = {
     }
   },
 
+  addAdmin: async (req, res) => {
+    try{
+      // console.log(req.body)
+      const user = await userService.addAdmin(req.body)
+      res.status(200).json(user)
+    } catch (err) {
+      res.status(500).json(err)
+      console.log(err)
+    }
+  },
+
   //DELETE customers
   deleteUser: async (req, res) => {
     try {

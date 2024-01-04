@@ -2,8 +2,8 @@ const userController = require('../controllers/userController')
 const router = require('express').Router()
 const { isAdmin } = require('../middleware/authenticationMiddleware')
 
-//GET all users
-// router.get('/', isAdmin, userController.getAllUsers)
+//ADD one admin
+router.post('/', isAdmin, userController.addAdmin)
 
 //DELETE user
 router.delete('/:id', isAdmin, userController.deleteUser)
