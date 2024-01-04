@@ -50,6 +50,12 @@ const authController = {
     res.render('auth', { layout: 'auth' })
   },
 
+  banUser: (req, res) => {
+    res.render('banned', {
+      layout: 'auth',
+      extraStyles: 'banned.css',
+    })
+  },
 }
 
 module.exports = authController

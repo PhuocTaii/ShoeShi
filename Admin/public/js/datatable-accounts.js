@@ -3,6 +3,7 @@ let sortBy = ''
 let sortOrder = 1
 let filterOption = ''
 const sortOptions = {
+  'none': { sortBy: '', sortOrder: '' },
   'name-a-z': { sortBy: 'name', sortOrder: 'asc' },
   'name-z-a': { sortBy: 'name', sortOrder: 'desc' },
   'email-a-z': { sortBy: 'email', sortOrder: 'asc' },
