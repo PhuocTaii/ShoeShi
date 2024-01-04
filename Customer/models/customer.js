@@ -50,6 +50,11 @@ const customerSchema = new mongoose.Schema({
     type: String,
     default: 'https://via.placeholder.com/100',
   },
+
+  isBan: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 const Customer = mongoose.model('Customer', customerSchema)

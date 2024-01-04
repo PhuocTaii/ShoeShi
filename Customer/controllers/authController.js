@@ -1,5 +1,6 @@
 const authService = require('../services/authService')
 const passport = require('../config/passport.config')
+const userService = require('../services/userService')
 
 const authController = {
   //Server side
@@ -22,12 +23,17 @@ const authController = {
       if (!user) {
         return res.status(401).json({ message: info.message })
       }
-      req.logIn(user, (loginErr) => {
+      req.logIn(user, async (loginErr) => {
+        // Add async here
         if (loginErr) {
           return res.status(500).json({ message: 'Login Error' })
-        }
-        else
+        } else {
+          const user = await userService.getUserById(req.user.id) // Now you can use await here
+          if (user?.isBan) {
+            return res.status(200).json({ redirect: '/banned' })
+          }
           return res.status(200).json({ redirect: '/' })
+        }
       })
     })(req, res, next)
   },
@@ -59,16 +65,20 @@ const authController = {
 
   getUserLogOut: (req, res) => {
     req.logout((err) => {
-    if (err) {
-      // Handle logout error
-      return res.status(500).json({ message: 'Logout Error' });
-    }
-    res.redirect('/');
-  });
-  }
+      if (err) {
+        // Handle logout error
+        return res.status(500).json({ message: 'Logout Error' })
+      }
+      res.redirect('/')
+    })
+  },
 
+  banUser: (req, res) => {
+    res.render('banned', {
+      layout: 'auth',
+      extraStyles: 'banned.css',
+    })
+  },
 }
-
-
 
 module.exports = authController
