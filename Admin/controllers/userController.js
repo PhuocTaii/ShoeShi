@@ -67,6 +67,7 @@ const userController = {
       const startIndex = (currentPage - 1) * usersPerPage
       const endIndex = currentPage * usersPerPage
       const usersInPage = users.slice(startIndex, endIndex)
+
       res.status(200).json({ usersInPage, pages, currentPage })
     } catch (err) {
       res.status(500).json(err)
@@ -90,6 +91,7 @@ const userController = {
       name: user.name,
       email: user.email,
       createTime: user.createTime,
+      isBan: user.isBan,
     }))
 
     res.render('accounts', {
@@ -107,6 +109,36 @@ const userController = {
       layout: 'main',
       extraStyles: 'profile.css',
     })
+  },
+
+  getUserById: async (req, res) => {
+    try {
+      const user = await userService.getUserById(req.params.id)
+      const formattedUser = {
+        id: user._id, // Assuming _id is the ID of the user
+        name: user.name,
+        gender: user.gender,
+        address: user.address,
+        email: user.email,
+        phone: user.phoneNum,
+        dob: user.birthday,
+        username: user.username,
+      }
+      return res.status(200).json(formattedUser) // Return the fetched user
+    } catch (err) {
+      res.status(500).json(err)
+    }
+  },
+
+  banAccount: async (req, res) => {
+    try {
+      const user = await userService.getUserById(req.params.id)
+      user.isBan = !user.isBan
+      await user.save()
+      res.status(200).json('The user has been banned')
+    } catch (err) {
+      res.status(500).json(err)
+    }
   },
 }
 module.exports = userController

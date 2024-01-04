@@ -6,7 +6,11 @@ const orderService = {
   // Create a new order
   // Get all orders
   getAllOrders: async () => {
-    return await Order.find()
+    return await Order.find().sort({ orderTime: -1 });
+  },
+
+  getAllOrderByFilter: async (filter) => {
+    return await Order.find({ status: filter }).sort({ orderTime: -1 });
   },
 
   getAllDoneOrders: async () => {
@@ -44,7 +48,7 @@ const orderService = {
 
   // Update an order
   updateOrder: async (id, data) => {
-    return await Order.findByIdAndUpdate(id, { $set: data })
+    return await Order.findByIdAndUpdate(id, { status: data })
   },
 
   // Delete an order

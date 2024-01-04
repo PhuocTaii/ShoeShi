@@ -26,6 +26,7 @@ function fetchPage(pageNumber) {
 
       data.usersInPage.forEach((customer) => {
         const row = document.createElement('tr')
+        row.setAttribute('data-id', customer._id)
 
         const usernameCell = document.createElement('td')
         usernameCell.textContent = customer.username
@@ -47,6 +48,11 @@ function fetchPage(pageNumber) {
         const input = document.createElement('input')
         input.type = 'checkbox'
         checkBox.appendChild(input)
+        if (customer.isBan) {
+          input.checked = true
+        } else {
+          input.checked = false
+        }
         row.appendChild(checkBox)
 
         // Add the row to the table
@@ -86,6 +92,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
   currentPage = 1
   fetchPage(currentPage)
 })
+
 document.addEventListener('DOMContentLoaded', (event) => {
   const sortSelect = document.getElementById('customer-sort')
   const filterSelect = document.getElementById('customer-filter')
@@ -104,3 +111,109 @@ document.addEventListener('DOMContentLoaded', (event) => {
     fetchPage(currentPage)
   })
 })
+
+document.addEventListener('DOMContentLoaded', (event) => {
+  // ... rest of your code ...
+
+  const table = document.getElementById('table-accounts')
+  table.addEventListener('click', (event) => {
+    const target = event.target
+    if (target.type === 'checkbox') {
+      event.stopPropagation()
+      return
+    }
+    const row = target.closest('tr')
+    if (!row) return
+
+    const id = $(row).data('id')
+
+    $.ajax({
+      url: `/user/${id}`,
+      method: 'GET', // Change the method as per your requirement
+      success: function (response) {
+        // Handle the response from the server if needed
+        const { id, name, gender, address, email, phone, dob, username } =
+          response
+
+        $('.username-modal').text(username)
+        $('.name-modal').text(name)
+        $('.gender-modal').text(gender)
+        $('.address-modal').text(address)
+        $('.email-modal').text(email)
+        $('.phone-modal').text(phone)
+        $('.dob-modal').text(formatDate(dob))
+
+        var myModal = new bootstrap.Modal(
+          document.getElementById('modal-account-detail')
+        )
+        myModal.show()
+      },
+      error: function (error) {
+        console.error('Error sending data:', error)
+      },
+    })
+  })
+})
+
+document.addEventListener('DOMContentLoaded', (event) => {
+  // Get the table element
+  const table = document.getElementById('table-accounts')
+
+  // Add a click event listener to the table
+  table.addEventListener('click', (event) => {
+    const target = event.target
+    const row = target.closest('tr')
+    if (!row) return
+
+    // If the clicked element is a checkbox, ban the account
+    if (target.type === 'checkbox') {
+      const accountId = row.getAttribute('data-id')
+
+      if (target.checked) {
+        // If the checkbox is checked, send a request to ban the account
+        fetch(`/user/ban/${accountId}`, {
+          method: 'POST',
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.success) {
+              console.log(`Account ${accountId} has been banned.`)
+            } else {
+              console.error(`Failed to ban account ${accountId}.`)
+            }
+          })
+          .catch((error) => {
+            console.error('Error:', error)
+          })
+      } else {
+        // If the checkbox is checked, send a request to ban the account
+        fetch(`/user/ban/${accountId}`, {
+          method: 'POST',
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.success) {
+              console.log(`Account ${accountId} has been unbanned.`)
+            } else {
+              console.error(`Failed to unban account ${accountId}.`)
+            }
+          })
+          .catch((error) => {
+            console.error('Error:', error)
+          })
+      }
+    }
+  })
+})
+
+function formatDate(dateString) {
+  const date = new Date(dateString)
+
+  const formattedDate = date.toLocaleDateString('vi-VN', {
+    year: 'numeric',
+    month: 'numeric',
+    day: 'numeric',
+  })
+
+  return `${formattedDate}`
+}

@@ -240,12 +240,6 @@ const productService = {
     const productsCount = Product.aggregate(pipeline)
     return productsCount
   },
-
-  // updateProductQuantity: async(productId, amount) => {
-  //   const update = { quantity: quantity - amount, totalPurchase: totalPurchase + amount};
-  //   const product = await Product.findByIdAndUpdate(productId, update)
-  //   product.save()
-  // }
 }
 
 module.exports = productService

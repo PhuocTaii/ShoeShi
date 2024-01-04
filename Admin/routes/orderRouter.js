@@ -2,7 +2,9 @@ const orderController = require('../controllers/orderController')
 const router = require('express').Router()
 const { isAdmin } = require('../middleware/authenticationMiddleware')
 
-// router.get('/', isAdmin, orderController.getAllOrders)
+router.get('/allOrders', isAdmin, orderController.getAllOrders)
+
+router.get('/search', isAdmin, orderController.getAllOrderByFilter)
 
 router.get('/:id', isAdmin, orderController.getOrderById)
 

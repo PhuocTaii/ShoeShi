@@ -21,6 +21,14 @@ const manufacturerService = {
     const manufacturer = Manufacturer.findOne({ name: name })
     return manufacturer
   },
+
+  updateManufacturer(id, manufacturer) {
+    const updatedManufacturer = Manufacturer.findByIdAndUpdate(
+      id,
+      manufacturer,
+    )
+    return updatedManufacturer
+  },
 }
 
 module.exports = manufacturerService
