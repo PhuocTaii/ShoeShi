@@ -82,6 +82,11 @@ const customerSchema = new mongoose.Schema({
     default: 'https://via.placeholder.com/100',
   },
 
+  isBan: {
+    type: Boolean,
+    default: false,
+  },
+  
   googleId: {
     type: String,
   },

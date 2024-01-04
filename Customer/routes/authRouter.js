@@ -52,5 +52,6 @@ router.post('/login/find-account', authController.findUserByUsername)
 //User log out page
 router.get('/logout', authController.getUserLogOut)
 
+router.get('/banned', authController.banUser)
 
 module.exports = router
