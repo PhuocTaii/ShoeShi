@@ -48,6 +48,13 @@ function updatePassword(event) {
     
   
     const newPassword = document.getElementById('new-password').value
+    const confirmPassword = document.getElementById('confirm-password').value;
+    const input = document.getElementById('current-password')
+
+    if(newPassword != confirmPassword){
+        alert('Confirm password not match')
+        return
+    }
     
     const id = document.getElementById('main-profile-detail').getAttribute('profile-id')
   
@@ -64,6 +71,9 @@ function updatePassword(event) {
         document.getElementById('new-password').value='';
         document.getElementById('btn-reset-password').disabled = true;
         document.getElementById('current-password').value='';
+        document.getElementById('confirm-password').value='';
+        input.classList.remove("is-valid");
+
         // Optionally, show a success message to the user
       },
       error: function (xhr, status, error) {

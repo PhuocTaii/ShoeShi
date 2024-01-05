@@ -132,10 +132,12 @@
             placeholder='Current password'
             id='current-password'
             minlength='8'
-            {{!-- pattern='(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}' --}}
-            {{!-- oninput="checkOldPassword(this)" --}}
+            pattern = '^(?=.*[a-zA-Z])(?=.*\d).{8,}$'
             required
+            oninput="checkOldPassword()"
+            aria-describedby="feedback-current-password"
           />
+          <div id="feedback-current-password" class="invalid-feedback"></div>
         </div>
 
         <div class='mb-2'>
@@ -148,7 +150,7 @@
             id='new-password'
             required
             minlength='8'
-            {{!-- pattern='(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}' --}}
+            pattern = '^(?=.*[a-zA-Z])(?=.*\d).{8,}$'
           />
         </div>
 
@@ -162,13 +164,15 @@
             id='confirm-password'
             required
             minlength='8'
-            {{!-- pattern='(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}' --}}
+            pattern = '^(?=.*[a-zA-Z])(?=.*\d).{8,}$'
           />
         </div>
 
         <button
           class='btn btn-dark fs-6 text-center my-4 px-5 py-3'
           type='submit'
+          id="btn-reset-password"
+          disabled
         >
           SAVE</button>
       </form>

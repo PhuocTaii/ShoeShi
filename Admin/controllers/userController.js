@@ -153,9 +153,10 @@ const userController = {
       const user = await userService.getUserById(req.params.id)
       user.isBan = !user.isBan
       await user.save()
-      res.status(200).json('The user has been banned')
+      res.status(200).json({success: true, message: 'The user has been banned'})
     } catch (err) {
       res.status(500).json(err)
+      console.log(err)
     }
   },
 }

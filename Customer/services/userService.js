@@ -1,5 +1,6 @@
 const User = require('../models/customer')
 const Cart = require('../models/cart')
+const bcrypt = require('bcrypt')
 
 const userService = {
   addUser(user, imageUrl) {
@@ -50,9 +51,20 @@ const userService = {
     return user
   },
 
-  checkOldPass(oldPassword, hashedPassword) {
-    return bcrypt.compare(oldPassword, hashedPassword)
+  checkPassword: async(curPass, hashPass) => {
+    const passwordMatch = bcrypt.compare(curPass, hashPass)
+    return passwordMatch
   },
+
+  resetPassword: async(id, newPassword) => {
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(newPassword, salt);
+    return User.findByIdAndUpdate(id, {password: hashedPassword})
+  },
+
+  // checkOldPass(oldPassword, hashedPassword) {
+  //   return bcrypt.compare(oldPassword, hashedPassword)
+  // },
 }
 
 module.exports = userService
