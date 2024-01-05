@@ -85,7 +85,10 @@ const productController = {
       const page = parseInt(req.query.page) || 1
       const product = await productService.getProductById(req.params.id)
       const relatedProducts = await productService.getRelatedProducts(product, req.params.id)
-      res.status(200).json(relatedProducts)
+      res.status(200).json({
+        products: relatedProducts,
+        amount: relatedProducts.length,
+      })
     } catch(err){
       res.status(500).json(err)
     }
