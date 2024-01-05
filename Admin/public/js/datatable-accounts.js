@@ -3,12 +3,13 @@ let sortBy = ''
 let sortOrder = 1
 let filterOption = ''
 const sortOptions = {
+  'none': { sortBy: '', sortOrder: '' },
   'name-a-z': { sortBy: 'name', sortOrder: 'asc' },
   'name-z-a': { sortBy: 'name', sortOrder: 'desc' },
   'email-a-z': { sortBy: 'email', sortOrder: 'asc' },
   'email-z-a': { sortBy: 'email', sortOrder: 'desc' },
-  newest: { sortBy: 'registrationTime', sortOrder: 'desc' },
-  oldest: { sortBy: 'registrationTime', sortOrder: 'asc' },
+  newest: { sortBy: 'createTime', sortOrder: 'desc' },
+  oldest: { sortBy: 'createTime', sortOrder: 'asc' },
 }
 
 function toggleAccountDetail(id) {
@@ -69,6 +70,12 @@ function fetchPage(pageNumber, pageAdmin, isAdmin) {
         }
         row.appendChild(checkBox)
 
+        if(isAdmin){
+          document.getElementById('form-control-admin').value = ''
+        } else{
+          document.getElementById('form-control').value = ''
+        }
+
         // Add the row to the table
         table.appendChild(row)
       })
@@ -83,14 +90,12 @@ let currentPage = 1
 let currentPageAdmin = 1
 
 document.getElementById('nextPage').addEventListener('click', () => {
-  event?.preventDefault()
   currentPage++
   adminSearch = false
   fetchPage(currentPage, currentPageAdmin, adminSearch)
 })
 
 document.getElementById('prevPage').addEventListener('click', () => {
-  event?.preventDefault()
   if (currentPage > 1) {
     currentPage--
     adminSearch = false
@@ -99,14 +104,12 @@ document.getElementById('prevPage').addEventListener('click', () => {
 })
 
 document.getElementById('nextPageAdmin').addEventListener('click', () => {
-  event?.preventDefault()
   currentPageAdmin++
   adminSearch = true
   fetchPage(currentPage, currentPageAdmin, adminSearch)
 })
 
 document.getElementById('prevPageAdmin').addEventListener('click', () => {
-  event?.preventDefault()
   if (currentPageAdmin > 1) {
     currentPageAdmin--
     adminSearch = true

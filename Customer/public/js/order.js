@@ -1,7 +1,7 @@
 const templateOrder = `
   <div class='row'>
     <div class='col d-inline-flex'>
-      <div class='number-item text-muted quantity-modal'>1x</div>
+      <div class='number-item text-muted quantity-modal'></div>
       <div class='item-info flex-column'>
         <div class='item-name item-modal'>Item Name</div>
         <div class='item-property d-inline-flex flex-row'>
@@ -67,10 +67,10 @@ $(document).ready(function () {
         $('.status-modal').text(status)
         $('.address-modal').text(address)
         $('.subtotal-modal').text(
-          `${(totalPrice - 20000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`
+          `${((totalPrice - 20000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','))}đ`
         )
         $('.total-modal').text(
-          `${(totalPrice).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} đ`
+          `${((totalPrice).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','))}đ`
 
         )
 
@@ -79,7 +79,9 @@ $(document).ready(function () {
 
         items.forEach((item) => {
           const itemDiv = $('<div>').html(templateOrder)
+          console.log(item)
           itemDiv.find('.item-name').text(item.itemName)
+          itemDiv.find('.quantity-modal').text(`${item.itemQuantity}x`)
           itemDiv.find('.size-modal').text(`│ Size: ${item.itemSize}`)
           itemDiv.find('.price-item-modal').text(`${item.itemPrice} đ`)
           itemDiv.find('.color-modal').css({

@@ -56,6 +56,9 @@
               {{prodList.length}}
             {{else}}
             <script>
+              if(!localStorage.getItem('cartData')) {
+                localStorage.setItem('cartData', JSON.stringify([]))
+              }
               const cartSize = JSON.parse(localStorage.getItem('cartData')).length || 0
               document.getElementById("number-cart-items").innerHTML =  cartSize
             </script>
