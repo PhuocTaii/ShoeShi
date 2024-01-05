@@ -65,6 +65,7 @@ const cartService = {
       if (cart.productList[i].product == productId.toString() && cart.productList[i].color.toString() == colorId.toString() && cart.productList[i].size.toString() == sizeId.toString()) {
         cart.productList.splice(i, 1)
         cart.save()
+        break;
       }
     }
     for (let i = 0; i < cart.productList.length; i++) {
@@ -143,7 +144,6 @@ const cartService = {
   },
 
   getProductListByIdForCheckout: async (cart) => {
-    // Assuming cartService.getOneCart returns a promise
     const productList = cart.productList
     var detailList = []
     for (let i = 0; i < productList.length; i++) {
@@ -191,7 +191,6 @@ const cartService = {
       }
       totalAmount += Number(qty)
       totalPrice += qty * prod.price
-      // productList[i].product = productDetail
       detailList.push(productDetail)
     }
     var total = totalPrice + 20000 
@@ -204,13 +203,11 @@ const cartService = {
     var totalAmount = 0
     var totalPrice = 0
     var detailList = []
-    console.log(cart.productList)
     for (let i = 0; i < cart.productList.length; i++) {
       const prod = await productService.getProductById(cart.productList[i].product)
       const clor = await colorService.findColorById(cart.productList[i].color)
       const sze = await sizeService.getSizeById(cart.productList[i].size)
       const qty = cart.productList[i].quantity
-      console.log(prod)
       const productDetail = {
         id: prod._id + clor._id + sze._id,
         price: prod.price,
@@ -225,7 +222,6 @@ const cartService = {
       }
       totalAmount += Number(qty)
       totalPrice += qty * prod.price
-      // productList[i].product = productDetail
       detailList.push(productDetail)
     }
     var total = totalPrice + 20000 

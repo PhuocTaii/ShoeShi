@@ -10,7 +10,9 @@ router.get('/', isAuth, userController.getProfilePage)
 
 router.post('/:id', isAuth, userController.updateUser);
 
-router.post('/:id/update-password',isAuth, userController.updatePassword)
+router.post('/:id/updatePassword',isAuth, userController.resetPassword)
+
+router.post('/:id/checkPassword', isAuth, userController.checkPassword);
 
 router.post('/:id/update-avatar', upload.single('customerImage'), userController.updateAvatar)
 

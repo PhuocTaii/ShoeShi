@@ -1,15 +1,18 @@
 const orderController = require('../controllers/orderController')
 const router = require('express').Router()
+const { isAdmin } = require('../middleware/authenticationMiddleware')
 
-router.get('/order', orderController.getAllOrders)
+router.get('/allOrders', isAdmin, orderController.getAllOrders)
 
-router.get('/order/:id', orderController.getOrderById)
+router.get('/search', isAdmin, orderController.getAllOrderByFilter)
 
-router.put('/order/:id', orderController.updateOrder)
+router.get('/:id', isAdmin, orderController.getOrderById)
 
-router.delete('/order/:id', orderController.deleteOrder)
+router.put('/:id', isAdmin, orderController.updateOrder)
 
-router.get('/orders', orderController.getAdminOrderPage)
+router.delete('/:id', isAdmin, orderController.deleteOrder)
+
+router.get('/', isAdmin, orderController.getAdminOrderPage)
   
 
 module.exports = router

@@ -53,3 +53,10 @@
   color: #707072;
   font-weight: 500;
 }
+
+.add-admin input[type="text"],
+.add-admin input[type="email"],
+.add-admin input[type="tel"],
+.add-admin input[type="date"] {
+  width: 100%;
+}

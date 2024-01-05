@@ -1,9 +1,4 @@
 const mongoose = require('mongoose')
-const Customer = require('./customer')
-const Size = require('./size')
-const Color = require('./color')
-const Category = require('./category')
-const Manufacturer = require('./manufacturer')
 
 const productSchema = new mongoose.Schema({
   name: {
@@ -18,32 +13,6 @@ const productSchema = new mongoose.Schema({
   price: {
     type: Number,
   },
-
-  review: [
-    {
-      reviewer: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Customer',
-      },
-
-      rating: {
-        type: Number,
-      },
-
-      title: {
-        type: String,
-      },
-
-      content: {
-        type: String,
-      },
-
-      reviewTime: {
-        type: Date,
-        default: Date.now,
-      },
-    },
-  ],
 
   size: [
     {
@@ -71,6 +40,11 @@ const productSchema = new mongoose.Schema({
     default: Date.now,
   },
 
+  quantity: {
+    type: Number,
+    default: 0,
+  },
+
   totalPurchase: {
     type: Number,
     default: 0,
@@ -78,6 +52,7 @@ const productSchema = new mongoose.Schema({
 
   status: {
     type: String,
+    enum: ['On stock', 'Out of stock', 'Suspend'],
   },
 
   productImage: [
@@ -88,5 +63,20 @@ const productSchema = new mongoose.Schema({
 })
 
 const Product = mongoose.model('Product', productSchema)
+productSchema.pre('remove', async function (next) {
+  try {
+    await Cart.updateMany(
+      { 'productList.product': this._id },
+      { $pull: { productList: { product: this._id } } }
+    );
+    await Order.updateMany(
+      { 'productList.product': this.name },
+      { $pull: { productList: { product: this.name } } }
+    );
+    next();
+  } catch (error) {
+    next(error);
+  }
+});
 
 module.exports = Product

@@ -65,33 +65,62 @@ const productsTemplate =
 const productsTemplateFunction = Handlebars.compile(productsTemplate);
 
 function updateProductListView(data) {
+	console.log(data)
 	document.getElementById("product-container").innerHTML = productsTemplateFunction(data);
 	document.getElementById("product-pagination").innerHTML = paginationTemplateFunction(data);
 }
 
+console.log(window.location.href)
+
 $.getJSON(window.location.href, function( data ) {
 	updateProductListView(data)
 });
+
 function paging(page) {
-	const url = window.location.href
-	$.getJSON(url+`&page=${page}`, function( data ) {
+	const url = new URL(window.location.href);
+	url.search = getQueryString()
+  	// const query = url.search;
+	// if(query.length > 0) {
+	// 	url.searchParams.set('page', page);
+	// }
+	// else {
+	// 	url.search = `?page=${page}`;
+	// }
+	url.searchParams.set('page', page);
+
+	$.getJSON('/product/productData' + url.search, function( data ) {
+		// window.history.pushState({html: data.html},"", url.href);
 		updateProductListView(data)
 	});
 }
 
-// FILTER
+// // FILTER
 function getQueryString() {
 	const filter = $('#filter-form').serialize()
+  const url = new URL(window.location.href);
+
+	const urlParams = new URLSearchParams(filter);
+	if(urlParams.get('product-name')==='')
+		urlParams.delete('product-name')
+	if(urlParams.get('from-input')==='100000')
+		urlParams.delete('from-input')
+	if(urlParams.get('to-input')==='9000000')
+		urlParams.delete('to-input')
+
+	url.search = '?' + urlParams.toString()
+  
 	const sortVal = document.getElementById('sort-products').value
-	const sort = (sortVal!=='none') ? 'sort=' + document.getElementById('sort-products').value : ''
-	return sort!=='' ? filter+'&'+sort : filter
+  if(sortVal!=='none')
+    url.searchParams.set('sort', sortVal);
+
+  return url.search
 }
 
 function handleQuery(event) {
 	event.preventDefault()
 	const query = getQueryString()
-	$.getJSON('/product?'+query, function( data ) {
-		window.history.pushState({"html":data.html},"", '/product?'+query);
-		updateProductListView(data)
-	});
+	$.getJSON('/product/productData' + query, function( data ) {
+		// window.history.pushState(data.html,"", '/product'+query);
+		updateProductListView(data);
+	})
 }

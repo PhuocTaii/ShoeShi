@@ -10,10 +10,7 @@ const passport = require('passport')
 const session = require('express-session')
 const exphbs = require('./config/handlebars.config')
 const express_handlebars_sections = require('express-handlebars-sections');
-// var bodyParser = require('body-parser');
-// const morgan = require('morgan');
 
-//Cloudinary config
 const cloudinary = require('./config/cloudinary.config')
 
 
@@ -27,6 +24,7 @@ const orderAdminRouter = require('./routes/orderRouter')
 const productAdminRouter = require('./routes/productRouter')
 const sizeAdminRouter = require('./routes/sizeRouter')
 const userAdminRouter = require('./routes/userRouter')
+const profileRouter = require('./routes/profileRouter')
 
 
 const app = express()
@@ -49,8 +47,6 @@ app.engine('hbs', exphbs.engine);
 app.set('view engine', 'hbs')
 app.set('views', path.join(__dirname, 'views'))
 
-// app.use(bodyParser.json());
-// app.use(morgan('common'));
 app.use(cors())
 app.use(cookieParser())
 app.use(logger('dev'))
@@ -72,18 +68,16 @@ app.use(
 app.use(passport.initialize())
 app.use(passport.session())
 
-app.use(
-  '/',
-  indexAdminRouter,
-  authAdminRouter,
-  categoryAdminRouter,
-  colorAdminRouter,
-  manufacturerAdminRouter,
-  orderAdminRouter,
-  productAdminRouter,
-  sizeAdminRouter,
-  userAdminRouter
-)
+app.use('/', indexAdminRouter)
+app.use('/', authAdminRouter)
+app.use('/category', categoryAdminRouter)
+app.use('/color', colorAdminRouter)
+app.use('/manufacturer', manufacturerAdminRouter)
+app.use('/order', orderAdminRouter)
+app.use('/product', productAdminRouter)
+app.use('/size', sizeAdminRouter)
+app.use('/user', userAdminRouter)
+app.use('/profile', profileRouter)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

@@ -38,7 +38,7 @@ function formatDateTime(dateString) {
 
 function populateItemSummary(items) {
   const itemSummaryContainer =
-    document.getElementsByClassName('all-items-modal') // Assuming a container with ID 'itemSummaryContainer'
+    document.getElementsByClassName('all-items-modal') 
 
   items.forEach((item) => {
     const itemDiv = document.createElement('div')
@@ -51,26 +51,23 @@ function populateItemSummary(items) {
 $(document).ready(function () {
   $('.orderView').on('click', function () {
     const id = $(this).data('id')
-    console.log(id)
 
     $.ajax({
       url: `/order/${id}`,
-      method: 'GET', // Change the method as per your requirement
+      method: 'GET', 
       success: function (response) {
         // Handle the response from the server if needed
         const { date, status, address, totalPrice, items } = response
-		    // document.getElementById("number-cart-items").innerHTML = 0;
 
-        const adjustedSubPrice = parseFloat(totalPrice) - 20000 // Subtract 20,000 VND
+        const adjustedSubPrice = parseFloat(totalPrice) - 20000 
         const formattedAdjustedSubPrice =
           adjustedSubPrice.toLocaleString('vi-VN') // Format with commas for thousands separators
-        console.log(adjustedSubPrice)
 
         $('.date-modal').text(formatDateTime(date))
         $('.status-modal').text(status)
         $('.address-modal').text(address)
         $('.subtotal-modal').text(
-          `${(totalPrice - 20000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} đ`
+          `${(totalPrice - 20000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`
         )
         $('.total-modal').text(
           `${(totalPrice).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} đ`
@@ -87,7 +84,7 @@ $(document).ready(function () {
           itemDiv.find('.price-item-modal').text(`${item.itemPrice} đ`)
           itemDiv.find('.color-modal').css({
             'background-color': item.itemColor,
-            border: '1px solid black', // Add black border
+            border: '1px solid black',
           })
 
           itemSummaryContainer.append(itemDiv)
@@ -95,13 +92,11 @@ $(document).ready(function () {
 
         $('#detailModal').modal('show')
 
-        console.log('Data sent successfully')
       },
       error: function (error) {
         console.error('Error sending data:', error)
       },
     })
 
-    // Populate the modal with order details
   })
 })

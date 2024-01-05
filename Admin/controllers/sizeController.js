@@ -28,7 +28,8 @@ const sizeController = {
   addSize: async (req, res) => {
     try {
       const size = await sizeService.addSize(req.body)
-      res.status(200).json(size)
+      const sizes = await sizeService.getAllSizes()
+      res.status(200).json(sizes)
     } catch (err) {
       res.status(500).json(err)
     }
@@ -41,7 +42,8 @@ const sizeController = {
       if (!foundSize) {
         return res.status(404).json('Size not found')
       }
-      res.status(200).json(foundSize)
+      const sizes = await sizeService.getAllSizes()
+      res.status(200).json(sizes)
     } catch (err) {
       res.status(500).json(err)
     }
@@ -54,7 +56,8 @@ const sizeController = {
       if (!foundSize) {
         return res.status(404).json('Size not found')
       }
-      res.status(200).json(foundSize)
+      const sizes = await sizeService.getAllSizes()
+      res.status(200).json(sizes)
     } catch (err) {
       res.status(500).json(err)
     }

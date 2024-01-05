@@ -9,131 +9,79 @@ const userService = require('../services/userService')
 
 const productController = {
   //GET all products
-  // getAllProducts: async (req, res) => {
-  //   try {
-  //     const { 'product-name': productName, category, manufacturer, page, sort } = req.query;
+  getAllProducts: async (req, res) => {
+    try {
+      const acceptHeader = req.get('Accept');
+  
+      if (acceptHeader && acceptHeader.includes('application/json')) {
+        const { 'product-name': productName, category, manufacturer, page, sort } = req.query;
+        const pageTo = parseInt(page) || 1
 
-  //     const pageTo = parseInt(page) || 1
+        const products = await productService.getProductsWithCondition(pageTo, productName, category, manufacturer, sort)
+        const totalProducts = await productService.getTotalProductsWithCondition(pageTo, productName, category, manufacturer, sort)
+        const amountProduct = totalProducts[0] ? totalProducts[0].totalCount : 0
+        const totalPages = Math.ceil(amountProduct / productService.productsPerPage)
+        res.json({
+          products,
+          totalPages,
+          activePage: pageTo
+        });
+      }
+      else {
+        const categories = await categoryService.getAllCategories()
+        const manufacturers = await manufacturerService.getAllManufacturers()
+        const colors = await colorService.getAllColors()
+        const sizes = await sizeService.getAllSizes()
 
-  //     var products
-  //     var totalProducts
-  //     var totalPages
-
-  //     if(sort && sort != 'none') {
-  //       products = await productService.sortProducts(sort, pageTo)
-  //       totalProducts = await productService.getTotalProducts()
-  //       totalPages = Math.ceil(totalProducts / productService.productsPerPage)
-  //     }
-  //     else {
-  //       const conditions = {}
-  //       if(productName){
-  //         conditions.name = productName
-  //       }
-
-  //       if (category){        
-  //         conditions.category = []
-  //         if(!Array.isArray(category)){
-  //           const cateID = await categoryService.getCategoryByName(category)
-  //           conditions.category.push(cateID)
-  //         }
-  //         else{
-  //           for(cate of category){
-  //             const cateID = await categoryService.getCategoryByName(cate)
-  //             conditions.category.push(cateID)
-  //           }
-  //         }
-  //       } 
-
-  //       if(manufacturer){
-  //         conditions.manufacturer = []
-  //         if(!Array.isArray(manufacturer)){
-  //           const manuID = await manufacturerService.findManufacturerByName(manufacturer)
-  //           conditions.manufacturer.push(manuID)
-  //         }
-  //         else{
-  //           for(manu of manufacturer){
-  //             const manuID = await manufacturerService.findManufacturerByName(manu)
-  //             conditions.manufacturer.push(manuID)
-  //           }
-  //         }
-  //       }
-        
-
-  //       if(conditions) {
-  //         products = await productService.getProductByFilter(conditions, pageTo)
-  //         totalProducts = await productService.getTotalFilteredProducts(conditions)
-  //         totalPages = Math.ceil(totalProducts / productService.productsPerPage)
-  //       }
-  //       else {
-  //         products = await productService.getProducts(pageTo)
-  //       }
-  //     }
-
-  //     const categories = await categoryService.getAllCategories()
-  //     const manufacturers = await manufacturerService.getAllManufacturers()
-
-  //     res.format({
-  //       html: function () {
-  //         res.render('productList', {
-  //           categories,
-  //           manufacturers,
-  //           products,
-  //           totalPages,
-  //           activePage: pageTo,
-  //           layout: 'main',
-  //           extraStyles: 'productList.css',
-  //         });
-  //       },
-  //       json: function () {
-  //         res.json({
-  //           products,
-  //           totalPages,
-  //           activePage: pageTo
-  //         });
-  //       }
-  //     });
-  //   } catch (err) {
-  //     res.status(500).json(err)
-  //     console.log(err)
-  //   }
-  // },
-
+        res.render('products', {
+          categories,
+          manufacturers,
+          colors,
+          sizes,
+          layout: 'main',
+          extraStyles: 'products.css',
+          user: req.user
+        });
+      }
+      } catch (err) {
+        res.status(500).json(err)
+      }
+  },
 
   //ADD product
   addProduct: async (req, res) => {
     try {
-      var colorArr = [],
-        sizeArr = [],
-        categoryArr = [],
-        imageArr = []
-      for (color of req.body.color) {
-        const colorObj = await colorService.findColorByName(color)
-        colorArr.push(colorObj)
+      var productImageList = []
+      if(req.files){
+        for(let i = 0; i < req.files.length; i++) {
+          const file = req.files[i]
+          const imageUrl = await imageService.uploadImageToCloudinary(file.buffer)
+          productImageList.push(imageUrl)
+        }
       }
-      for (size of req.body.size) {
-        const sizeObj = await sizeService.getSizeByNumber(size)
-        sizeArr.push(sizeObj)
-      }
-      for (category of req.body.category) {
-        const categoryObj = await categoryService.getCategoryByName(category)
-        categoryArr.push(categoryObj)
-      }
-      for (image of req.body.productImage) {
-        imageUrl = await imageService.uploadImageToCloudinary(image)
-        imageArr.push(imageUrl)
-      }
-      const manufacturer = await manufacturerService.findManufacturerByName(
-        req.body.manufacturer
-      )
-      const savedProduct = await productService.addProduct(
-        req.body,
-        colorArr,
-        sizeArr,
-        categoryArr,
-        manufacturer,
-        imageArr
-      )
+      const product = {name: req.body.name,
+                        manufacturer: req.body.manufacturer,
+                        price: req.body.price,
+                        quantity: req.body.quantity,
+                        status: req.body.status,
+                        category: JSON.parse(req.body.cates),
+                        color: JSON.parse(req.body.colors),
+                        size: JSON.parse(req.body.sizes),
+                        productImage: productImageList
+                      }
+      const savedProduct = await productService.addProduct(product)
+
       res.status(200).json(savedProduct)
+
+    } catch (err) {
+      res.status(500).json(err)
+    }
+  },
+
+  getProductById: async (req, res) => {
+    try {
+      const product = await productService.getProductById(req.params.id)
+      res.status(200).json(product)
     } catch (err) {
       res.status(500).json(err)
     }
@@ -142,14 +90,33 @@ const productController = {
   //UPDATE product
   updateProduct: async (req, res) => {
     try {
+      var productImageList = req.body.photos
+      if(req.files){
+        for(let i = 0; i < req.files.length; i++) {
+          const file = req.files[i]
+          const imageUrl = await imageService.uploadImageToCloudinary(file.buffer)
+          productImageList.push(imageUrl)
+        }
+      }
+
+      const updatedInfo = {
+        name: req.body.name,
+        manufacturer: req.body.manufacturer,
+        price: req.body.price,
+        quantity: req.body.quantity,
+        status: req.body.status,
+        category: JSON.parse(req.body.cates),
+        color: JSON.parse(req.body.colors),
+        size: JSON.parse(req.body.sizes),
+        productImage: productImageList
+      }
+      
       const product = await productService.updateProduct(
         req.params.id,
-        req.body
+        updatedInfo
       )
-      if (!product) {
-        return res.status(500).json(err)
-      }
       res.status(200).json(product)
+      
     } catch (err) {
       res.status(500).json(err)
     }
@@ -159,20 +126,10 @@ const productController = {
   deleteProduct: async (req, res) => {
     try {
       const product = await productService.deleteProduct(req.params.id)
-      if (!product) {
-        res.status(500).json(err)
-      }
       res.status(200).json('The product has been deleted')
     } catch (err) {
       res.status(500).json(err)
     }
-  },
-
-  getAdminProductPage: async (req, res) => {
-    res.render('products', {
-      layout: 'main',
-      extraStyles: 'products.css',
-    })
   },
 }
 module.exports = productController

@@ -1,13 +1,14 @@
-// module.exports.isAuth = (req, res, next) => {
-//   if (req.isAuthenticated()) return next()
-//   else {
-//     // res.redirect('/login')
-//     res.status(401).json({message: 'You must login to access'})
-//   }
-// }
+const userService = require('../services/userService')
 
-module.exports.isAdmin = (req, res, next) => {
-  if (req.isAuthenticated() && req.user.admin == true) return next()
+module.exports.isAdmin = async (req, res, next) => {
+  if (req.isAuthenticated() && req.user.admin == true){
+    const user = await userService.getUserById(req.user.id).lean();
+    if (user.isBan) {
+      res.redirect('/banned');
+    } else {
+      return next();
+    }
+  }
   else {
     res.redirect('/login')
   }

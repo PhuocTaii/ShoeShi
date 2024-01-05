@@ -67,10 +67,22 @@ const categoryController = {
 
   //Client side
   getCategoriesManufacturersPage: async(req, res) => {
-    res.render('categories', {
-      layout: 'main',
-      extraStyles: 'category.css',
-    })
+    try{
+      const acceptHeader = req.get('Accept');
+      if (acceptHeader && acceptHeader.includes('application/json')) {
+        const categories = await categoryService.getAllCategories()
+        res.status(200).json(categories)
+      }
+      else{
+        res.render('categories', {
+          layout: 'main',
+          extraStyles: 'category.css',
+          user: req.user
+        })
+      }
+    } catch (err) {
+      res.status(500).json(err)
+    }
   }
 }
 
