@@ -6,7 +6,6 @@ const User = require('../models/customer')
 const adminController = {
   getAdminProfilePage: async (req, res) => {
     const user = await User.findById(req.user.id).lean()
-    console.log(user.name)
     res.render('profile', {
       layout: 'main',
       extraStyles: 'profile.css',
@@ -32,10 +31,9 @@ const adminController = {
       const file = req.file
       const imageUrl = await imageService.uploadImageToCloudinary(file.buffer)
       const user = await userService.updateAvatarUser(req.params.id, imageUrl)
-      res.json(user);
+      res.status.json(user);
     } catch (err) {
-      // res.status(500).json(err)
-      console.log(err)
+      res.status(500).json(err)
     }
   },
 
@@ -50,17 +48,14 @@ const adminController = {
       }
     } catch (err) {
       res.status(500).json(err)
-      console.log(err)
     }
   },
 
   resetPassword: async (req, res) => {
     try {
-      console.log(req.body)
       const user = await profileService.resetPassword(req.params.id, req.body.newPassword)
       return res.status(200).json(user)
     } catch (err) {
-      console.log(err)
       return res.status(500).json(err)
     }
   },

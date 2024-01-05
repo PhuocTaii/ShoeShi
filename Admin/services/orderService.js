@@ -34,18 +34,6 @@ const orderService = {
     return revenue.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
   },
 
-  //GET orders by day
-  // getOrdersByDay: async (day) => {
-  //   const orders = await orderService.getAllOrders()
-  //   var count = 0
-  //   for(let i = 0; i < orders.length; i++) {
-  //     if(orders[i].orderTime.toLocaleDateString('en-us') == day) {
-  //       count++
-  //     }
-  //   }
-  //   return count
-  // },
-
   // Update an order
   updateOrder: async (id, data) => {
     return await Order.findByIdAndUpdate(id, { status: data })

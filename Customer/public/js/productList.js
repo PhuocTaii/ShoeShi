@@ -65,29 +65,36 @@ const productsTemplate =
 const productsTemplateFunction = Handlebars.compile(productsTemplate);
 
 function updateProductListView(data) {
+	console.log(data)
 	document.getElementById("product-container").innerHTML = productsTemplateFunction(data);
 	document.getElementById("product-pagination").innerHTML = paginationTemplateFunction(data);
 }
 
+console.log(window.location.href)
+
 $.getJSON(window.location.href, function( data ) {
 	updateProductListView(data)
 });
+
 function paging(page) {
 	const url = new URL(window.location.href);
-  const query = url.search;
-  if(query.length > 0) {
-    url.searchParams.set('page', page);
-  }
-  else {
-    url.search = `?page=${page}`;
-  }
-  $.getJSON(url.href, function( data ) {
-		window.history.pushState({"data":data},"", url.href);
+	url.search = getQueryString()
+  	// const query = url.search;
+	// if(query.length > 0) {
+	// 	url.searchParams.set('page', page);
+	// }
+	// else {
+	// 	url.search = `?page=${page}`;
+	// }
+	url.searchParams.set('page', page);
+
+	$.getJSON('/product/productData' + url.search, function( data ) {
+		// window.history.pushState({html: data.html},"", url.href);
 		updateProductListView(data)
 	});
 }
 
-// FILTER
+// // FILTER
 function getQueryString() {
 	const filter = $('#filter-form').serialize()
   const url = new URL(window.location.href);
@@ -112,8 +119,8 @@ function getQueryString() {
 function handleQuery(event) {
 	event.preventDefault()
 	const query = getQueryString()
-	$.getJSON('/product'+query, function( data ) {
-		window.history.pushState({"data":data},"", '/product'+query);
-		updateProductListView(data)
-	});
+	$.getJSON('/product/productData' + query, function( data ) {
+		// window.history.pushState(data.html,"", '/product'+query);
+		updateProductListView(data);
+	})
 }

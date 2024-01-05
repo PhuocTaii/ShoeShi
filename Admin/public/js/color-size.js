@@ -92,7 +92,6 @@ function handleSaveColor(id) {
     colorCode: document.querySelector('#color-code-chosen').innerHTML
   }
 
-  console.log(data)
 
   $.ajax({
     type: id == null ? "POST" : "PUT", 
@@ -199,7 +198,6 @@ function handleSaveSize(id) {
     size: document.querySelector('#item-size').value,
   }
 
-  console.log(data)
 
   $.ajax({
     type: id == null ? "POST" : "PUT", 
@@ -238,7 +236,6 @@ function handleSaveSize(id) {
 }
 
 function toggleDeleteItem(type ,id) {
-  console.log(type, id)
   $('#modal-delete-item').modal('toggle')
   document.querySelector('#modal-delete-item form').onsubmit = function(event) {
     event.preventDefault()
@@ -254,7 +251,6 @@ function handleDeleteItem(type, id){
       url: `/color/${id}`,
       contentType: 'application/json',
       success: function (response) {
-        console.log(response)
         document.getElementById('color-table').innerHTML = colorTableFunction(response);
         $('#modal-delete-item').modal('toggle')
         document.getElementById('toast-noti-product').innerHTML = toastTemplateFunction({
@@ -284,7 +280,6 @@ function handleDeleteItem(type, id){
       url: `/size/${id}`,
       contentType: 'application/json',
       success: function (response) {
-        console.log(response)
         document.getElementById('size-table').innerHTML = sizeTableFunction(response);
         $('#modal-delete-item').modal('toggle')
         document.getElementById('toast-noti-product').innerHTML = toastTemplateFunction({

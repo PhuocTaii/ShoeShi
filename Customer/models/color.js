@@ -20,7 +20,6 @@ const colorSchema = new mongoose.Schema({
 const Color = mongoose.model('Color', colorSchema)
 colorSchema.pre('remove', async function (next) {
   try {
-    // Xóa tất cả các Cart có sản phẩm cần xóa từ productList
     await Cart.updateMany(
       { 'productList.product': this._id },
       { $pull: { productList: { color: this._id } } }

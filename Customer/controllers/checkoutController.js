@@ -20,10 +20,13 @@ const checkoutController = {
           cart.productList[i].product
         )
         if(product.quantity < cart.productList[i].quantity){
-          return res.status(400).json('Not enough product')
+          return res.status(200).json({ valid: false, message: 'Not enough product.'})
         }
         product.totalPurchase += cart.productList[i].quantity
         product.quantity -= cart.productList[i].quantity
+        if(product.quantity == 0){
+          product.status = 'Out of stock'
+        }
         const color = await colorService.findColorById(
           cart.productList[i].color
         )
@@ -35,7 +38,6 @@ const checkoutController = {
         TotalPrice += Number(product.price * cart.productList[i].quantity)
         product.save()
       }
-      // const user = await userService.getUserById(req.user.id)
       const newOrder = await checkoutService.createOrder(
         req.body,
         req.user.id,
@@ -47,26 +49,12 @@ const checkoutController = {
         TotalPrice
       )
       const clearCart = await cartService.clearProductList(req.user.id)
-      res.status(200).json(newOrder)
+      res.status(200).json({valid: true, message: 'Create order successfully.'})
 
     } catch (err) {
       res.status(500).json(err)
-      console.log(err)
     }
   },
-
-  // // GET an order by id
-  // getOrderById: async (req, res) => {
-  //   try {
-  //     const foundOrder = await checkoutService.getOrderById(req.params.id)
-  //     if (!foundOrder) {
-  //       return res.status(404).json('Order not found')
-  //     }
-  //     res.status(200).json(foundOrder)
-  //   } catch (err) {
-  //     res.status(500).json(err)
-  //   }
-  // },
 
   getCheckoutPage: async (req, res) => {
     const cart = await cartService.getOneCart(req.user.id);

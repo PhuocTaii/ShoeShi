@@ -49,7 +49,6 @@ const authController = {
           .json({ valid: true, message: 'Username is valid' })
       }
     } catch (err) {
-      console.log(err)
       return res.status(500).json(err)
     }
   },
@@ -98,7 +97,6 @@ const authController = {
       await authService.resetPassword(req.body.id, hashedPassword)
       return res.status(200).json({ hashedPassword })
     } catch (err) {
-      console.log(err)
       return res.status(500).json(err)
     }
   },
@@ -146,7 +144,6 @@ const authController = {
       return res.status(200).json(foundUser)
       // return res.status(200).json({id: foundUser._id})
     } catch (err) {
-      console.log(err)
       return res.status(500).json(err)
     }
   },

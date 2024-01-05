@@ -208,7 +208,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
         // Handle the response from the server if needed
         const { id, name, gender, address, email, phone, dob, username, img } =
           response
-        console.log(response)
         $('.username-modal').text(username)
         $('.name-modal').text(name)
         $('.gender-modal').text(gender)
@@ -250,10 +249,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
       const userId = document.getElementById('userId').textContent
 
-      if (accountId === userId) {
-        alert("You can't ban your own account.")
-        target.checked = false
-        return
+      if (accountId.toString() == userId.toString()) {
+        if (target.checked){
+          alert("You can't ban your own account.")
+          target.checked = false
+          return
+        }
       }
 
       if (target.checked) {
@@ -263,11 +264,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
           .then((response) => response.json())
           .then((data) => {
             if (data.success) {
-              alert(`Account ${accountId} has been banned.`)
-              console.log(`Account ${accountId} has been banned.`)
+              alert(`Account has been banned.`)
             } else {
-              alert(`Account ${accountId} has been banned.`)
-              console.error(`Failed to ban account ${accountId}.`)
+              alert(`Failed to ban account.`)
             }
           })
           .catch((error) => {
@@ -280,11 +279,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
           .then((response) => response.json())
           .then((data) => {
             if (data.success) {
-              alert(`Account ${accountId} has been unbanned.`)
-              console.log(`Account ${accountId} has been unbanned.`)
+              alert(`Account has been unbanned.`)
             } else {
-              alert(`Failed to unban account ${accountId}.`)
-              console.error(`Failed to unban account ${accountId}.`)
+              alert(`Failed to unban account.`)
             }
           })
           .catch((error) => {
@@ -325,24 +322,12 @@ function toggleAddAdmin() {
 }
 
 function handleSaveAdmin() {
-  // get product info
-  // const formData = new FormData()
-
-  // const data {
-  //   username = document.querySelector('#admin-username').value,
-  // }
   var gender
-
-  // formData.append('username', document.querySelector('#admin-username').value)
-  // formData.append('password', document.querySelector('#admin-password').value)
-  // formData.append('email', document.querySelector('#admin-email').value)
-  // formData.append('name', document.querySelector('#admin-name').value)
   var genderRadios = document.getElementsByName('gender')
   var genderRadios = document.getElementsByName('gender');
   for (let i = 0; i < genderRadios.length; i++) {
     if (genderRadios[i].checked) {
       var selectedGender = genderRadios[i].value
-      // formData.append('gender', selectedGender)
       gender = selectedGender
       break
     }

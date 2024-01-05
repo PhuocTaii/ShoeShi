@@ -88,6 +88,7 @@ const orderController = {
         res.render('orders', {
           layout: 'main',
           extraStyles: 'order.css',
+          user: req.user
         })
       }
     } catch(err){

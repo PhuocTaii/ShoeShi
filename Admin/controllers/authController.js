@@ -19,7 +19,6 @@ const authController = {
       if (err) {
         return res.status(500).json(err)
       }
-      console.log(user)
       if (!user) {
         return res.status(401).json({ message: info.message })
       }
@@ -58,6 +57,14 @@ const authController = {
   getAdminLoginPage: (req, res) => {
     res.render('auth', { layout: 'auth' })
   },
+
+  getBannedPage: (req, res) => {
+    res.render('banned', {
+      layout: 'auth',
+      extraStyles: 'banned.css',
+      user: req.user
+    })
+  }
 
 }
 

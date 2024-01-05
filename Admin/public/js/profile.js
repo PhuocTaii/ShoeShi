@@ -123,7 +123,6 @@ function updateProfile(event) {
       },
       success: function (response) {
         alert('Profile updated successfully')
-        // console.log('Profile updated successfully:', response)
       },
       error: function (xhr, status, error) {
         // Handle error
@@ -141,7 +140,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Add an event listener to the file input to handle selected files
     document.getElementById('fileInput').addEventListener('change', function(event) {
       const fileInput = event.target;
-      // console.log(fileInput.files[0])
       if (fileInput.files.length > 0) {
         selectedFile = fileInput.files[0];
         displaySelectedImage(selectedFile);
@@ -171,13 +169,11 @@ document.addEventListener('DOMContentLoaded', function() {
   
       // Append the img element to the image container
       imageContainer.appendChild(img);
-      console.log(img.src)
     }
   
     function uploadImage(file){
       const formData = new FormData();
       formData.append('adminImage', file);
-      console.log(formData)
       $.ajax({
         url: `/profile/${id}/update-avatar`,
         method: 'POST',
@@ -185,7 +181,6 @@ document.addEventListener('DOMContentLoaded', function() {
         processData: false,
         contentType: false,
         success: function (response) {
-          console.log('Avatar updated successfully:', response);
           alert('Avatar updated successfully');
           // Optionally, show a success message to the user
         },

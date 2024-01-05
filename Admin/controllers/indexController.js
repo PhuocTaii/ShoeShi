@@ -6,7 +6,6 @@ const indexController = {
     getAdminHomePage: async(req, res) => {
         const orders = await orderService.getAllDoneOrders();
         const revenue = await orderService.getRevenue();
-        console.log(revenue);
         res.render('index', {
             orders,
             revenue,
@@ -19,11 +18,10 @@ const indexController = {
     getChartData: async(req, res) => {
         try{
             const orders = await orderService.getAllDoneOrders();
-            console.log(req.body.month);
             const revenue = await orderService.getChartDataByMonth(orders, req.body.month);
-            res.json(revenue);
+            res.status(200).json(revenue);
         } catch(err) {
-            console.log(err);
+            res.status(500).json(err);
         }
     },
 
@@ -38,9 +36,9 @@ const indexController = {
 
             const data = await orderService.getTableDataByMonth(orders, req.body.month, productsName);
 
-            res.json(data);
+            res.status(200).json(data);
         } catch(err) {
-            console.log(err);
+            res.status(500).json(err);
         }
     }
 }

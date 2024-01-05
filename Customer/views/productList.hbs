@@ -102,14 +102,46 @@
         </div>
       </div>
       <div id='product-container'>
-        {{!-- <div class="product-list" class='row row-cols-1 row-cols-md-3 row-cols-lg-4 g-2'>
-          
-        </div> --}}
+        {{#if totalPages}}
+          <div class='product-list row row-cols-1 row-cols-md-3 row-cols-lg-4 g-2'>
+            {{#each products}}
+            <div class='col'>
+              <a class='product mx-1 my-2' href='/product/{{_id}}'>
+                <img class='product-img' src={{productImage.[0]}} />
+                <div class='product-details'>
+                  <p class='product-name'>{{name}}</p>
+                  <p class='product-brand'>{{manufacturer.name}}</p>
+                  <p class='product-price'>{{formatPrice price}} ₫</p>
+                </div>
+              </a>
+            </div>
+            {{/each}}
+          </div>
+
+          {{else}}
+          <p class='no-products'>No products found</p>
+          {{/if}}
       </div>
         
       <nav aria-label="page-navigation">
         <ul class="pagination d-flex justify-content-center" id="product-pagination">
+          {{#if totalPages}}
+            <li class="page-item {{disabledPage 1 activePage}}">
+              <a class="page-link" aria-label="Previous" onclick="paging({{add activePage -1}})">
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+            </li>
 
+            {{#loopTill totalPages}}
+              <li class="page-item {{activeCurrentPage index activePage}}"><a class="page-link" onclick=paging({{index}})>{{index}}</a></li>
+            {{/loopTill}}
+
+            <li class="page-item {{disabledPage totalPages activePage}}">
+              <a class="page-link" aria-label="Next" onclick="paging({{add activePage 1}})">
+                <span aria-hidden="true">&raquo;</span>
+              </a>
+            </li>
+          {{/if}}
         </ul>
       </nav>
     </div>

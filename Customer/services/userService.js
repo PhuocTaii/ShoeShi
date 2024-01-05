@@ -4,7 +4,6 @@ const bcrypt = require('bcrypt')
 
 const userService = {
   addUser(user, imageUrl) {
-    console.log(user)
     const newUser = new User({
       username: user.username,
       password: user.password,
@@ -62,9 +61,6 @@ const userService = {
     return User.findByIdAndUpdate(id, {password: hashedPassword})
   },
 
-  // checkOldPass(oldPassword, hashedPassword) {
-  //   return bcrypt.compare(oldPassword, hashedPassword)
-  // },
 }
 
 module.exports = userService

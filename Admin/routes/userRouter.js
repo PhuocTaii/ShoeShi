@@ -10,6 +10,7 @@ router.delete('/:id', isAdmin, userController.deleteUser)
 
 //Client side
 router.get('/', isAdmin, userController.getAccountsPage)
+
 router.get('/api', isAdmin, userController.handlePaging)
 
 router.get('/:id', userController.getUserById)

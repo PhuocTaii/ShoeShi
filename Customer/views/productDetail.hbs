@@ -71,6 +71,7 @@
                 name='color-option'
                 class='option'
                 value="{{this._id}}"
+                onchange='changeColor(`{{this.colorCode}}`)'
               />
               <label class="color-present" for='{{this._id}}' style="background-color: {{this.colorCode}};">
                 <i class='ri-check-line'></i>
@@ -95,9 +96,14 @@
               {{/each}}
               </div>
             </div>
-            <button class='add-button' type="submit">
-             <p class='add-action'>add to cart</p>
-            </button>
+            <div class="btn-action">
+              <button class='add-button' type="submit" id="add-btn" {{#unless details.quantity}}disabled{{/unless}} >
+              <p class='add-action'>add to cart</p>
+              </button>
+              {{#unless details.quantity}}
+              <p class="noti-not-enough" id="noti-not-enough">This product is out of stock</p>
+              {{/unless}}
+            </div>
           </div>
         </form>
       </div>

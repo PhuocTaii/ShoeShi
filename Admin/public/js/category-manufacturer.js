@@ -13,6 +13,7 @@ function handleAddCate() {
       },
       success: function (response) {
         // Handle the response from the server if needed
+        alert('The category has been added')
         fetchCategoryTable()
         $('#item-name').val('')
         $('#modal-manage-item').modal('hide')
@@ -37,6 +38,7 @@ function handleModifyCate(id) {
         name: name,
       },
       success: function (response) {
+        alert('The category has been updated')
         fetchCategoryTable()
         $('#item-name').val('')
         $('#modal-manage-item').modal('hide')
@@ -55,8 +57,7 @@ function handleDeleteCate(id) {
       url: `/category/${id}`,
       method: 'DELETE',
       success: function (response) {
-        // Handle the response from the server if needed
-        console.log('Category deleted successfully')
+        alert('The category has been deleted')
         fetchCategoryTable()
         $('#modal-delete-item').modal('hide')
       },
@@ -81,6 +82,7 @@ function handleAddManu() {
         name: name,
       },
       success: function (response) {
+        alert('The manufacturer has been added')
         fetchManufacturerTable()
         $('#item-name').val('')
         $('#modal-manage-item').modal('hide')
@@ -105,6 +107,7 @@ function handleModifyManu(id) {
         name: name,
       },
       success: function (response) {
+        alert('The manufacturer has been updated')
         fetchManufacturerTable()
         $('#item-name').val('')
         $('#modal-manage-item').modal('hide')
@@ -125,6 +128,7 @@ function handleDeleteManu(id) {
       success: function (response) {
         fetchManufacturerTable()
         $('#modal-delete-item').modal('hide')
+        alert('The manufacturer has been deleted')
       },
       error: function (error) {
         console.error('Error deleting manufacture:', error)
@@ -162,9 +166,9 @@ function fetchCategoryTable() {
         // Add buttons
         const buttons = $('<td></td>')
         buttons.html(`
-    <button class='edit-btn'><i class='ri-pencil-line'></i></button>
-    <button class='delete-btn'><i class='ri-delete-bin-6-line'></i></button>
-  `)
+          <button class='edit-btn'><i class='ri-pencil-line'></i></button>
+          <button class='delete-btn'><i class='ri-delete-bin-6-line'></i></button>
+        `)
         row.append(buttons)
 
         // Add the row to the table
@@ -203,9 +207,9 @@ function fetchManufacturerTable() {
         // Add buttons
         const buttons = $('<td></td>')
         buttons.html(`
-    <button class='edit-btn'><i class='ri-pencil-line'></i></button>
-    <button class='delete-btn'><i class='ri-delete-bin-6-line'></i></button>
-  `)
+          <button class='edit-btn'><i class='ri-pencil-line'></i></button>
+          <button class='delete-btn'><i class='ri-delete-bin-6-line'></i></button>
+        `)
         row.append(buttons)
 
         // Add the row to the table
@@ -238,7 +242,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
     if (!row) return
 
     const id = $(row).data('id')
-    // console.log(id)
 
     if (target.hasClass('edit-btn')) {
       handleModifyCate(id)
@@ -264,7 +267,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
     if (!row) return
 
     const id = $(row).data('id')
-    // console.log(id)
 
     if (target.hasClass('edit-btn')) {
       handleModifyManu(id)

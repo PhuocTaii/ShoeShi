@@ -5,10 +5,7 @@ const userController = {
   //GET all customers
   getAllUsers: async (req, res) => {
     try {
-      console.log(123)
       const users = await userService.getAllUsers()
-      console.log(users)
-
       if (!users) {
         return res.status(500).json(err)
       }
@@ -20,12 +17,10 @@ const userController = {
 
   addAdmin: async (req, res) => {
     try{
-      // console.log(req.body)
       const user = await userService.addAdmin(req.body)
       res.status(200).json(user)
     } catch (err) {
       res.status(500).json(err)
-      console.log(err)
     }
   },
 
@@ -36,7 +31,6 @@ const userController = {
       const cart = await cartService.deleteCart(req.params.id)
       res.status(200).json('The user has been deleted')
     } catch (err) {
-      console.log(err)
       res.status(500).json(err)
     }
   },
@@ -108,8 +102,6 @@ const userController = {
     const pages = Array.from({ length: totalPage }, (_, i) => i + 1)
     const pagesAdmin = Array.from({ length: totalPageAdmin }, (_, i) => i + 1)
 
-    console.log(req.user.id)
-
     res.render('accounts', {
       layout: 'main',
       extraStyles: 'accounts.css',
@@ -118,15 +110,18 @@ const userController = {
       totalPage,
       totalPageAdmin,
       userId: req.user.id,
+      user: req.user
     })
   },
 
-  getAdminProfilePage: async (req, res) => {
-    res.render('profile', {
-      layout: 'main',
-      extraStyles: 'profile.css',
-    })
-  },
+  // getAdminProfilePage: async (req, res) => {
+  //   res.render('profile', {
+  //     layout: 'main',
+  //     extraStyles: 'profile.css',
+  //     user: req.user
+
+  //   })
+  // },
 
   getUserById: async (req, res) => {
     try {
@@ -156,7 +151,6 @@ const userController = {
       res.status(200).json({success: true, message: 'The user has been banned'})
     } catch (err) {
       res.status(500).json(err)
-      console.log(err)
     }
   },
 }

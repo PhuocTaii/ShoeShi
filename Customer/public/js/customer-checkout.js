@@ -4,25 +4,21 @@ function createOrder(event){
     const address = document.getElementById('address').value;
     const phoneNum = document.getElementById('phone-num').value;
 
-    console.log(name);
-    console.log(address);
-    console.log(phoneNum); 
-
     $.ajax({
         url: '/checkout',
         type: 'POST',
         data: {name: name, address: address, phone: phoneNum},
         dataType: 'json',
         success: function(data) {
-            console.log(data);
-            window.location.href = '/order';
-            alert('Create order successfully');
+            if(data.valid){
+                alert(data.message);
+                window.location.href = '/order'; 
+            } else{
+                alert(data.message);
+            }
         },
         error: function(err) {
-            // console.log(err)
-            // window.location.href = '/login';
-            alert('Not enough product');
-
+            // alert('Not enough product');
         }
     })
 }

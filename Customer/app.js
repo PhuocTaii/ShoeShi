@@ -14,14 +14,10 @@ const { CloudinaryStorage } = require('multer-storage-cloudinary');
 const multer = require('multer');
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
-// var bodyParser = require('body-parser');
-// const morgan = require('morgan');
+
 
 //Cloudinary config
 const cloudinary = require('./config/cloudinary.config')
-
-// const upload = multer({ storage: storage });
-
 
 //CUSTOMER routes
 const indexCustomerRouter = require('./routes/indexRouter')
@@ -32,7 +28,6 @@ const productCustomerRouter = require('./routes/productRouter')
 const userCustomerRouter = require('./routes/userRouter')
 const reviewCustomerRouter = require('./routes/reviewRouter')
 const orderCustomerRouter = require('./routes/orderRouter')
-// const checkoutCustomerRouter = require('./routes/checkoutRouter')
 
 const app = express()
 const store = session.MemoryStore()

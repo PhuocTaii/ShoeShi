@@ -97,7 +97,7 @@ label {
   display: flex;
   width: 34px;
   height: 34px;
-  align-items: flex-start;
+  /* align-items: flex-start; */
   gap: 10px;
   border-radius: 100px;
   justify-content: center;
@@ -106,12 +106,12 @@ label {
 
 .color-options .ri-check-line {
   font-size: x-large;
-  color: green;
   display: none;
 }
 
 .color-options input[type='radio']:checked + label .ri-check-line {
   display: inline-block;
+  color: #ffffff;
 }
 
 .size {
@@ -169,6 +169,14 @@ label {
   align-self: stretch;
   border-radius: 5px;
   background: #111;
+  color: #f5f5f5;
+  font-size: 16px;
+  font-weight: 700;
+  width: 100%;
+}
+
+#product-form button:disabled {
+  background-color: #ccc;
 }
 
 .add-action {
@@ -475,6 +483,17 @@ p {
 #review-form .noti-not-authen {
   color: var(--my-orange);
 }
+
+#product-form .noti-not-enough{
+  padding-top: 20px;
+  color: var(--my-orange);
+}
+
+.btn-action{
+  width: 100%;
+  text-align: center;
+}
+
 #review-form button:disabled {
   background-color: #ccc;
 }

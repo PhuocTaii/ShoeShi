@@ -24,8 +24,6 @@ const cartController = {
   //ADD product to cart
   addProductToCart: async (req, res) => {
     try {
-      // const color = await colorSerice.findColorByName(req.body.color)
-      // const size = await sizeService.getSizeByNumber(req.body.size)
       if(req.user){
         const cart = await cartService.getOneCart(req.user.id)
         const savedCart = cartService.addProductToCart(
@@ -37,7 +35,6 @@ const cartController = {
         return res.status(200).json(savedCart)  
       }
     } catch (err) {
-      console.log(err)
       res.status(500).json(err)
     }
   },
@@ -55,7 +52,6 @@ const cartController = {
       )
       res.status(200).json(savedcart)
     } catch (err) {
-      console.log(err)
       res.status(500).json(err)
     }
   },
@@ -64,18 +60,14 @@ const cartController = {
   deleteProductFromCart: async (req, res) => {
     try {
       const cart = await cartService.getOneCart(req.user.id)
-      console.log(cart)
       const savedcart = await cartService.deleteProductFromCart(
         cart,
         req.body.productId,
         req.body.color,
         req.body.size
       )
-      console.log(123)
-      console.log(savedcart)
       res.status(200).json(savedcart)
     } catch (err) {
-      console.log(err)
       res.status(500).json(err)
     }
   },
@@ -101,7 +93,6 @@ const cartController = {
       res.status(200).json(productList)
     } catch (err) {
       res.status(500).json(err)
-      console.log(err)
     }
   },
 
@@ -112,7 +103,6 @@ const cartController = {
       res.status(200).json(productList)
     } catch (err) {
       res.status(500).json(err)
-      console.log(err)
     }
   },
 
@@ -123,7 +113,6 @@ const cartController = {
       res.status(200).json(productList)
     } catch (err) {
       res.status(500).json(err)
-      console.log(err)
     }
   },
   //Client side
@@ -152,7 +141,6 @@ const cartController = {
     }
   } catch (err) {
       res.status(500).json(err)
-      console.log(err)
     }
   },
 
