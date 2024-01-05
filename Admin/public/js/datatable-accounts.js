@@ -257,15 +257,16 @@ document.addEventListener('DOMContentLoaded', (event) => {
       }
 
       if (target.checked) {
-        // If the checkbox is checked, send a request to ban the account
         fetch(`/user/ban/${accountId}`, {
           method: 'POST',
         })
           .then((response) => response.json())
           .then((data) => {
             if (data.success) {
+              alert(`Account ${accountId} has been banned.`)
               console.log(`Account ${accountId} has been banned.`)
             } else {
+              alert(`Account ${accountId} has been banned.`)
               console.error(`Failed to ban account ${accountId}.`)
             }
           })
@@ -273,15 +274,16 @@ document.addEventListener('DOMContentLoaded', (event) => {
             console.error('Error:', error)
           })
       } else {
-        // If the checkbox is checked, send a request to ban the account
         fetch(`/user/ban/${accountId}`, {
           method: 'POST',
         })
           .then((response) => response.json())
           .then((data) => {
             if (data.success) {
+              alert(`Account ${accountId} has been unbanned.`)
               console.log(`Account ${accountId} has been unbanned.`)
             } else {
+              alert(`Failed to unban account ${accountId}.`)
               console.error(`Failed to unban account ${accountId}.`)
             }
           })
