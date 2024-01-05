@@ -70,7 +70,6 @@ function updateProductListView(data) {
 	document.getElementById("product-pagination").innerHTML = paginationTemplateFunction(data);
 }
 
-console.log(window.location.href)
 
 $.getJSON(window.location.href, function( data ) {
 	updateProductListView(data)
@@ -89,7 +88,7 @@ function paging(page) {
 	url.searchParams.set('page', page);
 
 	$.getJSON('/product/productData' + url.search, function( data ) {
-		// window.history.pushState({html: data.html},"", url.href);
+		window.history.pushState(null,"", '/product'+ url.search);
 		updateProductListView(data)
 	});
 }
@@ -120,7 +119,7 @@ function handleQuery(event) {
 	event.preventDefault()
 	const query = getQueryString()
 	$.getJSON('/product/productData' + query, function( data ) {
-		// window.history.pushState(data.html,"", '/product'+query);
+		window.history.pushState(null,"", '/product'+query);
 		updateProductListView(data);
 	})
 }
