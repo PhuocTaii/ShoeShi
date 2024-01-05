@@ -261,3 +261,9 @@ footer .get-help {
 .other-method-container .btn-social p {
   margin: 0;
 }
+
+.search-bar button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
