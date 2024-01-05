@@ -77,6 +77,7 @@ const categoryController = {
         res.render('categories', {
           layout: 'main',
           extraStyles: 'category.css',
+          user: req.user
         })
       }
     } catch (err) {

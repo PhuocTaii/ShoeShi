@@ -30,7 +30,6 @@ function checkValidUsername(username) {
         }
       },
       error: function (error) {
-        console.log(error)
       },
     })
   }

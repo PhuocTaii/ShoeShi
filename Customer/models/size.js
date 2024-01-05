@@ -12,7 +12,6 @@ const sizeSchema = new mongoose.Schema({
 const Size = mongoose.model('Size', sizeSchema)
 sizeSchema.pre('remove', async function (next) {
   try {
-    // Xóa tất cả các Cart có sản phẩm cần xóa từ productList
     await Cart.updateMany(
       { 'productList.product': this._id },
       { $pull: { productList: { size: this._id } } }

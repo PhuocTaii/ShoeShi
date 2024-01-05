@@ -38,6 +38,7 @@ if(!user){
     const localCartTemplateFunction = Handlebars.compile(cartTemplate);
     
     const localCartData = JSON.parse(localStorage.getItem('cartData'))
+
     $.ajax({
         type: 'POST',
         url: '/cart/local',
@@ -45,16 +46,15 @@ if(!user){
         dataType: 'json',
         data: JSON.stringify(localCartData),
         success: function (data) {
-            console.log(data)
             document.getElementById('cart').innerHTML = localCartTemplateFunction(data.detailList);
             document.getElementById("total-item").innerHTML = data.totalAmount + ' items'
             document.getElementById("total-price").innerHTML = data.totalPrice
             document.getElementById("total").innerHTML = data.total + '₫'
         },
         error: function (error) {
+            console.log(error)
         },
     })
-    // console.log(localCartData.length)
 
 } else{
     const cartTemplateFunction = Handlebars.compile(cartTemplate);
@@ -64,7 +64,6 @@ if(!user){
         url: '/cart/logged',
         contentType: 'application/json',
         success: function (response) {
-            console.log(response)
             document.getElementById('cart').innerHTML = cartTemplateFunction(response.detailList);
             document.getElementById("total-item").innerHTML = response.totalAmount + ' items'
             document.getElementById("total-price").innerHTML = response.totalPrice
@@ -78,7 +77,6 @@ if(!user){
 function updateCart(productId, colorId, sizeId) {
     const id = productId + colorId + sizeId
     const productQuantity = document.getElementById(id).value
-    const productPrice = Number(document.getElementById("product-price-" + id).getAttribute('data-product-price'));
     const user = document.getElementById('user-cart').getAttribute('data-user')
     if(user){
         $.ajax({
@@ -142,7 +140,6 @@ function removeFromCart(productId, colorId, sizeId){
                     url: '/cart/logged',
                     contentType: 'application/json',
                     success: function (response) {
-                        console.log(response)
                         document.getElementById('cart').innerHTML = cartTemplateFunction(response.detailList);
                         document.getElementById("total-item").innerHTML = response.totalAmount + ' items'
                         document.getElementById("total-price").innerHTML = response.totalPrice
@@ -173,7 +170,6 @@ function removeFromCart(productId, colorId, sizeId){
             dataType: 'json',
             data: JSON.stringify(localCartData),
             success: function (data) {
-                console.log(data)
                 document.getElementById('cart').innerHTML = localCartTemplateFunction(data.detailList);
                 document.getElementById("total-item").innerHTML = data.totalAmount + ' items'
                 document.getElementById("total-price").innerHTML = data.totalPrice

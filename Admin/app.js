@@ -10,10 +10,7 @@ const passport = require('passport')
 const session = require('express-session')
 const exphbs = require('./config/handlebars.config')
 const express_handlebars_sections = require('express-handlebars-sections');
-// var bodyParser = require('body-parser');
-// const morgan = require('morgan');
 
-//Cloudinary config
 const cloudinary = require('./config/cloudinary.config')
 
 
@@ -50,8 +47,6 @@ app.engine('hbs', exphbs.engine);
 app.set('view engine', 'hbs')
 app.set('views', path.join(__dirname, 'views'))
 
-// app.use(bodyParser.json());
-// app.use(morgan('common'));
 app.use(cors())
 app.use(cookieParser())
 app.use(logger('dev'))

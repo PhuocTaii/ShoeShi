@@ -56,6 +56,9 @@
               {{prodList.length}}
             {{else}}
             <script>
+              if(!localStorage.getItem('cartData')) {
+                localStorage.setItem('cartData', JSON.stringify([]))
+              }
               const cartSize = JSON.parse(localStorage.getItem('cartData')).length || 0
               document.getElementById("number-cart-items").innerHTML =  cartSize
             </script>
@@ -143,8 +146,8 @@
         </div>
       </div>
       <div class='social-links'>
-        <a href='#'><i class='ri-facebook-circle-fill'></i></a>
-        <a href='#'><i class='ri-instagram-line'></i></a>
+        <a href='https://www.facebook.com/ngophuoc.tai.17/'target="_blank"><i class='ri-facebook-circle-fill'></i></a>
+        <a href='https://www.instagram.com/phuoc_taiii17/'target="_blank"><i class='ri-instagram-line'></i></a>
       </div>
     </footer>
     <!-- End Footer -->

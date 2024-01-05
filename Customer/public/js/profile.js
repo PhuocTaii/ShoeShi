@@ -7,28 +7,6 @@ function validatePhoneNumber(input) {
   return ''
 }
 
-// function checkOldPassword(input) {
-//   const id = document
-//     .getElementById('main-profile-detail')
-//     .getAttribute('profile-id')
-
-//   $.ajax({
-//     url: 'profile/check-password',
-//     method: 'POST', 
-//     data: {
-//       id,
-//       input,
-//     },
-//     success: function (response) {
-//       console.log('Profile updated successfully:', response)
-//       input.setCustomValidity('')
-//     },
-//     error: function (xhr, status, error) {
-//       input.setCustomValidity('Password incorrect')
-//     },
-//   })
-// }
-
 const id = document.getElementById('main-profile-detail').getAttribute('profile-id')
 
 // UPDATE REVIEW
@@ -72,14 +50,42 @@ function updateProfile(event) {
     },
     success: function (response) {
       alert('Profile updated successfully')
-      // console.log('Profile updated successfully:', response)
     },
     error: function (xhr, status, error) {
-      // Handle error
       alert('Error updating profile')
+    },
+  })
+}
 
-      // console.error('Error updating profile:', error)
-      // Show an error message to the user, if necessary
+function checkOldPassword() {
+  const id = document.getElementById('main-profile-detail').getAttribute('profile-id')
+  const btn = document.getElementById('btn-reset-password')
+
+  const curPass = document.getElementById('current-password').value;
+  const input = document.getElementById('current-password')
+  
+  $.ajax({
+    url: `profile/${id}/checkPassword`,
+    method: 'POST',
+    dataType: 'json',
+    contentType: 'application/json',
+    data: JSON.stringify({
+      curPass: curPass
+    }),
+    success: function (response) {
+      if(response.valid){
+          input.classList.remove("is-invalid");
+          input.classList.add("is-valid");
+          btn.disabled = false
+      } else{
+          input.classList.remove("is-valid");
+          input.classList.add("is-invalid");
+          const feedback = document.getElementById('feedback-current-password')
+          feedback.innerHTML = response.message
+          btn.disabled = true
+      }
+    },
+    error: function (xhr, status, error) {
     },
   })
 }
@@ -87,36 +93,35 @@ function updateProfile(event) {
 // UPDATE PASSWORD
 function updatePassword(event) {
   event.preventDefault()
+  
+  const newPassword = document.getElementById('new-password').value
+  const confirmPassword = document.getElementById('confirm-password').value;
+  const input = document.getElementById('current-password')
 
-  const form = document.forms['form-reset-password']
 
-  const oldPassword = form['current-password'].value
-  const newPassword = form['new-password'].value
-  const confirmPassword = form['confirm-password'].value;
-
-  if (newPassword !== confirmPassword) {
-    alert("New password and confirm password don't match");
-    return;
+  if(newPassword != confirmPassword){
+      alert('Confirm password not match')
+      return
   }
   
-  console.log(oldPassword, newPassword, confirmPassword, id);
+  const id = document.getElementById('main-profile-detail').getAttribute('profile-id')
 
-  // Make an AJAX request to update profile details
   $.ajax({
-    url: `/profile/${id}/update-password`,
+    url: `/profile/${id}/updatePassword`,
     method: 'POST',
-    data: {
-      id,
-      oldPassword,
-      newPassword,
-    },
+    dataType: 'json',
+    contentType: 'application/json',
+    data: JSON.stringify({
+      newPassword: newPassword
+    }),
     success: function (response) {
-      console.log('Password updated successfully:', response);
       alert('Password updated successfully');
-      document.getElementById('current-password').value='';
       document.getElementById('new-password').value='';
+      document.getElementById('btn-reset-password').disabled = true;
+      document.getElementById('current-password').value='';
       document.getElementById('confirm-password').value='';
-      // Optionally, show a success message to the user
+      input.classList.remove("is-valid");
+
     },
     error: function (xhr, status, error) {
       console.error('Error updating password:', error);
@@ -134,7 +139,6 @@ document.addEventListener('DOMContentLoaded', function() {
   // Add an event listener to the file input to handle selected files
   document.getElementById('fileInput').addEventListener('change', function(event) {
     const fileInput = event.target;
-    // console.log(fileInput.files[0])
     if (fileInput.files.length > 0) {
       selectedFile = fileInput.files[0];
       displaySelectedImage(selectedFile);
@@ -164,13 +168,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Append the img element to the image container
     imageContainer.appendChild(img);
-    console.log(img.src)
   }
 
   function uploadImage(file){
     const formData = new FormData();
     formData.append('customerImage', file);
-    console.log(formData)
     $.ajax({
       url: `/profile/${id}/update-avatar`,
       method: 'POST',
@@ -178,13 +180,10 @@ document.addEventListener('DOMContentLoaded', function() {
       processData: false,
       contentType: false,
       success: function (response) {
-        console.log('Avatar updated successfully:', response);
         alert('Avatar updated successfully');
-        // Optionally, show a success message to the user
       },
       error: function (error) {
         console.error('Error updating avatar:', error);
-        // alert(`Error updating avatar: ${errorMessage}`);
       },
     });
   }

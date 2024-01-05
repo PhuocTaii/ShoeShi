@@ -140,6 +140,35 @@ function sendReview(event) {
 	})
 }
 
+function hexToRgb(hex) {
+    hex = hex.replace(/^#/, '');
+    var bigint = parseInt(hex, 16);
+    var r = (bigint >> 16) & 255;
+    var g = (bigint >> 8) & 255;
+    var b = bigint & 255;
+    return { r, g, b };
+}
+
+function rgbToHex(r, g, b) {
+    return '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+}
+
+function calculateComplementaryColor(hex) {
+    var rgb = hexToRgb(hex);
+    var complementaryColor = {
+        r: 255 - rgb.r,
+        g: 255 - rgb.g,
+        b: 255 - rgb.b
+    };
+    return rgbToHex(complementaryColor.r, complementaryColor.g, complementaryColor.b);
+}
+
+function changeColor(color) {
+	console.log(color)
+	const complementaryColor = calculateComplementaryColor(color);
+	console.log(complementaryColor)
+	document.querySelector('.color-options input[type="radio"]:checked + label .ri-check-line').style.color = complementaryColor;
+}
 
 //ADD Product to cart
 function addToCart(event) {
@@ -172,12 +201,10 @@ function addToCart(event) {
 			dataType: 'json',
 			success: function(data) {
 				alert('Add product successfully');
-				console.log(data)
 				document.getElementById("number-cart-items").innerHTML = data.productList.length
 
 			},
 			error: function(err) {
-				console.log(err)
 			}
 		})
 	} else{
@@ -226,3 +253,4 @@ $.getJSON(`/product/related/${productId}`, function( data ) {
 	document.getElementsByClassName("related-product-container")[0].innerHTML = relatedProductsTemplateFunction(data.slice(0, 6));
 	document.getElementsByClassName("related-product-container")[1].innerHTML = relatedProductsTemplateFunction(data.slice(6, 12));
 });
+

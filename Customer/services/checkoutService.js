@@ -1,7 +1,5 @@
 const Order = require('../models/order')
-// const Product = require('../models/product')
-// const Color = require('../models/color')
-// const Size = require('../models/size')
+
 const checkoutService = {
   // Create a new order
   createOrder: async (

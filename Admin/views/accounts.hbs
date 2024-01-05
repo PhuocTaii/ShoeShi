@@ -31,7 +31,7 @@
             <option value='name'>Name</option>
             <option value='email'>Email</option>
           </select>
-          <input class='form-control' type='text' />
+          <input class='form-control' id="form-control" type='text' />
           <button type='button' class='btn'>Search</button>
         </div>
       </div>
@@ -106,7 +106,7 @@
 
       <div class='action-table'>
         <div class='sort-table'>
-          <label for='customer-sort'>Sort by</label>
+          <label for='customer-sort-admin'>Sort by</label>
           <select class='form-select' name='sort-options' id='customer-sort-admin'>
             <option selected value='none'>None</option>
             <option value='name-a-z'>Name: A-Z</option>
@@ -128,7 +128,7 @@
             <option value='name'>Name</option>
             <option value='email'>Email</option>
           </select>
-          <input class='form-control-admin' type='text' />
+          <input class='form-control-admin' id="form-control-admin" type='text' />
           <button type='button' class='btn-admin'>Search</button>
         </div>
       </div>
@@ -166,7 +166,7 @@
             <a
               id='prevPageAdmin'
               class='page-link'
-              href='?pageUser={{decrement currentPage}}'
+              href='?pageUser={{decrement currentPageAdmin}}'
               aria-label='Previous'
             >
               <span aria-hidden='true'>&laquo;</span>
@@ -181,7 +181,7 @@
             <a
               id='nextPageAdmin'
               class='page-link'
-              href='?pageUser={{increment currentPage}}'
+              href='?pageUser={{increment currentPageAdmin}}'
               aria-label='Next'
             >
               <span aria-hidden='true'>&raquo;</span>
@@ -285,7 +285,7 @@
     aria-labelledby='staticBackdropLabel'
     aria-hidden='true'
   >
-    <form class='modal-content' onsubmit="">
+    <form class='modal-content'>
       <div class='modal-header'>
         <p id='action-admin'></p>
         <button
@@ -300,7 +300,7 @@
         <div class='row row-cols-2 g-3'>
           <div class='col'>
             <div class='add-admin'>
-              <label for='admin-username'>Userame<small class='text-danger'>*</small></label>
+              <label for='admin-username'>Username<small class='text-danger'>*</small></label>
               <input type='text' id='admin-username' placeholder='Username' required/>
             </div>
           </div>
@@ -310,7 +310,6 @@
               <input 
                 type='password' 
                 id='admin-password' 
-                type='text' 
                 placeholder='Password' 
                 minlength='8' 
                 pattern='^(?=.*[a-zA-Z])(?=.*\d).{8,}$' 
@@ -333,8 +332,8 @@
           </div>
           <div class="col">
             <div class='add-admin'>
-              <label for='admin-gender'>Gender</label>
-              <div id='gender-group' class='form-group'>
+              <p class='form-label'>Gender</p>
+              <div id='admin-group' class='form-group'>
                 <div class='form-check form-check-inline'>
                   <label for='male' class='mr-3'>Male</label>
                   <input

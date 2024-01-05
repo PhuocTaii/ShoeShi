@@ -21,7 +21,6 @@ const indexController = {
             })
             }
             else{
-                // const localCart = await cartService.getLocalCart()
                 res.render('index', {
                     extraStyles: 'home.css',
                     layout: 'main',
@@ -31,7 +30,6 @@ const indexController = {
                 })
             }
         } catch(err){
-            console.log(err)    
             res.status(500).json(err)
         }
     },

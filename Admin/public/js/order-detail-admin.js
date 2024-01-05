@@ -1,19 +1,18 @@
 const templateOrder = `
-  <div class='row   '>
+  <div class='row'>
     <div class='col d-inline-flex'>
-      <div class='number-item text-muted quantity-modal'>1x</div>
+      <div class='number-item text-muted quantity-modal'></div>
       <div class='item-info flex-column'>
         <div class='item-name item-modal'>Item Name</div>
         <div class='item-property d-inline-flex flex-row'>
           <div class='color-item m-0 color-modal'></div>
-          <div class='size-item m-0 size-modal'>│ Size: M</div>
+          <div class='size-item m-0 size-modal'>│ Size: </div>
         </div>
       </div>
     </div>
     <div
       class='d-flex justify-content-end price col price-item-modal'
     >
-      1,000,000 đ
     </div>
   </div>
 `
@@ -21,14 +20,12 @@ const templateOrder = `
 function toggleViewDetail(id) {
   $.ajax({
     url: `/order/${id}`,
-    method: 'GET', // Change the method as per your requirement
+    method: 'GET',
     success: function (response) {
-      // Handle the response from the server if needed
       const { date, status, address, totalPrice, items, name ,username, phone } = response
 
-      const adjustedSubPrice = parseFloat(totalPrice) - 20000 // Subtract 20,000 VND
-      const formattedAdjustedSubPrice = adjustedSubPrice.toLocaleString('vi-VN') // Format with commas for thousands separators
-      console.log(adjustedSubPrice)
+      // const adjustedSubPrice = parseFloat(totalPrice) - 20000
+      // const formattedAdjustedSubPrice = adjustedSubPrice.toLocaleString('vi-VN')
 
       $('.datetime').text(formatDateTime(date))
       $('.status').text(status)
@@ -36,26 +33,22 @@ function toggleViewDetail(id) {
       $('.customer-phone').text(phone)
       $('.customer-username').text(username)
       $('.customer-address').text(address)
-      $('.sub-price').text(
-        `${(totalPrice - 20000)
-          .toString()
-          .replace(/\B(?=(\d{3})+(?!\d))/g, ',')} đ`
-      )
-      $('.total-price').text(
-        `${totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} đ`
-      )
+      $('.sub-price').text(`${((totalPrice - 20000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','))}`)
+      $('.total-price').text(`${(totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','))}`)
 
       const itemSummaryContainer = $('.all-items-modal')
       itemSummaryContainer.empty() // Clear previous items
 
       items.forEach((item) => {
+        console.log(item)
         const itemDiv = $('<div>').html(templateOrder)
         itemDiv.find('.item-name').text(item.itemName)
+        itemDiv.find('.quantity-modal').text(`${item.itemQuantity}x`)
         itemDiv.find('.size-modal').text(`│ Size: ${item.itemSize}`)
         itemDiv.find('.price-item-modal').text(`${item.itemPrice} đ`)
         itemDiv.find('.color-modal').css({
           'background-color': item.itemColor,
-          border: '1px solid black', // Add black border
+          border: '1px solid black', 
         })
 
         itemSummaryContainer.append(itemDiv)
@@ -80,7 +73,6 @@ function toggleDeleteOrderConfirm(id) {
         method: 'DELETE',
         contentType: 'application/json',
         success: function (response) {
-          console.log('Category deleted successfully')
           fetchAllOrders()
           $('#modal-delete-order').modal('hide')
         },
@@ -115,6 +107,10 @@ function showOrders(data) {
     const row = $('<tr></tr>')
     row.attr('data-id', order._id)
 
+    const id = $('<td></td>')
+    id.text(order._id)
+    row.append(id)
+
     const buyer = $('<td></td>')
     buyer.text(order.buyer)
     row.append(buyer)
@@ -139,27 +135,27 @@ function showOrders(data) {
     // Add status
     const status = $('<td></td>')
     status.html(`
-    <select class="form-select">
-                <option value="pending">pending</option>
-                <option value="shipping">shipping</option>
-                <option value="done">done</option>
-              </select>
-  `)
+      <select class="form-select">
+        <option value="pending">pending</option>
+        <option value="shipping">shipping</option>
+        <option value="done">done</option>
+      </select>
+    `)
     status.find('select').val(order.status.toLowerCase())
     row.append(status)
 
     // Add buttons
     const buttons = $('<td></td>')
     buttons.html(`
-    <td class="order-actions">
-    <button type="button" class="btn detail-btn">
-      <i class="ri-more-fill"></i>
-    </button>
-    <button type="button" class="btn delete-btn">
-      <i class="ri-delete-bin-line"></i>
-    </button>
-  </td>
-  `)
+      <td class="order-actions">
+        <button type="button" class="btn detail-btn">
+          <i class="ri-more-fill"></i>
+        </button>
+        <button type="button" class="btn delete-btn">
+          <i class="ri-delete-bin-line"></i>
+        </button>
+      </td>
+    `)
     row.append(buttons)
 
     // Add the row to the table
@@ -174,7 +170,6 @@ function fetchAllOrders() {
     contentType: 'application/json',
     dataType: 'json',
     success: function (data) {
-      // console.log(data)
       showOrders(data)
     },
     error: function (error) {
@@ -189,7 +184,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
   table.addEventListener('click', (event) => {
     let target = $(event.target)
 
-    // Check if the clicked element is an 'i' element and if so, get its parent button
     if (target.is('i')) {
       target = target.parent()
     }
@@ -227,7 +221,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
   const radioButtons = document.getElementsByName('status')
   for (let i = 0; i < radioButtons.length; i++) {
     radioButtons[i].addEventListener('change', (event) => {
-      console.log('trigger')
       if (event.target.checked) {
         const label = document.querySelector(`label[for="${event.target.id}"]`)
         const status = label.textContent

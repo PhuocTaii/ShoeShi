@@ -10,7 +10,6 @@ const customerSchema = new mongoose.Schema({
   username: {
     type: String,
     unique: true,
-    // required: [true, 'Username is required'],
     validate: {
       validator: function(v) {
         return v.length >= 6 && v.length <= 20;
@@ -21,7 +20,6 @@ const customerSchema = new mongoose.Schema({
 
   password: {
     type: String,
-    // required: [true, 'Password is required'],
     validate: {
       validator: function(v) {
         return /^(?=.*[a-zA-Z])(?=.*\d).{8,}$/.test(v);
@@ -59,7 +57,6 @@ const customerSchema = new mongoose.Schema({
 
   email: {
     type: String,
-    // required: [true, 'Email is required'],
     validate: {
       validator: function(v) {
         return /^[\w\.-]+@[a-zA-Z\d\.-]+\.[a-zA-Z]{2,}$/.test(v);

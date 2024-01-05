@@ -1,9 +1,10 @@
 const productController = require('../controllers/productController')
 const router = require('express').Router()
-const {isAuth, isAdmin} = require('../middleware/authenticationMiddleware')
 
 //GET all products
-router.get('/', productController.getAllProducts)
+router.get('/productData', productController.getAllProducts)
+
+router.get('/', productController.getProductPage)
 
 router.get('/:id', productController.getProductDetail)
 

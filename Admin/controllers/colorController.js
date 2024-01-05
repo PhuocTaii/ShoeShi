@@ -15,13 +15,11 @@ const colorController = {
   //ADD color
   addColor: async (req, res) => {
     try {
-      console.log(req.body)
       const savedColor = await colorService.addColor(req.body)
       const colors = await colorService.getAllColors()
       res.status(200).json(colors)
     } catch (err) {
       res.status(500).json(err)
-      console.log(err)
     }
   },
 
@@ -60,6 +58,7 @@ const colorController = {
         res.render('colors-sizes', {
           layout: 'main',
           extraStyles: 'color-size.css',
+          user: req.user
         })
       }      
     } catch (err) {

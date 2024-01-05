@@ -125,7 +125,7 @@
             placeholder='Current password'
             id='current-password'
             required
-            {{!-- pattern='(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}' --}}
+            pattern = '^(?=.*[a-zA-Z])(?=.*\d).{8,}$'
             oninput="checkOldPassword()"
             aria-describedby="feedback-current-password"
           />
@@ -142,7 +142,22 @@
             id='new-password'
             required
             minlength='8'
-            {{!-- pattern='(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}' --}}
+            pattern = '^(?=.*[a-zA-Z])(?=.*\d).{8,}$'
+          />
+        </div>
+
+        <div class='mb-2'>
+          <label for='confirm-password' class='form-label confirm-password'>Confirm Password
+            <small class='text-danger'>*</small></label>
+          <input
+            type='password'
+            class='form-control fs-6'
+            placeholder='Confirm password'
+            id='confirm-password'
+            required
+            minlength='8'
+            pattern = '^(?=.*[a-zA-Z])(?=.*\d).{8,}$'
+
           />
         </div>
 

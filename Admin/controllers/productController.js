@@ -40,6 +40,7 @@ const productController = {
           sizes,
           layout: 'main',
           extraStyles: 'products.css',
+          user: req.user
         });
       }
       } catch (err) {
@@ -73,7 +74,6 @@ const productController = {
       res.status(200).json(savedProduct)
 
     } catch (err) {
-      console.log(err)
       res.status(500).json(err)
     }
   },
@@ -83,7 +83,6 @@ const productController = {
       const product = await productService.getProductById(req.params.id)
       res.status(200).json(product)
     } catch (err) {
-      console.log(err)
       res.status(500).json(err)
     }
   },
@@ -119,7 +118,6 @@ const productController = {
       res.status(200).json(product)
       
     } catch (err) {
-      console.log(err)
       res.status(500).json(err)
     }
   },

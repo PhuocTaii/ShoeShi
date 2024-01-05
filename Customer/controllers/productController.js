@@ -10,9 +10,31 @@ const productController = {
   //GET all products
   getAllProducts: async (req, res) => {
     try {
-      const acceptHeader = req.get('Accept');
-  
-      if (acceptHeader && acceptHeader.includes('application/json')) {
+      const { 'product-name': productName, category, manufacturer, 'from-input': priceMin, 'to-input': priceMax, page, sort } = req.query;
+      const pageTo = parseInt(page) || 1
+
+      const products = await productService.getProductsWithCondition(pageTo, productName, category, manufacturer, priceMin, priceMax, sort)
+      const totalProducts = await productService.getTotalProductsWithCondition(pageTo, productName, category, manufacturer, priceMin, priceMax, sort)
+      const amountProduct = totalProducts[0] ? totalProducts[0].totalCount : 0
+      const totalPages = Math.ceil(amountProduct / productService.productsPerPage)
+      res.json({
+        products,
+        totalPages,
+        activePage: pageTo
+      });
+    } catch (err) {
+      res.status(500).json(err)
+      console.log(err)
+    }
+  },
+
+  getProductPage: async (req, res) => {
+    try{
+      const categories = await categoryService.getAllCategories()
+      const manufacturers = await manufacturerService.getAllManufacturers()
+      if(req.user){
+        const cart = await cartService.getOneCart(req.user.id);
+        const prodList = await cartService.getProductList(cart)
         const { 'product-name': productName, category, manufacturer, 'from-input': priceMin, 'to-input': priceMax, page, sort } = req.query;
         const pageTo = parseInt(page) || 1
 
@@ -20,41 +42,41 @@ const productController = {
         const totalProducts = await productService.getTotalProductsWithCondition(pageTo, productName, category, manufacturer, priceMin, priceMax, sort)
         const amountProduct = totalProducts[0] ? totalProducts[0].totalCount : 0
         const totalPages = Math.ceil(amountProduct / productService.productsPerPage)
-        res.json({
+        res.render('productList', {
+          categories,
+          manufacturers,
+          layout: 'main',
+          extraStyles: 'productList.css',
+          user: req.user,
+          prodList,
           products,
           totalPages,
           activePage: pageTo
         });
-      }
-      else {
-        const categories = await categoryService.getAllCategories()
-        const manufacturers = await manufacturerService.getAllManufacturers()
-        if(req.user){
-          const cart = await cartService.getOneCart(req.user.id);
-          const prodList = await cartService.getProductList(cart)
-          res.render('productList', {
-            categories,
-            manufacturers,
-            layout: 'main',
-            extraStyles: 'productList.css',
-            user: req.user,
-            prodList
-          });
-        } else{
-          res.render('productList', {
-            categories,
-            manufacturers,
-            layout: 'main',
-            extraStyles: 'productList.css',
-            user: null,
-          });
-        }
+      } else{
+        const { 'product-name': productName, category, manufacturer, 'from-input': priceMin, 'to-input': priceMax, page, sort } = req.query;
+        const pageTo = parseInt(page) || 1
+
+        const products = await productService.getProductsWithCondition(pageTo, productName, category, manufacturer, priceMin, priceMax, sort)
+        const totalProducts = await productService.getTotalProductsWithCondition(pageTo, productName, category, manufacturer, priceMin, priceMax, sort)
+        const amountProduct = totalProducts[0] ? totalProducts[0].totalCount : 0
+        const totalPages = Math.ceil(amountProduct / productService.productsPerPage)
+
+        res.render('productList', {
+          categories,
+          manufacturers,
+          layout: 'main',
+          extraStyles: 'productList.css',
+          user: req.user,
+          products,
+          totalPages,
+          activePage: pageTo
+        });
 
       }
-      } catch (err) {
-        res.status(500).json(err)
-        console.log(err)
-      }
+    } catch(err){
+      res.status(500).json(err)
+    }
   },
 
   //Get related products

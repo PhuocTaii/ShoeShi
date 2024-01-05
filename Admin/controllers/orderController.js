@@ -1,8 +1,6 @@
 const orderService = require('../services/orderService')
 const userService = require('../services/userService')
 const colorService = require('../services/colorService')
-const sizeService = require('../services/sizeService')
-const productService = require('../services/productService')
 
 const orderController = {
   // GET all orders
@@ -21,8 +19,12 @@ const orderController = {
     try {
       const order = await orderService.getOrderById(req.params.id) // Implement logic to fetch order by ID from your database
       const user = await userService.getUserById(order.user)
+      const processItemColor = async (color) => {
+        const colorInfo = await colorService.findColorByName(color);
+        return colorInfo.colorCode;
+      };
       const formattedOrder = {
-        orderId: order._id, // Assuming _id is the ID of the order
+        orderId: order._id,
         date: order.orderTime,
         name: order.buyer,
         username: user.username,
@@ -31,21 +33,15 @@ const orderController = {
         totalPrice: order.totalPrice,
         phone: order.phone,
         items:
-          order.productList && Array.isArray(order.productList)
-            ? order.productList.map((item) => ({
-                itemName: item.product,
-                itemPrice: item.price
-                  .toString()
-                  .replace(/\B(?=(\d{3})+(?!\d))/g, ','),
-                itemQuantity: item.quantity,
-                itemSize: item.size,
-                itemColor: item.color,
-                // Other item details you want to display
-              }))
-            : [], // If items is undefined or not an array, default to an empty array
-        totalPrice: order.totalPrice
-          ,
-        // Add other properties or modify existing ones as needed
+        order.productList && Array.isArray(order.productList)
+          ? await Promise.all(order.productList.map(async (item) => ({
+              itemName: item.product,
+              itemPrice: (item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')),
+              itemQuantity: item.quantity,
+              itemSize: item.size,
+              itemColor: await processItemColor(item.color),
+            })))
+          : [],
       }
       return res.status(200).json(formattedOrder) // Return the fetched order
     } catch (err) {
@@ -88,6 +84,7 @@ const orderController = {
         res.render('orders', {
           layout: 'main',
           extraStyles: 'order.css',
+          user: req.user
         })
       }
     } catch(err){
