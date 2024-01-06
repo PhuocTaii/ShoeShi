@@ -250,7 +250,8 @@ const relatedProductsTemplate =
 const relatedProductsTemplateFunction = Handlebars.compile(relatedProductsTemplate);
 
 $.getJSON(`/product/related/${productId}`, function( data ) {
-	document.getElementsByClassName("related-product-container")[0].innerHTML = relatedProductsTemplateFunction(data.slice(0, 6));
-	document.getElementsByClassName("related-product-container")[1].innerHTML = relatedProductsTemplateFunction(data.slice(6, 12));
+	const amountPerSlide = Math.ceil(data.amount/2);
+	document.getElementsByClassName("related-product-container")[0].innerHTML = relatedProductsTemplateFunction(data.products.slice(0, amountPerSlide));
+	document.getElementsByClassName("related-product-container")[1].innerHTML = relatedProductsTemplateFunction(data.products.slice(amountPerSlide, data.amount));
 });
 

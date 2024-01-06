@@ -46,12 +46,14 @@
         <a href='/product?category=Women'>Women</a>
         <a href='/product?category=Kids'>Kids</a>
         <div class='search-bar'>
-          <i class='ri-search-2-line'></i>
-          <input type='text' placeholder='Search...' />
+          <button onclick="handleSearchBtnClick(this)">
+            <i class='ri-search-2-line'></i>
+          </button>
+          <input type='text' placeholder='Search...' onkeydown="handleSearchBar(event)"/>
         </div>
         <a class='cart' href='/cart'>
           <i class='ri-shopping-cart-line'></i>
-          <div class='number-cart-items' id="number-cart-items">
+          <div class='number-cart-items' id="number-cart-items-header">
             {{!-- {{cart}} --}}
             {{#if user}}
               {{prodList.length}}
@@ -61,7 +63,7 @@
                 localStorage.setItem('cartData', JSON.stringify([]))
               }
               const cartSize = JSON.parse(localStorage.getItem('cartData')).length || 0
-              document.getElementById("number-cart-items").innerHTML =  cartSize
+              document.getElementById("number-cart-items-header").innerHTML =  cartSize
             </script>
             {{/if}}
           </div>
@@ -105,22 +107,30 @@
           <a href='/product?category=Women'>Women</a>
           <a href='/product?category=Kids'>Kids</a>
           <div class='search-bar'>
-            <i class='ri-search-2-line'></i>
-            <input type='text' placeholder='Search...' />
+            <button onclick="handleSearchBtnClick(this)">
+              <i class='ri-search-2-line'></i>
+            </button>
+            <input type='text' placeholder='Search...' onkeydown="handleSearchBar(event)" />
           </div>
           <a class='cart' href='/cart'>
             <i class='ri-shopping-cart-line'></i>
-            <div class='number-cart-items' id="number-cart-items">
+            <div class='number-cart-items' id="number-cart-items-sidebar">
               {{#if user}}
                 {{prodList.length}}
               {{else}}
               <script>
-                document.getElementById("number-cart-items").innerHTML = cartSize
+                document.getElementById("number-cart-items-sidebar").innerHTML =  cartSize
               </script>
               {{/if}}
             </div>
           </a>
-          <a href='/login'><i class='ri-user-3-line'></i></a>
+          {{#if user}}      
+          <a href='/order'><i class="ri-file-list-line"></i>  </a> 
+          <a href='/profile'><i class='ri-user-3-line'></i></a>
+          <a href='/logout' class="fw-bold">Log Out</a>
+          {{else}}
+          <a href='/login' class="fw-bold">Log In</a>
+          {{/if}}
         </div>
       </div>
       <!-- End Menu sidebar -->
@@ -161,6 +171,7 @@
     ></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.8/handlebars.min.js" integrity="sha512-E1dSFxg+wsfJ4HKjutk/WaCzK7S2wv1POn1RRPGh8ZK+ag9l244Vqxji3r6wgz9YBf6+vhQEYJZpSjqWFPg9gg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     {{!-- <script src='/js/logout.js'></script> --}}
+    <script src='/js/index.js'></script>
     {{{_sections.scripts}}}
   </body>
 </html>
