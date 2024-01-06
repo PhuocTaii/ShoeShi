@@ -7,7 +7,10 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
 //GET all products
-router.get('/', isAdmin, productController.getAllProducts)
+router.get('/api', isAdmin, productController.getAllProducts)
+
+router.get('/', isAdmin, productController.getProductPage)
+
 
 router.get('/:id', isAdmin, productController.getProductById)
 

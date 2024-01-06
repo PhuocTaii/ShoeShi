@@ -44,10 +44,15 @@ const hbs = express_handlebars.create({
       }
 
       const year = date.getFullYear()
-      const month = pad(date.getMonth() + 1) // Months are zero-based
+      const month = pad(date.getMonth() + 1)
       const day = pad(date.getDate())
 
       return `${year}-${month}-${day}`
+    },
+
+    joinArrObj(array, attribute) {
+      const newArr = array.map(item => item[attribute])
+      return newArr.join(', ')
     },
   }
 });
