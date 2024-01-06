@@ -78,16 +78,10 @@ $.getJSON(window.location.href, function( data ) {
 function paging(page) {
 	const url = new URL(window.location.href);
 	url.search = getQueryString()
-  	// const query = url.search;
-	// if(query.length > 0) {
-	// 	url.searchParams.set('page', page);
-	// }
-	// else {
-	// 	url.search = `?page=${page}`;
-	// }
+
 	url.searchParams.set('page', page);
 
-	$.getJSON('/product/productData' + url.search, function( data ) {
+	$.getJSON('/product/api' + url.search, function( data ) {
 		window.history.pushState(null,"", '/product'+ url.search);
 		updateProductListView(data)
 	});
@@ -118,7 +112,7 @@ function getQueryString() {
 function handleQuery(event) {
 	event.preventDefault()
 	const query = getQueryString()
-	$.getJSON('/product/productData' + query, function( data ) {
+	$.getJSON('/product/api' + query, function( data ) {
 		window.history.pushState(null,"", '/product'+query);
 		updateProductListView(data);
 	})

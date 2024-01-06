@@ -2,7 +2,7 @@ const productController = require('../controllers/productController')
 const router = require('express').Router()
 
 //GET all products
-router.get('/productData', productController.getAllProducts)
+router.get('/api', productController.getAllProducts)
 
 router.get('/', productController.getProductPage)
 

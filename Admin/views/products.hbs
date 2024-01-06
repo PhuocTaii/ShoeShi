@@ -87,7 +87,24 @@
             </tr>
           </tfoot>
           <tbody id="table-products" class="table-group-divider">
-            
+            {{#each products}}
+              <tr id={{_id}}>
+                <td>{{name}}</td>
+                <td>{{joinArrObj category 'name'}}</td>
+                <td>{{manufacturer.name}}</td>
+                <td>{{formatDate creationDate}}</td>
+                <td>{{formatPrice price}}</td>
+                <td>{{quantity}}</td>
+                <td>{{totalPurchase}}</td>
+                <td>{{status}}</td>
+                <td>
+                  <button class='edit-btn' onclick="toggleUpdateProduct('{{_id}}')"><i class='ri-pencil-line'></i></button>
+                  <button class='delete-btn' onclick="toggleDeleteProduct('{{_id}}')">
+                    <i class='ri-delete-bin-6-line'></i>
+                  </button>
+                </td>
+              </tr>
+            {{/each}}
           </tbody>
         </table>
       </div>
