@@ -55,8 +55,8 @@ passport.use('account-activation', new MagicLinkStrategy({
   tokenField: 'token',
   passReqToCallbacks: true,
 }, (req, user, token) => {
-  var link = 'http://' + process.env.HOST + ':' + process.env.PORT + '/signup/verify?token=' + token;
-  // var link = 'https://' + process.env.HOST+ '/signup/verify?token=' + token;
+  // var link = 'http://' + process.env.HOST + ':' + process.env.PORT + '/signup/verify?token=' + token;
+  var link = 'https://' + process.env.HOST+ '/signup/verify?token=' + token;
   var msg = {
     to: user.email,
     from: process.env['EMAIL'],
@@ -81,8 +81,8 @@ passport.use('reset-password', new MagicLinkStrategy({
   tokenField: 'token',
   passReqToCallbacks: true,
 }, (req, user, token) => {
-  const link = 'http://' + process.env.HOST + ':' + process.env.PORT + '/login/forgot-password/verify?token=' + token;
-  // const link = 'https://' + process.env.HOST + '/login/forgot-password/verify?token=' + token;
+  // const link = 'http://' + process.env.HOST + ':' + process.env.PORT + '/login/forgot-password/verify?token=' + token;
+  const link = 'https://' + process.env.HOST + '/login/forgot-password/verify?token=' + token;
   const msg = {
     to: user.email,
     from: process.env['EMAIL'],
@@ -102,8 +102,8 @@ passport.use('reset-password', new MagicLinkStrategy({
 passport.use(new GoogleStrategy({
   clientID: process.env.GOOGLE_CLIENT_ID,
   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-  callbackURL: 'http://' + process.env.HOST + ':' + process.env.PORT + '/oauth2/redirect/google'
-  // callbackURL: 'https://' + process.env.HOST + '/oauth2/redirect/google'
+  // callbackURL: 'http://' + process.env.HOST + ':' + process.env.PORT + '/oauth2/redirect/google'
+  callbackURL: 'https://' + process.env.HOST + '/oauth2/redirect/google'
 },
   async function(accessToken, refreshToken, profile, cb) {
     try {
