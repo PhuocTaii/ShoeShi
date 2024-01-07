@@ -82,10 +82,16 @@ const authController = {
       if (err) {
         return res.status(500).json(err)
       }
-      req.logIn(user, (loginErr) => {
+      req.logIn(user, async (loginErr) => {
         if (loginErr) {
           return res.status(500).json({ message: 'Login Error' })
-        } else return res.status(200).redirect('/')
+        } else {
+          const user = await userService.getUserById(req.user.id)
+          if (user?.isBan) {
+            return res.status(200).redirect('/banned')
+          }
+          return res.status(200).redirect('/')
+        }
       })
     })(req, res, next)
   },
