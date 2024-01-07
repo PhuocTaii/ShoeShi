@@ -99,11 +99,11 @@ function updateCart(productId, colorId, sizeId) {
                 }
 
                 // const total = Number(tPrice + 20000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                const total = formatPrice(Number(tPrice + 20000))
+                // const total = formatPrice(Number(tPrice + 20000))
                 
                 document.getElementById("total-item").innerHTML = tAmount + ' items'
                 document.getElementById("total-price").innerHTML = formatPrice(tPrice)
-                document.getElementById("total").innerHTML = formatPrice(total)
+                document.getElementById("total").innerHTML = formatPrice(Number(tPrice + 20000))
             },
             error: function (error) {
             },
@@ -122,10 +122,10 @@ function updateCart(productId, colorId, sizeId) {
             }
             totalPrice += Number(localCart[i].quantity * localCart[i].productPrice)
         }
-        const total = formatPrice(Number(totalPrice + 20000))
+        // const total = formatPrice(Number(totalPrice + 20000))
         document.getElementById("total-item").innerHTML = cnt + ' items'
         document.getElementById("total-price").innerHTML = formatPrice(totalPrice)
-        document.getElementById("total").innerHTML = formatPrice(total)
+        document.getElementById("total").innerHTML = formatPrice(Number(totalPrice + 20000))
     }
 }
 
