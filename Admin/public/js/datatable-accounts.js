@@ -18,6 +18,66 @@ function toggleAccountDetail(id) {
 
 let adminSearch = true
 
+const paginationCustomerTemplate = 
+`
+<li class='page-item'>
+  <a
+    id='prevPage'
+    class='page-link'
+    aria-label='Previous'
+    onclick='prevPage()'
+  >
+    <span aria-hidden='true'>&laquo;</span>
+  </a>
+</li>
+{{#each pages as |page|}}
+<li class='page-item {{#if (eq page currentPage)}}active{{/if}}'>
+  <a class='page-link' id='page{{page}}' onclick="paging({{page}})">{{page}}</a>
+</li>
+{{/each}}
+<li class='page-item'>
+  <a
+    id='nextPage'
+    class='page-link'
+    aria-label='Next'
+    onclick='nextPage()'
+  >
+    <span aria-hidden='true'>&raquo;</span>
+  </a>
+</li>
+`
+const paginationCustomerRendered = Handlebars.compile(paginationCustomerTemplate);
+
+const paginationAdminTemplate = 
+`
+<li class='page-item'>
+  <a
+    id='prevPageAdmin'
+    class='page-link'
+    aria-label='Previous'
+    onclick='prevPageAdmin()'
+  >
+    <span aria-hidden='true'>&laquo;</span>
+  </a>
+</li>
+{{#each pages as |page|}}
+  <li class='page-item'>
+    <a class='page-link' id='pageAdmin{{page}}' onclick="pagingAdmin({{page}})">{{page}}</a>
+  </li>
+{{/each}}
+<li class='page-item'>
+  <a
+    id='nextPageAdmin'
+    class='page-link'
+    aria-label='Next'
+    onclick='nextPageAdmin()'
+  >
+    <span aria-hidden='true'>&raquo;</span>
+  </a>
+</li>
+`
+const paginationAdminRendered = Handlebars.compile(paginationAdminTemplate);
+
 function fetchPage(pageNumber, pageAdmin, isAdmin) {
   $.ajax({
     url: `/user/api?pageUser=${pageNumber}&pageAdmin=${pageAdmin}&sortBy=${sortBy}&sortOrder=${sortOrder}&filterBy=${filterOption}&search=${filter}&isAdmin=${isAdmin}`,
@@ -78,7 +138,17 @@ function fetchPage(pageNumber, pageAdmin, isAdmin) {
 
         // Add the row to the table
         table.appendChild(row)
+
+        // update pagination
+        if(isAdmin) {
+          document.getElementById('pagination-admin-table').innerHTML = paginationAdminRendered({pages : data.pages, currentPage: data.currentPage})
+        }
+        else {
+          document.getElementById('pagination-customer-table').innerHTML = paginationCustomerRendered({pages : data.pages, currentPage: data.currentPage})
+        }
       })
+
+
     },
     error: function (jqXHR, textStatus, errorThrown) {
       console.error(textStatus, errorThrown)
@@ -89,55 +159,91 @@ function fetchPage(pageNumber, pageAdmin, isAdmin) {
 let currentPage = 1
 let currentPageAdmin = 1
 
-document.getElementById('nextPage').addEventListener('click', () => {
+// document.getElementById('nextPage').addEventListener('click', () => {
+//   currentPage++
+//   adminSearch = false
+//   fetchPage(currentPage, currentPageAdmin, adminSearch)
+// })
+
+// document.getElementById('prevPage').addEventListener('click', () => {
+//   if (currentPage > 1) {
+//     currentPage--
+//     adminSearch = false
+//     fetchPage(currentPage, currentPageAdmin, adminSearch)
+//   }
+// })
+
+// document.getElementById('nextPageAdmin').addEventListener('click', () => {
+//   currentPageAdmin++
+//   adminSearch = true
+//   fetchPage(currentPage, currentPageAdmin, adminSearch)
+// })
+
+// document.getElementById('prevPageAdmin').addEventListener('click', () => {
+//   if (currentPageAdmin > 1) {
+//     currentPageAdmin--
+//     adminSearch = true
+//     fetchPage(currentPage, currentPageAdmin, adminSearch)
+//   }
+// })
+
+function nextPage() {
   currentPage++
   adminSearch = false
   fetchPage(currentPage, currentPageAdmin, adminSearch)
-})
-
-document.getElementById('prevPage').addEventListener('click', () => {
+}
+function prevPage() {
   if (currentPage > 1) {
     currentPage--
     adminSearch = false
     fetchPage(currentPage, currentPageAdmin, adminSearch)
   }
-})
+}
+function paging(page) {
+  currentPage = page
+  adminSearch = false
+  fetchPage(currentPage, currentPageAdmin, adminSearch)
+}
 
-document.getElementById('nextPageAdmin').addEventListener('click', () => {
+function nextPageAdmin() {
   currentPageAdmin++
   adminSearch = true
   fetchPage(currentPage, currentPageAdmin, adminSearch)
-})
-
-document.getElementById('prevPageAdmin').addEventListener('click', () => {
+}
+function prevPageAdmin() {
   if (currentPageAdmin > 1) {
     currentPageAdmin--
     adminSearch = true
     fetchPage(currentPage, currentPageAdmin, adminSearch)
   }
-})
-
-const totalPage = document.getElementById('totalUserPage').textContent
-const totalPageAdmin = document.getElementById('totalAdminPage').textContent
-for (let i = 1; i <= totalPage; i++) {
-  document.getElementById(`page${i}`).addEventListener('click', (event) => {
-    event.preventDefault()
-    currentPage = i
-    adminSearch = false
-    fetchPage(currentPage, currentPageAdmin, adminSearch)
-  })
+}
+function pagingAdmin(page) {
+  currentPageAdmin = page
+  adminSearch = true
+  fetchPage(currentPage, currentPageAdmin, adminSearch)
 }
 
-for (let i = 1; i <= totalPageAdmin; i++) {
-  document
-    .getElementById(`pageAdmin${i}`)
-    .addEventListener('click', (event) => {
-      event.preventDefault()
-      currentPageAdmin = i
-      adminSearch = true
-      fetchPage(currentPage, currentPageAdmin, adminSearch)
-    })
-}
+// const totalPage = document.getElementById('totalUserPage').textContent
+// const totalPageAdmin = document.getElementById('totalAdminPage').textContent
+// for (let i = 1; i <= totalPage; i++) {
+//   document.getElementById(`page${i}`).addEventListener('click', (event) => {
+//     event.preventDefault()
+//     currentPage = i
+//     adminSearch = false
+//     fetchPage(currentPage, currentPageAdmin, adminSearch)
+//   })
+// }
+
+// for (let i = 1; i <= totalPageAdmin; i++) {
+//   document
+//     .getElementById(`pageAdmin${i}`)
+//     .addEventListener('click', (event) => {
+//       event.preventDefault()
+//       currentPageAdmin = i
+//       adminSearch = true
+//       fetchPage(currentPage, currentPageAdmin, adminSearch)
+//     })
+// }
 
 document.addEventListener('DOMContentLoaded', (event) => {
   event.preventDefault()

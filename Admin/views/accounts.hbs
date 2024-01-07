@@ -64,32 +64,37 @@
 
     <div class='card-footer'>
       <nav aria-label='navigation table'>
-        <ul class='pagination'>
+        <ul id="pagination-customer-table" class='pagination'>
+          <!--
           <li class='page-item'>
             <a
               id='prevPage'
               class='page-link'
-              href='?pageUser={{decrement currentPage}}'
+              {{!-- href='?pageUser={{decrement currentPage}}' --}}
               aria-label='Previous'
+              onclick="prevPage()"
             >
               <span aria-hidden='true'>&laquo;</span>
             </a>
           </li>
           {{#each pages as |page|}}
             <li class='page-item {{#if (eq page currentPage)}}active{{/if}}'>
-              <a class='page-link' href='?pageUser={{page}}' id='page{{page}}'>{{page}}</a>
+              <a class='page-link' id='page{{page}}' onclick="paging({{page}})">{{page}}</a>
+              {{!-- href='?pageUser={{page}}' --}}
             </li>
           {{/each}}
           <li class='page-item'>
             <a
               id='nextPage'
               class='page-link'
-              href='?pageUser={{increment currentPage}}'
+              {{!-- href='?pageUser={{increment currentPage}}' --}}
               aria-label='Next'
+              onclick="nextPage()"
             >
               <span aria-hidden='true'>&raquo;</span>
             </a>
           </li>
+          -->
         </ul>
       </nav>
     </div>
@@ -161,12 +166,13 @@
     </div>
     <div class='card-footer'>
       <nav aria-label='navigation table'>
-        <ul class='pagination'>
+        <ul id="pagination-admin-table" class='pagination'>
+          <!--
           <li class='page-item'>
             <a
               id='prevPageAdmin'
               class='page-link'
-              href='?pageUser={{decrement currentPageAdmin}}'
+              {{!-- href='?pageUser={{decrement currentPageAdmin}}' --}}
               aria-label='Previous'
             >
               <span aria-hidden='true'>&laquo;</span>
@@ -174,19 +180,21 @@
           </li>
           {{#each pagesAdmin as |page|}}
             <li class='page-item'>
-              <a class='page-link' href='?pageUser={{page}}' id='pageAdmin{{page}}'>{{page}}</a>
+              <a class='page-link' id='pageAdmin{{page}}'>{{page}}</a>
+              {{!-- href='?pageUser={{page}}'  --}}
             </li>
           {{/each}}
           <li class='page-item'>
             <a
               id='nextPageAdmin'
               class='page-link'
-              href='?pageUser={{increment currentPageAdmin}}'
+              {{!-- href='?pageUser={{increment currentPageAdmin}}' --}}
               aria-label='Next'
             >
               <span aria-hidden='true'>&raquo;</span>
             </a>
           </li>
+          -->
         </ul>
       </nav>
     </div>
@@ -394,4 +402,5 @@
 {{#section 'scripts'}}
   <script src='/js/templates/toast.js'></script>
   <script src='/js/datatable-accounts.js'></script>
+  <script src='/js/hbsHelpers.js'></script>
 {{/section}}

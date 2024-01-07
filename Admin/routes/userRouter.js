@@ -13,8 +13,8 @@ router.get('/', isAdmin, userController.getAccountsPage)
 
 router.get('/api', isAdmin, userController.handlePaging)
 
-router.get('/:id', userController.getUserById)
+router.get('/:id', isAdmin, userController.getUserById)
 
-router.post('/ban/:id', userController.banAccount)
+router.post('/ban/:id', isAdmin, userController.banAccount)
 
 module.exports = router
