@@ -54,6 +54,26 @@ const hbs = express_handlebars.create({
       const newArr = array.map(item => item[attribute])
       return newArr.join(', ')
     },
+
+    disabledPage(i, activePage) {
+      return i == activePage ? 'disabled' : '';
+    },
+
+    activeCurrentPage(i, activePage) {
+      return i == activePage ? 'active':'';
+    },
+
+    loopTill(num, options) {
+      var result = '';
+      for (var i = 1; i <= num; i++) {
+        result += options.fn({...this, index: i});
+      }
+      return result;
+    },
+
+    add(a, b) {
+      return a + b;
+    },
   }
 });
 
