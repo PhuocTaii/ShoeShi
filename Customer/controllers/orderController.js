@@ -22,7 +22,8 @@ const orderController = {
         order.productList && Array.isArray(order.productList)
           ? await Promise.all(order.productList.map(async (item) => ({
               itemName: item.product,
-              itemPrice: item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+              // itemPrice: item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+              itemPrice: item.price,
               itemQuantity: item.quantity,
               itemSize: item.size,
               itemColor: await processItemColor(item.color),
@@ -48,13 +49,13 @@ const orderController = {
           ? order.productList.map((item) => ({
               itemName: item.product,
               itemPrice: item.price
-                .toString()
-                .replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+                // .toString()
+                // .replace(/\B(?=(\d{3})+(?!\d))/g, ','),
             }))
           : [],
       totalPrice: order.totalPrice
-        .toString()
-        .replace(/\B(?=(\d{3})+(?!\d))/g, ','),
+        // .toString()
+        // .replace(/\B(?=(\d{3})+(?!\d))/g, ','),
     }))
 
     const user = await userService.getUserById(req.user.id) 

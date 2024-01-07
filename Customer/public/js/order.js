@@ -67,11 +67,12 @@ $(document).ready(function () {
         $('.status-modal').text(status)
         $('.address-modal').text(address)
         $('.subtotal-modal').text(
-          `${((totalPrice - 20000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','))}đ`
+          // `${((totalPrice - 20000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.'))}đ`
+          new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalPrice)
         )
         $('.total-modal').text(
-          `${((totalPrice).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','))}đ`
-
+          // `${((totalPrice).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.'))}đ`
+          new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalPrice)
         )
 
         const itemSummaryContainer = $('.all-items-modal')
@@ -83,7 +84,8 @@ $(document).ready(function () {
           itemDiv.find('.item-name').text(item.itemName)
           itemDiv.find('.quantity-modal').text(`${item.itemQuantity}x`)
           itemDiv.find('.size-modal').text(`│ Size: ${item.itemSize}`)
-          itemDiv.find('.price-item-modal').text(`${item.itemPrice} đ`)
+          // itemDiv.find('.price-item-modal').text(`${item.itemPrice} đ`)
+          itemDiv.find('.price-item-modal').text(Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(item.itemPrice))
           itemDiv.find('.color-modal').css({
             'background-color': item.itemColor,
             border: '1px solid black',

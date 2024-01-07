@@ -53,7 +53,7 @@
         </div>
         <a class='cart' href='/cart'>
           <i class='ri-shopping-cart-line'></i>
-          <div class='number-cart-items' id="number-cart-items-header">
+          <div class='number-cart-items' id="number-cart-items">
             {{!-- {{cart}} --}}
             {{#if user}}
               {{prodList.length}}
@@ -63,7 +63,7 @@
                 localStorage.setItem('cartData', JSON.stringify([]))
               }
               const cartSize = JSON.parse(localStorage.getItem('cartData')).length || 0
-              document.getElementById("number-cart-items-header").innerHTML =  cartSize
+              document.getElementById("number-cart-items").innerHTML =  cartSize
             </script>
             {{/if}}
           </div>

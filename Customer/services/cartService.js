@@ -194,8 +194,8 @@ const cartService = {
       detailList.push(productDetail)
     }
     var total = totalPrice + 20000 
-    totalPrice = totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-    total = total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+    // totalPrice = totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+    // total = total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
     return {detailList, totalAmount, totalPrice, total}
   },
 
@@ -225,8 +225,8 @@ const cartService = {
       detailList.push(productDetail)
     }
     var total = totalPrice + 20000 
-    totalPrice = totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-    total = total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+    // totalPrice = totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+    // total = total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
     return {detailList, totalAmount, totalPrice, total}
   },
 }
