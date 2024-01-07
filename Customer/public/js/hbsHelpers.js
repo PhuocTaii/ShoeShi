@@ -18,5 +18,5 @@ Handlebars.registerHelper("lessThanOrEqual", function(a, b) {
 	return a <= b;
 });
 Handlebars.registerHelper("formatPrice", function(price) {
-	return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+	return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price)
 });

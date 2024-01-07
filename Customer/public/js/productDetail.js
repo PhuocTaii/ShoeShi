@@ -242,7 +242,7 @@ const relatedProductsTemplate =
 		<div class='product-details'>
 			<p class='product-name'>{{name}}</p>
 			<p class='product-branch'>{{manufacturer.name}}</p>
-			<p class='product-price'>{{formatPrice price}} ₫</p>
+			<p class='product-price'>{{formatPrice price}}</p>
 		</div>
 	</a>
 	{{/each}}
