@@ -3,8 +3,6 @@ const mongoose = require('mongoose')
 const customerSchema = new mongoose.Schema({
   username: {
     type: String,
-    minlength: 6,
-    maxlength: 20,
     unique: true,
   },
 
@@ -15,6 +13,7 @@ const customerSchema = new mongoose.Schema({
   admin: {
     type: Boolean,
     default: false,
+    required: true,
   },
 
   name: {
@@ -31,6 +30,11 @@ const customerSchema = new mongoose.Schema({
 
   gender: {
     type: String,
+    default: 'male',
+    enum: {
+      values: ['male', 'female'],
+      message: '{VALUE} is not supported'
+    }
   },
 
   email: {
