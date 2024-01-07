@@ -8,9 +8,9 @@ const hbs = express_handlebars.create({
     formatPrice(price) {
       return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
     },
-    // ifEquals(arg1, arg2, options) {
-    //   return arg1 == arg2 ? options.fn(this) : options.inverse(this)
-    // },
+    ifEquals(arg1, arg2, options) {
+      return arg1 == arg2 ? options.fn(this) : options.inverse(this)
+    },
     formatDateTime(dateString) {
       const date = new Date(dateString)
 
