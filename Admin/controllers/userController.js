@@ -91,24 +91,24 @@ const userController = {
     }
   },
   getAccountsPage: async (req, res) => {
-    const itemPerPage = 5
-    const currentPage = Number(req.query.pageUser) || 1
-    const currentPageAdmin = Number(req.query.pageAdmin) || 1
+    // const itemPerPage = 5
+    // const currentPage = Number(req.query.pageUser) || 1
+    // const currentPageAdmin = Number(req.query.pageAdmin) || 1
 
-    const totalCustomer = await User.countDocuments({ admin: false })
-    const totalAdmin = await User.countDocuments({ admin: true })
-    const totalPage = Math.ceil(totalCustomer / itemPerPage)
-    const totalPageAdmin = Math.ceil(totalAdmin / itemPerPage)
-    const pages = Array.from({ length: totalPage }, (_, i) => i + 1)
-    const pagesAdmin = Array.from({ length: totalPageAdmin }, (_, i) => i + 1)
+    // const totalCustomer = await User.countDocuments({ admin: false })
+    // const totalAdmin = await User.countDocuments({ admin: true })
+    // const totalPage = Math.ceil(totalCustomer / itemPerPage)
+    // const totalPageAdmin = Math.ceil(totalAdmin / itemPerPage)
+    // const pages = Array.from({ length: totalPage }, (_, i) => i + 1)
+    // const pagesAdmin = Array.from({ length: totalPageAdmin }, (_, i) => i + 1)
 
     res.render('accounts', {
       layout: 'main',
       extraStyles: 'accounts.css',
-      pages: pages,
-      pagesAdmin: pagesAdmin,
-      totalPage,
-      totalPageAdmin,
+      // pages: pages,
+      // pagesAdmin: pagesAdmin,
+      // totalPage,
+      // totalPageAdmin,
       userId: req.user.id,
       user: req.user
     })

@@ -1,9 +1,11 @@
 function handleAddCate() {
   $('#modal-manage-item').modal('toggle')
   document.getElementById('action').innerHTML = `Add category`
+  $('#item-name').val('')
 
   $('.confirm-btn').off('click').click(function () {
     const name = $('#item-name').val()
+    if(name == '') return alert('Please enter category name')
 
     $.ajax({
       url: `/category`,
@@ -15,21 +17,25 @@ function handleAddCate() {
         // Handle the response from the server if needed
         alert('The category has been added')
         fetchCategoryTable()
-        $('#item-name').val('')
         $('#modal-manage-item').modal('hide')
       },
       error: function (error) {
-        console.error('Error sending data:', error)
+        alert('Failed to add new category. Make sure the category name is unique')
+        // console.error('Error sending data:', error)
       },
     })
+
+    $('#item-name').val('')
   })
 }
 function handleModifyCate(id) {
   $('#modal-manage-item').modal('toggle')
   document.getElementById('action').innerHTML = `Update category`
+  $('#item-name').val('')
 
   $('.confirm-btn').off('click').click(function () {
     const name = $('#item-name').val()
+    if(name == '') return alert('Please enter category name')
 
     $.ajax({
       url: `/category/${id}`,
@@ -40,13 +46,15 @@ function handleModifyCate(id) {
       success: function (response) {
         alert('The category has been updated')
         fetchCategoryTable()
-        $('#item-name').val('')
         $('#modal-manage-item').modal('hide')
       },
       error: function (error) {
-        console.error('Error sending data:', error)
+        alert('Failed to update category. Make sure the category name is unique')
+        // console.error('Error sending data:', error)
       },
     })
+
+    $('#item-name').val('')
   })
 }
 function handleDeleteCate(id) {
@@ -58,11 +66,12 @@ function handleDeleteCate(id) {
       method: 'DELETE',
       success: function (response) {
         alert('The category has been deleted')
-        fetchCategoryTable()
         $('#modal-delete-item').modal('hide')
+        fetchCategoryTable()
       },
       error: function (error) {
-        console.error('Error deleting category:', error)
+        alert('Error occurred')
+        // console.error('Error deleting category:', error)
       },
     })
   })
@@ -71,9 +80,11 @@ function handleDeleteCate(id) {
 function handleAddManu() {
   $('#modal-manage-item').modal('toggle')
   document.getElementById('action').innerHTML = `Add manufacturer`
+  $('#item-name').val('')
 
   $('.confirm-btn').off('click').click(function () {
     const name = $('#item-name').val()
+    if(name == '') return alert('Please enter manufacturer name')
 
     $.ajax({
       url: `/manufacturer`,
@@ -84,21 +95,24 @@ function handleAddManu() {
       success: function (response) {
         alert('The manufacturer has been added')
         fetchManufacturerTable()
-        $('#item-name').val('')
         $('#modal-manage-item').modal('hide')
       },
       error: function (error) {
-        console.error('Error sending data:', error)
+        alert('Failed to add new manufacturer. Make sure the manufacturer name is unique')
+        // console.error('Error sending data:', error)
       },
     })
+    $('#item-name').val('')
   })
 }
 function handleModifyManu(id) {
   $('#modal-manage-item').modal('toggle')
   document.getElementById('action').innerHTML = `Update manufacturer`
+  $('#item-name').val('')
 
   $('.confirm-btn').off('click').click(function () {
     const name = $('#item-name').val()
+    if(name == '') return alert('Please enter manufacturer name')
 
     $.ajax({
       url: `/manufacturer/${id}`,
@@ -109,13 +123,15 @@ function handleModifyManu(id) {
       success: function (response) {
         alert('The manufacturer has been updated')
         fetchManufacturerTable()
-        $('#item-name').val('')
         $('#modal-manage-item').modal('hide')
       },
       error: function (error) {
-        console.error('Error sending data:', error)
+        alert('Failed to add update manufacturer. Make sure the manufacturer name is unique')
+        // console.error('Error sending data:', error)
       },
     })
+    $('#item-name').val('')
+
   })
 }
 function handleDeleteManu(id) {
@@ -131,7 +147,8 @@ function handleDeleteManu(id) {
         alert('The manufacturer has been deleted')
       },
       error: function (error) {
-        console.error('Error deleting manufacture:', error)
+        alert('Error occurred')
+        // console.error('Error deleting manufacture:', error)
       },
     })
   })

@@ -27,3 +27,13 @@ Handlebars.registerHelper("joinArrObj", function(array, attribute) {
 Handlebars.registerHelper("formatDate", function(date) {
 	return new Date(date).toLocaleString('en-GB');
 });
+
+Handlebars.registerHelper('decrement', function(value) { return value - 1; }),
+
+Handlebars.registerHelper('increment', function(value) { return value + 1; }),
+
+Handlebars.registerHelper('eq', function(a, b) { return a === b; }),
+
+Handlebars.registerHelper('ifEquals', function(arg1, arg2, options) {
+	return arg1 == arg2 ? options.fn(this) : options.inverse(this)
+})
