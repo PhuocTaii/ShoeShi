@@ -164,7 +164,7 @@ function calculateComplementaryColor(hex) {
 }
 
 function changeColor(color) {
-	console.log(color)
+	// console.log(color)
 	const complementaryColor = calculateComplementaryColor(color);
 	console.log(complementaryColor)
 	document.querySelector('.color-options input[type="radio"]:checked + label .ri-check-line').style.color = complementaryColor;
@@ -202,6 +202,7 @@ function addToCart(event) {
 			success: function(data) {
 				alert('Add product successfully');
 				document.getElementById("number-cart-items").innerHTML = data.productList.length
+				document.getElementById("number-cart-items-sidebar").innerHTML = data.productList.length
 
 			},
 			error: function(err) {
@@ -227,6 +228,7 @@ function addToCart(event) {
 		localCart.push(data);
 		localStorage.setItem('cartData', JSON.stringify(localCart));
 		document.getElementById("number-cart-items").innerHTML = localCart.length
+		document.getElementById("number-cart-items-sidebar").innerHTML = localCart.length
 		alert('Add product successfully');
 	}
 

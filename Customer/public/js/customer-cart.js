@@ -1,4 +1,9 @@
 const user = document.getElementById('user-cart').getAttribute('data-user')
+
+function formatPrice(price){
+    return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price)
+}
+
 const cartTemplate = 
     `
     {{#each this}}
@@ -25,7 +30,7 @@ const cartTemplate =
                 </div>
                 </div>
                 <div class='right-box-info col-6'>
-                    <p class='m-0 fw-bold' data-product-price='{{this.price}}' id="product-price-{{this.id}}">{{this.price}}</p>
+                    <p class='m-0 fw-bold' data-product-price='{{this.price}}' id="product-price-{{this.id}}">{{formatPrice this.price}}</p>
                     <img class='mb-3' src='assets/img/trash-icon.svg' alt='' onclick="removeFromCart('{{this.productID}}', '{{this.colorId}}', '{{this.sizeId}}')" />
                 </div>
             </div>
@@ -48,8 +53,8 @@ if(!user){
         success: function (data) {
             document.getElementById('cart').innerHTML = localCartTemplateFunction(data.detailList);
             document.getElementById("total-item").innerHTML = data.totalAmount + ' items'
-            document.getElementById("total-price").innerHTML = data.totalPrice
-            document.getElementById("total").innerHTML = data.total + '₫'
+            document.getElementById("total-price").innerHTML = formatPrice(data.totalPrice)
+            document.getElementById("total").innerHTML =  formatPrice(data.total)
         },
         error: function (error) {
             console.log(error)
@@ -66,8 +71,8 @@ if(!user){
         success: function (response) {
             document.getElementById('cart').innerHTML = cartTemplateFunction(response.detailList);
             document.getElementById("total-item").innerHTML = response.totalAmount + ' items'
-            document.getElementById("total-price").innerHTML = response.totalPrice
-            document.getElementById("total").innerHTML = response.total + '₫'
+            document.getElementById("total-price").innerHTML = formatPrice(response.totalPrice)
+            document.getElementById("total").innerHTML = formatPrice(response.total)
         },
         error: function (error) {
         },
@@ -93,11 +98,12 @@ function updateCart(productId, colorId, sizeId) {
                     tPrice += data[i].quantity * data[i].price
                 }
 
-                const total = Number(tPrice + 20000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                // const total = Number(tPrice + 20000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+                const total = formatPrice(Number(tPrice + 20000))
                 
                 document.getElementById("total-item").innerHTML = tAmount + ' items'
-                document.getElementById("total-price").innerHTML = tPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-                document.getElementById("total").innerHTML = total + '₫'
+                document.getElementById("total-price").innerHTML = formatPrice(tPrice)
+                document.getElementById("total").innerHTML = formatPrice(total)
             },
             error: function (error) {
             },
@@ -116,10 +122,10 @@ function updateCart(productId, colorId, sizeId) {
             }
             totalPrice += Number(localCart[i].quantity * localCart[i].productPrice)
         }
-        const total = Number(totalPrice + 20000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+        const total = formatPrice(Number(totalPrice + 20000))
         document.getElementById("total-item").innerHTML = cnt + ' items'
-        document.getElementById("total-price").innerHTML = totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-        document.getElementById("total").innerHTML = total + '₫'
+        document.getElementById("total-price").innerHTML = formatPrice(totalPrice)
+        document.getElementById("total").innerHTML = formatPrice(total)
     }
 }
 
@@ -133,6 +139,7 @@ function removeFromCart(productId, colorId, sizeId){
             dataType: 'json',
             success: function (data) {
                 document.getElementById("number-cart-items").innerHTML = data.length
+                document.getElementById("number-cart-items-sidebar").innerHTML = data.length
                 const cartTemplateFunction = Handlebars.compile(cartTemplate);
     
                 $.ajax({
@@ -142,8 +149,8 @@ function removeFromCart(productId, colorId, sizeId){
                     success: function (response) {
                         document.getElementById('cart').innerHTML = cartTemplateFunction(response.detailList);
                         document.getElementById("total-item").innerHTML = response.totalAmount + ' items'
-                        document.getElementById("total-price").innerHTML = response.totalPrice
-                        document.getElementById("total").innerHTML = response.total + '₫'
+                        document.getElementById("total-price").innerHTML = formatPrice(response.totalPrice)
+                        document.getElementById("total").innerHTML = formatPrice(response.total)
                     },
                     error: function (error) {
                     },
@@ -172,9 +179,11 @@ function removeFromCart(productId, colorId, sizeId){
             success: function (data) {
                 document.getElementById('cart').innerHTML = localCartTemplateFunction(data.detailList);
                 document.getElementById("total-item").innerHTML = data.totalAmount + ' items'
-                document.getElementById("total-price").innerHTML = data.totalPrice
-                document.getElementById("total").innerHTML = data.total + '₫'
+                document.getElementById("total-price").innerHTML = formatPrice(data.totalPrice)
+                // document.getElementById("total").innerHTML = data.total + '₫'
+                document.getElementById("total").innerHTML = formatPrice(data.total)
                 document.getElementById("number-cart-items").innerHTML = data.detailList.length
+                document.getElementById("number-cart-items-sidebar").innerHTML = data.detailList.length
 
             },
             error: function (error) {
