@@ -168,7 +168,7 @@ function resetSizeModal(id) {
   if(id){
     document.querySelector('#item-size').value = document.querySelector(`#${CSS.escape(id)} td:first-child`).innerHTML
   } else{
-    document.querySelector('#item-name').value = ''
+    document.querySelector('#item-size').value = ''
   }
 }
 

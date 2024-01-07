@@ -28,7 +28,7 @@ const colorController = {
     try {
       const updatedColor = await colorService.updateColor(req.params.id, req.body)
       const colors = await colorService.getAllColors()
-      res.status(200).json(updatedColor)
+      res.status(200).json(colors)
     } catch (err) {
       res.status(500).json(err)
     }
