@@ -51,7 +51,7 @@ const productsTemplate =
 			<div class='product-details'>
 				<p class='product-name'>{{name}}</p>
 				<p class='product-brand'>{{manufacturer.name}}</p>
-				<p class='product-price'>{{formatPrice price}} ₫</p>
+				<p class='product-price'>{{formatPrice price}}</p>
 			</div>
 		</a>
 	</div>
