@@ -113,6 +113,7 @@ passport.use(new GoogleStrategy({
       if (!user) {
         const newUser = await User.create({
           googleId: profile.id,
+          username: profile.id,
           name: profile.displayName,
           customerImage: profile.photos ? profile.photos[0].value : '',
           active: true,
